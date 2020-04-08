@@ -28,6 +28,14 @@ languageCode = "ja-jp"
   # Default theme "light" or "dark"
   defaultTheme = "light"
 
+  # Social icons
+  [[params.social]]
+    name = "twitter"
+    url  = "https://twitter.com/tomorrowSLog"
+
+  [[params.social]]
+    name = "github"
+    url  = "https://github.com/tomowarkar"
 [languages]
   [languages.en]
     title = "tomowarkarの技術ブログ"
@@ -49,3 +57,8 @@ languageCode = "ja-jp"
     identifier = "blog"
     name       = "Blog"
     url        = "/blog/posts"
+
+  [[menu.main]]
+    identifier = "tags"
+    name       = "Tags"
+    url        = "/blog/tags"
