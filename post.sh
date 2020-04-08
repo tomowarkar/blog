@@ -28,4 +28,5 @@ else
   git add content/posts/ docs/
   git commit -m "post $1.md"
   git push origin master
+  echo "https://tomowarkar.github.io/blog/posts/$1/"
 fi
