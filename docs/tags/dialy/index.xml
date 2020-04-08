@@ -6,18 +6,18 @@
     <description>Recent content in dialy on tomowarkarの技術ブログ</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
-    <lastBuildDate>Wed, 08 Apr 2020 21:48:57 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 08 Apr 2020 22:41:43 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/dialy/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>001</title>
-      <link>https://tomowarkar.github.io/blog/posts/001/</link>
-      <pubDate>Wed, 08 Apr 2020 21:48:57 +0900</pubDate>
+      <title>Init　Github Pages でブログ始めました。</title>
+      <link>https://tomowarkar.github.io/blog/posts/init/</link>
+      <pubDate>Wed, 08 Apr 2020 22:41:43 +0900</pubDate>
       
-      <guid>https://tomowarkar.github.io/blog/posts/001/</guid>
-      <description>ハロ import json</description>
+      <guid>https://tomowarkar.github.io/blog/posts/init/</guid>
+      <description>こんにちは tomowarkar です。 GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。 これまでも他の形でブログを運用していたの</description>
     </item>
     
   </channel>

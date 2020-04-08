@@ -5,40 +5,27 @@
         <description>Recent content in Posts on tomowarkarの技術ブログ</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
-        <lastBuildDate>Wed, 08 Apr 2020 22:09:55 +0900</lastBuildDate>
+        <lastBuildDate>Wed, 08 Apr 2020 22:41:43 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
-            <title>Init</title>
+            <title>Init　Github Pages でブログ始めました。</title>
             <link>https://tomowarkar.github.io/blog/posts/init/</link>
-            <pubDate>Wed, 08 Apr 2020 22:09:55 +0900</pubDate>
+            <pubDate>Wed, 08 Apr 2020 22:41:43 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/init/</guid>
-            <description>テスト</description>
-            <content type="html"><![CDATA[<p>テスト</p>
+            <description>こんにちは tomowarkar です。 GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。 これまでも他の形でブログを運用していたの</description>
+            <content type="html"><![CDATA[<p>こんにちは tomowarkar です。</p>
+<p>GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。</p>
+<p>これまでも他の形でブログを運用していたのですが、技術ブログと日常ブログが混じってしまったり、サーバーやらドメインやらの管理が面倒になってきた(技術的なアウトプットをするだけなら、それ以外の運営コストをできるだけ下げたい)ので新しく Github でブログを始めた次第です。</p>
+<p>あまり硬くならずとりあえず書いたコードの供養の場として使っていけたらと思っています。</p>
+<p>今回 GitHub Pages と Hugo を使ってブログを始めるにあたって、以下の記事を参考にさせていただきました。ありがとうございます 🙏</p>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://qiita.com/Blank71/items/88a6c76ca9e162af73fe">https://qiita.com/Blank71/items/88a6c76ca9e162af73fe</a></li>
+<li><a href="https://qiita.com/yotsak83/items/017734d5f873f4f194d4">https://qiita.com/yotsak83/items/017734d5f873f4f194d4</a></li>
+</ul>
 ]]></content>
-        </item>
-        
-        <item>
-            <title>0001</title>
-            <link>https://tomowarkar.github.io/blog/posts/0001/</link>
-            <pubDate>Wed, 08 Apr 2020 21:54:51 +0900</pubDate>
-            
-            <guid>https://tomowarkar.github.io/blog/posts/0001/</guid>
-            <description></description>
-            <content type="html"><![CDATA[]]></content>
-        </item>
-        
-        <item>
-            <title>001</title>
-            <link>https://tomowarkar.github.io/blog/posts/001/</link>
-            <pubDate>Wed, 08 Apr 2020 21:48:57 +0900</pubDate>
-            
-            <guid>https://tomowarkar.github.io/blog/posts/001/</guid>
-            <description>ハロ import json</description>
-            <content type="html"><![CDATA[<p>ハロ</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json
-</code></pre></div>]]></content>
         </item>
         
     </channel>
