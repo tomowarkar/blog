@@ -38,7 +38,7 @@ languageCode = "ja-jp"
 
     [languages.en.params.logo]
       logoText = "tomowarkar"
-      logoHomeLink = "/blog"
+      logoHomeLink = "/"
     # or
     #
     # path = "/img/your-example-logo.svg"
@@ -48,4 +48,4 @@ languageCode = "ja-jp"
   [[menu.main]]
     identifier = "blog"
     name       = "Blog"
-    url        = "/posts"
+    url        = "/blog/posts"
