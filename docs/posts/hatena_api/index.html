@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="はてなブログの投稿を自動化、ローカル管理がしたい ということでHatena api を叩いてみた備忘録 参考 はてな API一覧 下準備 ローカルでの記事管理は" />
+<meta name="keywords" content=", python, hatena, automation" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/hatena_api/" />
+
+
+    <title>
+        
+            はてなブログ自動投稿Pythonスクリプト :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="はてなブログ自動投稿Pythonスクリプト">
+<meta itemprop="description" content="はてなブログの投稿を自動化、ローカル管理がしたい ということでHatena api を叩いてみた備忘録 参考 はてな API一覧 下準備 ローカルでの記事管理は">
+<meta itemprop="datePublished" content="2020-04-09T01:46:56&#43;09:00" />
+<meta itemprop="dateModified" content="2020-04-09T01:46:56&#43;09:00" />
+<meta itemprop="wordCount" content="439">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="python,hatena,automation," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="はてなブログ自動投稿Pythonスクリプト"/>
+<meta name="twitter:description" content="はてなブログの投稿を自動化、ローカル管理がしたい ということでHatena api を叩いてみた備忘録 参考 はてな API一覧 下準備 ローカルでの記事管理は"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-09 01:46:56 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>One minute
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/hatena_api/">はてなブログ自動投稿Pythonスクリプト</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <p>はてなブログの投稿を自動化、ローカル管理がしたい</p>
+<p>ということでHatena api を叩いてみた備忘録</p>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="http://developer.hatena.ne.jp/ja/documents/apis">はてな API一覧</a></li>
+</ul>
+<h2 id="下準備">下準備</h2>
+<p>ローカルでの記事管理は以下のようなものを想定する</p>
+<ul>
+<li>markdown形式</li>
+<li>1行目にブログタイトル</li>
+<li>2行目にブログタグ</li>
+<li>3行目以降は本文</li>
+</ul>
+<h3 id="examplemd">example.md</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">タイトル
+Python,日常,hoge
+<span style="color:#75715e">## 今日の
+</span><span style="color:#75715e"></span>hugahuga
+
+<span style="color:#75715e">### 天気は
+</span><span style="color:#75715e"></span>hogahoga
+</code></pre></div><p>ローカルでの投稿済みか未投稿かの判別や、投稿日時の判別は対応できないが最低限の仕様ではあると思う。</p>
+<h2 id="python-スクリプト">Python スクリプト</h2>
+<h3 id="mainpy">main.py</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+<span style="color:#f92672">import</span> requests <span style="color:#f92672">as</span> req
+
+HATENA_ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your hatena id&#34;</span>
+BLOG_DOMAIN <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your blog domain&#34;</span>
+API_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your api key&#34;</span>
+BASE_URL <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://blog.hatena.ne.jp/{HATENA_ID}/{BLOG_DOMAIN}/atom&#34;</span>
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hatena_entry</span>(title, content, categorys<span style="color:#f92672">=</span>[], updated<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, draft<span style="color:#f92672">=</span>False):
+    <span style="color:#e6db74">&#34;&#34;&#34;はてなブログへの投稿
+</span><span style="color:#e6db74">    Attributes:
+</span><span style="color:#e6db74">      HATENA_ID, API_KEY, BASE_URL (str)
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    Args:
+</span><span style="color:#e6db74">      title (str):
+</span><span style="color:#e6db74">      content (str): 
+</span><span style="color:#e6db74">      categorys (List[str]): 
+</span><span style="color:#e6db74">      updated (str): %Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">T%H:%M:%S
+</span><span style="color:#e6db74">      draft (bool):
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    Returns:
+</span><span style="color:#e6db74">      str: xml
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    updated <span style="color:#f92672">=</span> updated <span style="color:#66d9ef">if</span> updated <span style="color:#66d9ef">else</span> datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">T%H:%M:%S&#34;</span>)
+    draft <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yes&#34;</span> <span style="color:#66d9ef">if</span> draft <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;no&#34;</span>
+    category <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join([f<span style="color:#e6db74">&#34;&lt;category term=&#39;{e}&#39; /&gt;&#34;</span> <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> x])
+    categorys <span style="color:#f92672">=</span> category(categorys) <span style="color:#66d9ef">if</span> category <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;&#34;</span>
+
+    xml <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;&#34;&#34;&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;&lt;entry xmlns=&#34;http://www.w3.org/2005/Atom&#34; xmlns:app=&#34;http://www.w3.org/2007/app&#34;&gt;
+</span><span style="color:#e6db74">      &lt;title&gt;{title}&lt;/title&gt;&lt;author&gt;&lt;name&gt;name&lt;/name&gt;&lt;/author&gt;&lt;content type=&#34;text/markdown&#34;&gt;{content}&lt;/content&gt;
+</span><span style="color:#e6db74">      &lt;updated&gt;{updated}&lt;/updated&gt;{categorys}&lt;app:control&gt;&lt;app:draft&gt;{draft}&lt;/app:draft&gt;
+</span><span style="color:#e6db74">      &lt;/app:control&gt;&lt;/entry&gt;&#34;&#34;&#34;</span><span style="color:#f92672">.</span>encode(
+        <span style="color:#e6db74">&#34;UTF-8&#34;</span>
+    )
+    r <span style="color:#f92672">=</span> req<span style="color:#f92672">.</span>post(BASE_URL <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/entry&#34;</span>, auth<span style="color:#f92672">=</span>(HATENA_ID, API_KEY), data<span style="color:#f92672">=</span>xml)
+    <span style="color:#66d9ef">return</span> r<span style="color:#f92672">.</span>text
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    <span style="color:#f92672">import</span> sys
+
+    _, arg <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv
+    <span style="color:#66d9ef">with</span> open(arg, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+        title, categorys, <span style="color:#f92672">*</span>content <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+    categorys <span style="color:#f92672">=</span> categorys<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;,&#34;</span>)
+    content <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(content)
+    r <span style="color:#f92672">=</span> hatena_entry(title, content, categorys)
+    <span style="color:#66d9ef">print</span>(r)
+
+</code></pre></div><p>はてなブログのapiではxmlを扱う。これまでxmlにあまり触れてこなかったが、自動投稿ぐらいだと大して詰まることもなく書けた。</p>
+<h2 id="usage">usage</h2>
+<pre><code>python3 main.py example.md
+</code></pre>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/hatena">hatena</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/automation">automation</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>439 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-09 01:46 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/nicovideo/">
+                                <span class="button__text">ニコニコ動画のチャンネルにおける動画のurlリストを取得するPythonスクリプト</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

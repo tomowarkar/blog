@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Wed, 08 Apr 2020 23:04:57 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2020 01:46:56 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>automation</title>
+      <link>https://tomowarkar.github.io/blog/tags/automation/</link>
+      <pubDate>Thu, 09 Apr 2020 01:46:56 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/automation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hatena</title>
+      <link>https://tomowarkar.github.io/blog/tags/hatena/</link>
+      <pubDate>Thu, 09 Apr 2020 01:46:56 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/hatena/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://tomowarkar.github.io/blog/tags/python/</link>
+      <pubDate>Thu, 09 Apr 2020 01:46:56 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>niconico</title>
@@ -18,15 +45,6 @@
       <pubDate>Wed, 08 Apr 2020 23:04:57 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/niconico/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>python</title>
-      <link>https://tomowarkar.github.io/blog/tags/python/</link>
-      <pubDate>Wed, 08 Apr 2020 23:04:57 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
       <description></description>
     </item>
     

@@ -6,8 +6,96 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Wed, 08 Apr 2020 23:04:57 +0900</lastBuildDate>
+        <lastBuildDate>Thu, 09 Apr 2020 01:46:56 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>はてなブログ自動投稿Pythonスクリプト</title>
+            <link>https://tomowarkar.github.io/blog/posts/hatena_api/</link>
+            <pubDate>Thu, 09 Apr 2020 01:46:56 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/hatena_api/</guid>
+            <description>はてなブログの投稿を自動化、ローカル管理がしたい ということでHatena api を叩いてみた備忘録 参考 はてな API一覧 下準備 ローカルでの記事管理は</description>
+            <content type="html"><![CDATA[<p>はてなブログの投稿を自動化、ローカル管理がしたい</p>
+<p>ということでHatena api を叩いてみた備忘録</p>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="http://developer.hatena.ne.jp/ja/documents/apis">はてな API一覧</a></li>
+</ul>
+<h2 id="下準備">下準備</h2>
+<p>ローカルでの記事管理は以下のようなものを想定する</p>
+<ul>
+<li>markdown形式</li>
+<li>1行目にブログタイトル</li>
+<li>2行目にブログタグ</li>
+<li>3行目以降は本文</li>
+</ul>
+<h3 id="examplemd">example.md</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">タイトル
+Python,日常,hoge
+<span style="color:#75715e">## 今日の
+</span><span style="color:#75715e"></span>hugahuga
+
+<span style="color:#75715e">### 天気は
+</span><span style="color:#75715e"></span>hogahoga
+</code></pre></div><p>ローカルでの投稿済みか未投稿かの判別や、投稿日時の判別は対応できないが最低限の仕様ではあると思う。</p>
+<h2 id="python-スクリプト">Python スクリプト</h2>
+<h3 id="mainpy">main.py</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> datetime <span style="color:#f92672">import</span> datetime
+<span style="color:#f92672">import</span> requests <span style="color:#f92672">as</span> req
+
+HATENA_ID <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your hatena id&#34;</span>
+BLOG_DOMAIN <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your blog domain&#34;</span>
+API_KEY <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;your api key&#34;</span>
+BASE_URL <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://blog.hatena.ne.jp/{HATENA_ID}/{BLOG_DOMAIN}/atom&#34;</span>
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">hatena_entry</span>(title, content, categorys<span style="color:#f92672">=</span>[], updated<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, draft<span style="color:#f92672">=</span>False):
+    <span style="color:#e6db74">&#34;&#34;&#34;はてなブログへの投稿
+</span><span style="color:#e6db74">    Attributes:
+</span><span style="color:#e6db74">      HATENA_ID, API_KEY, BASE_URL (str)
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    Args:
+</span><span style="color:#e6db74">      title (str):
+</span><span style="color:#e6db74">      content (str): 
+</span><span style="color:#e6db74">      categorys (List[str]): 
+</span><span style="color:#e6db74">      updated (str): %Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">T%H:%M:%S
+</span><span style="color:#e6db74">      draft (bool):
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    Returns:
+</span><span style="color:#e6db74">      str: xml
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    updated <span style="color:#f92672">=</span> updated <span style="color:#66d9ef">if</span> updated <span style="color:#66d9ef">else</span> datetime<span style="color:#f92672">.</span>now()<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#34;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">T%H:%M:%S&#34;</span>)
+    draft <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;yes&#34;</span> <span style="color:#66d9ef">if</span> draft <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;no&#34;</span>
+    category <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join([f<span style="color:#e6db74">&#34;&lt;category term=&#39;{e}&#39; /&gt;&#34;</span> <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> x])
+    categorys <span style="color:#f92672">=</span> category(categorys) <span style="color:#66d9ef">if</span> category <span style="color:#66d9ef">else</span> <span style="color:#e6db74">&#34;&#34;</span>
+
+    xml <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;&#34;&#34;&lt;?xml version=&#34;1.0&#34; encoding=&#34;utf-8&#34;?&gt;&lt;entry xmlns=&#34;http://www.w3.org/2005/Atom&#34; xmlns:app=&#34;http://www.w3.org/2007/app&#34;&gt;
+</span><span style="color:#e6db74">      &lt;title&gt;{title}&lt;/title&gt;&lt;author&gt;&lt;name&gt;name&lt;/name&gt;&lt;/author&gt;&lt;content type=&#34;text/markdown&#34;&gt;{content}&lt;/content&gt;
+</span><span style="color:#e6db74">      &lt;updated&gt;{updated}&lt;/updated&gt;{categorys}&lt;app:control&gt;&lt;app:draft&gt;{draft}&lt;/app:draft&gt;
+</span><span style="color:#e6db74">      &lt;/app:control&gt;&lt;/entry&gt;&#34;&#34;&#34;</span><span style="color:#f92672">.</span>encode(
+        <span style="color:#e6db74">&#34;UTF-8&#34;</span>
+    )
+    r <span style="color:#f92672">=</span> req<span style="color:#f92672">.</span>post(BASE_URL <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;/entry&#34;</span>, auth<span style="color:#f92672">=</span>(HATENA_ID, API_KEY), data<span style="color:#f92672">=</span>xml)
+    <span style="color:#66d9ef">return</span> r<span style="color:#f92672">.</span>text
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    <span style="color:#f92672">import</span> sys
+
+    _, arg <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv
+    <span style="color:#66d9ef">with</span> open(arg, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+        title, categorys, <span style="color:#f92672">*</span>content <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+    categorys <span style="color:#f92672">=</span> categorys<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;,&#34;</span>)
+    content <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(content)
+    r <span style="color:#f92672">=</span> hatena_entry(title, content, categorys)
+    <span style="color:#66d9ef">print</span>(r)
+
+</code></pre></div><p>はてなブログのapiではxmlを扱う。これまでxmlにあまり触れてこなかったが、自動投稿ぐらいだと大して詰まることもなく書けた。</p>
+<h2 id="usage">usage</h2>
+<pre><code>python3 main.py example.md
+</code></pre>]]></content>
+        </item>
         
         <item>
             <title>ニコニコ動画のチャンネルにおける動画のurlリストを取得するPythonスクリプト</title>
