@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &amp;#34;&amp;#34; #ログインに使うメールアドレス PSWD = &amp;#34;&amp;#34; #ログインに使うパスワード class NicoVideo(object): &amp;#34;&amp;#34;&amp;#34;ニコニコ動画の" />
+<meta name="keywords" content=", niconico, selenium, python" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/nicovideo/" />
+
+
+    <title>
+        
+            ニコニコ動画のチャンネルにおける動画のurlリストを取得するPythonスクリプト :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="ニコニコ動画のチャンネルにおける動画のurlリストを取得するPythonスクリプト">
+<meta itemprop="description" content="from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &#34;&#34; #ログインに使うメールアドレス PSWD = &#34;&#34; #ログインに使うパスワード class NicoVideo(object): &#34;&#34;&#34;ニコニコ動画の">
+<meta itemprop="datePublished" content="2020-04-08T23:04:57&#43;09:00" />
+<meta itemprop="dateModified" content="2020-04-08T23:04:57&#43;09:00" />
+<meta itemprop="wordCount" content="301">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="niconico,selenium,python," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="ニコニコ動画のチャンネルにおける動画のurlリストを取得するPythonスクリプト"/>
+<meta name="twitter:description" content="from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &#34;&#34; #ログインに使うメールアドレス PSWD = &#34;&#34; #ログインに使うパスワード class NicoVideo(object): &#34;&#34;&#34;ニコニコ動画の"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-08 23:04:57 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>One minute
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/nicovideo/">ニコニコ動画のチャンネルにおける動画のurlリストを取得するPythonスクリプト</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> sleep
+<span style="color:#f92672">from</span> selenium <span style="color:#f92672">import</span> webdriver
+<span style="color:#f92672">from</span> selenium.webdriver.chrome.options <span style="color:#f92672">import</span> Options
+
+MAIL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e">#ログインに使うメールアドレス</span>
+PSWD <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e">#ログインに使うパスワード</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NicoVideo</span>(object):
+    <span style="color:#e6db74">&#34;&#34;&#34;ニコニコ動画の操作を行う
+</span><span style="color:#e6db74">    Args:
+</span><span style="color:#e6db74">      headless (bool): ヘッドレスモード使用の有無
+</span><span style="color:#e6db74">    Attributes:
+</span><span style="color:#e6db74">      driver: selenium.webdriver.chrome.webdriver.WebDriver
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">def</span> __init__(self, headless<span style="color:#f92672">=</span>False):
+        options <span style="color:#f92672">=</span> Options()
+        options<span style="color:#f92672">.</span>headless <span style="color:#f92672">=</span> headless
+        self<span style="color:#f92672">.</span>driver <span style="color:#f92672">=</span> webdriver<span style="color:#f92672">.</span>Chrome(options<span style="color:#f92672">=</span>options)
+
+    <span style="color:#66d9ef">def</span> __del__(self):
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>close()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">login</span>(self, mail, pswd):
+        <span style="color:#e6db74">&#34;&#34;&#34;ニコニコ動画へのログイン
+</span><span style="color:#e6db74">        Args:
+</span><span style="color:#e6db74">          mail (str)
+</span><span style="color:#e6db74">          pswd (str)
+</span><span style="color:#e6db74">        Returns:
+</span><span style="color:#e6db74">          None
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://account.nicovideo.jp/login&#34;</span>
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>get(url)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;[driver] get&#34;</span>, url)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;input__mailtel&#34;</span>)<span style="color:#f92672">.</span>send_keys(mail)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;input__password&#34;</span>)<span style="color:#f92672">.</span>send_keys(pswd)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;login__submit&#34;</span>)<span style="color:#f92672">.</span>submit()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">channel_video_list</span>(self, channel_name, page<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+        <span style="color:#e6db74">&#34;&#34;&#34;ニコニコ動画のあるチャンネルにおける動画のURLリストの取得
+</span><span style="color:#e6db74">        Args:
+</span><span style="color:#e6db74">          channel_name (str): channel name
+</span><span style="color:#e6db74">          page (int): page num　( &gt; 0 )
+</span><span style="color:#e6db74">        Returns:
+</span><span style="color:#e6db74">          List[str]
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://ch.nicovideo.jp/{channel_name}/video?page={page}&#34;</span>
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>get(url)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;[driver] get&#34;</span>, url)
+
+        items <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_elements_by_css_selector(<span style="color:#e6db74">&#34;ul.items &gt; li.item&#34;</span>)
+
+        <span style="color:#66d9ef">return</span> [
+            item<span style="color:#f92672">.</span>find_element_by_css_selector(<span style="color:#e6db74">&#34;div.item_left &gt; a&#34;</span>)<span style="color:#f92672">.</span>get_attribute(<span style="color:#e6db74">&#34;href&#34;</span>)
+            <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> items
+        ]
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    output_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;nicovideo.txt&#34;</span>
+
+    <span style="color:#75715e"># ファイルの初期化</span>
+    <span style="color:#66d9ef">with</span> open(output_file, <span style="color:#e6db74">&#34;w&#34;</span>):
+        <span style="color:#66d9ef">pass</span>
+
+    nv <span style="color:#f92672">=</span> NicoVideo(headless<span style="color:#f92672">=</span>True)
+    nv<span style="color:#f92672">.</span>login(MAIL, PSWD)
+
+    page <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">while</span> True:
+        channel_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mentalist&#34;</span>
+        vlist <span style="color:#f92672">=</span> nv<span style="color:#f92672">.</span>channel_video_list(channel_name, page<span style="color:#f92672">=</span>page)
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> vlist:
+            <span style="color:#66d9ef">break</span>
+        text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(vlist) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#66d9ef">with</span> open(output_file, <span style="color:#e6db74">&#34;a&#34;</span>) <span style="color:#66d9ef">as</span> f:
+            f<span style="color:#f92672">.</span>write(text)
+
+        page <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+
+</code></pre></div>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/niconico">niconico</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/selenium">selenium</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>301 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-08 23:04 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/init/">
+                                <span class="button__text">Github Pages でブログ始めました。</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2020</span>
+            
+            <span>tomowarkar</span>
+            
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            
+            
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

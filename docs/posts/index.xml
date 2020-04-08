@@ -6,11 +6,100 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Wed, 08 Apr 2020 22:41:43 +0900</lastBuildDate>
+        <lastBuildDate>Wed, 08 Apr 2020 23:04:57 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
-            <title>Init　Github Pages でブログ始めました。</title>
+            <title>ニコニコ動画のチャンネルにおける動画のurlリストを取得するPythonスクリプト</title>
+            <link>https://tomowarkar.github.io/blog/posts/nicovideo/</link>
+            <pubDate>Wed, 08 Apr 2020 23:04:57 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/nicovideo/</guid>
+            <description>from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &amp;#34;&amp;#34; #ログインに使うメールアドレス PSWD = &amp;#34;&amp;#34; #ログインに使うパスワード class NicoVideo(object): &amp;#34;&amp;#34;&amp;#34;ニコニコ動画の</description>
+            <content type="html"><![CDATA[<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> sleep
+<span style="color:#f92672">from</span> selenium <span style="color:#f92672">import</span> webdriver
+<span style="color:#f92672">from</span> selenium.webdriver.chrome.options <span style="color:#f92672">import</span> Options
+
+MAIL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e">#ログインに使うメールアドレス</span>
+PSWD <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e">#ログインに使うパスワード</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">NicoVideo</span>(object):
+    <span style="color:#e6db74">&#34;&#34;&#34;ニコニコ動画の操作を行う
+</span><span style="color:#e6db74">    Args:
+</span><span style="color:#e6db74">      headless (bool): ヘッドレスモード使用の有無
+</span><span style="color:#e6db74">    Attributes:
+</span><span style="color:#e6db74">      driver: selenium.webdriver.chrome.webdriver.WebDriver
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">def</span> __init__(self, headless<span style="color:#f92672">=</span>False):
+        options <span style="color:#f92672">=</span> Options()
+        options<span style="color:#f92672">.</span>headless <span style="color:#f92672">=</span> headless
+        self<span style="color:#f92672">.</span>driver <span style="color:#f92672">=</span> webdriver<span style="color:#f92672">.</span>Chrome(options<span style="color:#f92672">=</span>options)
+
+    <span style="color:#66d9ef">def</span> __del__(self):
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>close()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">login</span>(self, mail, pswd):
+        <span style="color:#e6db74">&#34;&#34;&#34;ニコニコ動画へのログイン
+</span><span style="color:#e6db74">        Args:
+</span><span style="color:#e6db74">          mail (str)
+</span><span style="color:#e6db74">          pswd (str)
+</span><span style="color:#e6db74">        Returns:
+</span><span style="color:#e6db74">          None
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://account.nicovideo.jp/login&#34;</span>
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>get(url)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;[driver] get&#34;</span>, url)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;input__mailtel&#34;</span>)<span style="color:#f92672">.</span>send_keys(mail)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;input__password&#34;</span>)<span style="color:#f92672">.</span>send_keys(pswd)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;login__submit&#34;</span>)<span style="color:#f92672">.</span>submit()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">channel_video_list</span>(self, channel_name, page<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>):
+        <span style="color:#e6db74">&#34;&#34;&#34;ニコニコ動画のあるチャンネルにおける動画のURLリストの取得
+</span><span style="color:#e6db74">        Args:
+</span><span style="color:#e6db74">          channel_name (str): channel name
+</span><span style="color:#e6db74">          page (int): page num　( &gt; 0 )
+</span><span style="color:#e6db74">        Returns:
+</span><span style="color:#e6db74">          List[str]
+</span><span style="color:#e6db74">        &#34;&#34;&#34;</span>
+        url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://ch.nicovideo.jp/{channel_name}/video?page={page}&#34;</span>
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>get(url)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;[driver] get&#34;</span>, url)
+
+        items <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_elements_by_css_selector(<span style="color:#e6db74">&#34;ul.items &gt; li.item&#34;</span>)
+
+        <span style="color:#66d9ef">return</span> [
+            item<span style="color:#f92672">.</span>find_element_by_css_selector(<span style="color:#e6db74">&#34;div.item_left &gt; a&#34;</span>)<span style="color:#f92672">.</span>get_attribute(<span style="color:#e6db74">&#34;href&#34;</span>)
+            <span style="color:#66d9ef">for</span> item <span style="color:#f92672">in</span> items
+        ]
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    output_file <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;nicovideo.txt&#34;</span>
+
+    <span style="color:#75715e"># ファイルの初期化</span>
+    <span style="color:#66d9ef">with</span> open(output_file, <span style="color:#e6db74">&#34;w&#34;</span>):
+        <span style="color:#66d9ef">pass</span>
+
+    nv <span style="color:#f92672">=</span> NicoVideo(headless<span style="color:#f92672">=</span>True)
+    nv<span style="color:#f92672">.</span>login(MAIL, PSWD)
+
+    page <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">while</span> True:
+        channel_name <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;mentalist&#34;</span>
+        vlist <span style="color:#f92672">=</span> nv<span style="color:#f92672">.</span>channel_video_list(channel_name, page<span style="color:#f92672">=</span>page)
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> vlist:
+            <span style="color:#66d9ef">break</span>
+        text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(vlist) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>
+        <span style="color:#66d9ef">with</span> open(output_file, <span style="color:#e6db74">&#34;a&#34;</span>) <span style="color:#66d9ef">as</span> f:
+            f<span style="color:#f92672">.</span>write(text)
+
+        page <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+
+</code></pre></div>]]></content>
+        </item>
+        
+        <item>
+            <title>Github Pages でブログ始めました。</title>
             <link>https://tomowarkar.github.io/blog/posts/init/</link>
             <pubDate>Wed, 08 Apr 2020 22:41:43 +0900</pubDate>
             
