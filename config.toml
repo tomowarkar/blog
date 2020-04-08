@@ -1,3 +1,51 @@
-baseURL = "http://example.org/"
-languageCode = "en-us"
-title = "My New Hugo Site"
+baseurl = "https://tomowarkar.github.io/blog/"
+
+author = "tomowarkar"
+canonifyurls = true
+paginate = 20
+theme = "hello-friend-ng"
+publishDir = "docs"
+hasCJKLanguage = true
+languageCode = "ja-jp"
+
+[params]
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
+
+  # Set disableReadOtherPosts to true in order to hide the links to other posts.
+  disableReadOtherPosts = false
+
+  # Metadata mostly used in document's head
+  description = "tomowarkarの技術ブログ"
+  keywords = "tomowarkar, blog"
+  images = [""]
+
+  # Directory name of your blog content (default is `content/posts`)
+  contentTypeName = "posts"
+
+  # Default theme "light" or "dark"
+  defaultTheme = "light"
+
+[languages]
+  [languages.en]
+    title = "tomowarkarの技術ブログ"
+    subtitle = "３歩進んで２歩下がる"
+    keywords = ""
+    copyright = ""
+    readOtherPosts = "Read other posts"
+
+    [languages.en.params.logo]
+      logoText = "tomowarkar"
+      logoHomeLink = "/"
+    # or
+    #
+    # path = "/img/your-example-logo.svg"
+    # alt = "Your example logo alt text"
+
+  # And you can even create generic menu
+  [[menu.main]]
+    identifier = "blog"
+    name       = "Blog"
+    url        = "/blog/posts"

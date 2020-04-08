@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>untagged on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/untagged/</link>
+    <description>Recent content in untagged on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <lastBuildDate>Wed, 08 Apr 2020 21:54:51 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/untagged/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>0001</title>
+      <link>https://tomowarkar.github.io/blog/posts/0001/</link>
+      <pubDate>Wed, 08 Apr 2020 21:54:51 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/0001/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

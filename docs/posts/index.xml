@@ -1,0 +1,34 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on tomowarkarの技術ブログ</title>
+        <link>https://tomowarkar.github.io/blog/posts/</link>
+        <description>Recent content in Posts on tomowarkarの技術ブログ</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>ja-jp</language>
+        <lastBuildDate>Wed, 08 Apr 2020 21:54:51 +0900</lastBuildDate>
+        <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>0001</title>
+            <link>https://tomowarkar.github.io/blog/posts/0001/</link>
+            <pubDate>Wed, 08 Apr 2020 21:54:51 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/0001/</guid>
+            <description></description>
+            <content type="html"><![CDATA[]]></content>
+        </item>
+        
+        <item>
+            <title>001</title>
+            <link>https://tomowarkar.github.io/blog/posts/001/</link>
+            <pubDate>Wed, 08 Apr 2020 21:48:57 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/001/</guid>
+            <description>ハロ import json</description>
+            <content type="html"><![CDATA[<p>ハロ</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> json
+</code></pre></div>]]></content>
+        </item>
+        
+    </channel>
+</rss>
