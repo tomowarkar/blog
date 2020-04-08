@@ -22,6 +22,7 @@ fi
 
 if [ "$OPTION_n" = "TRUE" ]; then
   hugo new posts/$1.md
+  code content/posts/$1.md
 else
   hugo
   git add content/posts/ docs/
