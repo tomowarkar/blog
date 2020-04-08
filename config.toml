@@ -33,7 +33,7 @@ languageCode = "ja-jp"
     title = "tomowarkarの技術ブログ"
     subtitle = "３歩進んで２歩下がる"
     keywords = ""
-    copyright = ""
+    copyright = "tomowarkar"
     readOtherPosts = "Read other posts"
 
     [languages.en.params.logo]
