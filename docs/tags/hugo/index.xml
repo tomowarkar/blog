@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hugo on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/hugo/</link>
+    <description>Recent content in hugo on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>tomowarkar</copyright>
+    <lastBuildDate>Thu, 09 Apr 2020 15:33:43 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/hugo/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>HugoのソーシャルアイコンにQiitaアイコンを追加した備忘録</title>
+      <link>https://tomowarkar.github.io/blog/posts/hugo_social_icon/</link>
+      <pubDate>Thu, 09 Apr 2020 15:33:43 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/hugo_social_icon/</guid>
+      <description>当然といえば当然だが、hello-friend-ngのREADMEにもあるように、ソーシャルアイコンにQiitaは対応していない。 そこに画像</description>
+    </item>
+    
+  </channel>
+</rss>

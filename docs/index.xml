@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Thu, 09 Apr 2020 01:46:56 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 09 Apr 2020 15:33:43 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HugoのソーシャルアイコンにQiitaアイコンを追加した備忘録</title>
+      <link>https://tomowarkar.github.io/blog/posts/hugo_social_icon/</link>
+      <pubDate>Thu, 09 Apr 2020 15:33:43 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/hugo_social_icon/</guid>
+      <description>当然といえば当然だが、hello-friend-ngのREADMEにもあるように、ソーシャルアイコンにQiitaは対応していない。 そこに画像</description>
+    </item>
     
     <item>
       <title>はてなブログ自動投稿Pythonスクリプト</title>
