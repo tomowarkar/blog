@@ -1,4 +1,6 @@
 #!/bin/bash
+# Hugoの新規記事を作成したり、デプロイしたり
+
 COMMAND=`basename $0`
 
 show_usage() {
