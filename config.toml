@@ -36,6 +36,10 @@ languageCode = "ja-jp"
   [[params.social]]
     name = "github"
     url  = "https://github.com/tomowarkar"
+  [[params.social]]
+    name = "qiita"
+    url  = "https://qiita.com/tomowarkar"
+
 [languages]
   [languages.en]
     title = "tomowarkarの技術ブログ"
