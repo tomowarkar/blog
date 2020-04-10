@@ -6,8 +6,204 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Fri, 10 Apr 2020 11:32:50 +0900</lastBuildDate>
+        <lastBuildDate>Fri, 10 Apr 2020 15:16:15 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>VSCodeのインストール済み拡張機能とその用途</title>
+            <link>https://tomowarkar.github.io/blog/posts/vscode_list_extensions/</link>
+            <pubDate>Fri, 10 Apr 2020 15:16:15 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/vscode_list_extensions/</guid>
+            <description>個人的メモ 定期的に確認すると良さげですね VSCode プラグイン一覧の表示 code --list-extensions | xargs -L 1 echo code --install-extension 2020/04/10 現在 code --install-extension bbenoist.shell code --install-extension christian-kohler.npm-intellisense code --install-extension christian-kohler.path-intellisense code --install-extension dariofuzinato.vue-peek code --install-extension dbaeumer.vscode-eslint code --install-extension donjayamanne.jupyter code --install-extension eg2.vscode-npm-script code --install-extension esbenp.prettier-vscode code --install-extension formulahendry.auto-close-tag</description>
+            <content type="html"><![CDATA[<p>個人的メモ</p>
+<p>定期的に確認すると良さげですね</p>
+<h2 id="vscode-プラグイン一覧の表示">VSCode プラグイン一覧の表示</h2>
+<pre><code>code --list-extensions | xargs -L 1 echo code --install-extension
+</code></pre><h3 id="20200410-現在">2020/04/10 現在</h3>
+<pre><code>code --install-extension bbenoist.shell
+code --install-extension christian-kohler.npm-intellisense
+code --install-extension christian-kohler.path-intellisense
+code --install-extension dariofuzinato.vue-peek
+code --install-extension dbaeumer.vscode-eslint
+code --install-extension donjayamanne.jupyter
+code --install-extension eg2.vscode-npm-script
+code --install-extension esbenp.prettier-vscode
+code --install-extension formulahendry.auto-close-tag
+code --install-extension formulahendry.auto-complete-tag
+code --install-extension formulahendry.auto-rename-tag
+code --install-extension formulahendry.code-runner
+code --install-extension jcbuisson.vue
+code --install-extension KnisterPeter.vscode-github
+code --install-extension ms-azuretools.vscode-docker
+code --install-extension MS-CEINTL.vscode-language-pack-ja
+code --install-extension ms-mssql.mssql
+code --install-extension ms-python.python
+code --install-extension ms-vscode.cpptools
+code --install-extension ms-vscode.Go
+code --install-extension ms-vscode.vscode-typescript-tslint-plugin
+code --install-extension mubaidr.vuejs-extension-pack
+code --install-extension octref.vetur
+code --install-extension robertoachar.vscode-essentials-snippets
+code --install-extension tht13.python
+code --install-extension tombonnike.vscode-status-bar-format-toggle
+code --install-extension tomoki1207.pdf
+code --install-extension VisualStudioExptTeam.vscodeintellicode
+code --install-extension xabikos.JavaScriptSnippets
+code --install-extension xaver.clang-format
+code --install-extension yzhang.markdown-all-in-one
+</code></pre><h2 id="用途">用途</h2>
+<h5 id="bbenoistshellhttpsmarketplacevisualstudiocomitemsitemnamebbenoistshell"><a href="https://marketplace.visualstudio.com/items?itemName=bbenoist.shell">bbenoist.shell</a></h5>
+<ul>
+<li>エディタから直接shellコマンドを実行できる</li>
+<li>ほぼ使っていない</li>
+</ul>
+<h5 id="christian-kohlerpath-intellisensehttpsmarketplacevisualstudiocomitemsitemnamechristian-kohlerpath-intellisense"><a href="https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense">christian-kohler.path-intellisense</a></h5>
+<ul>
+<li>ファイル名を自動補完</li>
+<li>賢くて良き</li>
+</ul>
+<h5 id="dbaeumervscode-eslinthttpsmarketplacevisualstudiocomitemsitemnamedbaeumervscode-eslint"><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint">dbaeumer.vscode-eslint</a></h5>
+<ul>
+<li>コードフォーマッター</li>
+<li>よくわからん</li>
+</ul>
+<h5 id="esbenpprettier-vscodehttpsmarketplacevisualstudiocomitemsitemnameesbenpprettier-vscode"><a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">esbenp.prettier-vscode</a></h5>
+<ul>
+<li>コードフォーマッター</li>
+<li><a href="https://qiita.com/soarflat/items/06377f3b96964964a65d">Prettier 入門 ～ESLintとの違いを理解して併用する～</a></li>
+</ul>
+<h5 id="eg2vscode-npm-scripthttpsmarketplacevisualstudiocomitemsitemnameeg2vscode-npm-script"><a href="https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script">eg2.vscode-npm-script</a></h5>
+<ul>
+<li>npm のhogehoge</li>
+<li>よくわからん</li>
+</ul>
+<h5 id="christian-kohlernpm-intellisensehttpsmarketplacevisualstudiocomitemsitemnamechristian-kohlernpm-intellisense"><a href="https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense">christian-kohler.npm-intellisense</a></h5>
+<ul>
+<li>npmモジュールを自動補完</li>
+</ul>
+<h5 id="dariofuzinatovue-peekhttpsmarketplacevisualstudiocomitemsitemnamedariofuzinatovue-peek"><a href="https://marketplace.visualstudio.com/items?itemName=dariofuzinato.vue-peek">dariofuzinato.vue-peek</a></h5>
+<ul>
+<li>vue のhogehoge</li>
+<li>vueをあまり書いてないからよくわからん</li>
+</ul>
+<h5 id="jcbuissonvuehttpsmarketplacevisualstudiocomitemsitemnamejcbuissonvue"><a href="https://marketplace.visualstudio.com/items?itemName=jcbuisson.vue">jcbuisson.vue</a></h5>
+<ul>
+<li>vue のSyntax Highlight</li>
+<li>まあいるよね</li>
+</ul>
+<h5 id="mubaidrvuejs-extension-packhttpsmarketplacevisualstudiocomitemsitemnamemubaidrvuejs-extension-pack"><a href="https://marketplace.visualstudio.com/items?itemName=mubaidr.vuejs-extension-pack">mubaidr.vuejs-extension-pack</a></h5>
+<ul>
+<li>vue 関連</li>
+</ul>
+<h5 id="octrefveturhttpsmarketplacevisualstudiocomitemsitemnameoctrefvetur"><a href="https://marketplace.visualstudio.com/items?itemName=octref.vetur">octref.vetur</a></h5>
+<ul>
+<li>同上</li>
+</ul>
+<h5 id="formulahendryauto-complete-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-complete-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-complete-tag">formulahendry.auto-complete-tag</a></h5>
+<ul>
+<li>以下二つのまとめ役</li>
+</ul>
+<h5 id="formulahendryauto-close-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-close-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag">formulahendry.auto-close-tag</a></h5>
+<ul>
+<li>html などの close tag 自動補完</li>
+<li>必須</li>
+</ul>
+<h5 id="formulahendryauto-rename-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-rename-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag">formulahendry.auto-rename-tag</a></h5>
+<ul>
+<li>便利</li>
+<li>時々うざい</li>
+</ul>
+<h5 id="formulahendrycode-runnerhttpsmarketplacevisualstudiocomitemsitemnameformulahendrycode-runner"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner">formulahendry.code-runner</a></h5>
+<ul>
+<li>VScode上でのショートカット操作で外部のshell scriptを実行できる</li>
+<li>入れたてホヤホヤ未使用様</li>
+</ul>
+<h5 id="knisterpetervscode-githubhttpsmarketplacevisualstudiocomitemsitemnameknisterpetervscode-github"><a href="https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-github">KnisterPeter.vscode-github</a></h5>
+<ul>
+<li>github関連</li>
+<li>どこからどこまで何をしているのかわからない</li>
+</ul>
+<h5 id="ms-azuretoolsvscode-dockerhttpsmarketplacevisualstudiocomitemsitemnamems-azuretoolsvscode-docker"><a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker">ms-azuretools.vscode-docker</a></h5>
+<ul>
+<li>docker for vscode</li>
+<li>あまりdocker触ってないなぁ</li>
+</ul>
+<h5 id="ms-ceintlvscode-language-pack-jahttpsmarketplacevisualstudiocomitemsitemnamems-ceintlvscode-language-pack-ja"><a href="https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja">MS-CEINTL.vscode-language-pack-ja</a></h5>
+<ul>
+<li>VSCodeの日本語対応</li>
+<li>必須</li>
+</ul>
+<h5 id="ms-mssqlmssqlhttpsmarketplacevisualstudiocomitemsitemnamems-mssqlmssql"><a href="https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql">ms-mssql.mssql</a></h5>
+<ul>
+<li>sql関連</li>
+</ul>
+<h5 id="ms-pythonpythonhttpsmarketplacevisualstudiocomitemsitemnamems-pythonpython"><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">ms-python.python</a></h5>
+<ul>
+<li>python関連</li>
+<li>必須</li>
+</ul>
+<h5 id="tht13pythonhttpsmarketplacevisualstudiocomitemsitemnametht13python"><a href="https://marketplace.visualstudio.com/items?itemName=tht13.python">tht13.python</a></h5>
+<ul>
+<li>python関連</li>
+<li>よくわからん</li>
+</ul>
+<h5 id="donjayamannejupyterhttpsmarketplacevisualstudiocomitemsitemnamedonjayamannejupyter"><a href="https://marketplace.visualstudio.com/items?itemName=donjayamanne.jupyter">donjayamanne.jupyter</a></h5>
+<ul>
+<li>jupyter notebook　のhogehoge</li>
+<li>あると便利</li>
+<li>なくても困らん</li>
+</ul>
+<h5 id="xaverclang-formathttpsmarketplacevisualstudiocomitemsitemnamexaverclang-format"><a href="https://marketplace.visualstudio.com/items?itemName=xaver.clang-format">xaver.clang-format</a></h5>
+<ul>
+<li>c関連</li>
+</ul>
+<h5 id="ms-vscodecpptoolshttpsmarketplacevisualstudiocomitemsitemnamems-vscodecpptools"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">ms-vscode.cpptools</a></h5>
+<ul>
+<li>c/c++関連</li>
+</ul>
+<h5 id="ms-vscodegohttpsmarketplacevisualstudiocomitemsitemnamems-vscodego"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go">ms-vscode.Go</a></h5>
+<ul>
+<li>go 関連</li>
+<li>必須</li>
+</ul>
+<h5 id="ms-vscodevscode-typescript-tslint-pluginhttpsmarketplacevisualstudiocomitemsitemnamems-vscodevscode-typescript-tslint-plugin"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin">ms-vscode.vscode-typescript-tslint-plugin</a></h5>
+<ul>
+<li>使ってないなぁ</li>
+</ul>
+<h5 id="robertoacharvscode-essentials-snippetshttpsmarketplacevisualstudiocomitemsitemnamerobertoacharvscode-essentials-snippets"><a href="https://marketplace.visualstudio.com/items?itemName=robertoachar.vscode-essentials-snippets">robertoachar.vscode-essentials-snippets</a></h5>
+<ul>
+<li>見た感じ便利そう</li>
+<li>なお使ったことはない</li>
+</ul>
+<h5 id="tombonnikevscode-status-bar-format-togglehttpsmarketplacevisualstudiocomitemsitemnametombonnikevscode-status-bar-format-toggle"><a href="https://marketplace.visualstudio.com/items?itemName=tombonnike.vscode-status-bar-format-toggle">tombonnike.vscode-status-bar-format-toggle</a></h5>
+<ul>
+<li>なんだ&hellip; これは&hellip;</li>
+</ul>
+<h5 id="tomoki1207pdfhttpsmarketplacevisualstudiocomitemsitemnametomoki1207pdf"><a href="https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf">tomoki1207.pdf</a></h5>
+<ul>
+<li>VSCodeでPDFが見れる</li>
+<li>benri</li>
+</ul>
+<h5 id="visualstudioexptteamvscodeintellicodehttpsmarketplacevisualstudiocomitemsitemnamevisualstudioexptteamvscodeintellicode"><a href="https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode">VisualStudioExptTeam.vscodeintellicode</a></h5>
+<ul>
+<li>ものゴッツ便利</li>
+</ul>
+<h5 id="xabikosjavascriptsnippetshttpsmarketplacevisualstudiocomitemsitemnamexabikosjavascriptsnippets"><a href="https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets">xabikos.JavaScriptSnippets</a></h5>
+<ul>
+<li>JS</li>
+<li>こんなん知らんかった</li>
+<li>今度使いたい</li>
+</ul>
+<h5 id="yzhangmarkdown-all-in-onehttpsmarketplacevisualstudiocomitemsitemnameyzhangmarkdown-all-in-one"><a href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one">yzhang.markdown-all-in-one</a></h5>
+<ul>
+<li>markdown関連</li>
+<li>必須</li>
+</ul>
+<h3 id="参考">参考</h3>
+<p><a href="https://qiita.com/koshilife/items/3ed4b1c28de233f39ebb">Qiita::VSCode インストール済 プラグイン一覧の確認方法 (コマンド)</a></p>
+]]></content>
+        </item>
         
         <item>
             <title>imgurに画像をアップロードするBashスクリプト</title>

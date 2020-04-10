@@ -3,6 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tomowarkar.github.io/blog/tags/memo/</loc>
+    <lastmod>2020-04-10T15:16:15+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/posts/</loc>
+    <lastmod>2020-04-10T15:16:15+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/</loc>
+    <lastmod>2020-04-10T15:16:15+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/</loc>
+    <lastmod>2020-04-10T15:16:15+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/vscode/</loc>
+    <lastmod>2020-04-10T15:16:15+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/posts/vscode_list_extensions/</loc>
+    <lastmod>2020-04-10T15:16:15+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tomowarkar.github.io/blog/tags/api/</loc>
     <lastmod>2020-04-10T11:32:50+09:00</lastmod>
   </url>
@@ -19,21 +49,6 @@
   
   <url>
     <loc>https://tomowarkar.github.io/blog/posts/imgur_api/</loc>
-    <lastmod>2020-04-10T11:32:50+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/posts/</loc>
-    <lastmod>2020-04-10T11:32:50+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/</loc>
-    <lastmod>2020-04-10T11:32:50+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/</loc>
     <lastmod>2020-04-10T11:32:50+09:00</lastmod>
   </url>
   

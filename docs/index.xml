@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Fri, 10 Apr 2020 11:32:50 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2020 15:16:15 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>VSCodeのインストール済み拡張機能とその用途</title>
+      <link>https://tomowarkar.github.io/blog/posts/vscode_list_extensions/</link>
+      <pubDate>Fri, 10 Apr 2020 15:16:15 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/vscode_list_extensions/</guid>
+      <description>個人的メモ 定期的に確認すると良さげですね VSCode プラグイン一覧の表示 code --list-extensions | xargs -L 1 echo code --install-extension 2020/04/10 現在 code --install-extension bbenoist.shell code --install-extension christian-kohler.npm-intellisense code --install-extension christian-kohler.path-intellisense code --install-extension dariofuzinato.vue-peek code --install-extension dbaeumer.vscode-eslint code --install-extension donjayamanne.jupyter code --install-extension eg2.vscode-npm-script code --install-extension esbenp.prettier-vscode code --install-extension formulahendry.auto-close-tag</description>
+    </item>
     
     <item>
       <title>imgurに画像をアップロードするBashスクリプト</title>
