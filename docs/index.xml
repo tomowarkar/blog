@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Thu, 09 Apr 2020 15:33:43 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 10 Apr 2020 11:32:50 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>imgurに画像をアップロードするBashスクリプト</title>
+      <link>https://tomowarkar.github.io/blog/posts/imgur_api/</link>
+      <pubDate>Fri, 10 Apr 2020 11:32:50 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/imgur_api/</guid>
+      <description>選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi</description>
+    </item>
     
     <item>
       <title>HugoのソーシャルアイコンにQiitaアイコンを追加した備忘録</title>

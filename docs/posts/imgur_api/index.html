@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi" />
+<meta name="keywords" content=", imgur, api, bash" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/imgur_api/" />
+
+
+    <title>
+        
+            imgurに画像をアップロードするBashスクリプト :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="imgurに画像をアップロードするBashスクリプト">
+<meta itemprop="description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi">
+<meta itemprop="datePublished" content="2020-04-10T11:32:50&#43;09:00" />
+<meta itemprop="dateModified" content="2020-04-10T11:32:50&#43;09:00" />
+<meta itemprop="wordCount" content="1114">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="imgur,api,bash," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="imgurに画像をアップロードするBashスクリプト"/>
+<meta name="twitter:description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-10 11:32:50 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/imgur_api/">imgurに画像をアップロードするBashスクリプト</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <p>選ばれたのは<a href="https://imgur.com/">imgur</a>でした.</p>
+<p>このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。</p>
+<p>それに応じてimgurにブログ用の画像を簡単にアップロードするbashスクリプトを書いたので備忘録。</p>
+<h3 id="なぜこのブログの画像管理にimgurを選んだか">なぜこのブログの画像管理にimgurを選んだか</h3>
+<p>imgurを選んだ理由はこんな感じ</p>
+<ul>
+<li>apiが使える</li>
+<li>無料であある</li>
+<li>投稿オプションが豊富(匿名、アルバム, タグなど)</li>
+</ul>
+<p>デメリットとしては、</p>
+<ul>
+<li>画像サイズ制限</li>
+<li>使われない画像の自動削除</li>
+</ul>
+<p>などがあるが、画像サイズ制限はそこまで画質を重視しないのと,アップロード時の通信料を考えて元々圧縮した画像をアップロードするつもりなのでOK</p>
+<p>使われない画像の自動削除については正直どうなるか未知数なので、今後の運用を見て適宜考えていくこととする。とはいえそこまで画像を多用するつもりはないので最悪消えても大丈夫だろう。</p>
+<h2 id="スクリプト本文">スクリプト本文</h2>
+<h3 id="依存">依存</h3>
+<p><a href="https://apidocs.imgur.com/?version=latest">imgur api doc</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ ffmpeg -version
+ffmpeg version 4.2.2
+
+$ jq --version
+jq-1.6
+
+$ curl --version
+curl 7.64.1
+</code></pre></div><h3 id="imgursh">imgur.sh</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># !/bin/bash</span>
+<span style="color:#75715e"># imgurの特定のアルバムに写真をアップロードする。</span>
+COMMAND<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>basename $0<span style="color:#e6db74">`</span>
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! $# -eq <span style="color:#ae81ff">1</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+echo <span style="color:#e6db74">&#34;Usage: </span>$COMMAND<span style="color:#e6db74"> img_path&#34;</span>
+exit <span style="color:#ae81ff">1</span>
+<span style="color:#66d9ef">fi</span>
+
+<span style="color:#75715e"># 画像を横600pxになるようにリサイズ</span>
+tmp_img<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;resized_img.png&#34;</span>
+ffmpeg -i <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> -vf scale<span style="color:#f92672">=</span>600:-1 $tmp_img
+
+ACCESS_TOKEN<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your imgur api auth acess token&#34;</span>
+ALBUM_HASH<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;your imgur album hash&#34;</span>
+
+JSON_RESPONSE<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>curl --request POST --url https://api.imgur.com/3/image --header <span style="color:#e6db74">&#34;authorization: Bearer </span><span style="color:#e6db74">${</span>ACCESS_TOKEN<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> -F <span style="color:#e6db74">&#34;image=@</span>$tmp_img<span style="color:#e6db74">&#34;</span> -F <span style="color:#e6db74">&#34;album=</span>$ALBUM_HASH<span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">)</span>
+
+success<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>echo $JSON_RESPONSE | jq <span style="color:#e6db74">&#34;.success&#34;</span><span style="color:#e6db74">`</span>
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $success <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;true&#34;</span> <span style="color:#f92672">]</span>;<span style="color:#66d9ef">then</span>
+  echo
+  url<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>echo $JSON_RESPONSE | jq <span style="color:#e6db74">&#34;.data.link&#34;</span><span style="color:#e6db74">`</span>
+  echo $url
+  <span style="color:#75715e"># ショートコード扱いになるため{{_ としているが、_は不要。</span>
+  echo <span style="color:#e6db74">&#34;{{_&lt;image src=</span>$url<span style="color:#e6db74"> alt=\&#34;blog top page\&#34; position=\&#34;center\&#34;&gt;}}&#34;</span>
+
+  <span style="color:#75715e"># アップロードに成功したら元画像をゴミ箱に入れる</span>
+  mv <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#e6db74">&#34;/Users/username/.Trash/&#34;</span>
+<span style="color:#66d9ef">fi</span>
+
+<span style="color:#75715e"># 可否によらず削除</span>
+rm $tmp_img
+exit <span style="color:#ae81ff">0</span>
+
+</code></pre></div><p>少し改変してあるが、大まかにこんな感じで実装。</p>
+<p>相変わらず <code>jq</code> は便利である。</p>
+<h2 id="個人的ポイント">個人的ポイント</h2>
+<h3 id="アップロード前のリサイズ">アップロード前のリサイズ</h3>
+<pre><code>ffmpeg -i &quot;$1&quot; -vf scale=600:-1 $tmp_img
+</code></pre><p>私のMac(MacBook Pro, 13-inch, 2016)でフルサイズのスクリーンショットをすると 2880×1800 の画像が保存される518万画素の3K画質である。</p>
+<p>流石にそんなに高画質な画像は必要ないのと、手軽さを考え横のスケールを600pxに圧縮してアップロードすることにした。</p>
+<p>フルサイズのスクリーンショットだと 2880×1800 が 600×375になるので約1/23のサイズになる</p>
+<h3 id="アウトプットをhugoのショートコードで出力">アウトプットをHugoのショートコードで出力</h3>
+<p>HugoにはMarkdownで使える便利なショートコードがある</p>
+<p><a href="https://gohugo.io/content-management/shortcodes/">Hugo :: Shortcodes</a></p>
+<p>アウトプットの形をショートコードにすることで画像のリサイズ・アップロードから、ショートコードの生成までを一気に任せてしまうことにした。</p>
+<h3 id="rm-の仕様">rm の仕様</h3>
+<p>この辺りの操作</p>
+<pre><code>  # アップロードに成功したら元画像をゴミ箱に入れる
+  mv &quot;$1&quot; &quot;/Users/username/.Trash/&quot;
+fi
+
+# 可否によらず削除
+rm $tmp_img
+</code></pre><p>自動生成の $tmp_img は <code>rm</code> で、元画像は <code>mv</code> でゴミ箱へって感じで運用しているが、<code>rm</code> は基本的には不可逆削除って認識であってるのかな?</p>
+<p>軽く調べた限り時間が経ってないのであれば復元手段もあるらしいけど&hellip;</p>
+<h3 id="参考">参考</h3>
+<ul>
+<li><a href="https://newfivefour.com/unix-imgur-basic-upload.html">https://newfivefour.com/unix-imgur-basic-upload.html</a></li>
+<li><a href="https://apidocs.imgur.com/?version=latest">https://apidocs.imgur.com/?version=latest</a></li>
+</ul>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/imgur">imgur</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/api">api</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/bash">bash</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1114 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-10 11:32 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/hugo_social_icon/">
+                                <span class="button__text">HugoのソーシャルアイコンにQiitaアイコンを追加した備忘録</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
