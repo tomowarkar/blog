@@ -6,8 +6,69 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Fri, 10 Apr 2020 15:16:15 +0900</lastBuildDate>
+        <lastBuildDate>Sun, 12 Apr 2020 23:33:30 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>[macOS] コマンドラインで音楽を流したい</title>
+            <link>https://tomowarkar.github.io/blog/posts/afplay/</link>
+            <pubDate>Sun, 12 Apr 2020 23:33:30 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/afplay/</guid>
+            <description>環境 $ bash --version GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin19) Copyright (C) 2007 Free Software Foundation, Inc. $ afplay -h Audio File Play Version: 2.0 Copyright 2003-2013, Apple Inc. All Rights Reserved. Specify -h (-help) for command options Usage: afplay [option...] audio_file Options: (may appear before or after arguments) {-v | --volume} VOLUME set the volume for playback of the file {-h | --help} print help { --leaks} run leaks</description>
+            <content type="html"><![CDATA[<h2 id="環境">環境</h2>
+<pre><code>$ bash --version
+GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin19)
+Copyright (C) 2007 Free Software Foundation, Inc.
+</code></pre><pre><code>$ afplay -h
+
+    Audio File Play
+    Version: 2.0
+    Copyright 2003-2013, Apple Inc. All Rights Reserved.
+    Specify -h (-help) for command options
+
+Usage:
+afplay [option...] audio_file
+
+Options: (may appear before or after arguments)
+  {-v | --volume} VOLUME
+    set the volume for playback of the file
+  {-h | --help}
+    print help
+  { --leaks}
+    run leaks analysis
+  {-t | --time} TIME
+    play for TIME seconds
+  {-r | --rate} RATE
+    play at playback rate
+  {-q | --rQuality} QUALITY
+    set the quality used for rate-scaled playback (default is 0 - low quality, 1 - high quality)
+  {-d | --debug}
+    debug print output
+</code></pre><h3 id="再生">再生</h3>
+<p>quality はデフォルト値が low である 0 なので 1 に変更</p>
+<p>音量は適宜</p>
+<pre><code>$ afplay -q 1 -v .1 path/to/audio_file
+</code></pre><h3 id="バックグラウンド実行-プロセスの確認-プロセス-kill">バックグラウンド実行, プロセスの確認, プロセス kill</h3>
+<pre><code>$ afplay path/to/audio_file &amp;
+[1] PID
+$ jobs
+[1]+  Running afplay path/to/audio_file &amp;
+$ # kill %ジョブ番号
+$ kill %1
+$ # もしくは
+$ kill PID
+</code></pre><p>見つからない場合や、他のターミナルから kill</p>
+<pre><code>ps aux | grep afplay | grep -v grep | awk '{ print &quot;kill -9&quot;, $2 }' | sh
+</code></pre><h2 id="参考">参考</h2>
+<ul>
+<li><a href="https://zariganitosh.hatenablog.jp/entry/20100908/itunes">徹底的にソフトウェアで豊かな音を奏でてみよう</a></li>
+<li><a href="https://qiita.com/inosy22/items/341cfc589494b8211844">Linux コマンド(Bash)でバックグラウンド実行する方法のまとめメモ</a></li>
+<li><a href="https://qiita.com/nyango/items/7b6b719f248b2ee8d379">シェルスクリプトで単純に並列実行・直列実行を行う</a></li>
+<li><a href="https://qiita.com/masarufuruya/items/409679c1006980ef1b60">プロセス名で grep した結果を kill するシェルスクリプトを作る</a></li>
+</ul>
+]]></content>
+        </item>
         
         <item>
             <title>VSCodeのインストール済み拡張機能とその用途</title>

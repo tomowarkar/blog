@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Fri, 10 Apr 2020 15:16:15 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 12 Apr 2020 23:33:30 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>[macOS] コマンドラインで音楽を流したい</title>
+      <link>https://tomowarkar.github.io/blog/posts/afplay/</link>
+      <pubDate>Sun, 12 Apr 2020 23:33:30 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/afplay/</guid>
+      <description>環境 $ bash --version GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin19) Copyright (C) 2007 Free Software Foundation, Inc. $ afplay -h Audio File Play Version: 2.0 Copyright 2003-2013, Apple Inc. All Rights Reserved. Specify -h (-help) for command options Usage: afplay [option...] audio_file Options: (may appear before or after arguments) {-v | --volume} VOLUME set the volume for playback of the file {-h | --help} print help { --leaks} run leaks</description>
+    </item>
     
     <item>
       <title>VSCodeのインストール済み拡張機能とその用途</title>
