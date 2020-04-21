@@ -11,13 +11,13 @@ tags:
 
 ## 環境
 
-```
+```bash
 $ bash --version
 GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin19)
 Copyright (C) 2007 Free Software Foundation, Inc.
 ```
 
-```
+```bash
 $ afplay -h
 
     Audio File Play
@@ -51,13 +51,13 @@ quality はデフォルト値が low である 0 なので 1 に変更
 
 音量は適宜
 
-```
+```bash
 $ afplay -q 1 -v .1 path/to/audio_file
 ```
 
 ### バックグラウンド実行, プロセスの確認, プロセス kill
 
-```
+```bash
 $ afplay path/to/audio_file &
 [1] PID
 $ jobs

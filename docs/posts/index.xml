@@ -6,8 +6,137 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Mon, 13 Apr 2020 09:56:10 +0900</lastBuildDate>
+        <lastBuildDate>Tue, 21 Apr 2020 19:16:51 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>最近よく書くシェルスクリプトの備忘録</title>
+            <link>https://tomowarkar.github.io/blog/posts/mac_bash/</link>
+            <pubDate>Tue, 21 Apr 2020 19:16:51 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/mac_bash/</guid>
+            <description>実行環境 $ sw_vers ProductName: Mac OS X ProductVersion: 10.15.4 BuildVersion: 19E266 $ sh --version GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin19) Copyright (C) 2007 Free Software Foundation, Inc. Linux コマンド ファイルの中身を表示する # 一番有名? 間違えてバイナリファイルなどを指定す</description>
+            <content type="html"><![CDATA[<h2 id="実行環境">実行環境</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.4
+BuildVersion:   19E266
+
+$ sh --version
+GNU bash, version 3.2.57<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>-release <span style="color:#f92672">(</span>x86_64-apple-darwin19<span style="color:#f92672">)</span>
+Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2007</span> Free Software Foundation, Inc.
+</code></pre></div><h2 id="linux-コマンド">Linux コマンド</h2>
+<h3 id="ファイルの中身を表示する">ファイルの中身を表示する</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 一番有名? 間違えてバイナリファイルなどを指定すると悲惨</span>
+cat /path/to/file
+<span style="color:#75715e"># ファイルの一部を表示, スクロールして中身を見ることができる。</span>
+less /path/to/file
+<span style="color:#75715e"># less の出力結果を残す版</span>
+more /path/to/file
+</code></pre></div><h3 id="ヒアドキュメント">ヒアドキュメント</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat <span style="color:#e6db74">&lt;&lt;EOL &gt;/path/to/file
+</span><span style="color:#e6db74">hoge
+</span><span style="color:#e6db74">huga
+</span><span style="color:#e6db74">EOL</span>
+</code></pre></div><p>参考 <a href="https://qiita.com/take4s5i/items/e207cee4fb04385a9952">bashのヒアドキュメントを活用する</a></p>
+<h3 id="dateコマンド">dateコマンド</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ date -R
+Tue, <span style="color:#ae81ff">21</span> Apr <span style="color:#ae81ff">2020</span> 18:50:48 +0900
+
+$ date +%y%m%d
+<span style="color:#ae81ff">200421</span>
+<span style="color:#75715e"># 昨日の日付</span>
+$ date -v -1d +%y%m%d
+<span style="color:#ae81ff">200420</span>
+</code></pre></div><h3 id="sayコマンド">sayコマンド</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ say -v ? | grep <span style="color:#e6db74">&#34;ja_JP&#34;</span>
+Kyoko               ja_JP    <span style="color:#75715e"># こんにちは、私の名前はKyokoです。日本語の音声をお届けします。</span>
+Otoya               ja_JP    <span style="color:#75715e"># こんにちは、私の名前はOtoyaです。日本語の音声をお届けします。</span>
+
+$ say -v Bad<span style="color:#ae81ff">\ </span>News Kgo mo ichi ni chi gamba lu zowi Kgo mo ichi ni chi gamba lu zowi
+</code></pre></div><p>参考 <a href="https://gist.github.com/susisu/c9b106745f94c85e482c">非実用 say コマンド</a></p>
+<h3 id="afplay-コマンド">afplay コマンド</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># バックグラウンド再生</span>
+$ afplay -q <span style="color:#ae81ff">1</span> /path/to/audio/file &amp;
+<span style="color:#75715e"># 中断</span>
+$ killall afplay
+</code></pre></div><h2 id="シェルスクリプト">シェルスクリプト</h2>
+<h3 id="シェルスクリプトの説明文">シェルスクリプトの説明文</h3>
+<h5 id="hogesh">hoge.sh</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span><span style="color:#75715e"># @(#) This script is hoge.</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ what hoge.sh 
+hoge.sh
+         This script is hoge.
+</code></pre></div><h3 id="ファイルの初期化">ファイルの初期化</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># touch だと作成済みのファイルは初期化されない</span>
+touch /path/to/file
+
+<span style="color:#75715e"># これでもいいけど</span>
+echo -n <span style="color:#e6db74">&#34;&#34;</span> &gt; /path/to/file
+
+<span style="color:#75715e"># こっちのがスマート</span>
+:&gt; /path/to/file
+</code></pre></div><h3 id="演算子">演算子</h3>
+<p>コマンドが成功した時と失敗した時とでの場合わけ</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ true <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> echo <span style="color:#ae81ff">2</span>
+&gt;&gt; <span style="color:#ae81ff">1</span>
+$ false <span style="color:#f92672">&amp;&amp;</span> echo <span style="color:#ae81ff">1</span> <span style="color:#f92672">||</span> echo <span style="color:#ae81ff">2</span>
+&gt;&gt; <span style="color:#ae81ff">2</span>
+</code></pre></div><h3 id="拡張子を取り除きたい">拡張子を取り除きたい</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ f<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;hoge.md&#34;</span>
+$ echo <span style="color:#e6db74">${</span>f%.*<span style="color:#e6db74">}</span>
+&gt;&gt; hoge
+</code></pre></div><p>参考 <a href="https://qiita.com/mriho/items/b30b3a33e8d2e25e94a8">bashの変数展開によるファイル名や拡張子の取得</a></p>
+<h3 id="引数をループ">引数をループ</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span> arg; <span style="color:#66d9ef">do</span>
+    echo $arg
+<span style="color:#66d9ef">done</span>
+</code></pre></div><h3 id="無限ループ">無限ループ</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">while</span> true; <span style="color:#66d9ef">do</span>
+    :
+<span style="color:#66d9ef">done</span>
+</code></pre></div><h3 id="for-ループ">for ループ</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span> i in aa bb cc; <span style="color:#66d9ef">do</span>
+    echo $i
+<span style="color:#66d9ef">done</span>
+
+<span style="color:#66d9ef">for</span> i in <span style="color:#66d9ef">$(</span>seq 10<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+    echo $i
+<span style="color:#66d9ef">done</span>
+
+<span style="color:#66d9ef">for</span> <span style="color:#f92672">((</span>i <span style="color:#f92672">=</span> 1; i &lt; 11; i++<span style="color:#f92672">))</span>; <span style="color:#66d9ef">do</span>
+    echo $i
+<span style="color:#66d9ef">done</span>
+</code></pre></div><h3 id="ls-ループ">ls ループ</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span> f in *; <span style="color:#66d9ef">do</span>
+    echo $f
+<span style="color:#66d9ef">done</span>
+</code></pre></div><h3 id="ファイル内ループ">ファイル内ループ</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">while</span> read line; <span style="color:#66d9ef">do</span>
+　　echo $line
+<span style="color:#66d9ef">done</span> &lt; /path/to/file
+</code></pre></div><h2 id="引数解析">引数解析</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">COMMAND<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>basename $0<span style="color:#e6db74">`</span>
+<span style="color:#66d9ef">while</span> getopts ab: OPT
+<span style="color:#66d9ef">do</span>
+  <span style="color:#66d9ef">case</span> $OPT in
+    a <span style="color:#f92672">)</span> OPTION_a<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;TRUE&#34;</span> ;;
+    b <span style="color:#f92672">)</span> OPTION_b<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;TRUE&#34;</span> ; VALUE_b<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span>$OPTARG<span style="color:#e6db74">&#34;</span> ;;
+    * <span style="color:#f92672">)</span> echo <span style="color:#e6db74">&#34;Usage: &#34;</span> ; exit <span style="color:#ae81ff">1</span> ;;
+  <span style="color:#66d9ef">esac</span>
+<span style="color:#66d9ef">done</span>
+
+shift <span style="color:#66d9ef">$((</span>$OPTIND <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span><span style="color:#66d9ef">))</span>
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span>$OPTION_b<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;TRUE&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    :
+<span style="color:#66d9ef">fi</span>
+</code></pre></div><h3 id="途中終了時実行コマンド">途中終了時実行コマンド</h3>
+<p>Ctl+c でスクリプト実行が途中終了した時のコマンドを指定できる</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">trap <span style="color:#e6db74">&#34;echo \&#34;\n途中終了!!\&#34;&#34;</span> <span style="color:#ae81ff">0</span>
+</code></pre></div>]]></content>
+        </item>
         
         <item>
             <title>今さら言語処理100本ノック #01</title>
@@ -155,48 +284,48 @@ False
             <guid>https://tomowarkar.github.io/blog/posts/afplay/</guid>
             <description>環境 $ bash --version GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin19) Copyright (C) 2007 Free Software Foundation, Inc. $ afplay -h Audio File Play Version: 2.0 Copyright 2003-2013, Apple Inc. All Rights Reserved. Specify -h (-help) for command options Usage: afplay [option...] audio_file Options: (may appear before or after arguments) {-v | --volume} VOLUME set the volume for playback of the file {-h | --help} print help { --leaks} run leaks</description>
             <content type="html"><![CDATA[<h2 id="環境">環境</h2>
-<pre><code>$ bash --version
-GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin19)
-Copyright (C) 2007 Free Software Foundation, Inc.
-</code></pre><pre><code>$ afplay -h
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ bash --version
+GNU bash, version 3.2.57<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>-release <span style="color:#f92672">(</span>x86_64-apple-darwin19<span style="color:#f92672">)</span>
+Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2007</span> Free Software Foundation, Inc.
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ afplay -h
 
     Audio File Play
     Version: 2.0
     Copyright 2003-2013, Apple Inc. All Rights Reserved.
-    Specify -h (-help) for command options
+    Specify -h <span style="color:#f92672">(</span>-help<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> command options
 
 Usage:
-afplay [option...] audio_file
+afplay <span style="color:#f92672">[</span>option...<span style="color:#f92672">]</span> audio_file
 
-Options: (may appear before or after arguments)
-  {-v | --volume} VOLUME
-    set the volume for playback of the file
-  {-h | --help}
+Options: <span style="color:#f92672">(</span>may appear before or after arguments<span style="color:#f92672">)</span>
+  <span style="color:#f92672">{</span>-v | --volume<span style="color:#f92672">}</span> VOLUME
+    set the volume <span style="color:#66d9ef">for</span> playback of the file
+  <span style="color:#f92672">{</span>-h | --help<span style="color:#f92672">}</span>
     print help
-  { --leaks}
+  <span style="color:#f92672">{</span> --leaks<span style="color:#f92672">}</span>
     run leaks analysis
-  {-t | --time} TIME
-    play for TIME seconds
-  {-r | --rate} RATE
+  <span style="color:#f92672">{</span>-t | --time<span style="color:#f92672">}</span> TIME
+    play <span style="color:#66d9ef">for</span> TIME seconds
+  <span style="color:#f92672">{</span>-r | --rate<span style="color:#f92672">}</span> RATE
     play at playback rate
-  {-q | --rQuality} QUALITY
-    set the quality used for rate-scaled playback (default is 0 - low quality, 1 - high quality)
-  {-d | --debug}
+  <span style="color:#f92672">{</span>-q | --rQuality<span style="color:#f92672">}</span> QUALITY
+    set the quality used <span style="color:#66d9ef">for</span> rate-scaled playback <span style="color:#f92672">(</span>default is <span style="color:#ae81ff">0</span> - low quality, <span style="color:#ae81ff">1</span> - high quality<span style="color:#f92672">)</span>
+  <span style="color:#f92672">{</span>-d | --debug<span style="color:#f92672">}</span>
     debug print output
-</code></pre><h3 id="再生">再生</h3>
+</code></pre></div><h3 id="再生">再生</h3>
 <p>quality はデフォルト値が low である 0 なので 1 に変更</p>
 <p>音量は適宜</p>
-<pre><code>$ afplay -q 1 -v .1 path/to/audio_file
-</code></pre><h3 id="バックグラウンド実行-プロセスの確認-プロセス-kill">バックグラウンド実行, プロセスの確認, プロセス kill</h3>
-<pre><code>$ afplay path/to/audio_file &amp;
-[1] PID
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ afplay -q <span style="color:#ae81ff">1</span> -v .1 path/to/audio_file
+</code></pre></div><h3 id="バックグラウンド実行-プロセスの確認-プロセス-kill">バックグラウンド実行, プロセスの確認, プロセス kill</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ afplay path/to/audio_file &amp;
+<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span> PID
 $ jobs
-[1]+  Running afplay path/to/audio_file &amp;
-$ # kill %ジョブ番号
+<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>+  Running afplay path/to/audio_file &amp;
+$ <span style="color:#75715e"># kill %ジョブ番号</span>
 $ kill %1
-$ # もしくは
+$ <span style="color:#75715e"># もしくは</span>
 $ kill PID
-</code></pre><p>見つからない場合や、他のターミナルから kill</p>
+</code></pre></div><p>見つからない場合や、他のターミナルから kill</p>
 <pre><code>ps aux | grep afplay | grep -v grep | awk '{ print &quot;kill -9&quot;, $2 }' | sh
 </code></pre><h2 id="参考">参考</h2>
 <ul>

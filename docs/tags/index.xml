@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Mon, 13 Apr 2020 09:56:10 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2020 19:16:51 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>bash</title>
+      <link>https://tomowarkar.github.io/blog/tags/bash/</link>
+      <pubDate>Tue, 21 Apr 2020 19:16:51 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/bash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>memo</title>
+      <link>https://tomowarkar.github.io/blog/tags/memo/</link>
+      <pubDate>Tue, 21 Apr 2020 19:16:51 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/memo/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>nlp</title>
@@ -27,24 +45,6 @@
       <pubDate>Mon, 13 Apr 2020 09:56:10 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>bash</title>
-      <link>https://tomowarkar.github.io/blog/tags/bash/</link>
-      <pubDate>Sun, 12 Apr 2020 23:33:30 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/bash/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>memo</title>
-      <link>https://tomowarkar.github.io/blog/tags/memo/</link>
-      <pubDate>Sun, 12 Apr 2020 23:33:30 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/memo/</guid>
       <description></description>
     </item>
     

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Sun, 12 Apr 2020 23:33:30 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 21 Apr 2020 19:16:51 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/memo/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>最近よく書くシェルスクリプトの備忘録</title>
+      <link>https://tomowarkar.github.io/blog/posts/mac_bash/</link>
+      <pubDate>Tue, 21 Apr 2020 19:16:51 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/mac_bash/</guid>
+      <description>実行環境 $ sw_vers ProductName: Mac OS X ProductVersion: 10.15.4 BuildVersion: 19E266 $ sh --version GNU bash, version 3.2.57(1)-release (x86_64-apple-darwin19) Copyright (C) 2007 Free Software Foundation, Inc. Linux コマンド ファイルの中身を表示する # 一番有名? 間違えてバイナリファイルなどを指定す</description>
+    </item>
     
     <item>
       <title>[macOS] コマンドラインで音楽を流したい</title>
