@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="言語処理 100 本ノック(第 2 章: UNIX コマンド) popular-names.txtは，アメリカで生まれた赤ちゃんの「名前」「性別」「人数」「年」をタ" />
+<meta name="keywords" content=", nlp, python" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/nlp100-02-py/" />
+
+
+    <title>
+        
+            今さら言語処理100本ノック #02-python :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="今さら言語処理100本ノック #02-python">
+<meta itemprop="description" content="言語処理 100 本ノック(第 2 章: UNIX コマンド) popular-names.txtは，アメリカで生まれた赤ちゃんの「名前」「性別」「人数」「年」をタ">
+<meta itemprop="datePublished" content="2020-04-22T13:01:34&#43;09:00" />
+<meta itemprop="dateModified" content="2020-04-22T13:01:34&#43;09:00" />
+<meta itemprop="wordCount" content="1139">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="nlp,python," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="今さら言語処理100本ノック #02-python"/>
+<meta name="twitter:description" content="言語処理 100 本ノック(第 2 章: UNIX コマンド) popular-names.txtは，アメリカで生まれた赤ちゃんの「名前」「性別」「人数」「年」をタ"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-22 13:01:34 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/nlp100-02-py/">今さら言語処理100本ノック #02-python</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <h2 id="言語処理-100-本ノック第-2-章-unix-コマンドhttpsnlp100githubiojach02html"><a href="https://nlp100.github.io/ja/ch02.html">言語処理 100 本ノック(第 2 章: UNIX コマンド)</a></h2>
+<blockquote>
+<p><a href="https://nlp100.github.io/data/popular-names.txt">popular-names.txt</a>は，アメリカで生まれた赤ちゃんの「名前」「性別」「人数」「年」をタブ区切り形式で格納したファイルである．以下の処理を行うプログラムを作成し，<a href="https://nlp100.github.io/data/popular-names.txt">popular-names.txt</a>を入力ファイルとして実行せよ．さらに，同様の処理を UNIX コマンドでも実行し，プログラムの実行結果を確認せよ．</p>
+</blockquote>
+<h3 id="環境">環境</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.4
+BuildVersion:   19E266
+
+$ python3 -V
+Python 3.6.8
+</code></pre></div><h5 id="popular-namestxt">popular-names.txt</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ head -n <span style="color:#ae81ff">5</span> popular-names.txt
+Mary    F       <span style="color:#ae81ff">7065</span>    <span style="color:#ae81ff">1880</span>
+Anna    F       <span style="color:#ae81ff">2604</span>    <span style="color:#ae81ff">1880</span>
+Emma    F       <span style="color:#ae81ff">2003</span>    <span style="color:#ae81ff">1880</span>
+Elizabeth       F       <span style="color:#ae81ff">1939</span>    <span style="color:#ae81ff">1880</span>
+Minnie  F       <span style="color:#ae81ff">1746</span>    <span style="color:#ae81ff">1880</span>
+</code></pre></div><h3 id="10-行数のカウント">10. 行数のカウント</h3>
+<p>行数をカウントせよ．確認には wc コマンドを用いよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    <span style="color:#66d9ef">print</span>(len(f<span style="color:#f92672">.</span>readlines()))
+
+<span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">2780</span>
+</code></pre></div><h3 id="11-タブをスペースに置換">11. タブをスペースに置換</h3>
+<p>タブ 1 文字につきスペース 1 文字に置換せよ．確認には sed コマンド，tr コマンド，もしくは expand コマンドを用いよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    text <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
+
+replaced_text <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34; &#34;</span>)
+<span style="color:#66d9ef">print</span>(replaced_text)
+</code></pre></div><h3 id="12-1-列目を-col1txt-に2-列目を-col2txt-に保存-permalink">12. 1 列目を col1.txt に，2 列目を col2.txt に保存 Permalink</h3>
+<p>各行の 1 列目だけを抜き出したものを col1.txt に，2 列目だけを抜き出したものを col2.txt としてファイルに保存せよ．確認には cut コマンドを用いよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+col1 <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">0</span>], lines))
+col2 <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>], lines))
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;col1-py.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(col1) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;col2-py.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(col2) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><h3 id="13-col1txt-と-col2txt-をマージ">13. col1.txt と col2.txt をマージ</h3>
+<p>12 で作った col1.txt と col2.txt を結合し，元のファイルの 1 列目と 2 列目をタブ区切りで並べたテキストファイルを作成せよ．確認には paste コマンドを用いよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;col1-py.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    col1 <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;col2-py.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    col2 <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+
+lines <span style="color:#f92672">=</span> [f<span style="color:#e6db74">&#34;{x}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">{y}&#34;</span> <span style="color:#66d9ef">for</span> x, y <span style="color:#f92672">in</span> zip(col1, col2)]
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;cols-py.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(lines))
+</code></pre></div><h3 id="14-先頭から-n-行を出力">14. 先頭から N 行を出力</h3>
+<p>自然数 N をコマンドライン引数などの手段で受け取り，入力のうち先頭の N 行だけを表示せよ．確認には head コマンドを用いよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">N <span style="color:#f92672">=</span> int(input())
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+    <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>lines[:N], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
+</code></pre></div><h3 id="15-末尾の-n-行を出力">15. 末尾の N 行を出力</h3>
+<p>自然数 N をコマンドライン引数などの手段で受け取り，入力のうち末尾の N 行だけを表示せよ．確認には tail コマンドを用いよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">N <span style="color:#f92672">=</span> int(input())
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+    <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>lines[<span style="color:#f92672">-</span>N:], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
+</code></pre></div><h3 id="16-ファイルを-n-分割する">16. ファイルを N 分割する</h3>
+<p>自然数 N をコマンドライン引数などの手段で受け取り，入力のファイルを行単位で N 分割せよ．同様の処理を split コマンドで実現せよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+N <span style="color:#f92672">=</span> int(input())
+idx <span style="color:#f92672">=</span> list(map(int, np<span style="color:#f92672">.</span>linspace(<span style="color:#ae81ff">0</span>, len(lines), N <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)))
+files <span style="color:#f92672">=</span> [lines[idx[i]:idx[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N)]
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>files, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><h5 id="memo">memo</h5>
+<ul>
+<li>bash の方とは違う実装をしている</li>
+<li>小数点の扱いがざる</li>
+</ul>
+<h3 id="17-１列目の文字列の異なり">17. １列目の文字列の異なり</h3>
+<p>1 列目の文字列の種類（異なる文字列の集合）を求めよ．確認には cut, sort, uniq コマンドを用いよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+uniq_names <span style="color:#f92672">=</span> set([line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines])
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>sorted(uniq_names), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><h3 id="18-各行を-3-コラム目の数値の降順にソート">18. 各行を 3 コラム目の数値の降順にソート</h3>
+<p>各行を 3 コラム目の数値の逆順で整列せよ（注意: 各行の内容は変更せずに並び替えよ）．確認には sort コマンドを用いよ（この問題はコマンドで実行した時の結果と合わなくてもよい）．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+sorted_lines <span style="color:#f92672">=</span> sorted(lines, key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: int(x<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">2</span>]), reverse<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>sorted_lines, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
+</code></pre></div><h3 id="19-各行の-1-コラム目の文字列の出現頻度を求め出現頻度の高い順に並べる">19. 各行の 1 コラム目の文字列の出現頻度を求め，出現頻度の高い順に並べる</h3>
+<p>各行の 1 列目の文字列の出現頻度を求め，その高い順に並べて表示せよ．確認には cut, uniq, sort コマンドを用いよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+col1_count <span style="color:#f92672">=</span> dict()
+<span style="color:#66d9ef">for</span> l <span style="color:#f92672">in</span> lines:
+    c <span style="color:#f92672">=</span> l<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">if</span> col1_count<span style="color:#f92672">.</span>get(c):
+        col1_count[c]<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">else</span>:
+        col1_count[c] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+sorted_col1 <span style="color:#f92672">=</span> sorted(col1_count<span style="color:#f92672">.</span>items(), key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x[<span style="color:#ae81ff">1</span>], reverse<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>sorted_col1, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><h5 id="memo-1">memo</h5>
+
+    <img src="https://i.imgur.com/2PTQM3P.png"  alt="blog top page"  class="center"  />
+
+
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/nlp">nlp</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1139 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-22 13:01 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+                        <span class="button previous">
+                            <a href="https://tomowarkar.github.io/blog/posts/nlp100-02/">
+                                <span class="button__icon">←</span>
+                                <span class="button__text">今さら言語処理100本ノック #02-bash</span>
+                            </a>
+                        </span>
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/mac_bash/">
+                                <span class="button__text">最近よく書くシェルスクリプトの備忘録</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
