@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="言語処理 100 本ノック(第 4 章: 形態素解析) 夏目漱石の小説『吾輩は猫である』の文章（[neko.txt](https://nlp100.gith" />
+<meta name="keywords" content=", nlp, python" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/nlp100-04/" />
+
+
+    <title>
+        
+            今さら言語処理100本ノック #04 :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="今さら言語処理100本ノック #04">
+<meta itemprop="description" content="言語処理 100 本ノック(第 4 章: 形態素解析) 夏目漱石の小説『吾輩は猫である』の文章（[neko.txt](https://nlp100.gith">
+<meta itemprop="datePublished" content="2020-04-24T07:07:28&#43;09:00" />
+<meta itemprop="dateModified" content="2020-04-24T07:07:28&#43;09:00" />
+<meta itemprop="wordCount" content="3027">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="nlp,python," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="今さら言語処理100本ノック #04"/>
+<meta name="twitter:description" content="言語処理 100 本ノック(第 4 章: 形態素解析) 夏目漱石の小説『吾輩は猫である』の文章（[neko.txt](https://nlp100.gith"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-24 07:07:28 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>7 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/nlp100-04/">今さら言語処理100本ノック #04</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <h2 id="言語処理-100-本ノック第-4-章-形態素解析httpsnlp100githubiojach04html"><a href="https://nlp100.github.io/ja/ch04.html">言語処理 100 本ノック(第 4 章: 形態素解析)</a></h2>
+<blockquote>
+<p>夏目漱石の小説『吾輩は猫である』の文章（[neko.txt](<a href="https://nlp100.github.io/data/neko.txt">https://nlp100.github.io/data/neko.txt</a>）を MeCab を使って形態素解析し，その結果を neko.txt.mecab というファイルに保存せよ．このファイルを用いて，以下の問に対応するプログラムを実装せよ．</p>
+<p>なお，問題 37, 38, 39 は matplotlib もしくは Gnuplot を用いるとよい．</p>
+</blockquote>
+<h3 id="環境">環境</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.4
+BuildVersion:   19E266
+
+$ python3 -V
+Python 3.6.8
+</code></pre></div><h4 id="mecab">mecab</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mecab --version
+mecab of 0.996
+
+$ more /usr/local/etc/mecabrc
+;
+; Configuration file of MeCab
+;
+; $Id: mecabrc.in,v 1.3 2006/05/29 15:36:08 taku-ku Exp $;
+;
+;dicdir <span style="color:#f92672">=</span>  /usr/local/lib/mecab/dic/ipadic
+dicdir <span style="color:#f92672">=</span> /usr/local/lib/mecab/dic/mecab-ipadic-neologd
+userdic <span style="color:#f92672">=</span> /path/to/user.dic
+
+; output-format-type <span style="color:#f92672">=</span> wakati
+; input-buffer-size <span style="color:#f92672">=</span> <span style="color:#ae81ff">8192</span>
+
+; node-format <span style="color:#f92672">=</span> %m<span style="color:#ae81ff">\n</span>
+; bos-format <span style="color:#f92672">=</span> %S<span style="color:#ae81ff">\n</span>
+; eos-format <span style="color:#f92672">=</span> EOS<span style="color:#ae81ff">\n</span>
+</code></pre></div><h5 id="memo">memo</h5>
+<ul>
+<li>mecab を通すと<code>surface\tpos,pos1,pos2,pos3,conjugation,form,base,read,spell\n</code>の形に解析結果が出力される</li>
+</ul>
+<p>久しぶりに mecab を触ったら以下のエラーが出た。どうやら昔定義したユーザー辞書が見つからないらしい。</p>
+<p>なので mecab の設定ファイル(<code>/usr/local/etc/mecabrc</code>(Mac OS X))から<code>userdic = /path/to/user.dic</code>の 1 行を消してあげれば問題なく動く。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mecab
+viterbi.cpp<span style="color:#f92672">(</span>50<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>tokenizer_-&gt;open<span style="color:#f92672">(</span>param<span style="color:#f92672">)]</span> tokenizer.cpp<span style="color:#f92672">(</span>127<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>d-&gt;open<span style="color:#f92672">(</span>dicfile<span style="color:#f92672">[</span>i<span style="color:#f92672">])]</span> dictionary.cpp<span style="color:#f92672">(</span>79<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>dmmap_-&gt;open<span style="color:#f92672">(</span>file, mode<span style="color:#f92672">)]</span> no such file or directory: /path/to/user.dic
+</code></pre></div><h3 id="30-形態素解析結果の読み込み">30. 形態素解析結果の読み込み)</h3>
+<p>形態素解析結果（neko.txt.mecab）を読み込むプログラムを実装せよ．ただし，各形態素は表層形（surface），基本形（base），品詞（pos），品詞細分類 1（pos1）をキーとするマッピング型に格納し，1 文を形態素（マッピング型）のリストとして表現せよ．第 4 章の残りの問題では，ここで作ったプログラムを活用せよ．</p>
+<h4 id="download-nekotxt">Download neko.txt</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -Os https://nlp100.github.io/data/neko.txt
+$ :&gt; neko.txt.mecab <span style="color:#f92672">&amp;&amp;</span> mecab &lt; neko.txt &gt; neko.txt.mecab
+$ more neko.txt.mecab
+一      名詞,数,*,*,*,*,一,イチ,イチ
+EOS
+EOS
+　      記号,空白,*,*,*,*,　,　,　
+吾輩は猫である  名詞,固有名詞,一般,*,*,*,吾輩は猫である,ワガハイハネコデアル,ワ
+ガハイワネコデアル
+。      記号,句点,*,*,*,*,。,。,。
+EOS
+名前    名詞,一般,*,*,*,*,名前,ナマエ,ナマエ
+は      助詞,係助詞,*,*,*,*,は,ハ,ワ
+まだ    副詞,助詞類接続,*,*,*,*,まだ,マダ,マダ
+無い    形容詞,自立,*,*,形容詞・アウオ段,基本形,無い,ナイ,ナイ
+。      記号,句点,*,*,*,*,。,。,。
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> MeCab
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_mecab</span>(file_name):
+    <span style="color:#e6db74">&#34;&#34;&#34;
+</span><span style="color:#e6db74">    Args:
+</span><span style="color:#e6db74">      file_name (str): path to txt file.
+</span><span style="color:#e6db74">
+</span><span style="color:#e6db74">    Returns:
+</span><span style="color:#e6db74">      Generator ([[word_shape]]): 一文毎のword_shapeの配列が返される.
+</span><span style="color:#e6db74">      word_shape (dict): keys=[&#34;surface&#34;, &#34;base&#34;, &#34;pos&#34;, &#34;pos1&#34;]
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">with</span> open(file_name) <span style="color:#66d9ef">as</span> f:
+        lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+    sentence <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+        <span style="color:#66d9ef">if</span> line <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;EOS</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>:
+            <span style="color:#66d9ef">if</span> sentence:
+                <span style="color:#66d9ef">yield</span> sentence
+            sentence <span style="color:#f92672">=</span> []
+            <span style="color:#66d9ef">continue</span>
+
+        surface, attr <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)
+        cols <span style="color:#f92672">=</span> attr<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;,&#34;</span>)
+        sentence<span style="color:#f92672">.</span>append({
+            <span style="color:#e6db74">&#39;surface&#39;</span>: surface,
+            <span style="color:#e6db74">&#39;base&#39;</span>: cols[<span style="color:#ae81ff">6</span>],
+            <span style="color:#e6db74">&#39;pos&#39;</span>: cols[<span style="color:#ae81ff">0</span>],
+            <span style="color:#e6db74">&#39;pos1&#39;</span>: cols[<span style="color:#ae81ff">1</span>]
+        })
+
+
+wss  <span style="color:#f92672">=</span> list(read_mecab(<span style="color:#e6db74">&#34;neko.txt.mecab&#34;</span>))
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>wss[:<span style="color:#ae81ff">3</span>], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><h4 id="out">out</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;一&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;一&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;名詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;数&#39;</span><span style="color:#f92672">}]</span>
+<span style="color:#f92672">[{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;\u3000&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;\u3000&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;記号&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;空白&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;吾輩は猫である&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;吾輩は猫である&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;名詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;固有名詞&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;。&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;。&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;記号&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;句点&#39;</span><span style="color:#f92672">}]</span>
+<span style="color:#f92672">[{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;名前&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;名前&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;名詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;一般&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;は&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;は&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;助詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;係助詞&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;まだ&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;まだ&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;副詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;助詞類接続&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;無い&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;無い&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;形容詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;自立&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;。&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;。&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;記号&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;句点&#39;</span><span style="color:#f92672">}]</span>
+</code></pre></div><h3 id="functions">functions</h3>
+<p>今回使うプログラムに対応した関数群.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">filter_</span>(sentences, <span style="color:#f92672">*</span>, f<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x, target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, flatten<span style="color:#f92672">=</span>False):
+    <span style="color:#e6db74">&#34;&#34;&#34;辞書型の配列を内包する配列に特化したフィルタ&#34;&#34;&#34;</span>
+    out <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> sentence <span style="color:#f92672">in</span> sentences:
+        filtered <span style="color:#f92672">=</span> list(filter(f, sentence))
+        <span style="color:#66d9ef">if</span> target:
+            filtered <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(target), filtered))
+        <span style="color:#66d9ef">if</span> flatten:
+            out<span style="color:#f92672">+=</span>filtered
+        <span style="color:#66d9ef">else</span>:
+            out<span style="color:#f92672">.</span>append(filtered)
+    <span style="color:#66d9ef">return</span> out
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">frequency</span>(sentences):
+    <span style="color:#e6db74">&#34;&#34;&#34;辞書型の配列を内包する配列の単語出現頻度を返す&#34;&#34;&#34;</span>
+    dic <span style="color:#f92672">=</span> dict()
+    <span style="color:#66d9ef">for</span> sentence <span style="color:#f92672">in</span> sentences:
+        <span style="color:#66d9ef">for</span> word <span style="color:#f92672">in</span> sentence:
+            surface <span style="color:#f92672">=</span> word<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;surface&#34;</span>)
+            <span style="color:#66d9ef">if</span> dic<span style="color:#f92672">.</span>get(surface):
+                dic[surface] <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+            <span style="color:#66d9ef">else</span>:
+                dic[surface] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+    <span style="color:#66d9ef">return</span> dic
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">top_n</span>(frequency, n<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>):
+    <span style="color:#e6db74">&#34;&#34;&#34;単語出現頻度をソートし, 上位n件を返す&#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">return</span> sorted(frequency<span style="color:#f92672">.</span>items(), key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x[<span style="color:#ae81ff">1</span>], reverse<span style="color:#f92672">=</span>True)[:n]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wc_plot</span>(freq):
+    <span style="color:#e6db74">&#34;&#34;&#34;出現頻度を棒グラフでプロット&#34;&#34;&#34;</span>
+    plt<span style="color:#f92672">.</span>bar(range(<span style="color:#ae81ff">1</span>, len(freq)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>), list(dict(freq)<span style="color:#f92672">.</span>values()))
+    plt<span style="color:#f92672">.</span>show()
+</code></pre></div><h3 id="31-動詞">31. 動詞</h3>
+<p>動詞の表層形をすべて抽出せよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">verb_surfaces <span style="color:#f92672">=</span> filter_(wss, f<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;動詞&#34;</span>, target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;surface&#34;</span>, flatten<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(verb_surfaces) <span style="color:#75715e">#&gt; [&#39;生れ&#39;, &#39;つか&#39;, &#39;泣い&#39;, &#39;し&#39;, &#39;いる&#39;, &#39;始め&#39;, &#39;見&#39;, &#39;聞く&#39;, ...</span>
+</code></pre></div><h3 id="32-動詞の原形">32. 動詞の原形</h3>
+<p>動詞の原形をすべて抽出せよ</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">verb_bases <span style="color:#f92672">=</span> filter_(wss, f<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;動詞&#34;</span>, target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;base&#34;</span>, flatten<span style="color:#f92672">=</span>True)
+<span style="color:#66d9ef">print</span>(verb_bases) <span style="color:#75715e">#&gt; [&#39;生れる&#39;, &#39;つく&#39;, &#39;泣く&#39;, &#39;する&#39;, &#39;いる&#39;, &#39;始める&#39;, &#39;見る&#39;, &#39;聞く&#39;, ...</span>
+</code></pre></div><h3 id="33-a-の-b">33. 「A の B」</h3>
+<p>2 つの名詞が「の」で連結されている名詞句を抽出せよ．</p>
+<h5 id="memo-1">memo</h5>
+<ul>
+<li>文意的に連体修飾格の「の」でありそうだが, trigram で実装する</li>
+</ul>
+<p>参考: <a href="https://dictionary.goo.ne.jp/word/%E3%81%AE/#jn-171157">の の意味</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">for</span> ws <span style="color:#f92672">in</span> wss:
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(ws) <span style="color:#f92672">-</span> <span style="color:#ae81ff">2</span>):
+        n1, no, n2 <span style="color:#f92672">=</span> ws[i:i<span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>]
+        <span style="color:#66d9ef">if</span> no<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;surface&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;の&#34;</span> <span style="color:#f92672">and</span>\
+            n1<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;名詞&#34;</span> <span style="color:#f92672">and</span>\
+            n2<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;名詞&#34;</span>:
+
+            <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{n1.get(&#39;surface&#39;)}の{n2.get(&#39;surface&#39;)}&#34;</span>)
+</code></pre></div><h4 id="out-1">out</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">彼の掌
+掌の上
+書生の顔
+はずの顔
+顔の真中
+穴の中
+書生の掌
+...
+</code></pre></div><h3 id="34-名詞の連接">34. 名詞の連接</h3>
+<p>名詞の連接（連続して出現する名詞）を最長一致で抽出せよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">norn_series</span>(word_shapes):
+    words <span style="color:#f92672">=</span> []
+    <span style="color:#66d9ef">for</span> ws <span style="color:#f92672">in</span> word_shapes:
+        <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> ws:
+            <span style="color:#66d9ef">if</span> e<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;名詞&#34;</span>:
+                words<span style="color:#f92672">.</span>append(e<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;surface&#34;</span>))
+            <span style="color:#66d9ef">else</span>:
+                <span style="color:#66d9ef">if</span> len(words) <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">1</span>:
+                    <span style="color:#66d9ef">yield</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(words)
+                words <span style="color:#f92672">=</span> []
+ns <span style="color:#f92672">=</span> list(norn_series(wss))
+<span style="color:#66d9ef">print</span>(ns) <span style="color:#75715e">#&gt; [&#39;した所&#39;, &#39;人間中&#39;, &#39;一番獰悪&#39;, &#39;時妙&#39;, &#39;一毛&#39;, &#39;その後猫&#39;, &#39;一度&#39;, ...</span>
+</code></pre></div><h3 id="35-単語の出現頻度">35. 単語の出現頻度</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">foa <span style="color:#f92672">=</span> frequency(wss)
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>top_n(foa, <span style="color:#ae81ff">10</span>), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><h4 id="out-2">out</h4>
+<p>品詞毎に分けずに出すので当然助詞が上位を占めている</p>
+<pre><code>('の', 9101)
+('。', 7484)
+('、', 6772)
+('て', 6697)
+('は', 6384)
+('に', 6145)
+('を', 6068)
+('と', 5474)
+('が', 5259)
+('た', 3916)
+</code></pre><h3 id="36-頻度上位-10-語">36. 頻度上位 10 語</h3>
+<p>出現頻度が高い 10 語とその出現頻度をグラフ（例えば棒グラフなど）で表示せよ．</p>
+<h5 id="memo-2">memo</h5>
+<ul>
+<li>せっかくなので名詞で出現頻度が高い 10 語とその出現頻度をグラフにする</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+
+foa <span style="color:#f92672">=</span> top_n(frequency(filter_(wss, f<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>)<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;名詞&#34;</span>)), <span style="color:#ae81ff">10</span>)
+<span style="color:#66d9ef">print</span>(list(map(<span style="color:#66d9ef">lambda</span> x: x[<span style="color:#ae81ff">0</span>], foa)))
+
+wc_plot(foa)
+</code></pre></div>
+    <img src="https://i.imgur.com/ltYSxbZ.png"  alt="blog top page"  class="center"  />
+
+
+<h3 id="37-猫と共起頻度の高い上位-10-語">37. 「猫」と共起頻度の高い上位 10 語</h3>
+<p>「猫」とよく共起する（共起頻度が高い）10 語とその出現頻度をグラフ（例えば棒グラフなど）で表示せよ．</p>
+<h5 id="memo-3">memo</h5>
+<ul>
+<li>共起の定義が不明瞭だが、今回は「猫」と同一文中に出現する物を共起すると定義する</li>
+<li>せっかくなので動詞で出現頻度が高い 10 語とその出現頻度をグラフにする</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">cat_rerations <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> ws <span style="color:#f92672">in</span> wss:
+    <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> ws:
+        <span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;猫&#34;</span> <span style="color:#f92672">in</span>  e<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;surface&#34;</span>):
+            cat_rerations<span style="color:#f92672">.</span>append(ws)
+            <span style="color:#66d9ef">break</span>
+cat_rerations <span style="color:#f92672">=</span> top_n(frequency(filter_(cat_rerations, f<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>)<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;動詞&#34;</span>)), <span style="color:#ae81ff">10</span>)
+<span style="color:#66d9ef">print</span>(cat_rerations)
+wc_plot(cat_rerations)
+</code></pre></div>
+    <img src="https://i.imgur.com/dqbrtCT.png"  alt="blog top page"  class="center"  />
+
+
+<h3 id="38-ヒストグラム">38. ヒストグラム</h3>
+<p>単語の出現頻度のヒストグラム（横軸に出現頻度，縦軸に出現頻度をとる単語の種類数を棒グラフで表したもの）を描け．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">arr <span style="color:#f92672">=</span> list(dict(sorted(foa<span style="color:#f92672">.</span>items(), key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x[<span style="color:#ae81ff">1</span>], reverse<span style="color:#f92672">=</span>True))<span style="color:#f92672">.</span>values())
+plt<span style="color:#f92672">.</span>hist(arr, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, range<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">100</span>))
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div>
+    <img src="https://i.imgur.com/SxRTS3A.png"  alt="blog top page"  class="center"  />
+
+
+<h3 id="39-zipf-の法則">39. Zipf の法則</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(range(<span style="color:#ae81ff">1</span>, len(arr)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>), arr,marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;.&#39;</span>)
+plt<span style="color:#f92672">.</span>xscale(<span style="color:#e6db74">&#39;log&#39;</span>)
+plt<span style="color:#f92672">.</span>yscale(<span style="color:#e6db74">&#39;log&#39;</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div>
+    <img src="https://i.imgur.com/XUSWFbE.png"  alt="blog top page"  class="center"  />
+
+
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/nlp">nlp</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>3027 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-24 07:07 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/nlp100-03/">
+                                <span class="button__text">今さら言語処理100本ノック #03</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
