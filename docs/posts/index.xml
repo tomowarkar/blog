@@ -6,8 +6,199 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Fri, 24 Apr 2020 07:07:28 +0900</lastBuildDate>
+        <lastBuildDate>Fri, 24 Apr 2020 10:51:15 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>今さら言語処理100本ノック #05 前半</title>
+            <link>https://tomowarkar.github.io/blog/posts/nlp100-05/</link>
+            <pubDate>Fri, 24 Apr 2020 10:51:15 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/nlp100-05/</guid>
+            <description>言語処理 100 本ノック(第 5 章: 係り受け解析) 夏目漱石の小説『吾輩は猫である』の文章（neko.txt）を CaboCha を使って係り受け解析し，その結果を neko.txt.cabocha</description>
+            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第-5-章-係り受け解析httpsnlp100githubiojach05html"><a href="https://nlp100.github.io/ja/ch05.html">言語処理 100 本ノック(第 5 章: 係り受け解析)</a></h2>
+<blockquote>
+<p>夏目漱石の小説『吾輩は猫である』の文章（neko.txt）を CaboCha を使って係り受け解析し，その結果を neko.txt.cabocha というファイルに保存せよ．このファイルを用いて，以下の問に対応するプログラムを実装せよ．</p>
+</blockquote>
+<h3 id="環境">環境</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
+ProductName:    Mac OS X
+ProductVersion: 10.15.4
+BuildVersion:   19E266
+
+$ python3 -V
+Python 3.6.8
+
+$ cabocha --version
+cabocha of 0.69
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat neko.txt | cabocha -f1 &gt; neko.txt.cabocha
+$ more neko.txt.cabocha
+* <span style="color:#ae81ff">0</span> -1D 0/0 0.000000
+一      名詞,数,*,*,*,*,一,イチ,イチ
+EOS
+EOS
+* <span style="color:#ae81ff">0</span> -1D 1/1 0.000000
+　      記号,空白,*,*,*,*,　,　,　
+吾輩は猫である  名詞,固有名詞,一般,*,*,*,吾輩は猫である,ワガハイハネコデアル,ワガハイワネコデアル
+。      記号,句点,*,*,*,*,。,。,。
+EOS
+* <span style="color:#ae81ff">0</span> 2D 0/1 -1.911675
+名前    名詞,一般,*,*,*,*,名前,ナマエ,ナマエ
+は      助詞,係助詞,*,*,*,*,は,ハ,ワ
+* <span style="color:#ae81ff">1</span> 2D 0/0 -1.911675
+まだ    副詞,助詞類接続,*,*,*,*,まだ,マダ,マダ
+* <span style="color:#ae81ff">2</span> -1D 0/0 0.000000
+無い    形容詞,自立,*,*,形容詞・アウオ段,基本形,無い,ナイ,ナイ
+。      記号,句点,*,*,*,*,。,。,。
+EOS
+</code></pre></div><h3 id="40-係り受け解析結果の読み込み形態素">40. 係り受け解析結果の読み込み（形態素）</h3>
+<p>形態素を表すクラス Morph を実装せよ．このクラスは表層形（surface），基本形（base），品詞（pos），品詞細分類 1（pos1）をメンバ変数に持つこととする．さらに，CaboCha の解析結果（neko.txt.cabocha）を読み込み，各文を Morph オブジェクトのリストとして表現し，3 文目の形態素列を表示せよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Morph</span>:
+    <span style="color:#e6db74">&#34;&#34;&#34;cabochaの形態素解析結果
+</span><span style="color:#e6db74">    Args:
+</span><span style="color:#e6db74">        line (str): e.x. &#39;名前</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">名詞,一般,*,*,*,*,名前,ナマエ,ナマエ&#39;
+</span><span style="color:#e6db74">    Attributes:
+</span><span style="color:#e6db74">        surface (str): 表層形
+</span><span style="color:#e6db74">        base (str): 基本形
+</span><span style="color:#e6db74">        pos (str): 品詞
+</span><span style="color:#e6db74">        pos1 (str): 品詞細分類1
+</span><span style="color:#e6db74">    &#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">def</span> __init__(self, line):
+        pattern <span style="color:#f92672">=</span> <span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;^([^,]*?)\t([^,]*?),([^,]*?)(?:,[^,]*?){4},([^,]*?)(?:(?:,[^,]*?){2})?$&#34;</span>
+        <span style="color:#66d9ef">try</span>:
+            [(self<span style="color:#f92672">.</span>surface, self<span style="color:#f92672">.</span>pos, self<span style="color:#f92672">.</span>pos1, self<span style="color:#f92672">.</span>base)] <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(pattern, line)
+        <span style="color:#66d9ef">except</span>:
+            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(f<span style="color:#e6db74">&#34;Invalid line pattern: </span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">{repr(line)}&#34;</span>, )
+
+    <span style="color:#66d9ef">def</span> __str__(self):
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>surface
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_cabocha</span>(file_name):
+    <span style="color:#66d9ef">with</span> open(file_name) <span style="color:#66d9ef">as</span> f:
+        lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+    p <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;^\*\ \d+\ (?:-1|\d+)D\ \d+\/\d+\ -?\d+\.\d+$&#34;</span>)
+    sentence<span style="color:#f92672">=</span>[]
+    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+        line <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+        <span style="color:#66d9ef">if</span> line <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;EOS&#34;</span>:
+            <span style="color:#66d9ef">if</span> sentence:
+                <span style="color:#66d9ef">yield</span> sentence
+            sentence <span style="color:#f92672">=</span> []
+            <span style="color:#66d9ef">continue</span>
+        <span style="color:#66d9ef">elif</span> p<span style="color:#f92672">.</span>match(line):
+            <span style="color:#66d9ef">continue</span>
+        sentence<span style="color:#f92672">.</span>append(Morph(line))
+
+sentences <span style="color:#f92672">=</span> list(read_cabocha(<span style="color:#e6db74">&#34;neko.txt.cabocha&#34;</span>))
+<span style="color:#66d9ef">print</span>(list(map(str, sentences[<span style="color:#ae81ff">2</span>]))) <span style="color:#75715e">#&gt; [&#39;名前&#39;, &#39;は&#39;, &#39;まだ&#39;, &#39;無い&#39;, &#39;。&#39;]</span>
+</code></pre></div><p>参考: <a href="http://taku910.github.io/cabocha/">係り受け解析レイヤの出力フォーマット</a></p>
+<p>sentences ⊃ sentence = chunks ⊃ chunk = morphs ⊃ morph</p>
+<h5 id="memo">memo</h5>
+<ul>
+<li>attributes は<code>'名前\t名詞,一般,*,*,*,*,名前,ナマエ,ナマエ\n'</code>のように(surface を除く)9 つがデフォ</li>
+<li><code>'頸筋\t名詞,一般,*,*,*,*,*\n'</code>この様に attributes が 7 つしかないものもある</li>
+</ul>
+<h3 id="41-係り受け解析結果の読み込み文節係り受け">41. 係り受け解析結果の読み込み（文節・係り受け）</h3>
+<p>40 に加えて，文節を表すクラス Chunk を実装せよ．このクラスは形態素（Morph オブジェクト）のリスト（morphs），係り先文節インデックス番号（dst），係り元文節インデックス番号のリスト（srcs）をメンバ変数に持つこととする．さらに，入力テキストの CaboCha の解析結果を読み込み，１文を Chunk オブジェクトのリストとして表現し，8 文目の文節の文字列と係り先を表示せよ．第 5 章の残りの問題では，ここで作ったプログラムを活用せよ</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Chunk</span>:
+    <span style="color:#66d9ef">def</span> __init__(self, dst):
+        self<span style="color:#f92672">.</span>morphs <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>srcs <span style="color:#f92672">=</span> []
+        self<span style="color:#f92672">.</span>dst <span style="color:#f92672">=</span> dst
+
+    <span style="color:#66d9ef">def</span>  __str__(self):
+        <span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(list(map(str, self<span style="color:#f92672">.</span>morphs)))
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_cabocha_v2</span>(file):
+    <span style="color:#66d9ef">with</span> open(file) <span style="color:#66d9ef">as</span> f:
+        sentences <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;EOS</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+
+    p <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\*\ (\d+)\ (-1|\d+)D\ \d+\/\d+\ -?\d+\.\d+&#34;</span>)
+    <span style="color:#66d9ef">for</span> sentence <span style="color:#f92672">in</span> sentences:
+        dep <span style="color:#f92672">=</span> p<span style="color:#f92672">.</span>findall(sentence)
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> dep:
+            <span style="color:#66d9ef">continue</span>
+
+        chunks <span style="color:#f92672">=</span> []
+        <span style="color:#66d9ef">for</span> (index, dst) <span style="color:#f92672">in</span> dep:
+            c <span style="color:#f92672">=</span> Chunk(int(dst))
+            c<span style="color:#f92672">.</span>srcs <span style="color:#f92672">=</span> [int(f) <span style="color:#66d9ef">for</span> f, t <span style="color:#f92672">in</span> dep <span style="color:#66d9ef">if</span> t <span style="color:#f92672">==</span> index]
+            chunks<span style="color:#f92672">.</span>append(c)
+
+        cnt <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>
+        <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> sentence<span style="color:#f92672">.</span>splitlines():
+            <span style="color:#66d9ef">if</span> p<span style="color:#f92672">.</span>match(line):
+                cnt <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+                <span style="color:#66d9ef">continue</span>
+            <span style="color:#66d9ef">else</span>:
+                chunks[cnt]<span style="color:#f92672">.</span>morphs<span style="color:#f92672">.</span>append(Morph(line))
+        <span style="color:#66d9ef">yield</span> chunks
+
+sentences <span style="color:#f92672">=</span> list(read_cabocha_v2(<span style="color:#e6db74">&#34;neko.txt.cabocha&#34;</span>))
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sentence <span style="color:#f92672">=</span> sentences[<span style="color:#ae81ff">5</span>] <span style="color:#75715e"># 空文を除しているので6行目が該当部</span>
+<span style="color:#66d9ef">for</span> i, chunk <span style="color:#f92672">in</span> enumerate(sentence):
+    <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{i}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">{chunk.dst}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, chunk)
+</code></pre></div><h4 id="out">out</h4>
+<pre><code>0	5	 吾輩 は
+1	2	 ここ で
+2	3	 始め て
+3	4	 人間 という
+4	5	 もの を
+5	-1	 見 た 。
+</code></pre><h3 id="42-係り元と係り先の文節の表示">42. 係り元と係り先の文節の表示</h3>
+<p>係り元の文節と係り先の文節のテキストをタブ区切り形式ですべて抽出せよ．ただし，句読点などの記号は出力しないようにせよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sentence <span style="color:#f92672">=</span> sentences[<span style="color:#ae81ff">5</span>]
+<span style="color:#66d9ef">for</span> i, chunk <span style="color:#f92672">in</span> enumerate(sentence):
+    f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: list(filter(<span style="color:#66d9ef">lambda</span> y: y<span style="color:#f92672">.</span>pos <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;記号&#34;</span> , x))
+    dst <span style="color:#f92672">=</span> i <span style="color:#66d9ef">if</span> chunk<span style="color:#f92672">.</span>dst <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">else</span> chunk<span style="color:#f92672">.</span>dst
+    <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>f(chunk<span style="color:#f92672">.</span>morphs),<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>f(sentence[dst]<span style="color:#f92672">.</span>morphs))
+</code></pre></div><h4 id="out-1">out</h4>
+<pre><code>吾輩 は 	 見 た
+ここ で 	 始め て
+始め て 	 人間 という
+人間 という 	 もの を
+もの を 	 見 た
+見 た 	 見 た
+</code></pre><h3 id="43-名詞を含む文節が動詞を含む文節に係るものを抽出">43. 名詞を含む文節が動詞を含む文節に係るものを抽出</h3>
+<p>名詞を含む文節が，動詞を含む文節に係るとき，これらをタブ区切り形式で抽出せよ．ただし，句読点などの記号は出力しないようにせよ．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sentence <span style="color:#f92672">=</span> sentences[<span style="color:#ae81ff">5</span>]
+<span style="color:#66d9ef">for</span> i, chunk <span style="color:#f92672">in</span> enumerate(sentence):
+    <span style="color:#66d9ef">if</span> chunk<span style="color:#f92672">.</span>dst <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+        <span style="color:#66d9ef">continue</span>
+    f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x, y: any([m<span style="color:#f92672">.</span>pos<span style="color:#f92672">==</span>y <span style="color:#66d9ef">for</span> m <span style="color:#f92672">in</span> x])
+    a, b <span style="color:#f92672">=</span> chunk<span style="color:#f92672">.</span>morphs, sentence[chunk<span style="color:#f92672">.</span>dst]<span style="color:#f92672">.</span>morphs
+    <span style="color:#66d9ef">if</span> f(a, <span style="color:#e6db74">&#34;名詞&#34;</span>) <span style="color:#f92672">and</span> f(b, <span style="color:#e6db74">&#34;動詞&#34;</span>):
+        f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: list(filter(<span style="color:#66d9ef">lambda</span> y: y<span style="color:#f92672">.</span>pos <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;記号&#34;</span> , x))
+        <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>f(a),<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>f(b))
+</code></pre></div><h4 id="out-2">out</h4>
+<pre><code>吾輩 は 	 見 た
+ここ で 	 始め て
+もの を 	 見 た
+</code></pre><h3 id="44-係り受け木の可視化">44. 係り受け木の可視化</h3>
+<p>与えられた文の係り受け木を有向グラフとして可視化せよ．可視化には，係り受け木を DOT 言語に変換し，Graphviz を用いるとよい．また，Python から有向グラフを直接的に可視化するには，pydot を使うとよい．</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pydot <span style="color:#f92672">import</span> Dot, Edge, Node
+graph <span style="color:#f92672">=</span> Dot(graph_type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;digraph&#39;</span>)
+
+<span style="color:#66d9ef">for</span> i, chunk <span style="color:#f92672">in</span> enumerate(sentence):
+    node <span style="color:#f92672">=</span> Node(i, label <span style="color:#f92672">=</span> chunk)
+    graph<span style="color:#f92672">.</span>add_node(node)
+
+<span style="color:#66d9ef">for</span> i, chunk <span style="color:#f92672">in</span> enumerate(sentence):
+    <span style="color:#66d9ef">if</span> chunk<span style="color:#f92672">.</span>dst <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+        edge <span style="color:#f92672">=</span> Edge(i, chunk<span style="color:#f92672">.</span>dst)
+        graph<span style="color:#f92672">.</span>add_edge(edge)
+
+<span style="color:#f92672">from</span> PIL <span style="color:#f92672">import</span> Image
+<span style="color:#f92672">from</span> io <span style="color:#f92672">import</span> BytesIO
+img <span style="color:#f92672">=</span> Image<span style="color:#f92672">.</span>open(BytesIO(graph<span style="color:#f92672">.</span>create_png()))
+img<span style="color:#f92672">.</span>show()
+</code></pre></div>
+    <img src="https://i.imgur.com/HnpGEwK.png"  alt="blog top page"  class="center"  />
+
+
+]]></content>
+        </item>
         
         <item>
             <title>今さら言語処理100本ノック #04</title>

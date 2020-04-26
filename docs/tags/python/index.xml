@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Fri, 24 Apr 2020 07:07:28 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 24 Apr 2020 10:51:15 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>今さら言語処理100本ノック #05 前半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-05/</link>
+      <pubDate>Fri, 24 Apr 2020 10:51:15 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-05/</guid>
+      <description>言語処理 100 本ノック(第 5 章: 係り受け解析) 夏目漱石の小説『吾輩は猫である』の文章（neko.txt）を CaboCha を使って係り受け解析し，その結果を neko.txt.cabocha</description>
+    </item>
     
     <item>
       <title>今さら言語処理100本ノック #04</title>
