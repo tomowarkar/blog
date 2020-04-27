@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>line on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/line/</link>
+    <description>Recent content in line on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>tomowarkar</copyright>
+    <lastBuildDate>Tue, 28 Apr 2020 00:49:59 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/line/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>BashからLINE botにメッセージを送る</title>
+      <link>https://tomowarkar.github.io/blog/posts/bash_line/</link>
+      <pubDate>Tue, 28 Apr 2020 00:49:59 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/bash_line/</guid>
+      <description>Mac で LINE を開くのすら面倒くさい時用 LINE Messaging API send push message line.sh #!/bin/bash # @(#) Send message to line bot. TOKEN=&amp;#34;your token&amp;#34; TO=&amp;#34;your userId on bot&amp;#34; pushMsg() { curl -s -X POST https://api.line.me/v2/bot/message/push \ -H &amp;#34;Content-Type: application/json&amp;#34; \ -H &amp;#34;Authorization: Bearer $TOKEN&amp;#34; \ -d &amp;#34;{ \&amp;#34;to\&amp;#34;: \&amp;#34;$TO\&amp;#34;, \&amp;#34;messages\&amp;#34;:[ { \&amp;#34;type\&amp;#34;:\&amp;#34;text\&amp;#34;, \&amp;#34;text\&amp;#34;:\&amp;#34;$1\&amp;#34; } ] }&amp;#34; } res=$(pushMsg &amp;#34;$1&amp;#34; | jq</description>
+    </item>
+    
+  </channel>
+</rss>
