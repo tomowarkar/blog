@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Fri, 24 Apr 2020 10:51:15 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2020 00:01:07 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Gmail API 受信フォルダの内容確認</title>
+      <link>https://tomowarkar.github.io/blog/posts/gmail_api/</link>
+      <pubDate>Tue, 28 Apr 2020 00:01:07 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/gmail_api/</guid>
+      <description>コロナウイルス拡大に伴い、普段使っている UQ モバイルで学生向け（25 歳以下）に UQ mobile データ容量 30GB まで無償提供が発表された。 新型コロナウイルス感染</description>
+    </item>
     
     <item>
       <title>今さら言語処理100本ノック #05 前半</title>

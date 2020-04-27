@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Fri, 24 Apr 2020 10:51:15 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 28 Apr 2020 00:01:07 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>api</title>
+      <link>https://tomowarkar.github.io/blog/tags/api/</link>
+      <pubDate>Tue, 28 Apr 2020 00:01:07 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/api/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>google</title>
+      <link>https://tomowarkar.github.io/blog/tags/google/</link>
+      <pubDate>Tue, 28 Apr 2020 00:01:07 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/google/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://tomowarkar.github.io/blog/tags/python/</link>
+      <pubDate>Tue, 28 Apr 2020 00:01:07 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>nlp</title>
@@ -18,15 +45,6 @@
       <pubDate>Fri, 24 Apr 2020 10:51:15 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/nlp/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>python</title>
-      <link>https://tomowarkar.github.io/blog/tags/python/</link>
-      <pubDate>Fri, 24 Apr 2020 10:51:15 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
       <description></description>
     </item>
     
@@ -54,15 +72,6 @@
       <pubDate>Fri, 10 Apr 2020 15:16:15 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/vscode/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>api</title>
-      <link>https://tomowarkar.github.io/blog/tags/api/</link>
-      <pubDate>Fri, 10 Apr 2020 11:32:50 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/api/</guid>
       <description></description>
     </item>
     

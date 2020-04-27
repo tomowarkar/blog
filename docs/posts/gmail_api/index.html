@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="コロナウイルス拡大に伴い、普段使っている UQ モバイルで学生向け（25 歳以下）に UQ mobile データ容量 30GB まで無償提供が発表された。 新型コロナウイルス感染" />
+<meta name="keywords" content=", python, google, api" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/gmail_api/" />
+
+
+    <title>
+        
+            Gmail API 受信フォルダの内容確認 :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="Gmail API 受信フォルダの内容確認">
+<meta itemprop="description" content="コロナウイルス拡大に伴い、普段使っている UQ モバイルで学生向け（25 歳以下）に UQ mobile データ容量 30GB まで無償提供が発表された。 新型コロナウイルス感染">
+<meta itemprop="datePublished" content="2020-04-28T00:01:07&#43;09:00" />
+<meta itemprop="dateModified" content="2020-04-28T00:01:07&#43;09:00" />
+<meta itemprop="wordCount" content="1438">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="python,google,api," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="Gmail API 受信フォルダの内容確認"/>
+<meta name="twitter:description" content="コロナウイルス拡大に伴い、普段使っている UQ モバイルで学生向け（25 歳以下）に UQ mobile データ容量 30GB まで無償提供が発表された。 新型コロナウイルス感染"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-28 00:01:07 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/gmail_api/">Gmail API 受信フォルダの内容確認</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <p>コロナウイルス拡大に伴い、普段使っている UQ モバイルで学生向け（25 歳以下）に UQ mobile データ容量 30GB まで無償提供が発表された。</p>
+<p><a href="https://www.uqwimax.jp/annai/news_release/202004061.html">新型コロナウイルス感染症の影響拡大に伴う支援措置について</a></p>
+<p>説明をよく読んでみると</p>
+<blockquote>
+<p>このたび、新型コロナウィルス感染症の拡大による学校・教育機関等の休校措置を踏まえ、学生のオンライン授業の利用等を支援するため、2020 年 4 月 1 日から 2020 年 4 月 30 日まで、25 歳以下のお客さまを対象（注 2）に、UQ mobile サービス(スマートフォンサービス)において、月間データ容量超過後に追加した 30GB までのデータ容量を無償で提供します（注 3）。</p>
+</blockquote>
+<blockquote>
+<p>お客さまが「UQ mobile ポータルアプリ」または「データチャージサイト」より、追加でチャージしていただく必要がございます（注 5） 。データチャージによる追加購入手続き時の画面等には無償化対象となることが記載されませんが、本支援措置の適用条件を満たしたお客さまは、自動的に割引対象となります。</p>
+</blockquote>
+<blockquote>
+<p>（注 5）最大 30GB を無償でご利用いただくためには、「500MB 単位」でのご購入手続きが必要となります。</p>
+</blockquote>
+<p>などとあり、かなりわかりづらく使いづらい仕様になっていることがわかる。最大 30GB 使うのには 60 回チャージしないとダメで、さらにそれが本当に割引されているかは引き落としまで分からないという恐怖である。やってるよっていう建前だけな気がしないでもない。</p>
+<p>そもそも引き落としされるまで追加分が割引されるのかされないのか分からない仕様ってどうなんだろうか。ミスチャージによる課金を誘っている感が物すごい。（注 5）を読まずに 500MB 以上の単位で最大 30GB 分の追加チャージをすれば 30,000 円分の請求が来るのだろうか.そうなれば支援どころかコロナでお金を稼ぐ手段が限られる学生をより窮地に立たせることになる気がするのだが&hellip;</p>
+<p>まあそれは置いておいて、この支援をより効率よく使いたいなということで Gmail API を使って自動化してしまおうという試み。</p>
+<h2 id="前提">前提</h2>
+<ul>
+<li>UQ モバイルではデータ通信量が制限に近づくと自動メールが送られる</li>
+<li>そのメールを元に UQ モバイルのデータチャージサイトへログイン, 500MB 分のチャージを行う</li>
+</ul>
+<p>以上二つのサイクルを月間 60 回(30GB 分)の制限をつけて自動化</p>
+<p>今回は Gmail API の部分のみ</p>
+<h2 id="セットアップ">セットアップ</h2>
+<p><a href="https://developers.google.com/gmail/api/quickstart/python">https://developers.google.com/gmail/api/quickstart/python</a></p>
+<h2 id="main">main</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pickle
+<span style="color:#f92672">import</span> os.path
+<span style="color:#f92672">from</span> googleapiclient.discovery <span style="color:#f92672">import</span> build
+<span style="color:#f92672">from</span> google_auth_oauthlib.flow <span style="color:#f92672">import</span> InstalledAppFlow
+<span style="color:#f92672">from</span> google.auth.transport.requests <span style="color:#f92672">import</span> Request
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GmailBase</span>:
+    <span style="color:#75715e"># If modifying these scopes, delete the file token.pickle.</span>
+    SCOPES <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;https://www.googleapis.com/auth/gmail.readonly&#34;</span>]
+    <span style="color:#66d9ef">def</span> __init__(self, credentials_path):
+        self<span style="color:#f92672">.</span>credentials_path <span style="color:#f92672">=</span> credentials_path
+        self<span style="color:#f92672">.</span>service <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>build()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">build</span>(self):
+        creds <span style="color:#f92672">=</span> None
+        <span style="color:#75715e"># The file token.pickle stores the user&#39;s access and refresh tokens, and is</span>
+        <span style="color:#75715e"># created automatically when the authorization flow completes for the first</span>
+        <span style="color:#75715e"># time.</span>
+        <span style="color:#66d9ef">if</span> os<span style="color:#f92672">.</span>path<span style="color:#f92672">.</span>exists(<span style="color:#e6db74">&#34;token.pickle&#34;</span>):
+            <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;token.pickle&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>) <span style="color:#66d9ef">as</span> token:
+                creds <span style="color:#f92672">=</span> pickle<span style="color:#f92672">.</span>load(token)
+        <span style="color:#75715e"># If there are no (valid) credentials available, let the user log in.</span>
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> creds <span style="color:#f92672">or</span> <span style="color:#f92672">not</span> creds<span style="color:#f92672">.</span>valid:
+            <span style="color:#66d9ef">if</span> creds <span style="color:#f92672">and</span> creds<span style="color:#f92672">.</span>expired <span style="color:#f92672">and</span> creds<span style="color:#f92672">.</span>refresh_token:
+                creds<span style="color:#f92672">.</span>refresh(Request())
+            <span style="color:#66d9ef">else</span>:
+                flow <span style="color:#f92672">=</span> InstalledAppFlow<span style="color:#f92672">.</span>from_client_secrets_file(
+                    self<span style="color:#f92672">.</span>credentials_path, self<span style="color:#f92672">.</span>SCOPES)
+                creds <span style="color:#f92672">=</span> flow<span style="color:#f92672">.</span>run_local_server(port<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+            <span style="color:#75715e"># Save the credentials for the next run</span>
+            <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;token.pickle&#34;</span>, <span style="color:#e6db74">&#34;wb&#34;</span>) <span style="color:#66d9ef">as</span> token:
+                pickle<span style="color:#f92672">.</span>dump(creds, token)
+
+        <span style="color:#66d9ef">return</span> build(<span style="color:#e6db74">&#34;gmail&#34;</span>, <span style="color:#e6db74">&#34;v1&#34;</span>, credentials<span style="color:#f92672">=</span>creds)
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">GmailApiHandler</span>(GmailBase):
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">list_labels</span>(self, userId<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;me&#34;</span>):
+        <span style="color:#e6db74">&#34;&#34;&#34;Lists the user&#39;s Gmail labels.&#34;&#34;&#34;</span>
+        results <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>service<span style="color:#f92672">.</span>users()<span style="color:#f92672">.</span>labels()<span style="color:#f92672">.</span>list(
+            userId<span style="color:#f92672">=</span>userId)<span style="color:#f92672">.</span>execute()
+        labels <span style="color:#f92672">=</span> results<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#39;labels&#39;</span>, [])
+
+        <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> labels:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;No labels found.&#39;</span>)
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Labels:&#39;</span>)
+            <span style="color:#66d9ef">for</span> label <span style="color:#f92672">in</span> labels:
+                <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, label[<span style="color:#e6db74">&#39;name&#39;</span>])
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">find_messages</span>(self, userId<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;me&#34;</span>, count<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>, query<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>):
+        <span style="color:#e6db74">&#34;&#34;&#34;Returns the user&#39;s Gmail ids.&#34;&#34;&#34;</span>
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>service<span style="color:#f92672">.</span>users()<span style="color:#f92672">.</span>messages()<span style="color:#f92672">.</span>list(
+            userId<span style="color:#f92672">=</span>userId, maxResults<span style="color:#f92672">=</span>count, q<span style="color:#f92672">=</span>query)<span style="color:#f92672">.</span>execute()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">message_detail</span>(self, message_id, userId<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;me&#34;</span>):
+        <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>service<span style="color:#f92672">.</span>users()<span style="color:#f92672">.</span>messages()<span style="color:#f92672">.</span>get(userId<span style="color:#f92672">=</span>userId, id<span style="color:#f92672">=</span>message_id)<span style="color:#f92672">.</span>execute()
+</code></pre></div><h2 id="usage">usage</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">gmail <span style="color:#f92672">=</span> GmailApiHandler(<span style="color:#e6db74">&#34;credentials.json&#34;</span>)
+gmail_ids <span style="color:#f92672">=</span> gmail<span style="color:#f92672">.</span>find_messages(count<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, query<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UQ mobile データ通信量のご案内&#34;</span>)
+gmail_id <span style="color:#f92672">=</span> gmail_ids<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;messages&#34;</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;id&#34;</span>)
+message_details <span style="color:#f92672">=</span> gmail<span style="color:#f92672">.</span>message_detail(gmail_id)
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">show_mail</span>(message_details):
+    [subject] <span style="color:#f92672">=</span> list(filter(
+        <span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;name&#34;</span>)<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;Subject&#34;</span>,
+        message_details<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;payload&#34;</span>)<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;headers&#34;</span>)
+    ))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;title:&#34;</span>, subject<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;value&#34;</span>))
+    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;text: &#34;</span>, message_details<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;snippet&#34;</span>))
+
+show_mail(message_details)
+</code></pre></div><h4 id="out">out</h4>
+<pre><code>title: UQ mobile データ通信量のご案内（自動送信メール）
+text:  2020/04/27 21:05:31 ID：hogehoge 様日頃よりUQ mobileをご利用いただき誠にありがとうございます。 ご契約回線のデータ通信量のご利用状況について、お知らせいたします。 データ残量がなくなった場合、月末までデータ通信の速度に制限がかかります。 【電話番号】 08000000000 【データプラン】 データ高速（999GB） 【基本データ残量※】 0 MB ※上記
+</code></pre><p>この本文内容を元にデータチャージ実行を行うかを判定し、データチャージの実行をさせると良さげ。</p>
+<p>Gmail API の(初めてさわる)部分ができればあとは難しくないので、気が向けば続き描きます(多分書かない)</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/google">google</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/api">api</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1438 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-28 00:01 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/nlp100-05/">
+                                <span class="button__text">今さら言語処理100本ノック #05 前半</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
