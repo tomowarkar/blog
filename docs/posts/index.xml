@@ -115,7 +115,23 @@ show_mail(message_details)
 </code></pre></div><h4 id="out">out</h4>
 <pre><code>title: UQ mobile データ通信量のご案内（自動送信メール）
 text:  2020/04/27 21:05:31 ID：hogehoge 様日頃よりUQ mobileをご利用いただき誠にありがとうございます。 ご契約回線のデータ通信量のご利用状況について、お知らせいたします。 データ残量がなくなった場合、月末までデータ通信の速度に制限がかかります。 【電話番号】 08000000000 【データプラン】 データ高速（999GB） 【基本データ残量※】 0 MB ※上記
-</code></pre><p>この本文内容を元にデータチャージ実行を行うかを判定し、データチャージの実行をさせると良さげ。</p>
+</code></pre><h3 id="日時とかデータ量とかの抽出">日時とかデータ量とかの抽出</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extract</span>(text):
+    date <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\d{4}/\d{2}/\d{2}\ \d{2}:\d{2}:\d{2}&#34;</span>, text)
+    amount <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;【基本データ残量※】\ (\d)*&#34;</span>, text)
+    <span style="color:#66d9ef">return</span> date, amount
+
+text <span style="color:#f92672">=</span> message_details<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;snippet&#34;</span>)
+
+<span style="color:#66d9ef">try</span>:
+    [date], [amount] <span style="color:#f92672">=</span> extract(text)
+<span style="color:#66d9ef">except</span>:
+    <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(f<span style="color:#e6db74">&#34;Undefined format: </span><span style="color:#ae81ff">\n\t</span><span style="color:#e6db74">{text}&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(date, amount) <span style="color:#75715e">#&gt; 2020/04/27 21:05:31 0</span>
+</code></pre></div><p>この本文内容を元にデータチャージ実行を行うかを判定し、データチャージの実行をさせると良さげ。</p>
 <p>Gmail API の(初めてさわる)部分ができればあとは難しくないので、気が向けば続き描きます(多分書かない)</p>
 ]]></content>
         </item>

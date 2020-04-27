@@ -128,6 +128,26 @@ title: UQ mobile データ通信量のご案内（自動送信メール）
 text:  2020/04/27 21:05:31 ID：hogehoge 様日頃よりUQ mobileをご利用いただき誠にありがとうございます。 ご契約回線のデータ通信量のご利用状況について、お知らせいたします。 データ残量がなくなった場合、月末までデータ通信の速度に制限がかかります。 【電話番号】 08000000000 【データプラン】 データ高速（999GB） 【基本データ残量※】 0 MB ※上記
 ```
 
+### 日時とかデータ量とかの抽出
+
+```python
+import re
+
+def extract(text):
+    date = re.findall(r"\d{4}/\d{2}/\d{2}\ \d{2}:\d{2}:\d{2}", text)
+    amount = re.findall(r"【基本データ残量※】\ (\d)*", text)
+    return date, amount
+
+text = message_details.get("snippet")
+
+try:
+    [date], [amount] = extract(text)
+except:
+    raise Exception(f"Undefined format: \n\t{text}")
+
+print(date, amount) #> 2020/04/27 21:05:31 0
+```
+
 この本文内容を元にデータチャージ実行を行うかを判定し、データチャージの実行をさせると良さげ。
 
 Gmail API の(初めてさわる)部分ができればあとは難しくないので、気が向けば続き描きます(多分書かない)
