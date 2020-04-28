@@ -102,6 +102,26 @@ https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
 <li>バックスラッシュの使い方が癖あるなぁ</li>
 </ul>
 <p>参考: <a href="https://qiita.com/hirohiro77/items/771ffb64dddceabf69a3">grep でこういう時はどうする?</a></p>
+<h3 id="変更差分の取得例">変更差分の取得例</h3>
+<p>簡単化のためテキストファイルを 5 行にして示す.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*href=\&#34;\([^\&#34;]*\)\&#34;.*/https:\/\/www.youtube.com\1/g&#34;</span> &gt; hikakin<span style="color:#e6db74">`</span>date +%y%m%d<span style="color:#e6db74">`</span>.txt
+
+$ cat -b hikakin200427.txt hikakin200428.txt
+     1	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>KAfULYulCJM
+     2	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>RlVB-Q8eLHk
+     3	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>b0k-fdXk28c
+     4	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>DEuruU-doQM
+     5	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>cEdeotYQMCM
+     1	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>anWsme7SRSs
+     2	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
+     3	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>KAfULYulCJM
+     4	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>RlVB-Q8eLHk
+     5	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>b0k-fdXk28c
+
+$ diff hikakin200427.txt hikakin200428.txt | grep <span style="color:#e6db74">&#34;^&gt;\ &#34;</span> | awk <span style="color:#e6db74">&#39;{print $2}&#39;</span>
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>anWsme7SRSs
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
+</code></pre></div><p>本件関係ないけど<code>diff</code>に関して 1 へぇ<a href="https://qiita.com/wingedtw/items/2f05c5d0c37d71f209f4">diff でコマンドの出力の結果を直接比較する。</a></p>
 ]]></content>
         </item>
         

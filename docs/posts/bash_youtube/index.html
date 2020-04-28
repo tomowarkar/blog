@@ -34,7 +34,7 @@
 <meta itemprop="description" content="チャンネル ID 抜き出し $ echo https://www.youtube.com/user/HikakinTV/videos | cut -d &#34;/&#34; -f 5 HikakinTV タイトルを取得 $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep &#34;yt-lockup-title&#34; | sed -e &#34;s/.*title=\&#34;\([^\&#34;]*\)\&#34;.*/\1/g&#34; 【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコス">
 <meta itemprop="datePublished" content="2020-04-28T12:26:31&#43;09:00" />
 <meta itemprop="dateModified" content="2020-04-28T12:26:31&#43;09:00" />
-<meta itemprop="wordCount" content="1494">
+<meta itemprop="wordCount" content="1620">
 <meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
 
 
@@ -119,7 +119,7 @@
     <main class="post">
 
         <div class="post-info">
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>4 minutes
 
             
 
@@ -220,6 +220,26 @@ https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
 <li>バックスラッシュの使い方が癖あるなぁ</li>
 </ul>
 <p>参考: <a href="https://qiita.com/hirohiro77/items/771ffb64dddceabf69a3">grep でこういう時はどうする?</a></p>
+<h3 id="変更差分の取得例">変更差分の取得例</h3>
+<p>簡単化のためテキストファイルを 5 行にして示す.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*href=\&#34;\([^\&#34;]*\)\&#34;.*/https:\/\/www.youtube.com\1/g&#34;</span> &gt; hikakin<span style="color:#e6db74">`</span>date +%y%m%d<span style="color:#e6db74">`</span>.txt
+
+$ cat -b hikakin200427.txt hikakin200428.txt
+     1	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>KAfULYulCJM
+     2	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>RlVB-Q8eLHk
+     3	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>b0k-fdXk28c
+     4	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>DEuruU-doQM
+     5	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>cEdeotYQMCM
+     1	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>anWsme7SRSs
+     2	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
+     3	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>KAfULYulCJM
+     4	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>RlVB-Q8eLHk
+     5	https://www.youtube.com/watch?v<span style="color:#f92672">=</span>b0k-fdXk28c
+
+$ diff hikakin200427.txt hikakin200428.txt | grep <span style="color:#e6db74">&#34;^&gt;\ &#34;</span> | awk <span style="color:#e6db74">&#39;{print $2}&#39;</span>
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>anWsme7SRSs
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
+</code></pre></div><p>本件関係ないけど<code>diff</code>に関して 1 へぇ<a href="https://qiita.com/wingedtw/items/2f05c5d0c37d71f209f4">diff でコマンドの出力の結果を直接比較する。</a></p>
 
             </div>
         </article>
@@ -231,7 +251,7 @@ https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/bash">bash</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/youtube">youtube</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/regex">regex</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1494 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1620 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-28 12:26 &#43;0900</p>
         </div>

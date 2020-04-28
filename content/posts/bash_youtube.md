@@ -109,3 +109,29 @@ $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep -c "yt-lockup-tit
 - バックスラッシュの使い方が癖あるなぁ
 
 参考: [grep でこういう時はどうする?](https://qiita.com/hirohiro77/items/771ffb64dddceabf69a3)
+
+### 変更差分の取得例
+
+簡単化のためテキストファイルを 5 行にして示す.
+
+```bash
+$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep "yt-lockup-title" | sed -e "s/.*href=\"\([^\"]*\)\".*/https:\/\/www.youtube.com\1/g" > hikakin`date +%y%m%d`.txt
+
+$ cat -b hikakin200427.txt hikakin200428.txt
+     1	https://www.youtube.com/watch?v=KAfULYulCJM
+     2	https://www.youtube.com/watch?v=RlVB-Q8eLHk
+     3	https://www.youtube.com/watch?v=b0k-fdXk28c
+     4	https://www.youtube.com/watch?v=DEuruU-doQM
+     5	https://www.youtube.com/watch?v=cEdeotYQMCM
+     1	https://www.youtube.com/watch?v=anWsme7SRSs
+     2	https://www.youtube.com/watch?v=jGbevSbPwOI
+     3	https://www.youtube.com/watch?v=KAfULYulCJM
+     4	https://www.youtube.com/watch?v=RlVB-Q8eLHk
+     5	https://www.youtube.com/watch?v=b0k-fdXk28c
+
+$ diff hikakin200427.txt hikakin200428.txt | grep "^>\ " | awk '{print $2}'
+https://www.youtube.com/watch?v=anWsme7SRSs
+https://www.youtube.com/watch?v=jGbevSbPwOI
+```
+
+本件関係ないけど`diff`に関して 1 へぇ[diff でコマンドの出力の結果を直接比較する。](https://qiita.com/wingedtw/items/2f05c5d0c37d71f209f4)
