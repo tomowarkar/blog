@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>regex on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/regex/</link>
+    <description>Recent content in regex on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>tomowarkar</copyright>
+    <lastBuildDate>Tue, 28 Apr 2020 12:26:31 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/regex/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>コマンドラインからyoutubeの再生リストを取得する</title>
+      <link>https://tomowarkar.github.io/blog/posts/bash_youtube/</link>
+      <pubDate>Tue, 28 Apr 2020 12:26:31 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/bash_youtube/</guid>
+      <description>チャンネル ID 抜き出し $ echo https://www.youtube.com/user/HikakinTV/videos | cut -d &amp;#34;/&amp;#34; -f 5 HikakinTV タイトルを取得 $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep &amp;#34;yt-lockup-title&amp;#34; | sed -e &amp;#34;s/.*title=\&amp;#34;\([^\&amp;#34;]*\)\&amp;#34;.*/\1/g&amp;#34; 【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコス</description>
+    </item>
+    
+  </channel>
+</rss>

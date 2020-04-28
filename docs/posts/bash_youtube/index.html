@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="チャンネル ID 抜き出し $ echo https://www.youtube.com/user/HikakinTV/videos | cut -d &amp;#34;/&amp;#34; -f 5 HikakinTV タイトルを取得 $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep &amp;#34;yt-lockup-title&amp;#34; | sed -e &amp;#34;s/.*title=\&amp;#34;\([^\&amp;#34;]*\)\&amp;#34;.*/\1/g&amp;#34; 【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコス" />
+<meta name="keywords" content=", bash, youtube, regex" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/bash_youtube/" />
+
+
+    <title>
+        
+            コマンドラインからyoutubeの再生リストを取得する :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="コマンドラインからyoutubeの再生リストを取得する">
+<meta itemprop="description" content="チャンネル ID 抜き出し $ echo https://www.youtube.com/user/HikakinTV/videos | cut -d &#34;/&#34; -f 5 HikakinTV タイトルを取得 $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep &#34;yt-lockup-title&#34; | sed -e &#34;s/.*title=\&#34;\([^\&#34;]*\)\&#34;.*/\1/g&#34; 【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコス">
+<meta itemprop="datePublished" content="2020-04-28T12:26:31&#43;09:00" />
+<meta itemprop="dateModified" content="2020-04-28T12:26:31&#43;09:00" />
+<meta itemprop="wordCount" content="1494">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="bash,youtube,regex," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="コマンドラインからyoutubeの再生リストを取得する"/>
+<meta name="twitter:description" content="チャンネル ID 抜き出し $ echo https://www.youtube.com/user/HikakinTV/videos | cut -d &#34;/&#34; -f 5 HikakinTV タイトルを取得 $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep &#34;yt-lockup-title&#34; | sed -e &#34;s/.*title=\&#34;\([^\&#34;]*\)\&#34;.*/\1/g&#34; 【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコス"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-28 12:26:31 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/bash_youtube/">コマンドラインからyoutubeの再生リストを取得する</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <h3 id="チャンネル-id-抜き出し">チャンネル ID 抜き出し</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ echo https://www.youtube.com/user/HikakinTV/videos | cut -d <span style="color:#e6db74">&#34;/&#34;</span> -f <span style="color:#ae81ff">5</span>
+HikakinTV
+</code></pre></div><h3 id="タイトルを取得">タイトルを取得</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*title=\&#34;\([^\&#34;]*\)\&#34;.*/\1/g&#34;</span>
+【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコスパ抜群のiphone!【開封レビュー】【カメラ比較】【ヒカキンTV】
+スーパー店員時代のヤバい話・変なお客さん【金隠しおじさん&amp;amp;クーラーおじさん】
+国からもらったマスク誕生日に開封レビューしてみたw【31歳】
+【悲報】ヒカキン、斉藤さんでブチギレられる…コロナのこと聞いたら危機感ないので注意してみた
+ヒカキン×香取慎吾の質問コーナーで裏話や突っ込んだこと沢山聞けましたwww
+1000万円のヒカキンゲームスタジオついに完成！【ゲーミングPC】
+小池都知事にコロナのこと質問しまくってみた【ヒカキンTV】【新型コロナウイルス】
+【開封】ニンテンドースイッチどうぶつの森セット&amp;amp;スイッチライトコーラル！【Nintendo Switch】
+僕の地元でコロナが。緊急事態宣言が出ても帰省は控えよう【拡散希望】
+店員さんに優しくしてあげよう。
+【削除覚悟】きりたんぽ同士で無理やり共食いさせてみた…【衝撃映像】
+自宅で本気の味噌ラーメン作ったらお店レベルにwww【麺処くるり】【ヒカキン&amp;amp;セイキン】
+LINEでビデオ通話したら香取慎吾さんドッキリ【後編】ユーチューバーにかけまくるw【ヒカキンTV】
+若いみんなへ、ヒカキンより。
+LINEでビデオ通話したら香取慎吾さんドッキリ【前編】ユーチューバーにかけまくるw【ヒカキンTV】
+【ドッキリ】デカキンUUUM加入！サプライズで大号泣!?【UUUM新オフィス紹介】
+【ドッキリ】デカキンに無断で２人一緒に金髪にしてみたら発狂w【ヒカキンも金髪】
+【費用????万円】渋谷に超巨大ヒカキントラック走らせてみたwww
+BTSに間違われて空港がパニックになりました…【ヒカキンTV】
+卒業式が出来なかったみんなへ、ヒカキンより。
+【感動】まるおともふこがもう一匹の兄弟と再会！もふこに超ソックリでビックリ!?【家族再会】
+【拡散希望】マスク詐欺が許せない。その手口と被害防止について【家族を守ろう】【注意喚起】
+炎上中に質問100個答えますw【登録者800万人記念生配信】
+【デマで炎上】トイレットペーパー不足はヒカキンが買い占めたせい【マスク不足について】
+人間より大きい超巨大わたあめ作ったら大変すぎたwww
+【旅動画】総額120万円の高級ニューヨーク旅 &amp;amp; ヒカキン流緊急パッキング！【NewYork旅行】
+【ランキング】ヒカキンが選ぶマジでウマいセブンのおにぎりTOP５発表！
+ママと初めてのウーバーイーツ食べ放題で大パニックwww【Uber Eats】
+【わたあめ王決定戦】わたあめ作り＆ 大食いバトルで１位は誰だ!!!【ヒカキンvs関根りさvsマスオ】
+【超簡単】カップヌードルチャーハンを７種類作って1位を決めたらまさかの結果に!!【炒飯】
+</code></pre></div><h3 id="動画-url-を取得">動画 URL を取得</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*href=\&#34;\([^\&#34;]*\)\&#34;.*/https:\/\/www.youtube.com\1/g&#34;</span>
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>zPHERhDPIJM
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>KAfULYulCJM
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>RlVB-Q8eLHk
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>b0k-fdXk28c
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>DEuruU-doQM
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>cEdeotYQMCM
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>ofCsslfc-So
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>rzziAEhCJhI
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>YybcDn5BJAg
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>o_lfRo1_52c
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>Qq0_H0Zx51E
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>VRovUa1ioOw
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>lWEb0E1LmjE
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>ThfRyRj_1KI
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>V27iErwCs2E
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>iI7Nx3nXrdk
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>YvCQ1UZeHnA
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>E0jUYAfFHIM
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>D5gd_0dhQ00
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>VbHHk-Qw_nw
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>55dkC87QFU8
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>pqQDCOWtcZY
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>g8c0psnuDc8
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>rPTKNk1vU5w
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>WtYprWCWaVA
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>1LaaEldNh0Q
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>Np0xscEb3Dw
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>W5r3Y2TPZHo
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>anWsme7SRSs
+https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
+</code></pre></div>
+    <img src="https://i.imgur.com/ZE6z532.png"  alt="blog top page"  class="center"  />
+
+
+<p>うまくいってそう</p>
+<h4 id="memo">memo</h4>
+<ul>
+<li>変更差分を取れば新規動画投稿のトリガーになりそう</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep -c <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span>
+<span style="color:#ae81ff">30</span>
+</code></pre></div><ul>
+<li>最新 30 件以上の動画の取得は<code>JavaScript</code>を用いた通信が用いられているためコマンドラインだけでは無理?</li>
+<li>Chrome driver とか使う方が良さそう</li>
+<li>grep 　正規表現の最短一致の記述がわからない <code>&quot;</code>内の最短一致を今回は<code>\&quot;\([^\&quot;]*\)\&quot;</code>この様に実装</li>
+<li>python だと<code>\&quot;(.*?)\&quot;</code>これでいけた気がする</li>
+<li>バックスラッシュの使い方が癖あるなぁ</li>
+</ul>
+<p>参考: <a href="https://qiita.com/hirohiro77/items/771ffb64dddceabf69a3">grep でこういう時はどうする?</a></p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/bash">bash</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/youtube">youtube</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/regex">regex</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1494 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-28 12:26 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/bash_line/">
+                                <span class="button__text">BashからLINE botにメッセージを送る</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
