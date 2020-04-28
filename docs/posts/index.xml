@@ -740,13 +740,13 @@ plt<span style="color:#f92672">.</span>show()
             <pubDate>Thu, 23 Apr 2020 14:16:41 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/nlp100-03/</guid>
-            <description>言語処理 100 本ノック(第3章: 正規表現) Wikipediaの記事を以下のフォーマットで書き出したファイルjawiki-country.json</description>
-            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第3章-正規表現httpsnlp100githubiojach03html"><a href="https://nlp100.github.io/ja/ch03.html">言語処理 100 本ノック(第3章: 正規表現)</a></h2>
+            <description>言語処理 100 本ノック(第 3 章: 正規表現) Wikipedia の記事を以下のフォーマットで書き出したファイルjawiki-country.json.gzがある． 1</description>
+            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第-3-章-正規表現httpsnlp100githubiojach03html"><a href="https://nlp100.github.io/ja/ch03.html">言語処理 100 本ノック(第 3 章: 正規表現)</a></h2>
 <blockquote>
-<p>Wikipediaの記事を以下のフォーマットで書き出したファイル<a href="https://nlp100.github.io/data/jawiki-country.json.gz">jawiki-country.json.gz</a>がある．
-1行に1記事の情報がJSON形式で格納される
-各行には記事名が”title”キーに，記事本文が”text”キーの辞書オブジェクトに格納され，そのオブジェクトがJSON形式で書き出される
-ファイル全体はgzipで圧縮される
+<p>Wikipedia の記事を以下のフォーマットで書き出したファイル<a href="https://nlp100.github.io/data/jawiki-country.json.gz">jawiki-country.json.gz</a>がある．
+1 行に 1 記事の情報が JSON 形式で格納される
+各行には記事名が”title”キーに，記事本文が”text”キーの辞書オブジェクトに格納され，そのオブジェクトが JSON 形式で書き出される
+ファイル全体は gzip で圧縮される
 以下の処理を行うプログラムを作成せよ．</p>
 </blockquote>
 <h3 id="環境">環境</h3>
@@ -757,8 +757,8 @@ BuildVersion:   19E266
 
 $ python3 -V
 Python 3.6.8
-</code></pre></div><h3 id="20-jsonデータの読み込み">20. JSONデータの読み込み</h3>
-<p>Wikipedia記事のJSONファイルを読み込み，「イギリス」に関する記事本文を表示せよ．問題21-29では，ここで抽出した記事本文に対して実行せよ．</p>
+</code></pre></div><h3 id="20-json-データの読み込み">20. JSON データの読み込み</h3>
+<p>Wikipedia 記事の JSON ファイルを読み込み，「イギリス」に関する記事本文を表示せよ．問題 21-29 では，ここで抽出した記事本文に対して実行せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gzip
 <span style="color:#f92672">import</span> json
 
@@ -792,7 +792,7 @@ category_lines <span style="color:#f92672">=</span> list(filter(<span style="col
 [[Category:現存する君主国]]
 [[Category:島国]]
 [[Category:1801年に成立した国家・領域]]
-</code></pre><h3 id="22-カテゴリ名の抽出permalink">22. カテゴリ名の抽出Permalink</h3>
+</code></pre><h3 id="22-カテゴリ名の抽出-permalink">22. カテゴリ名の抽出 Permalink</h3>
 <p>記事のカテゴリ名を（行単位ではなく名前で）抽出せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">categories <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[Category:(.*?)\]\]&#34;</span>, uk_text)
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>categories, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
@@ -819,8 +819,8 @@ G8加盟国
 現存する君主国
 島国
 1801年に成立した国家・領域
-</code></pre><h3 id="23-セクション構造permalink">23. セクション構造Permalink</h3>
-<p>記事中に含まれるセクション名とそのレベル（例えば”== セクション名 ==”なら1）を表示せよ．</p>
+</code></pre><h3 id="23-セクション構造-permalink">23. セクション構造 Permalink</h3>
+<p>記事中に含まれるセクション名とそのレベル（例えば”== セクション名 ==”なら 1）を表示せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sections <span style="color:#f92672">=</span> list(filter(<span style="color:#66d9ef">lambda</span> x: re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;^=(.+)=$&#34;</span>, x), uk_text<span style="color:#f92672">.</span>splitlines()))
 section_levels <span style="color:#f92672">=</span> [(section<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;=&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>), section<span style="color:#f92672">.</span>count(<span style="color:#e6db74">&#34;=&#34;</span>)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> section <span style="color:#f92672">in</span> sections]
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>section_levels, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
@@ -935,7 +935,7 @@ Wembley Stadium, illuminated.jpg
         num<span style="color:#f92672">+=</span><span style="color:#ae81ff">1</span>
     <span style="color:#66d9ef">elif</span> item<span style="color:#f92672">.</span>group() <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;}}&#34;</span>:
         num<span style="color:#f92672">-=</span><span style="color:#ae81ff">1</span>
-    
+
     <span style="color:#66d9ef">if</span> num <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">1</span>:
         end <span style="color:#f92672">=</span> item<span style="color:#f92672">.</span>start()
         <span style="color:#66d9ef">break</span>
@@ -1008,8 +1008,8 @@ ans <span style="color:#f92672">=</span> dict(re<span style="color:#f92672">.</s
 <ul>
 <li>正規表現だけで空白削除頑張った</li>
 </ul>
-<h3 id="26-強調マークアップの除去permalink">26. 強調マークアップの除去Permalink</h3>
-<p>25の処理時に，テンプレートの値からMediaWikiの強調マークアップ（弱い強調，強調，強い強調のすべて）を除去してテキストに変換せよ（参考: マークアップ早見表）．</p>
+<h3 id="26-強調マークアップの除去-permalink">26. 強調マークアップの除去 Permalink</h3>
+<p>25 の処理時に，テンプレートの値から MediaWiki の強調マークアップ（弱い強調，強調，強い強調のすべて）を除去してテキストに変換せよ（参考: マークアップ早見表）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict((k, re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#39;{2,3}|&#39;{5}&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, v)) <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items())
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before: &#34;</span>, ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態4&#34;</span>))
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;after : &#34;</span>, new_ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態4&#34;</span>))
@@ -1017,7 +1017,7 @@ ans <span style="color:#f92672">=</span> dict(re<span style="color:#f92672">.</s
 <pre><code>before:  現在の国号「'''グレートブリテン及び北アイルランド連合王国'''」に変更
 after :  現在の国号「グレートブリテン及び北アイルランド連合王国」に変更
 </code></pre><h3 id="27-内部リンクの除去">27. 内部リンクの除去</h3>
-<p>26の処理に加えて，テンプレートの値からMediaWikiの内部リンクマークアップを除去し，テキストに変換せよ（参考: <a href="https://ja.wikipedia.org/wiki/Help:%E6%97%A9%E8%A6%8B%E8%A1%A8">マークアップ早見表</a>）．</p>
+<p>26 の処理に加えて，テンプレートの値から MediaWiki の内部リンクマークアップを除去し，テキストに変換せよ（参考: <a href="https://ja.wikipedia.org/wiki/Help:%E6%97%A9%E8%A6%8B%E8%A1%A8">マークアップ早見表</a>）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict((k, re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[(?!.*ファイル)(?!.*Category)([^|\]]+\|)*(.*?)\]\]&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">2&#34;</span>, v)) <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items())
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before: &#34;</span>, ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;通貨&#34;</span>))
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;after : &#34;</span>, new_ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;通貨&#34;</span>))
@@ -1037,8 +1037,8 @@ after :  グレートブリテン及びアイルランド連合王国成立&lt;b
 </ul>
 <pre><code>before:  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br /&gt;''神よ女王を護り賜え''&lt;br /&gt;{{center|[[ファイル:United States Navy Band - God Save the Queen.ogg]]}}
 after :  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br /&gt;''神よ女王を護り賜え''&lt;br /&gt;{{center|[[ファイル:United States Navy Band - God Save the Queen.ogg]]}}
-</code></pre><h3 id="28-mediawikiマークアップの除去">28. MediaWikiマークアップの除去</h3>
-<p>27の処理に加えて，テンプレートの値からMediaWikiマークアップを可能な限り除去し，国の基本情報を整形せよ．</p>
+</code></pre><h3 id="28-mediawiki-マークアップの除去">28. MediaWiki マークアップの除去</h3>
+<p>27 の処理に加えて，テンプレートの値から MediaWiki マークアップを可能な限り除去し，国の基本情報を整形せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict()
 <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items():
   v <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#39;{2,3}|&#39;{5}&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, v) <span style="color:#75715e"># 26</span>
@@ -1110,11 +1110,11 @@ after :  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br 
 </code></pre><h5 id="memo-4">memo</h5>
 <ul>
 <li>１行に複数該当がある場合に実装もれがある</li>
-<li>該当をloopで置換するのがいいか?</li>
+<li>該当を loop で置換するのがいいか?</li>
 <li>疲れたのでここまで</li>
 </ul>
-<h3 id="29-国旗画像のurlを取得する">29. 国旗画像のURLを取得する</h3>
-<p>テンプレートの内容を利用し，国旗画像のURLを取得せよ．（ヒント: <a href="https://www.mediawiki.org/wiki/API:Main_page/ja">MediaWiki API</a>の<a href="https://www.mediawiki.org/wiki/API:**Imageinfo**">imageinfo</a>を呼び出して，ファイル参照をURLに変換すればよい）</p>
+<h3 id="29-国旗画像の-url-を取得する">29. 国旗画像の URL を取得する</h3>
+<p>テンプレートの内容を利用し，国旗画像の URL を取得せよ．（ヒント: <a href="https://www.mediawiki.org/wiki/API:Main_page/ja">MediaWiki API</a>の<a href="https://www.mediawiki.org/wiki/API:**Imageinfo**">imageinfo</a>を呼び出して，ファイル参照を URL に変換すればよい）</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
 URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://en.wikipedia.org/w/api.php&#34;</span>
 params <span style="color:#f92672">=</span> {
