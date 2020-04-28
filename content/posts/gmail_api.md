@@ -151,3 +151,21 @@ print(date, amount) #> 2020/04/27 21:05:31 0
 この本文内容を元にデータチャージ実行を行うかを判定し、データチャージの実行をさせると良さげ。
 
 Gmail API の(初めてさわる)部分ができればあとは難しくないので、気が向けば続き描きます(多分書かない)
+
+### UQ モバイルデータチャージサイト
+
+追加データが 0 になった時即時にデータチャージをするのであればメールをトリガーにするのがいいが、定時実行であれば以下のが楽かも。
+
+#### 追加データ残量の取得
+
+```bash
+$ curl -F "username=your username" -F "password=your pass" -sL https://dc.uqmobile.jp/login.action | grep -A 1 "追加データ残量" | grep "info-value" | sed -e "s/.*>\(.*\)<\/span>.*/\1/g" -e "s/&nbsp;//g"
+0.16GB
+
+# テンプレート
+$ echo; echo "UQモバイル 追加データの残量を表示します。ユーザー名とパスワードを入力してください";\
+read -sp "username: " username; echo; read -sp "password: " password; echo;\
+curl -F "username=$username" -F "password=$password" -sL https://dc.uqmobile.jp/login.action |\
+grep -A 1 "追加データ残量" | grep "info-value" |\
+sed -e "s/.*>\(.*\)<\/span>.*/追加データ残量: \1/g" -e "s/&nbsp;//g"
+```
