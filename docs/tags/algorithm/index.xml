@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>algorithm on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/algorithm/</link>
+    <description>Recent content in algorithm on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>tomowarkar</copyright>
+    <lastBuildDate>Tue, 28 Apr 2020 20:05:19 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>BashでFizzBuzzとか素数判定とか</title>
+      <link>https://tomowarkar.github.io/blog/posts/bash_fizzbuzz/</link>
+      <pubDate>Tue, 28 Apr 2020 20:05:19 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/bash_fizzbuzz/</guid>
+      <description>オーソドックスな FizzBuzz 数値部を弄るだけで様々なパターンに対応できる. for i in {1..30}; do if (($i % 15 == 0)); then echo FizzBuzz elif (($i % 3 == 0)); then echo Fizz elif (($i % 5 == 0)); then echo Buzz else echo $i fi done awk</description>
+    </item>
+    
+  </channel>
+</rss>

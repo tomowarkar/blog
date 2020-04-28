@@ -6,8 +6,105 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Tue, 28 Apr 2020 12:26:31 +0900</lastBuildDate>
+        <lastBuildDate>Tue, 28 Apr 2020 20:05:19 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>BashでFizzBuzzとか素数判定とか</title>
+            <link>https://tomowarkar.github.io/blog/posts/bash_fizzbuzz/</link>
+            <pubDate>Tue, 28 Apr 2020 20:05:19 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/bash_fizzbuzz/</guid>
+            <description>オーソドックスな FizzBuzz 数値部を弄るだけで様々なパターンに対応できる. for i in {1..30}; do if (($i % 15 == 0)); then echo FizzBuzz elif (($i % 3 == 0)); then echo Fizz elif (($i % 5 == 0)); then echo Buzz else echo $i fi done awk</description>
+            <content type="html"><![CDATA[<h2 id="オーソドックスな-fizzbuzz">オーソドックスな FizzBuzz</h2>
+<p>数値部を弄るだけで様々なパターンに対応できる.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..30<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>$i % 15 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span>
+        echo FizzBuzz
+    <span style="color:#66d9ef">elif</span> <span style="color:#f92672">((</span>$i % 3 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span>
+        echo Fizz
+    <span style="color:#66d9ef">elif</span> <span style="color:#f92672">((</span>$i % 5 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span>
+        echo Buzz
+    <span style="color:#66d9ef">else</span>
+        echo $i
+    <span style="color:#66d9ef">fi</span>
+<span style="color:#66d9ef">done</span>
+</code></pre></div><h2 id="awk-を用いた-fizzbuzz">awk を用いた FizzBuzz</h2>
+<p>テキストを処理でよく用いられる<code>awk</code>を用いた処理.
+こちらも処理内容としてはオーソドックス</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | awk <span style="color:#e6db74">&#39;{
+</span><span style="color:#e6db74">    if($1 % 15 == 0){
+</span><span style="color:#e6db74">        print &#34;FizzBuzz&#34;
+</span><span style="color:#e6db74">    }else if($1 % 3 == 0){
+</span><span style="color:#e6db74">        print &#34;Fizz&#34;
+</span><span style="color:#e6db74">    }else if($1 % 5 == 0){
+</span><span style="color:#e6db74">        print &#34;Buzz&#34;
+</span><span style="color:#e6db74">    }else{
+</span><span style="color:#e6db74">        print $1}
+</span><span style="color:#e6db74">    }&#39;</span>
+</code></pre></div><h2 id="sed-を用いた-fizzbuzz">sed を用いた FizzBuzz</h2>
+<p><code>n コマンド</code>を用いた少し特殊な FizzBuzz</p>
+<p>短くワンライナーで書けてかっこいいが, パターンが変わる場合少し面倒</p>
+<p>実行環境が Mac のため?か<code>3~3</code>(3 行目から 3 行毎)みたいな表記が使えない(方法あれば教えてください 🙇‍♀️)ので以下の実装。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span>
+</code></pre></div><h3 id="0-から始まる場合">0 から始まる場合</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span>
+
+<span style="color:#75715e"># きちんと30まで表示するには以下の様にする必要がある</span>
+seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">34</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span> | head -n <span style="color:#ae81ff">31</span>
+</code></pre></div><h3 id="面倒なところ">面倒なところ</h3>
+<p>この表記はうまくいくが&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*$/Buzz/&#39;</span>
+
+ans1<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span><span style="color:#e6db74">`</span>
+ans2<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*$/Buzz/&#39;</span><span style="color:#e6db74">`</span>
+
+diff &lt;<span style="color:#f92672">(</span>echo $ans1<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans2<span style="color:#f92672">)</span> <span style="color:#75715e">#&gt;None</span>
+</code></pre></div><p>同じ様に<code>n;</code>を<code>N;</code>に変えるだけではうまくいかないこともある</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*$/Buzz/&#39;</span>
+
+ans1<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span><span style="color:#e6db74">`</span>
+ans2<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*$/Buzz/&#39;</span><span style="color:#e6db74">`</span>
+
+diff &lt;<span style="color:#f92672">(</span>echo $ans1<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans2<span style="color:#f92672">)</span>
+1c1
+&lt; FizzBuzz <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> Fizz <span style="color:#ae81ff">4</span> Buzz Fizz <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> Fizz Buzz <span style="color:#ae81ff">11</span> Fizz <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> FizzBuzz <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> Fizz <span style="color:#ae81ff">19</span> Buzz Fizz <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> Fizz Buzz <span style="color:#ae81ff">26</span> Fizz <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">29</span>
+---
+&gt; Fizz <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> Fizz Buzz <span style="color:#ae81ff">5</span> Fizz <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> FizzBuzz <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> Fizz <span style="color:#ae81ff">13</span> Buzz Fizz <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> Fizz Buzz <span style="color:#ae81ff">20</span> Fizz <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> FizzBuzz <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">26</span> Fizz <span style="color:#ae81ff">28</span> Buzz
+</code></pre></div><p>別に<code>ans1</code>の方で問題ないが上手い書き方はないものか&hellip;</p>
+<h3 id="動作確認">動作確認</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ans1<span style="color:#f92672">=</span><span style="color:#e6db74">`</span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..30<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>$i % 15 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span> echo FizzBuzz; <span style="color:#66d9ef">elif</span> <span style="color:#f92672">((</span>$i % 3 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span> echo Fizz; <span style="color:#66d9ef">elif</span> <span style="color:#f92672">((</span>$i % 5 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span> echo Buzz; <span style="color:#66d9ef">else</span> echo $i; <span style="color:#66d9ef">fi</span> <span style="color:#66d9ef">done</span><span style="color:#e6db74">`</span>
+ans2<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">30</span> | awk <span style="color:#e6db74">&#39;{if($1 % 15 == 0){print &#34;FizzBuzz&#34;}else if($1 % 3 == 0){print &#34;Fizz&#34;}else if($1 % 5 == 0){print &#34;Buzz&#34;}else{print $1}}&#39;</span><span style="color:#e6db74">`</span>
+ans3<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span><span style="color:#e6db74">`</span>
+
+<span style="color:#75715e"># デバック用</span>
+diff &lt;<span style="color:#f92672">(</span>echo $ans1<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans2<span style="color:#f92672">)</span> <span style="color:#75715e">#&gt; None</span>
+diff &lt;<span style="color:#f92672">(</span>echo $ans2<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f92672">)</span> <span style="color:#75715e">#&gt; None</span>
+diff &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans1<span style="color:#f92672">)</span> <span style="color:#75715e">#&gt; None</span>
+</code></pre></div><h4 id="memo">memo</h4>
+<p>BSD ではなく GNU の<code>sed</code>では以下の様にも描ける様だ(未確認)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;s/.*5$/Buzz/;3~3s/[0-9]*/Fizz/&#39;</span>
+</code></pre></div><p>参考: <a href="https://qiita.com/gyu-don/items/f5440b16213200da9775">シェルコマンドで FizzBuzz</a></p>
+<h3 id="素数判定">素数判定</h3>
+<p>速度を考えないのであれば&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">isprime<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">[</span> $1 -lt <span style="color:#ae81ff">2</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">return</span>
+    <span style="color:#f92672">[</span> $1 -eq <span style="color:#ae81ff">2</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $1 <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">return</span>
+    <span style="color:#66d9ef">for</span> p in <span style="color:#66d9ef">$(</span>seq <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">$(</span>expr $1 - 1<span style="color:#66d9ef">))</span>; <span style="color:#66d9ef">do</span>
+        <span style="color:#f92672">((</span>$1 % $p <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">return</span>
+    <span style="color:#66d9ef">done</span>
+    echo $1
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">for</span> i in <span style="color:#66d9ef">$(</span>seq 100<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+    isprime $i
+<span style="color:#66d9ef">done</span>
+</code></pre></div><p><code>gfactor</code>(もしくは<code>factor</code>)を使う手もある(圧倒的に早い)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">100</span> | gfactor | awk <span style="color:#e6db74">&#39;NF == 2&#39;</span> | cut -d : -f1
+</code></pre></div><h4 id="なんか書いたけど使わなかったコード供養">なんか書いたけど使わなかったコード供養</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">max<span style="color:#f92672">(){</span> <span style="color:#f92672">[</span> $1 -gt $2 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $1 <span style="color:#f92672">||</span> echo $2; <span style="color:#f92672">}</span>
+</code></pre></div>]]></content>
+        </item>
         
         <item>
             <title>コマンドラインからyoutubeの再生リストを取得する</title>

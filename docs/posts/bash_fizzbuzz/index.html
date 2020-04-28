@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="オーソドックスな FizzBuzz 数値部を弄るだけで様々なパターンに対応できる. for i in {1..30}; do if (($i % 15 == 0)); then echo FizzBuzz elif (($i % 3 == 0)); then echo Fizz elif (($i % 5 == 0)); then echo Buzz else echo $i fi done awk" />
+<meta name="keywords" content=", bash, algorithm" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/bash_fizzbuzz/" />
+
+
+    <title>
+        
+            BashでFizzBuzzとか素数判定とか :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="BashでFizzBuzzとか素数判定とか">
+<meta itemprop="description" content="オーソドックスな FizzBuzz 数値部を弄るだけで様々なパターンに対応できる. for i in {1..30}; do if (($i % 15 == 0)); then echo FizzBuzz elif (($i % 3 == 0)); then echo Fizz elif (($i % 5 == 0)); then echo Buzz else echo $i fi done awk">
+<meta itemprop="datePublished" content="2020-04-28T20:05:19&#43;09:00" />
+<meta itemprop="dateModified" content="2020-04-28T20:05:19&#43;09:00" />
+<meta itemprop="wordCount" content="843">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="bash,algorithm," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="BashでFizzBuzzとか素数判定とか"/>
+<meta name="twitter:description" content="オーソドックスな FizzBuzz 数値部を弄るだけで様々なパターンに対応できる. for i in {1..30}; do if (($i % 15 == 0)); then echo FizzBuzz elif (($i % 3 == 0)); then echo Fizz elif (($i % 5 == 0)); then echo Buzz else echo $i fi done awk"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-04-28 20:05:19 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/bash_fizzbuzz/">BashでFizzBuzzとか素数判定とか</a>
+            </h1>
+
+            
+
+            <div class="post-content">
+                <h2 id="オーソドックスな-fizzbuzz">オーソドックスな FizzBuzz</h2>
+<p>数値部を弄るだけで様々なパターンに対応できる.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..30<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>$i % 15 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span>
+        echo FizzBuzz
+    <span style="color:#66d9ef">elif</span> <span style="color:#f92672">((</span>$i % 3 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span>
+        echo Fizz
+    <span style="color:#66d9ef">elif</span> <span style="color:#f92672">((</span>$i % 5 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span>
+        echo Buzz
+    <span style="color:#66d9ef">else</span>
+        echo $i
+    <span style="color:#66d9ef">fi</span>
+<span style="color:#66d9ef">done</span>
+</code></pre></div><h2 id="awk-を用いた-fizzbuzz">awk を用いた FizzBuzz</h2>
+<p>テキストを処理でよく用いられる<code>awk</code>を用いた処理.
+こちらも処理内容としてはオーソドックス</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | awk <span style="color:#e6db74">&#39;{
+</span><span style="color:#e6db74">    if($1 % 15 == 0){
+</span><span style="color:#e6db74">        print &#34;FizzBuzz&#34;
+</span><span style="color:#e6db74">    }else if($1 % 3 == 0){
+</span><span style="color:#e6db74">        print &#34;Fizz&#34;
+</span><span style="color:#e6db74">    }else if($1 % 5 == 0){
+</span><span style="color:#e6db74">        print &#34;Buzz&#34;
+</span><span style="color:#e6db74">    }else{
+</span><span style="color:#e6db74">        print $1}
+</span><span style="color:#e6db74">    }&#39;</span>
+</code></pre></div><h2 id="sed-を用いた-fizzbuzz">sed を用いた FizzBuzz</h2>
+<p><code>n コマンド</code>を用いた少し特殊な FizzBuzz</p>
+<p>短くワンライナーで書けてかっこいいが, パターンが変わる場合少し面倒</p>
+<p>実行環境が Mac のため?か<code>3~3</code>(3 行目から 3 行毎)みたいな表記が使えない(方法あれば教えてください 🙇‍♀️)ので以下の実装。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span>
+</code></pre></div><h3 id="0-から始まる場合">0 から始まる場合</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span>
+
+<span style="color:#75715e"># きちんと30まで表示するには以下の様にする必要がある</span>
+seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">34</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span> | head -n <span style="color:#ae81ff">31</span>
+</code></pre></div><h3 id="面倒なところ">面倒なところ</h3>
+<p>この表記はうまくいくが&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*$/Buzz/&#39;</span>
+
+ans1<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span><span style="color:#e6db74">`</span>
+ans2<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*$/Buzz/&#39;</span><span style="color:#e6db74">`</span>
+
+diff &lt;<span style="color:#f92672">(</span>echo $ans1<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans2<span style="color:#f92672">)</span> <span style="color:#75715e">#&gt;None</span>
+</code></pre></div><p>同じ様に<code>n;</code>を<code>N;</code>に変えるだけではうまくいかないこともある</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*$/Buzz/&#39;</span>
+
+ans1<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span><span style="color:#e6db74">`</span>
+ans2<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">0</span> <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;N;N;s/[0-9]*/Fizz/&#39;</span> | sed <span style="color:#e6db74">&#39;N;N;N;N;s/[0-9]*$/Buzz/&#39;</span><span style="color:#e6db74">`</span>
+
+diff &lt;<span style="color:#f92672">(</span>echo $ans1<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans2<span style="color:#f92672">)</span>
+1c1
+&lt; FizzBuzz <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> Fizz <span style="color:#ae81ff">4</span> Buzz Fizz <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> Fizz Buzz <span style="color:#ae81ff">11</span> Fizz <span style="color:#ae81ff">13</span> <span style="color:#ae81ff">14</span> FizzBuzz <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> Fizz <span style="color:#ae81ff">19</span> Buzz Fizz <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> Fizz Buzz <span style="color:#ae81ff">26</span> Fizz <span style="color:#ae81ff">28</span> <span style="color:#ae81ff">29</span>
+---
+&gt; Fizz <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> Fizz Buzz <span style="color:#ae81ff">5</span> Fizz <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> FizzBuzz <span style="color:#ae81ff">10</span> <span style="color:#ae81ff">11</span> Fizz <span style="color:#ae81ff">13</span> Buzz Fizz <span style="color:#ae81ff">16</span> <span style="color:#ae81ff">17</span> Fizz Buzz <span style="color:#ae81ff">20</span> Fizz <span style="color:#ae81ff">22</span> <span style="color:#ae81ff">23</span> FizzBuzz <span style="color:#ae81ff">25</span> <span style="color:#ae81ff">26</span> Fizz <span style="color:#ae81ff">28</span> Buzz
+</code></pre></div><p>別に<code>ans1</code>の方で問題ないが上手い書き方はないものか&hellip;</p>
+<h3 id="動作確認">動作確認</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ans1<span style="color:#f92672">=</span><span style="color:#e6db74">`</span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..30<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>$i % 15 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span> echo FizzBuzz; <span style="color:#66d9ef">elif</span> <span style="color:#f92672">((</span>$i % 3 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span> echo Fizz; <span style="color:#66d9ef">elif</span> <span style="color:#f92672">((</span>$i % 5 <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span>; <span style="color:#66d9ef">then</span> echo Buzz; <span style="color:#66d9ef">else</span> echo $i; <span style="color:#66d9ef">fi</span> <span style="color:#66d9ef">done</span><span style="color:#e6db74">`</span>
+ans2<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">30</span> | awk <span style="color:#e6db74">&#39;{if($1 % 15 == 0){print &#34;FizzBuzz&#34;}else if($1 % 3 == 0){print &#34;Fizz&#34;}else if($1 % 5 == 0){print &#34;Buzz&#34;}else{print $1}}&#39;</span><span style="color:#e6db74">`</span>
+ans3<span style="color:#f92672">=</span><span style="color:#e6db74">`</span>seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;n;n;n;n;s/[0-9]*/Buzz/&#39;</span> | sed <span style="color:#e6db74">&#39;n;n;s/[0-9]*/Fizz/&#39;</span><span style="color:#e6db74">`</span>
+
+<span style="color:#75715e"># デバック用</span>
+diff &lt;<span style="color:#f92672">(</span>echo $ans1<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans2<span style="color:#f92672">)</span> <span style="color:#75715e">#&gt; None</span>
+diff &lt;<span style="color:#f92672">(</span>echo $ans2<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f92672">)</span> <span style="color:#75715e">#&gt; None</span>
+diff &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>echo $ans1<span style="color:#f92672">)</span> <span style="color:#75715e">#&gt; None</span>
+</code></pre></div><h4 id="memo">memo</h4>
+<p>BSD ではなく GNU の<code>sed</code>では以下の様にも描ける様だ(未確認)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;s/.*5$/Buzz/;3~3s/[0-9]*/Fizz/&#39;</span>
+</code></pre></div><p>参考: <a href="https://qiita.com/gyu-don/items/f5440b16213200da9775">シェルコマンドで FizzBuzz</a></p>
+<h3 id="素数判定">素数判定</h3>
+<p>速度を考えないのであれば&hellip;</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">isprime<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#f92672">[</span> $1 -lt <span style="color:#ae81ff">2</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">return</span>
+    <span style="color:#f92672">[</span> $1 -eq <span style="color:#ae81ff">2</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $1 <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">return</span>
+    <span style="color:#66d9ef">for</span> p in <span style="color:#66d9ef">$(</span>seq <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">$(</span>expr $1 - 1<span style="color:#66d9ef">))</span>; <span style="color:#66d9ef">do</span>
+        <span style="color:#f92672">((</span>$1 % $p <span style="color:#f92672">==</span> 0<span style="color:#f92672">))</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">return</span>
+    <span style="color:#66d9ef">done</span>
+    echo $1
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">for</span> i in <span style="color:#66d9ef">$(</span>seq 100<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+    isprime $i
+<span style="color:#66d9ef">done</span>
+</code></pre></div><p><code>gfactor</code>(もしくは<code>factor</code>)を使う手もある(圧倒的に早い)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">100</span> | gfactor | awk <span style="color:#e6db74">&#39;NF == 2&#39;</span> | cut -d : -f1
+</code></pre></div><h4 id="なんか書いたけど使わなかったコード供養">なんか書いたけど使わなかったコード供養</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">max<span style="color:#f92672">(){</span> <span style="color:#f92672">[</span> $1 -gt $2 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $1 <span style="color:#f92672">||</span> echo $2; <span style="color:#f92672">}</span>
+</code></pre></div>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/bash">bash</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/algorithm">algorithm</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>843 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-28 20:05 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/bash_youtube/">
+                                <span class="button__text">コマンドラインからyoutubeの再生リストを取得する</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
