@@ -401,8 +401,17 @@ text <span style="color:#f92672">=</span> message_details<span style="color:#f92
 <p>Gmail API の(初めてさわる)部分ができればあとは難しくないので、気が向けば続き描きます(多分書かない)</p>
 <h3 id="uq-モバイルデータチャージサイト">UQ モバイルデータチャージサイト</h3>
 <p>追加データが 0 になった時即時にデータチャージをするのであればメールをトリガーにするのがいいが、定時実行であれば以下のが楽かも。</p>
+<h3 id="-注意">※ 注意</h3>
+<p><a href="https://www.uqwimax.jp/signup/term/files/myuqmobile_service.pdf">my UQ mobile 利用規約</a>第８条の以下の部分に該当, 抵触する可能性があります。</p>
+<blockquote>
+<p>(12) 逆アセンブル、逆コンパイル、リバースエンジニアリング等、またはその他ソースコ
+ード、構造、アイディア等を解析するような行為</p>
+</blockquote>
+<p>また該当しない場合においても、本来想定された利用法とは異なる操作を行っています。
+いかなる損害が生じたとしても、当方は一切責任を負いませんのでコードの流用は自己責任でお願いします。</p>
 <h4 id="追加データ残量の取得">追加データ残量の取得</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -F <span style="color:#e6db74">&#34;username=your username&#34;</span> -F <span style="color:#e6db74">&#34;password=your pass&#34;</span> -sL https://dc.uqmobile.jp/login.action | grep -A <span style="color:#ae81ff">1</span> <span style="color:#e6db74">&#34;追加データ残量&#34;</span> | grep <span style="color:#e6db74">&#34;info-value&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*&gt;\(.*\)&lt;\/span&gt;.*/\1/g&#34;</span> -e <span style="color:#e6db74">&#34;s/&amp;nbsp;//g&#34;</span>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -F <span style="color:#e6db74">&#34;username=your username&#34;</span> -F <span style="color:#e6db74">&#34;password=your pass&#34;</span><span style="color:#ae81ff">\
+</span><span style="color:#ae81ff"></span>  -sL https://dc.uqmobile.jp/login.action | grep -A <span style="color:#ae81ff">1</span> <span style="color:#e6db74">&#34;追加データ残量&#34;</span> | grep <span style="color:#e6db74">&#34;info-value&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*&gt;\(.*\)&lt;\/span&gt;.*/\1/g&#34;</span> -e <span style="color:#e6db74">&#34;s/&amp;nbsp;//g&#34;</span>
 0.16GB
 
 <span style="color:#75715e"># テンプレート</span>
