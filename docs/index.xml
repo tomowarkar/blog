@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Tue, 28 Apr 2020 20:05:19 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 02 May 2020 21:09:14 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Pandasの基本操作まとめ</title>
+      <link>https://tomowarkar.github.io/blog/posts/ipynb_pandas_tutorial/</link>
+      <pubDate>Sat, 02 May 2020 21:09:14 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/ipynb_pandas_tutorial/</guid>
+      <description>備忘録的メモ この記事は Python 環境がなくても、Google Colab上で実際に動かすことができます。 実行環境 Google Colab ! cat /etc/issue Ubuntu 18.04.3 LTS \n \l ! python -V Python 3.6.9 ! pip show pandas</description>
+    </item>
     
     <item>
       <title>BashでFizzBuzzとか素数判定とか</title>

@@ -1,0 +1,2399 @@
+---
+title: "Pandasの基本操作まとめ"
+date: 2020-05-02T21:09:14+09:00
+draft: false
+toc: false
+images:
+tags:
+  - python
+  - colab
+---
+
+この記事は Python 環境がなくても、`Google Colab`上で実際に動かすことができます。
+
+## 実行環境
+
+- [Google Colab](https://colab.research.google.com/?hl=ja)
+
+```bash
+! cat /etc/issue
+Ubuntu 18.04.3 LTS \n \l
+
+! python -V
+Python 3.6.9
+
+! pip show pandas | grep -e Name -e Version
+Name: pandas
+Version: 1.0.3
+```
+
+### ソースコード
+
+https://colab.research.google.com/drive/1kodWef1HTaZeffIYQc7uyw4FTyvkr83F#forceEdit=true&sandboxMode=true
+
+ソースコードの実行には Google アカウントが必要です。
+
+また実行時 `警告: このノートブックは Google が作成したものではありません。` とポップアップが出ます。データや認証情報の読み取りが無いよう留意しておりますが、実行に際しては一度ソースコードを読んでから実行することをお願い申し上げます。
+
+## Pandas とは
+
+データ操作と分析のための Python ライブラリ
+
+Excel のような 2 次元のテーブルを用いて構造化されたデータへのアクセスを行う。
+
+csv, json, xlsx などに対応していて, インターネット上のソースファイルも利用できる
+
+## データセットのダウンロード
+
+今回は Titanic データセットを利用します。
+
+https://www.openml.org/d/40945
+
+Unix コマンドを用いてデータセットのダウンロードと簡単な中身の確認をしていきます。
+
+```
+curl -o titanic.csv https://www.openml.org/data/get_csv/16826755/phpMYEkMl
+```
+
+### 内容確認
+
+```
+head -n 3 titanic.csv && tail  -n 3 titanic.csv
+
+"pclass","survived","name","sex","age","sibsp","parch","ticket","fare","cabin","embarked","boat","body","home.dest"
+1,1,"Allen, Miss. Elisabeth Walton","female",29,0,0,"24160",211.3375,"B5","S","2",?,"St Louis, MO"
+1,1,"Allison, Master. Hudson Trevor","male",0.9167,1,2,"113781",151.55,"C22 C26","S","11",?,"Montreal, PQ / Chesterville, ON"
+3,0,"Zakarian, Mr. Mapriededer","male",26.5,0,0,"2656",7.225,?,"C",?,304,?
+3,0,"Zakarian, Mr. Ortin","male",27,0,0,"2670",7.225,?,"C",?,?,?
+3,0,"Zimmerman, Mr. Leo","male",29,0,0,"315082",7.875,?,"S",?,?,?
+```
+
+### 行数確認
+
+```
+cat titanic.csv | wc -l
+
+1310
+```
+
+## pandas の inport
+
+```python
+import pandas as pd
+```
+
+```python
+# バージョン確認
+pd.__version__ #> '1.0.3'
+```
+
+## データのインポート
+
+```python
+src = "titanic.csv"
+df = pd.read_csv(src)
+```
+
+データソースが`json`の場合`pd.read_json(src)`, `excel`の場合`pd.read_excel(src)`のように直感的に読み込むことができます。
+
+データソースがインターネット上にある場合(例えば
+[COVID-19](https://github.com/CSSEGISandData/COVID-19/blob/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv) )も`raw`ファイルを指定してあげることで同様に読み込むことができます。
+
+```python
+src = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+```
+
+### 内容の確認
+
+頭 5 行の表示
+
+```python
+df.head(5)
+```
+
+うしろ 5 行の表示
+
+```python
+df.tail(5)
+```
+
+カラムを表示
+
+```python
+df.columns
+```
+
+インデックスを表示
+
+```python
+df.index
+```
+
+値を表示
+
+```python
+df.values
+```
+
+各カラムのタイプを表示
+
+```python
+df.dtypes
+```
+
+```
+pclass        int64
+survived      int64
+name         object
+sex          object
+age          object
+sibsp         int64
+parch         int64
+ticket       object
+fare         object
+cabin        object
+embarked     object
+boat         object
+body         object
+home.dest    object
+dtype: object
+```
+
+さらに詳しい DataFrame の基本情報を表示
+
+```python
+df.info()
+```
+
+```
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 1309 entries, 0 to 1308
+Data columns (total 14 columns):
+ #   Column     Non-Null Count  Dtype
+---  ------     --------------  -----
+ 0   pclass     1309 non-null   int64
+ 1   survived   1309 non-null   int64
+ 2   name       1309 non-null   object
+ 3   sex        1309 non-null   object
+ 4   age        1309 non-null   object
+ 5   sibsp      1309 non-null   int64
+ 6   parch      1309 non-null   int64
+ 7   ticket     1309 non-null   object
+ 8   fare       1309 non-null   object
+ 9   cabin      1309 non-null   object
+ 10  embarked   1309 non-null   object
+ 11  boat       1309 non-null   object
+ 12  body       1309 non-null   object
+ 13  home.dest  1309 non-null   object
+dtypes: int64(4), object(10)
+memory usage: 143.3+ KB
+```
+
+## 基本統計
+
+基本統計の表示
+
+```python
+df.describe()
+```
+
+全てのカラムにおける統計の表示
+
+```python
+df.describe(include="all")
+```
+
+## 行列の抽出
+
+行の抽出
+
+```python
+df.loc[:, 'pclass']
+
+# 以下のコードで同様の結果を得る
+df.pclass
+df["pclass"]
+```
+
+```
+0       1
+1       1
+2       1
+3       1
+4       1
+       ..
+1304    3
+1305    3
+1306    3
+1307    3
+1308    3
+Name: pclass, Length: 1309, dtype: int64
+```
+
+列の抽出
+
+```python
+df.loc[0]
+```
+
+```
+pclass                                   1
+survived                                 1
+name         Allen, Miss. Elisabeth Walton
+sex                                 female
+age                                     29
+sibsp                                    0
+parch                                    0
+ticket                               24160
+fare                              211.3375
+cabin                                   B5
+embarked                                 S
+boat                                     2
+body                                     ?
+home.dest                     St Louis, MO
+Name: 0, dtype: object
+```
+
+## 特定の行列の抽出
+
+行番号(index)が 100 から 104 の"pclass", "age"のカラム
+
+```python
+df.loc[range(100,105), ["pclass", "age"]]
+```
+
+単独要素の抜き出し
+
+```python
+df.at[1000, "ticket"]
+```
+
+```
+'367228'
+```
+
+`loc`でも同様の結果を得るが、`at`の方が速い
+
+```python
+%%timeit
+df.loc[1000, "ticket"]
+
+    The slowest run took 14.63 times longer than the fastest. This could mean that an intermediate result is being cached.
+    100000 loops, best of 3: 7.47 µs per loop
+
+%%timeit
+df.at[1000, "ticket"]
+
+    The slowest run took 15.20 times longer than the fastest. This could mean that an intermediate result is being cached.
+    100000 loops, best of 3: 4.26 µs per loop
+```
+
+## 複雑な抽出
+
+```
+
+# df[df["survived"] == 1]
+
+df.query('survived > 0')
+
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pclass</th>
+      <th>survived</th>
+      <th>name</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>ticket</th>
+      <th>fare</th>
+      <th>cabin</th>
+      <th>embarked</th>
+      <th>boat</th>
+      <th>body</th>
+      <th>home.dest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Allen, Miss. Elisabeth Walton</td>
+      <td>female</td>
+      <td>29</td>
+      <td>0</td>
+      <td>0</td>
+      <td>24160</td>
+      <td>211.3375</td>
+      <td>B5</td>
+      <td>S</td>
+      <td>2</td>
+      <td>?</td>
+      <td>St Louis, MO</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Allison, Master. Hudson Trevor</td>
+      <td>male</td>
+      <td>0.9167</td>
+      <td>1</td>
+      <td>2</td>
+      <td>113781</td>
+      <td>151.55</td>
+      <td>C22 C26</td>
+      <td>S</td>
+      <td>11</td>
+      <td>?</td>
+      <td>Montreal, PQ / Chesterville, ON</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Anderson, Mr. Harry</td>
+      <td>male</td>
+      <td>48</td>
+      <td>0</td>
+      <td>0</td>
+      <td>19952</td>
+      <td>26.55</td>
+      <td>E12</td>
+      <td>S</td>
+      <td>3</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Andrews, Miss. Kornelia Theodosia</td>
+      <td>female</td>
+      <td>63</td>
+      <td>1</td>
+      <td>0</td>
+      <td>13502</td>
+      <td>77.9583</td>
+      <td>D7</td>
+      <td>S</td>
+      <td>10</td>
+      <td>?</td>
+      <td>Hudson, NY</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Appleton, Mrs. Edward Dale (Charlotte Lamson)</td>
+      <td>female</td>
+      <td>53</td>
+      <td>2</td>
+      <td>0</td>
+      <td>11769</td>
+      <td>51.4792</td>
+      <td>C101</td>
+      <td>S</td>
+      <td>D</td>
+      <td>?</td>
+      <td>Bayside, Queens, NY</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1261</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Turkula, Mrs. (Hedwig)</td>
+      <td>female</td>
+      <td>63</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4134</td>
+      <td>9.5875</td>
+      <td>?</td>
+      <td>S</td>
+      <td>15</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1277</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Vartanian, Mr. David</td>
+      <td>male</td>
+      <td>22</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2658</td>
+      <td>7.225</td>
+      <td>?</td>
+      <td>C</td>
+      <td>13 15</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1286</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Whabee, Mrs. George Joseph (Shawneene Abi-Saab)</td>
+      <td>female</td>
+      <td>38</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2688</td>
+      <td>7.2292</td>
+      <td>?</td>
+      <td>C</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1290</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Wilkes, Mrs. James (Ellen Needs)</td>
+      <td>female</td>
+      <td>47</td>
+      <td>1</td>
+      <td>0</td>
+      <td>363272</td>
+      <td>7</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1300</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Yasbeck, Mrs. Antoni (Selini Alexander)</td>
+      <td>female</td>
+      <td>15</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2659</td>
+      <td>14.4542</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+  </tbody>
+</table>
+<p>500 rows × 14 columns</p>
+
+</div>
+
+```
+
+# df[df["embarked"].isin(["C", "S"])]
+
+df.query('embarked in ["C", "S"]')
+
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pclass</th>
+      <th>survived</th>
+      <th>name</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>ticket</th>
+      <th>fare</th>
+      <th>cabin</th>
+      <th>embarked</th>
+      <th>boat</th>
+      <th>body</th>
+      <th>home.dest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Allen, Miss. Elisabeth Walton</td>
+      <td>female</td>
+      <td>29</td>
+      <td>0</td>
+      <td>0</td>
+      <td>24160</td>
+      <td>211.3375</td>
+      <td>B5</td>
+      <td>S</td>
+      <td>2</td>
+      <td>?</td>
+      <td>St Louis, MO</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Allison, Master. Hudson Trevor</td>
+      <td>male</td>
+      <td>0.9167</td>
+      <td>1</td>
+      <td>2</td>
+      <td>113781</td>
+      <td>151.55</td>
+      <td>C22 C26</td>
+      <td>S</td>
+      <td>11</td>
+      <td>?</td>
+      <td>Montreal, PQ / Chesterville, ON</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Allison, Miss. Helen Loraine</td>
+      <td>female</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>113781</td>
+      <td>151.55</td>
+      <td>C22 C26</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Montreal, PQ / Chesterville, ON</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Allison, Mr. Hudson Joshua Creighton</td>
+      <td>male</td>
+      <td>30</td>
+      <td>1</td>
+      <td>2</td>
+      <td>113781</td>
+      <td>151.55</td>
+      <td>C22 C26</td>
+      <td>S</td>
+      <td>?</td>
+      <td>135</td>
+      <td>Montreal, PQ / Chesterville, ON</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Allison, Mrs. Hudson J C (Bessie Waldo Daniels)</td>
+      <td>female</td>
+      <td>25</td>
+      <td>1</td>
+      <td>2</td>
+      <td>113781</td>
+      <td>151.55</td>
+      <td>C22 C26</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Montreal, PQ / Chesterville, ON</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1304</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Zabour, Miss. Hileni</td>
+      <td>female</td>
+      <td>14.5</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2665</td>
+      <td>14.4542</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>328</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1305</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Zabour, Miss. Thamine</td>
+      <td>female</td>
+      <td>?</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2665</td>
+      <td>14.4542</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1306</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Zakarian, Mr. Mapriededer</td>
+      <td>male</td>
+      <td>26.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2656</td>
+      <td>7.225</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>304</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1307</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Zakarian, Mr. Ortin</td>
+      <td>male</td>
+      <td>27</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2670</td>
+      <td>7.225</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1308</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Zimmerman, Mr. Leo</td>
+      <td>male</td>
+      <td>29</td>
+      <td>0</td>
+      <td>0</td>
+      <td>315082</td>
+      <td>7.875</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+  </tbody>
+</table>
+<p>1184 rows × 14 columns</p>
+
+</div>
+
+```
+
+# df[df["name"].str.startswith("A")]
+
+# df[df["name"].str.endswith("e")]
+
+# df[df["name"].str.contains("z")]
+
+df[df["name"].str.match("._\([^\)]_\).\*")]
+
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pclass</th>
+      <th>survived</th>
+      <th>name</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>ticket</th>
+      <th>fare</th>
+      <th>cabin</th>
+      <th>embarked</th>
+      <th>boat</th>
+      <th>body</th>
+      <th>home.dest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>4</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Allison, Mrs. Hudson J C (Bessie Waldo Daniels)</td>
+      <td>female</td>
+      <td>25</td>
+      <td>1</td>
+      <td>2</td>
+      <td>113781</td>
+      <td>151.55</td>
+      <td>C22 C26</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Montreal, PQ / Chesterville, ON</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Appleton, Mrs. Edward Dale (Charlotte Lamson)</td>
+      <td>female</td>
+      <td>53</td>
+      <td>2</td>
+      <td>0</td>
+      <td>11769</td>
+      <td>51.4792</td>
+      <td>C101</td>
+      <td>S</td>
+      <td>D</td>
+      <td>?</td>
+      <td>Bayside, Queens, NY</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Astor, Mrs. John Jacob (Madeleine Talmadge Force)</td>
+      <td>female</td>
+      <td>18</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17757</td>
+      <td>227.525</td>
+      <td>C62 C64</td>
+      <td>C</td>
+      <td>4</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Baxter, Mrs. James (Helene DeLaudeniere Chaput)</td>
+      <td>female</td>
+      <td>50</td>
+      <td>0</td>
+      <td>1</td>
+      <td>PC 17558</td>
+      <td>247.5208</td>
+      <td>B58 B60</td>
+      <td>C</td>
+      <td>6</td>
+      <td>?</td>
+      <td>Montreal, PQ</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Beckwith, Mrs. Richard Leonard (Sallie Monypeny)</td>
+      <td>female</td>
+      <td>47</td>
+      <td>1</td>
+      <td>1</td>
+      <td>11751</td>
+      <td>52.5542</td>
+      <td>D35</td>
+      <td>S</td>
+      <td>5</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1276</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Vander Planke, Mrs. Julius (Emelia Maria Vande...</td>
+      <td>female</td>
+      <td>31</td>
+      <td>1</td>
+      <td>0</td>
+      <td>345763</td>
+      <td>18</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1286</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Whabee, Mrs. George Joseph (Shawneene Abi-Saab)</td>
+      <td>female</td>
+      <td>38</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2688</td>
+      <td>7.2292</td>
+      <td>?</td>
+      <td>C</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1290</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Wilkes, Mrs. James (Ellen Needs)</td>
+      <td>female</td>
+      <td>47</td>
+      <td>1</td>
+      <td>0</td>
+      <td>363272</td>
+      <td>7</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1291</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Willer, Mr. Aaron ('Abi Weller')</td>
+      <td>male</td>
+      <td>?</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3410</td>
+      <td>8.7125</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1300</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Yasbeck, Mrs. Antoni (Selini Alexander)</td>
+      <td>female</td>
+      <td>15</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2659</td>
+      <td>14.4542</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+  </tbody>
+</table>
+<p>221 rows × 14 columns</p>
+
+</div>
+
+```
+
+df.query('40 < age < 60')
+
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pclass</th>
+      <th>survived</th>
+      <th>name</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>ticket</th>
+      <th>fare</th>
+      <th>cabin</th>
+      <th>embarked</th>
+      <th>boat</th>
+      <th>body</th>
+      <th>home.dest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Anderson, Mr. Harry</td>
+      <td>male</td>
+      <td>48.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>19952</td>
+      <td>26.55</td>
+      <td>E12</td>
+      <td>S</td>
+      <td>3</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Appleton, Mrs. Edward Dale (Charlotte Lamson)</td>
+      <td>female</td>
+      <td>53.0</td>
+      <td>2</td>
+      <td>0</td>
+      <td>11769</td>
+      <td>51.4792</td>
+      <td>C101</td>
+      <td>S</td>
+      <td>D</td>
+      <td>?</td>
+      <td>Bayside, Queens, NY</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Astor, Col. John Jacob</td>
+      <td>male</td>
+      <td>47.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17757</td>
+      <td>227.525</td>
+      <td>C62 C64</td>
+      <td>C</td>
+      <td>?</td>
+      <td>124</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Baxter, Mrs. James (Helene DeLaudeniere Chaput)</td>
+      <td>female</td>
+      <td>50.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>PC 17558</td>
+      <td>247.5208</td>
+      <td>B58 B60</td>
+      <td>C</td>
+      <td>6</td>
+      <td>?</td>
+      <td>Montreal, PQ</td>
+    </tr>
+    <tr>
+      <th>21</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Beckwith, Mrs. Richard Leonard (Sallie Monypeny)</td>
+      <td>female</td>
+      <td>47.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>11751</td>
+      <td>52.5542</td>
+      <td>D35</td>
+      <td>S</td>
+      <td>5</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1264</th>
+      <td>3</td>
+      <td>0</td>
+      <td>van Billiard, Mr. Austin Blyler</td>
+      <td>male</td>
+      <td>40.5</td>
+      <td>0</td>
+      <td>2</td>
+      <td>A/5. 851</td>
+      <td>14.5</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>255</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1272</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Vander Cruyssen, Mr. Victor</td>
+      <td>male</td>
+      <td>47.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>345765</td>
+      <td>9</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1287</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Widegren, Mr. Carl/Charles Peter</td>
+      <td>male</td>
+      <td>51.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>347064</td>
+      <td>7.75</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1290</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Wilkes, Mrs. James (Ellen Needs)</td>
+      <td>female</td>
+      <td>47.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>363272</td>
+      <td>7</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1301</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Youseff, Mr. Gerious</td>
+      <td>male</td>
+      <td>45.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2628</td>
+      <td>7.225</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>312</td>
+      <td>?</td>
+    </tr>
+  </tbody>
+</table>
+<p>187 rows × 14 columns</p>
+
+</div>
+
+```
+
+# dtype の変更
+
+df["age"].dtype
+
+```
+
+    dtype('O')
+
+```
+
+set(df[df["age"].str.match("[^\d]")]["age"])
+
+```
+
+    {'?'}
+
+```
+
+# df["age"] = df["age"].mask(df["age"].str.match("[^\d]"))
+
+df["age"] = df["age"].where(df["age"].str.match("\d"))
+df["age"] = df["age"].astype(float)
+
+```
+
+```
+
+df.query('40 < age < 60')
+
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pclass</th>
+      <th>survived</th>
+      <th>name</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>ticket</th>
+      <th>fare</th>
+      <th>cabin</th>
+      <th>embarked</th>
+      <th>boat</th>
+      <th>body</th>
+      <th>home.dest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>6</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Andrews, Miss. Kornelia Theodosia</td>
+      <td>female</td>
+      <td>63.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>13502</td>
+      <td>77.9583</td>
+      <td>D7</td>
+      <td>S</td>
+      <td>10</td>
+      <td>?</td>
+      <td>Hudson, NY</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Artagaveytia, Mr. Ramon</td>
+      <td>male</td>
+      <td>71.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17609</td>
+      <td>49.5042</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>22</td>
+      <td>Montevideo, Uruguay</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Barkworth, Mr. Algernon Henry Wilson</td>
+      <td>male</td>
+      <td>80.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>27042</td>
+      <td>30</td>
+      <td>A23</td>
+      <td>S</td>
+      <td>B</td>
+      <td>?</td>
+      <td>Hessle, Yorks</td>
+    </tr>
+    <tr>
+      <th>61</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Cavendish, Mrs. Tyrell William (Julia Florence...</td>
+      <td>female</td>
+      <td>76.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>19877</td>
+      <td>78.85</td>
+      <td>C46</td>
+      <td>S</td>
+      <td>6</td>
+      <td>?</td>
+      <td>Little Onn Hall, Staffs</td>
+    </tr>
+    <tr>
+      <th>78</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Compton, Mrs. Alexander Taylor (Mary Eliza Ing...</td>
+      <td>female</td>
+      <td>64.0</td>
+      <td>0</td>
+      <td>2</td>
+      <td>PC 17756</td>
+      <td>83.1583</td>
+      <td>E45</td>
+      <td>C</td>
+      <td>14</td>
+      <td>?</td>
+      <td>Lakewood, NJ</td>
+    </tr>
+    <tr>
+      <th>81</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Crosby, Capt. Edward Gifford</td>
+      <td>male</td>
+      <td>70.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>WE/P 5735</td>
+      <td>71</td>
+      <td>B22</td>
+      <td>S</td>
+      <td>?</td>
+      <td>269</td>
+      <td>Milwaukee, WI</td>
+    </tr>
+    <tr>
+      <th>83</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Crosby, Mrs. Edward Gifford (Catherine Elizabe...</td>
+      <td>female</td>
+      <td>64.0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>112901</td>
+      <td>26.55</td>
+      <td>B26</td>
+      <td>S</td>
+      <td>7</td>
+      <td>?</td>
+      <td>Milwaukee, WI</td>
+    </tr>
+    <tr>
+      <th>115</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Fortune, Mr. Mark</td>
+      <td>male</td>
+      <td>64.0</td>
+      <td>1</td>
+      <td>4</td>
+      <td>19950</td>
+      <td>263</td>
+      <td>C23 C25 C27</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Winnipeg, MB</td>
+    </tr>
+    <tr>
+      <th>135</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Goldschmidt, Mr. George B</td>
+      <td>male</td>
+      <td>71.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17754</td>
+      <td>34.6542</td>
+      <td>A5</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>205</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Millet, Mr. Francis Davis</td>
+      <td>male</td>
+      <td>65.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>13509</td>
+      <td>26.55</td>
+      <td>E38</td>
+      <td>S</td>
+      <td>?</td>
+      <td>249</td>
+      <td>East Bridgewater, MA</td>
+    </tr>
+    <tr>
+      <th>217</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Nicholson, Mr. Arthur Ernest</td>
+      <td>male</td>
+      <td>64.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>693</td>
+      <td>26</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>263</td>
+      <td>Isle of Wight, England</td>
+    </tr>
+    <tr>
+      <th>221</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Ostby, Mr. Engelhart Cornelius</td>
+      <td>male</td>
+      <td>65.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>113509</td>
+      <td>61.9792</td>
+      <td>B30</td>
+      <td>C</td>
+      <td>?</td>
+      <td>234</td>
+      <td>Providence, RI</td>
+    </tr>
+    <tr>
+      <th>252</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Ryerson, Mr. Arthur Larned</td>
+      <td>male</td>
+      <td>61.0</td>
+      <td>1</td>
+      <td>3</td>
+      <td>PC 17608</td>
+      <td>262.375</td>
+      <td>B57 B59 B63 B66</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Haverford, PA / Cooperstown, NY</td>
+    </tr>
+    <tr>
+      <th>279</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Stead, Mr. William Thomas</td>
+      <td>male</td>
+      <td>62.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>113514</td>
+      <td>26.55</td>
+      <td>C87</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Wimbledon Park, London / Hayling Island, Hants</td>
+    </tr>
+    <tr>
+      <th>284</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Stone, Mrs. George Nelson (Martha Evelyn)</td>
+      <td>female</td>
+      <td>62.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>113572</td>
+      <td>80</td>
+      <td>B28</td>
+      <td>?</td>
+      <td>6</td>
+      <td>?</td>
+      <td>Cincinatti, OH</td>
+    </tr>
+    <tr>
+      <th>285</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Straus, Mr. Isidor</td>
+      <td>male</td>
+      <td>67.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17483</td>
+      <td>221.7792</td>
+      <td>C55 C57</td>
+      <td>S</td>
+      <td>?</td>
+      <td>96</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>286</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Straus, Mrs. Isidor (Rosalie Ida Blun)</td>
+      <td>female</td>
+      <td>63.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>PC 17483</td>
+      <td>221.7792</td>
+      <td>C55 C57</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>287</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Sutton, Mr. Frederick</td>
+      <td>male</td>
+      <td>61.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>36963</td>
+      <td>32.3208</td>
+      <td>D50</td>
+      <td>S</td>
+      <td>?</td>
+      <td>46</td>
+      <td>Haddenfield, NJ</td>
+    </tr>
+    <tr>
+      <th>300</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Van der hoef, Mr. Wyckoff</td>
+      <td>male</td>
+      <td>61.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>111240</td>
+      <td>33.5</td>
+      <td>B19</td>
+      <td>S</td>
+      <td>?</td>
+      <td>245</td>
+      <td>Brooklyn, NY</td>
+    </tr>
+    <tr>
+      <th>303</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Warren, Mr. Frank Manley</td>
+      <td>male</td>
+      <td>64.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>110813</td>
+      <td>75.25</td>
+      <td>D37</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Portland, OR</td>
+    </tr>
+    <tr>
+      <th>321</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Wright, Mr. George</td>
+      <td>male</td>
+      <td>62.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>113807</td>
+      <td>26.55</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Halifax, NS</td>
+    </tr>
+    <tr>
+      <th>432</th>
+      <td>2</td>
+      <td>1</td>
+      <td>Harris, Mr. George</td>
+      <td>male</td>
+      <td>62.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>S.W./PP 752</td>
+      <td>10.5</td>
+      <td>?</td>
+      <td>S</td>
+      <td>15</td>
+      <td>?</td>
+      <td>London</td>
+    </tr>
+    <tr>
+      <th>455</th>
+      <td>2</td>
+      <td>0</td>
+      <td>Howard, Mr. Benjamin</td>
+      <td>male</td>
+      <td>63.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>24065</td>
+      <td>26</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Swindon, England</td>
+    </tr>
+    <tr>
+      <th>487</th>
+      <td>2</td>
+      <td>0</td>
+      <td>Lingane, Mr. John</td>
+      <td>male</td>
+      <td>61.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>235509</td>
+      <td>12.35</td>
+      <td>?</td>
+      <td>Q</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>506</th>
+      <td>2</td>
+      <td>0</td>
+      <td>Mitchell, Mr. Henry Michael</td>
+      <td>male</td>
+      <td>70.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>C.A. 24580</td>
+      <td>10.5</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Guernsey / Montclair, NJ and/or Toledo, Ohio</td>
+    </tr>
+    <tr>
+      <th>511</th>
+      <td>2</td>
+      <td>0</td>
+      <td>Myles, Mr. Thomas Francis</td>
+      <td>male</td>
+      <td>62.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>240276</td>
+      <td>9.6875</td>
+      <td>?</td>
+      <td>Q</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Cambridge, MA</td>
+    </tr>
+    <tr>
+      <th>594</th>
+      <td>2</td>
+      <td>0</td>
+      <td>Wheadon, Mr. Edward H</td>
+      <td>male</td>
+      <td>66.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>C.A. 24579</td>
+      <td>10.5</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Guernsey, England / Edgewood, RI</td>
+    </tr>
+    <tr>
+      <th>727</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Connors, Mr. Patrick</td>
+      <td>male</td>
+      <td>70.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>370369</td>
+      <td>7.75</td>
+      <td>?</td>
+      <td>Q</td>
+      <td>?</td>
+      <td>171</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>782</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Duane, Mr. Frank</td>
+      <td>male</td>
+      <td>65.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>336439</td>
+      <td>7.75</td>
+      <td>?</td>
+      <td>Q</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1068</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Nysveen, Mr. Johan Hansen</td>
+      <td>male</td>
+      <td>61.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>345364</td>
+      <td>6.2375</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1225</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Storey, Mr. Thomas</td>
+      <td>male</td>
+      <td>60.5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>3701</td>
+      <td>?</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>261</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1235</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Svensson, Mr. Johan</td>
+      <td>male</td>
+      <td>74.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>347060</td>
+      <td>7.775</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1261</th>
+      <td>3</td>
+      <td>1</td>
+      <td>Turkula, Mrs. (Hedwig)</td>
+      <td>female</td>
+      <td>63.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>4134</td>
+      <td>9.5875</td>
+      <td>?</td>
+      <td>S</td>
+      <td>15</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+# 欠損地の扱い
+
+```
+
+# 欠損値でないものの数
+
+df["age"].count().sum()
+
+```
+
+    1046
+
+```
+
+# 欠損値の数
+
+df["age"].isnull().sum()
+
+# df["age"].isnull().any()
+
+```
+
+    263
+
+```
+
+# 欠損値がある行の表示
+
+df[df['age'].isnull()]
+
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pclass</th>
+      <th>survived</th>
+      <th>name</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>ticket</th>
+      <th>fare</th>
+      <th>cabin</th>
+      <th>embarked</th>
+      <th>boat</th>
+      <th>body</th>
+      <th>home.dest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Baumann, Mr. John D</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17318</td>
+      <td>25.925</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>37</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Bradley, Mr. George ('George Arthur Brayton')</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>111427</td>
+      <td>26.55</td>
+      <td>?</td>
+      <td>S</td>
+      <td>9</td>
+      <td>?</td>
+      <td>Los Angeles, CA</td>
+    </tr>
+    <tr>
+      <th>40</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Brewe, Dr. Arthur Jackson</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>112379</td>
+      <td>39.6</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Philadelphia, PA</td>
+    </tr>
+    <tr>
+      <th>46</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Cairns, Mr. Alexander</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>113798</td>
+      <td>31</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>59</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Cassebeer, Mrs. Henry Arthur Jr (Eleanor Genev...</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>17770</td>
+      <td>27.7208</td>
+      <td>?</td>
+      <td>C</td>
+      <td>5</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>1293</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Williams, Mr. Howard Hugh 'Harry'</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A/5 2466</td>
+      <td>8.05</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1297</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Wiseman, Mr. Phillippe</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>A/4. 34244</td>
+      <td>7.25</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1302</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Yousif, Mr. Wazli</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2647</td>
+      <td>7.225</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1303</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Yousseff, Mr. Gerious</td>
+      <td>male</td>
+      <td>NaN</td>
+      <td>0</td>
+      <td>0</td>
+      <td>2627</td>
+      <td>14.4583</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+    <tr>
+      <th>1305</th>
+      <td>3</td>
+      <td>0</td>
+      <td>Zabour, Miss. Thamine</td>
+      <td>female</td>
+      <td>NaN</td>
+      <td>1</td>
+      <td>0</td>
+      <td>2665</td>
+      <td>14.4542</td>
+      <td>?</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>?</td>
+    </tr>
+  </tbody>
+</table>
+<p>263 rows × 14 columns</p>
+
+</div>
+
+```
+
+# 欠損値を持つ行の削除
+
+# df.dropna()
+
+len(df.copy().dropna().index)
+
+```
+
+    1046
+
+```
+
+# 欠損値を持つ列の削除
+
+len(df.copy().dropna(axis=1).columns)
+
+```
+
+    13
+
+```
+
+# 欠損値を 0 で置換
+
+df.fillna(0).at[15,"age"]
+
+```
+
+    0.0
+
+```
+
+# 欠損値を平均値で置換
+
+df.fillna(df.mean()).at[15,"age"]
+
+# median() 中央値
+
+# mode() 最頻値
+
+```
+
+    29.8811345124283
+
+```
+
+# 欠損値を前の値で置換
+
+df.fillna(method='ffill').loc[[14, 15, 16]]
+
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pclass</th>
+      <th>survived</th>
+      <th>name</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>ticket</th>
+      <th>fare</th>
+      <th>cabin</th>
+      <th>embarked</th>
+      <th>boat</th>
+      <th>body</th>
+      <th>home.dest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Barkworth, Mr. Algernon Henry Wilson</td>
+      <td>male</td>
+      <td>80.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>27042</td>
+      <td>30</td>
+      <td>A23</td>
+      <td>S</td>
+      <td>B</td>
+      <td>?</td>
+      <td>Hessle, Yorks</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Baumann, Mr. John D</td>
+      <td>male</td>
+      <td>80.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17318</td>
+      <td>25.925</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Baxter, Mr. Quigg Edmond</td>
+      <td>male</td>
+      <td>24.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>PC 17558</td>
+      <td>247.5208</td>
+      <td>B58 B60</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Montreal, PQ</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+```
+
+# 欠損値を後ろの値で置換
+
+df.fillna(method='bfill').loc[[14, 15, 16]]
+
+```
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>pclass</th>
+      <th>survived</th>
+      <th>name</th>
+      <th>sex</th>
+      <th>age</th>
+      <th>sibsp</th>
+      <th>parch</th>
+      <th>ticket</th>
+      <th>fare</th>
+      <th>cabin</th>
+      <th>embarked</th>
+      <th>boat</th>
+      <th>body</th>
+      <th>home.dest</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>14</th>
+      <td>1</td>
+      <td>1</td>
+      <td>Barkworth, Mr. Algernon Henry Wilson</td>
+      <td>male</td>
+      <td>80.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>27042</td>
+      <td>30</td>
+      <td>A23</td>
+      <td>S</td>
+      <td>B</td>
+      <td>?</td>
+      <td>Hessle, Yorks</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Baumann, Mr. John D</td>
+      <td>male</td>
+      <td>24.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>PC 17318</td>
+      <td>25.925</td>
+      <td>?</td>
+      <td>S</td>
+      <td>?</td>
+      <td>?</td>
+      <td>New York, NY</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>1</td>
+      <td>0</td>
+      <td>Baxter, Mr. Quigg Edmond</td>
+      <td>male</td>
+      <td>24.0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>PC 17558</td>
+      <td>247.5208</td>
+      <td>B58 B60</td>
+      <td>C</td>
+      <td>?</td>
+      <td>?</td>
+      <td>Montreal, PQ</td>
+    </tr>
+  </tbody>
+</table>
+
+</div>
+
+```
+
+```
+
+```
+
+```
