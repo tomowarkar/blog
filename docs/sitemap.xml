@@ -3,6 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tomowarkar.github.io/blog/tags/bash/</loc>
+    <lastmod>2020-05-03T06:47:36+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/posts/bash_parallel_brace/</loc>
+    <lastmod>2020-05-03T06:47:36+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/memo/</loc>
+    <lastmod>2020-05-03T06:47:36+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/posts/</loc>
+    <lastmod>2020-05-03T06:47:36+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/</loc>
+    <lastmod>2020-05-03T06:47:36+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/</loc>
+    <lastmod>2020-05-03T06:47:36+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tomowarkar.github.io/blog/tags/colab/</loc>
     <lastmod>2020-05-02T21:09:14+09:00</lastmod>
   </url>
@@ -13,32 +43,12 @@
   </url>
   
   <url>
-    <loc>https://tomowarkar.github.io/blog/posts/</loc>
-    <lastmod>2020-05-02T21:09:14+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://tomowarkar.github.io/blog/tags/python/</loc>
     <lastmod>2020-05-02T21:09:14+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://tomowarkar.github.io/blog/tags/</loc>
-    <lastmod>2020-05-02T21:09:14+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/</loc>
-    <lastmod>2020-05-02T21:09:14+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://tomowarkar.github.io/blog/tags/algorithm/</loc>
-    <lastmod>2020-04-28T20:05:19+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/bash/</loc>
     <lastmod>2020-04-28T20:05:19+09:00</lastmod>
   </url>
   
@@ -115,11 +125,6 @@
   <url>
     <loc>https://tomowarkar.github.io/blog/posts/nlp100-02-py/</loc>
     <lastmod>2020-04-22T13:01:34+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/memo/</loc>
-    <lastmod>2020-04-21T19:16:51+09:00</lastmod>
   </url>
   
   <url>

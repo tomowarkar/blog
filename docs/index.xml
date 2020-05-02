@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Sat, 02 May 2020 21:09:14 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 03 May 2020 06:47:36 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Bashにおけるloopとかブレース展開とか並列行処理とか</title>
+      <link>https://tomowarkar.github.io/blog/posts/bash_parallel_brace/</link>
+      <pubDate>Sun, 03 May 2020 06:47:36 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/bash_parallel_brace/</guid>
+      <description>ブレース展開 # こんなんとか echo {1..10} #&amp;gt; 1 2 3 4 5 6 7 8 9 10 # こんなんとか echo {{a..z},{A..Z}} #&amp;gt; a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H</description>
+    </item>
     
     <item>
       <title>Pandasの基本操作まとめ</title>

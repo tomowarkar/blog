@@ -6,8 +6,205 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Sat, 02 May 2020 21:09:14 +0900</lastBuildDate>
+        <lastBuildDate>Sun, 03 May 2020 06:47:36 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Bashにおけるloopとかブレース展開とか並列行処理とか</title>
+            <link>https://tomowarkar.github.io/blog/posts/bash_parallel_brace/</link>
+            <pubDate>Sun, 03 May 2020 06:47:36 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/bash_parallel_brace/</guid>
+            <description>ブレース展開 # こんなんとか echo {1..10} #&amp;gt; 1 2 3 4 5 6 7 8 9 10 # こんなんとか echo {{a..z},{A..Z}} #&amp;gt; a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H</description>
+            <content type="html"><![CDATA[<h2 id="ブレース展開">ブレース展開</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># こんなんとか</span>
+echo <span style="color:#f92672">{</span>1..10<span style="color:#f92672">}</span> <span style="color:#75715e">#&gt; 1 2 3 4 5 6 7 8 9 10</span>
+
+<span style="color:#75715e"># こんなんとか</span>
+echo <span style="color:#f92672">{{</span>a..z<span style="color:#f92672">}</span>,<span style="color:#f92672">{</span>A..Z<span style="color:#f92672">}}</span> <span style="color:#75715e">#&gt; a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</span>
+</code></pre></div><h4 id="深いディレクトリ操作とかで便利">深いディレクトリ操作とかで便利</h4>
+<p>ファイル名を typo した時の変更とかに</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mv content/posts/bash_parallel_<span style="color:#f92672">{</span>braves,brace<span style="color:#f92672">}</span>.md
+</code></pre></div><p>以下と同意</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mv content/posts/bash_parallel_braves.md content/posts/bash_parallel_brace.md
+</code></pre></div><p>もちろん<code>cp</code> や <code>touch</code>などでも使える</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mkdir -p test/<span style="color:#f92672">{</span>hoga,hige<span style="color:#f92672">}</span>/<span style="color:#f92672">{</span>1..3<span style="color:#f92672">}</span>
+$ tree test/
+test/
+├── hige
+│   ├── <span style="color:#ae81ff">1</span>
+│   ├── <span style="color:#ae81ff">2</span>
+│   └── <span style="color:#ae81ff">3</span>
+└── hoga
+    ├── <span style="color:#ae81ff">1</span>
+    ├── <span style="color:#ae81ff">2</span>
+    └── <span style="color:#ae81ff">3</span>
+</code></pre></div><h3 id="mac-のブレース展開で詰まったところ">Mac のブレース展開で詰まったところ</h3>
+<p>年月を<code>%Y%m</code>で表示したい</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 期待</span>
+echo <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}{</span>01..12<span style="color:#f92672">}</span> <span style="color:#75715e">#&gt; 202001 202002 202003 202004 202005 202006 202007 202008 202009 202010 202011 202012</span>
+
+<span style="color:#75715e"># 現実 #&gt; 20201 20202 20203 20204 20205 20206 20207 20208 20209 202010 202011 202012</span>
+</code></pre></div><p>0 パディングされなくて悲しい</p>
+<h3 id="解決策">解決策</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ゴリ押し法</span>
+echo <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}{{</span>01,02,03,04,05,06,07,08,09<span style="color:#f92672">}</span>,<span style="color:#f92672">{</span>10..12<span style="color:#f92672">}}</span>
+
+<span style="color:#75715e"># xargs and printf法</span>
+str<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#f92672">{</span>01..12<span style="color:#f92672">}</span> | xargs -n1 -I<span style="color:#f92672">{}</span> printf <span style="color:#e6db74">&#34;%02d,&#34;</span> <span style="color:#f92672">{}</span> | sed -e <span style="color:#e6db74">&#39;s/,$//g&#39;</span><span style="color:#66d9ef">)</span>
+eval echo <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}{</span>$str<span style="color:#f92672">}</span>
+
+<span style="color:#75715e"># seq and sed法</span>
+str<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>seq -w -s <span style="color:#e6db74">&#39;,&#39;</span> <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">12</span> | sed -e <span style="color:#e6db74">&#39;s/,$//g&#39;</span><span style="color:#66d9ef">)</span>
+eval echo <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}{</span>$str<span style="color:#f92672">}</span>
+
+<span style="color:#75715e"># sed法</span>
+str<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>echo <span style="color:#f92672">{</span>101..112<span style="color:#f92672">}</span> | sed -e <span style="color:#e6db74">&#39;s/1\([0-9]\{2\}\)/\1/g&#39;</span> -e <span style="color:#e6db74">&#39;s/\ /,/g&#39;</span><span style="color:#66d9ef">)</span>
+eval echo <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}{</span>$str<span style="color:#f92672">}</span>
+</code></pre></div><h2 id="for-loop-の速度">for loop の速度</h2>
+<p>ところで年月を<code>%Y%m</code>で表示したいと考えたときに一番簡単に実装できる方法が<code>for loop</code>を用いた実装ではないだろうか</p>
+<p>巷では<code>for loop</code>は遅いと言われているが実際はどうなのか確かめてみる。</p>
+<h3 id="0-パディングなし">0 パディングなし</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">f1<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">for</span> yy in <span style="color:#66d9ef">$(</span>seq <span style="color:#ae81ff">2020</span> 2020<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+        <span style="color:#66d9ef">for</span> m in <span style="color:#66d9ef">$(</span>seq <span style="color:#ae81ff">1</span> 12<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+            echo $yy$m &gt;/dev/null
+        <span style="color:#66d9ef">done</span>
+    <span style="color:#66d9ef">done</span>
+<span style="color:#f92672">}</span>
+time -p <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..1000<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> f1; <span style="color:#66d9ef">done</span><span style="color:#f92672">)</span>
+<span style="color:#75715e"># &gt;real 5.02 user 1.53 sys 2.75</span>
+
+f2<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">for</span> yy in <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span>
+        <span style="color:#66d9ef">for</span> m in <span style="color:#f92672">{</span>1..12<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span>
+            echo $yy$m &gt;/dev/null
+        <span style="color:#66d9ef">done</span>
+    <span style="color:#66d9ef">done</span>
+<span style="color:#f92672">}</span>
+time -p <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..1000<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> f2; <span style="color:#66d9ef">done</span><span style="color:#f92672">)</span>
+<span style="color:#75715e"># &gt;real 0.44 user 0.21 sys 0.23</span>
+
+<span style="color:#75715e">## 比較</span>
+time -p <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..1000<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> echo <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}{{</span>01,02,03,04,05,06,07,08,09<span style="color:#f92672">}</span>,<span style="color:#f92672">{</span>10..12<span style="color:#f92672">}}</span>&gt;/dev/null; <span style="color:#66d9ef">done</span><span style="color:#f92672">)</span>
+<span style="color:#75715e">#&gt; real 0.08 user 0.06 sys 0.02</span>
+</code></pre></div><h4 id="question">question</h4>
+<p>こちらのが比較としてより正しい気がするけどどうなのだろうか(ちなみにものすごく遅い)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">time -p <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..1000<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> echo <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}{{</span>01,02,03,04,05,06,07,08,09<span style="color:#f92672">}</span>,<span style="color:#f92672">{</span>10..12<span style="color:#f92672">}}</span>| xargs -n1 -I<span style="color:#f92672">{}</span> echo <span style="color:#f92672">{}</span> &gt;/dev/null; <span style="color:#66d9ef">done</span><span style="color:#f92672">)</span>
+<span style="color:#75715e"># &gt;real 16.82 user 5.57 sys 10.83</span>
+
+<span style="color:#75715e"># 並列処理しても遅い</span>
+time -p <span style="color:#f92672">(</span><span style="color:#66d9ef">for</span> i in <span style="color:#f92672">{</span>1..1000<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span> echo <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}{{</span>01,02,03,04,05,06,07,0
+8,09<span style="color:#f92672">}</span>,<span style="color:#f92672">{</span>10..12<span style="color:#f92672">}}</span>| xargs -n1 -P4 -I<span style="color:#f92672">{}</span> echo <span style="color:#f92672">{}</span> &gt;/dev/null; <span style="color:#66d9ef">done</span><span style="color:#f92672">)</span>
+<span style="color:#75715e"># &gt;real 8.99 user 6.64 sys 14.65</span>
+</code></pre></div><h2 id="並列処理">並列処理</h2>
+<p>ついでなので<code>xargs</code>での並列処理についてメモを残しておく</p>
+<h4 id="基本">基本</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ seq <span style="color:#ae81ff">10</span> | xargs echo
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
+
+$ seq <span style="color:#ae81ff">10</span> | xargs -t echo
+echo <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
+
+$ seq <span style="color:#ae81ff">10</span> | xargs -t -n1 echo
+echo <span style="color:#ae81ff">1</span>
+<span style="color:#ae81ff">1</span>
+echo <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">2</span>
+echo <span style="color:#ae81ff">3</span>
+<span style="color:#ae81ff">3</span>
+echo <span style="color:#ae81ff">4</span>
+<span style="color:#ae81ff">4</span>
+echo <span style="color:#ae81ff">5</span>
+<span style="color:#ae81ff">5</span>
+echo <span style="color:#ae81ff">6</span>
+<span style="color:#ae81ff">6</span>
+echo <span style="color:#ae81ff">7</span>
+<span style="color:#ae81ff">7</span>
+echo <span style="color:#ae81ff">8</span>
+<span style="color:#ae81ff">8</span>
+echo <span style="color:#ae81ff">9</span>
+<span style="color:#ae81ff">9</span>
+echo <span style="color:#ae81ff">10</span>
+<span style="color:#ae81ff">10</span>
+</code></pre></div><ul>
+<li><code>-t</code> 実行コマンドを表示</li>
+<li><code>-n</code> 引数の数を指定</li>
+</ul>
+<h4 id="n-コマンドと-l-コマンドの違い">n コマンドと L コマンドの違い</h4>
+<ul>
+<li><code>-n</code> 区切り文字 <code>' '</code>(スペース)で分割?</li>
+<li><code>-L</code> 区切り文字 <code>\n</code>で分割?</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># 以下二つは同様の結果を示す</span>
+$ seq <span style="color:#ae81ff">10</span> | xargs -t -n3 echo
+$ seq <span style="color:#ae81ff">10</span> | xargs -t -L3 echo
+
+<span style="color:#75715e"># 違い</span>
+$ seq  -s <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#ae81ff">10</span> | xargs -t -n3 echo
+echo <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span>
+echo <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>
+<span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>
+echo <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span>
+<span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span>
+echo <span style="color:#ae81ff">10</span>
+<span style="color:#ae81ff">10</span>
+$ seq  -s <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#ae81ff">10</span> | xargs -t -L3 echo
+echo <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
+<span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
+</code></pre></div><h4 id="引数の操作">引数の操作</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ seq <span style="color:#ae81ff">10</span> | xargs -t -n2 bash -c <span style="color:#e6db74">&#39;[ $0 -gt $1 ] &amp;&amp; echo $0 || echo $1&#39;</span>
+bash -c <span style="color:#f92672">[</span> $0 -gt $1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $0 <span style="color:#f92672">||</span> echo $1 <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span>
+<span style="color:#ae81ff">2</span>
+bash -c <span style="color:#f92672">[</span> $0 -gt $1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $0 <span style="color:#f92672">||</span> echo $1 <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span>
+<span style="color:#ae81ff">4</span>
+bash -c <span style="color:#f92672">[</span> $0 -gt $1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $0 <span style="color:#f92672">||</span> echo $1 <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span>
+<span style="color:#ae81ff">6</span>
+bash -c <span style="color:#f92672">[</span> $0 -gt $1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $0 <span style="color:#f92672">||</span> echo $1 <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span>
+<span style="color:#ae81ff">8</span>
+bash -c <span style="color:#f92672">[</span> $0 -gt $1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $0 <span style="color:#f92672">||</span> echo $1 <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
+<span style="color:#ae81ff">10</span>
+</code></pre></div><h4 id="並列処理-1">並列処理</h4>
+<p>途中経過より正しく並列処理されていることを確認</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">time -p seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="color:#f92672">{}</span> bash -c <span style="color:#e6db74">&#39;echo {} &gt;/dev/null &amp;&amp; sleep 1&#39;</span>
+<span style="color:#75715e"># &gt;real 10.13 user 0.02 sys 0.05</span>
+time -p seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="color:#f92672">{}</span> -P2 bash -c <span style="color:#e6db74">&#39;echo {} &gt;/dev/null &amp;&amp; sleep 1&#39;</span>
+<span style="color:#75715e"># &gt;real 5.07 user 0.02 sys 0.06</span>
+time -p seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="color:#f92672">{}</span> -P10 bash -c <span style="color:#e6db74">&#39;echo {} &gt;/dev/null &amp;&amp; sleep 1&#39;</span>
+<span style="color:#75715e"># &gt;real 1.08 user 0.02 sys 0.07</span>
+</code></pre></div><p>引数の数をしてして実行</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">time seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="color:#f92672">{}</span> -L2 bash -c <span style="color:#e6db74">&#39;echo {} &gt;/dev/null &amp;&amp; sleep 1&#39;</span>
+time seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="color:#f92672">{}</span> -L2 -P2 bash -c <span style="color:#e6db74">&#39;echo {} &gt;/dev/null &amp;&amp; sleep 1&#39;</span>
+</code></pre></div><h3 id="使わなかったコード供養">使わなかったコード供養</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">red<span style="color:#f92672">(){</span> echo <span style="color:#e6db74">$&#39;\e[31m&#39;</span>$1<span style="color:#e6db74">$&#39;\e[0m&#39;</span> ;<span style="color:#f92672">}</span>
+red hoge
+</code></pre></div><p>参考 <a href="https://qiita.com/PruneMazui/items/8a023347772620025ad6">ANSI エスケープシーケンス チートシート</a></p>
+<p>参考 <a href="https://sites.google.com/a/tatsuo.jp/programming/Home/bash/hentai-bunpou-saisoku-masuta#TOC--6">https://sites.google.com/a/tatsuo.jp/programming/Home/bash/hentai-bunpou-saisoku-masuta#TOC--6</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">eval echo <span style="color:#66d9ef">$(</span>echo <span style="color:#f92672">{</span><span style="color:#66d9ef">$(</span>seq -w <span style="color:#ae81ff">1</span> 12<span style="color:#66d9ef">)</span><span style="color:#f92672">}</span> | tr <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#e6db74">&#39;,&#39;</span><span style="color:#66d9ef">)</span> <span style="color:#75715e">#&gt; 01 02 03 04 05 06 07 08 09 10 11 12</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">f2<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">for</span> yy in <span style="color:#f92672">{</span>2020..2020<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span>
+        <span style="color:#66d9ef">for</span> m in <span style="color:#f92672">{</span>1..12<span style="color:#f92672">}</span>; <span style="color:#66d9ef">do</span>
+            <span style="color:#f92672">[</span> $m -lt <span style="color:#ae81ff">10</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> printf <span style="color:#e6db74">&#34;%s0%s\n&#34;</span> $yy $m  <span style="color:#f92672">||</span> echo $yy$m
+        <span style="color:#66d9ef">done</span>
+    <span style="color:#66d9ef">done</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>日付めくりとかだと使えるかもね</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">since<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2020/01/01&#34;</span>
+till<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2020/12/01&#34;</span>
+dy<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gdate -d $since +%Y%m<span style="color:#66d9ef">)</span>
+ft<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gdate -d $till +%Y%m<span style="color:#66d9ef">)</span>
+monthes<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+
+<span style="color:#66d9ef">while</span> <span style="color:#f92672">[</span> $dy -le $ft <span style="color:#f92672">]</span>; <span style="color:#66d9ef">do</span>
+    echo $dy
+    monthes<span style="color:#f92672">=</span><span style="color:#66d9ef">$((</span><span style="color:#f92672">++</span>monthes<span style="color:#66d9ef">))</span>
+    dy<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>gdate -d <span style="color:#e6db74">&#34;</span>$since<span style="color:#e6db74"> </span>$monthes<span style="color:#e6db74"> month&#34;</span> +%Y%m<span style="color:#66d9ef">)</span>
+<span style="color:#66d9ef">done</span>
+
+</code></pre></div>]]></content>
+        </item>
         
         <item>
             <title>Pandasの基本操作まとめ</title>
