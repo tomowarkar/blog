@@ -6,8 +6,197 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Sun, 03 May 2020 06:47:36 +0900</lastBuildDate>
+        <lastBuildDate>Mon, 04 May 2020 22:19:10 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>spaCyを使ってみた ~レンマ化とステミングの違い~</title>
+            <link>https://tomowarkar.github.io/blog/posts/nlp_spacy/</link>
+            <pubDate>Mon, 04 May 2020 22:19:10 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/nlp_spacy/</guid>
+            <description>2020 年版 言語処理 100 本ノック 第 6 章 で自然言語処理ライブラリのspaCyを使った備忘録 Google Colab では標準で入っているので簡単に試してみるにはおすすめ 参考</description>
+            <content type="html"><![CDATA[<p>2020 年版 <a href="https://nlp100.github.io/ja/ch06.html">言語処理 100 本ノック 第 6 章</a> で自然言語処理ライブラリの<code>spaCy</code>を使った備忘録</p>
+<p>Google Colab では標準で入っているので簡単に試してみるにはおすすめ</p>
+<h3 id="参考">参考</h3>
+<p><a href="https://spacy.io/usage/spacy-101">spaCy 101: Everything you need to know</a></p>
+<p><a href="https://qiita.com/miorgash/items/0eda4adcc8d9ecd143e6">spaCy 101: Everything you need to know 和訳</a></p>
+<h2 id="環境">環境</h2>
+<p>Google Colab</p>
+<pre><code>! python -V
+! pip show spacy
+Python 3.6.9
+Name: spacy
+Version: 2.2.4
+Summary: Industrial-strength Natural Language Processing (NLP) in Python
+</code></pre><h2 id="トークン化">トークン化</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> spacy
+nlp <span style="color:#f92672">=</span> spacy<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#34;en_core_web_sm&#34;</span>)
+
+doc <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;So foul and fair a day I have not seen.&#34;</span>)
+
+tokens <span style="color:#f92672">=</span> [e <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> doc]
+<span style="color:#66d9ef">print</span>(tokens) <span style="color:#75715e"># &gt; [So, foul, and, fair, a, day, I, have, not, seen, .]</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">token <span style="color:#f92672">=</span> tokens[<span style="color:#ae81ff">5</span>]
+<span style="color:#66d9ef">print</span>(token<span style="color:#f92672">.</span>text, token<span style="color:#f92672">.</span>lemma_, token<span style="color:#f92672">.</span>pos_, token<span style="color:#f92672">.</span>tag_,
+    token<span style="color:#f92672">.</span>dep_, token<span style="color:#f92672">.</span>shape_, token<span style="color:#f92672">.</span>is_alpha, token<span style="color:#f92672">.</span>is_stop)
+    <span style="color:#75715e"># &gt; day day NOUN NN npadvmod xxx True False</span>
+</code></pre></div><p>右から原文, 基本語形, 品詞, 詳細, 統計, 語形, 英字, ストップワードの順</p>
+<blockquote>
+<p>Text: The original word text.
+Lemma: The base form of the word.
+POS: The simple part-of-speech tag.
+Tag: The detailed part-of-speech tag.
+Dep: Syntactic dependency, i.e. the relation between tokens.
+Shape: The word shape – capitalization, punctuation, digits.
+is alpha: Is the token an alpha character?
+is stop: Is the token part of a stop list, i.e. the most common words of the language?
+参照: spaCy 101: Everything you need to know より</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 品詞によるフィルター</span>
+token_noun <span style="color:#f92672">=</span> [e <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> doc <span style="color:#66d9ef">if</span> e<span style="color:#f92672">.</span>pos_ <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;NOUN&#34;</span>]]
+<span style="color:#66d9ef">print</span>(token_noun) <span style="color:#75715e"># &gt; [day]</span>
+
+<span style="color:#75715e"># ストップワードを除外</span>
+token_excl_sw <span style="color:#f92672">=</span> [e <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> doc <span style="color:#66d9ef">if</span> <span style="color:#f92672">not</span> e<span style="color:#f92672">.</span>is_stop]
+<span style="color:#66d9ef">print</span>(token_excl_sw) <span style="color:#75715e"># &gt; [foul, fair, day, seen, .]</span>
+
+<span style="color:#75715e"># 最低限のクリーニングをするなら。</span>
+token_tidy <span style="color:#f92672">=</span> [e <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> doc <span style="color:#66d9ef">if</span> e<span style="color:#f92672">.</span>pos_ <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;PUNCT&#34;</span>, <span style="color:#e6db74">&#34;SYM&#34;</span>, <span style="color:#e6db74">&#34;SPACE&#34;</span>]]
+<span style="color:#66d9ef">print</span>(token_tidy) <span style="color:#75715e"># &gt; [So, foul, and, fair, a, day, I, have, not, seen]</span>
+</code></pre></div><p>参考: <a href="https://spacy.io/api/annotation#section-pos-tagging">Syntactic Dependency Parsing</a></p>
+<h3 id="固有表現">固有表現</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">doc <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;Apple bought 10 apples for 100 billion yen.&#34;</span>)
+<span style="color:#66d9ef">for</span> ent <span style="color:#f92672">in</span> doc<span style="color:#f92672">.</span>ents:
+    <span style="color:#66d9ef">print</span>(ent<span style="color:#f92672">.</span>text, ent<span style="color:#f92672">.</span>start_char, ent<span style="color:#f92672">.</span>end_char, ent<span style="color:#f92672">.</span>label_)
+</code></pre></div><h5 id="out">out</h5>
+<p>数字の有意性を図るのに使えそう?</p>
+<pre><code>Apple 0 5 ORG
+10 13 15 CARDINAL
+100 billion yen 27 42 MONEY
+</code></pre><h3 id="単語ベクトルと類似性">単語ベクトルと類似性</h3>
+<p>末尾に<code>sm</code>とつく<code>en_core_web_sm</code>のような言語モデルでは単語ベクトルが含まれておらず精度が低い。</p>
+<p>また実行時に<code>ModelsWarning: [W007] The model you're using has no word vectors loaded, so the ...</code>と警告される。</p>
+<p>言語モデルを確認のこと、データ量の大きいモデルをダウンロードすると良い</p>
+<pre><code># python -m spacy download en_core_web_md
+python -m spacy download en_core_web_lg
+</code></pre><p>またさらに上記コードでモデルをダウンロードして、いざ<code>nlp = spacy.load(&quot;en_core_web_lg&quot;)</code>で扱おうとしても
+<code>OSError: [E050] Can't find model 'en_core_web_lg'. It doesn't ...</code>モデルみつかんねーよとエラーが出る場合がある(jupyter notebook や google colab で発現?)</p>
+<p>参考: <a href="https://github.com/explosion/spaCy/issues/4577">spaCy issues #4577</a></p>
+<p>上記 issue にもあるように以下コードで修正した</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> en_core_web_lg
+nlp <span style="color:#f92672">=</span> en_core_web_lg<span style="color:#f92672">.</span>load()
+</code></pre></div><h4 id="類似性">類似性</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dog <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;dog&#34;</span>)
+cat <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;cat&#34;</span>)
+apple <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;apple&#34;</span>)
+
+<span style="color:#66d9ef">print</span>(dog<span style="color:#f92672">.</span>text, cat<span style="color:#f92672">.</span>text, dog<span style="color:#f92672">.</span>similarity(cat))
+<span style="color:#66d9ef">print</span>(dog<span style="color:#f92672">.</span>text, apple<span style="color:#f92672">.</span>text, dog<span style="color:#f92672">.</span>similarity(apple))
+</code></pre></div><p>2 つのモデル(<code>en_core_web_sm</code>, <code>en_core_web_lg</code>)の類似度の結果をそれぞれ載せておく</p>
+<pre><code># モデル en_core_web_sm
+dog cat 0.6549556828973659
+dog apple 0.6209418867452425
+
+# モデル en_core_web_lg
+dog cat 0.8016854705531046
+dog apple 0.2633902481063797
+</code></pre><p><code>sm</code>の方は犬と猫とりんごもそんな変わらない結果となっている。データ量は偉大。</p>
+<h2 id="ハッシュ化">ハッシュ化</h2>
+<p>自分でやろうとしたら管理が面倒なので, 便利だなーって思ったやつ</p>
+<p>文字列にハッシュ 値が割り振られている</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">nlp<span style="color:#f92672">.</span>vocab<span style="color:#f92672">.</span>strings[<span style="color:#e6db74">&#34;apple&#34;</span>] <span style="color:#75715e"># &gt; 8566208034543834098</span>
+
+nlp<span style="color:#f92672">.</span>vocab<span style="color:#f92672">.</span>strings[<span style="color:#ae81ff">3197928453018144401</span>] <span style="color:#75715e"># &gt; &#39;coffee&#39;</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">lexeme <span style="color:#f92672">=</span> nlp<span style="color:#f92672">.</span>vocab[apple<span style="color:#f92672">.</span>text]
+<span style="color:#66d9ef">print</span>(lexeme<span style="color:#f92672">.</span>text, lexeme<span style="color:#f92672">.</span>orth, lexeme<span style="color:#f92672">.</span>shape_, lexeme<span style="color:#f92672">.</span>prefix_, lexeme<span style="color:#f92672">.</span>suffix_,
+            lexeme<span style="color:#f92672">.</span>is_alpha, lexeme<span style="color:#f92672">.</span>is_digit, lexeme<span style="color:#f92672">.</span>is_title, lexeme<span style="color:#f92672">.</span>lang_)
+<span style="color:#75715e"># &gt; apple 8566208034543834098 xxxx a ple True False False en</span>
+</code></pre></div><blockquote>
+<p>Text: The original text of the lexeme.
+Orth: The hash value of the lexeme.
+Shape: The abstract word shape of the lexeme.
+Prefix: By default, the first letter of the word string.
+Suffix: By default, the last three letters of the word string.
+is alpha: Does the lexeme consist of alphabetic characters?
+is digit: Does the lexeme consist of digits?
+参照: spaCy 101: Everything you need to know より</p>
+</blockquote>
+<h2 id="ステミング">ステミング</h2>
+<p>spaCy は Stemming(ステミング)に対応しておらず、代わりに レンマ化(Lemmatization)を使うこととなります。</p>
+<p>ステミングとレンマ化の違いを説明しろと言われてもまだあまり理解しておらず少し難しいので、<code>nltk</code>のスノーボールステマーと簡単な比較をしてみます。</p>
+<h4 id="lemmatization">Lemmatization</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">doc <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;compute computer computed computing computation&#34;</span>)
+<span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> doc:
+    <span style="color:#66d9ef">print</span>(token<span style="color:#f92672">.</span>text<span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; --&gt; &#39;</span> <span style="color:#f92672">+</span> token<span style="color:#f92672">.</span>lemma_)
+</code></pre></div><h4 id="stemming">Stemming</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> nltk.stem.snowball <span style="color:#f92672">import</span> SnowballStemmer
+
+stemmer <span style="color:#f92672">=</span> SnowballStemmer(language<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;english&#39;</span>)
+tokens <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;compute computer computed computing computation&#34;</span><span style="color:#f92672">.</span>split()
+
+<span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> tokens:
+    <span style="color:#66d9ef">print</span>(token <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; --&gt; &#39;</span> <span style="color:#f92672">+</span> stemmer<span style="color:#f92672">.</span>stem(token))
+</code></pre></div><h5 id="out-1">out</h5>
+<pre><code># Lemmatization
+compute --&gt; compute
+computer --&gt; computer
+computed --&gt; compute
+computing --&gt; compute
+computation --&gt; computation
+
+# Stemming
+compute --&gt; comput
+computer --&gt; comput
+computed --&gt; comput
+computing --&gt; comput
+computation --&gt; comput
+</code></pre><h4 id="ステミングとレンマ化の違い-2">ステミングとレンマ化の違い 2</h4>
+<p>判別の難しい<code>saw</code>を使って違いを見てみます。
+比較する文は<code>a power saw</code>と<code>I saw the apple</code>で, 結果のみを記します。</p>
+<pre><code># a power saw (Lemmatization)
+a --&gt; a
+power --&gt; power
+saw --&gt; see
+
+# a power saw (Stemming)
+a --&gt; a
+power --&gt; power
+saw --&gt; saw
+
+# I saw the apple (Lemmatization)
+I --&gt; -PRON-
+saw --&gt; see
+the --&gt; the
+apple --&gt; apple
+
+# I saw the apple (Stemming)
+I --&gt; i
+saw --&gt; saw
+the --&gt; the
+apple --&gt; appl
+</code></pre><p>レンマ化ではノコギリの方の<code>saw</code>を<code>see</code>と誤認していますし、ステミンングでは<code>saw</code>を<code>see</code>と見抜けていません
+。またステミンングでは<code>apple --&gt; appl</code>となっています。</p>
+<p>この辺りがステミングとレンマ化の違いと言えるのではないでしょうか。</p>
+<p>ステミングでは主に接尾の除去による処理が行われ、レンマ化では辞書参照が行われているという認識でしょうか?</p>
+<p>とはいえステミングとレンマ化の違いは手段の違いでしかないので、目的に合わせて判断やチューニングするのが大事でしょう。(自分は目的がうまく達成されるならどっちでもいいと捉えます)</p>
+<h4 id="眺めた記事たち">眺めた記事たち</h4>
+<ul>
+<li><a href="https://stackabuse.com/python-for-nlp-tokenization-stemming-and-lemmatization-with-spacy-library/">Python for NLP: Tokenization, Stemming, and Lemmatization with SpaCy Library</a></li>
+<li><a href="https://www.haya-programming.com/entry/2018/03/25/203836">【python】nltk で英語の Stemming と Lemmatization</a></li>
+<li><a href="https://stackoverflow.com/questions/1787110/what-is-the-difference-between-lemmatization-vs-stemming">What is the difference between lemmatization vs stemming?</a></li>
+<li><a href="https://www.quora.com/What-are-the-advantages-of-Spacy-vs-NLTK">What-are-the-advantages-of-Spacy-vs-NLTK</a></li>
+</ul>
+<h2 id="おわりに">おわりに</h2>
+<p>英語での自然言語処理を始めようとしたとき、機械的に空白で tokenize して、正規表現でクリーニングして、 <code>nltk</code>のスノーボールステマーでステミングして&hellip; と考えていたものが<code>spaCy</code>でほぼ実装できてしまいました。</p>
+<p>深いレベル(自分でモデルのチューニングをする)の場合は分かりませんが、とりあえず自然言語処理をやってみるという点でこの<code>spaCy</code>は最高に使いやすかったです。</p>
+<p>英語の自然言語処理は進んでるなーって感じです(こなみ)</p>
+<ul>
+<li><a href="https://sunscrapers.com/blog/8-best-python-natural-language-processing-nlp-libraries/">8 best Python Natural Language Processing (NLP) libraries</a></li>
+</ul>
+<p>P.S.　いくら<code>spaCy</code>が高速な言語解析ツールだからといって 10000 行を超える処理をさせると数分かかる(処理速度 ms 単位)</p>
+]]></content>
+        </item>
         
         <item>
             <title>Bashにおけるloopとかブレース展開とか並列行処理とか</title>

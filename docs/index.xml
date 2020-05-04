@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Sun, 03 May 2020 06:47:36 +0900</lastBuildDate>
+    <lastBuildDate>Mon, 04 May 2020 22:19:10 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>spaCyを使ってみた ~レンマ化とステミングの違い~</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp_spacy/</link>
+      <pubDate>Mon, 04 May 2020 22:19:10 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp_spacy/</guid>
+      <description>2020 年版 言語処理 100 本ノック 第 6 章 で自然言語処理ライブラリのspaCyを使った備忘録 Google Colab では標準で入っているので簡単に試してみるにはおすすめ 参考</description>
+    </item>
     
     <item>
       <title>Bashにおけるloopとかブレース展開とか並列行処理とか</title>
