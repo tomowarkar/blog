@@ -119,7 +119,7 @@ seq 30 | sed 's/.*5$/Buzz/;3~3s/[0-9]*/Fizz/'
 
 参考: [シェルコマンドで FizzBuzz](https://qiita.com/gyu-don/items/f5440b16213200da9775)
 
-### 素数判定
+## 素数判定
 
 速度を考えないのであれば...
 
@@ -144,7 +144,7 @@ done
 seq 100 | gfactor | awk 'NF == 2' | cut -d : -f1
 ```
 
-#### なんか書いたけど使わなかったコード供養
+## なんか書いたけど使わなかったコード供養
 
 ```bash
 max(){ [ $1 -gt $2 ] && echo $1 || echo $2; }

@@ -12,10 +12,14 @@ tags:
 
 Mac で LINE を開くのすら面倒くさい時用
 
+## 参考
+
 - [LINE Messaging API](https://developers.line.biz/ja/services/messaging-api/)
 - [send push message](https://developers.line.biz/ja/docs/messaging-api/sending-messages/#methods-of-sending-message)
 
-#### line.sh
+## コード
+
+### line.sh
 
 ```bash
 #!/bin/bash
@@ -49,7 +53,7 @@ fi
 exit 0
 ```
 
-### Usage
+## Usage
 
 ```bash
 $ # 成功した場合

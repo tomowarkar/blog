@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="">
-<meta name="description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi" />
+<meta name="description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと 30 秒程考えた結果、imgur で管理することにしました。 それに応じて imgur に" />
 <meta name="keywords" content=", imgur, api, bash" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
@@ -31,10 +31,10 @@
 
 
 <meta itemprop="name" content="imgurに画像をアップロードするBashスクリプト">
-<meta itemprop="description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi">
+<meta itemprop="description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと 30 秒程考えた結果、imgur で管理することにしました。 それに応じて imgur に">
 <meta itemprop="datePublished" content="2020-04-10T11:32:50&#43;09:00" />
 <meta itemprop="dateModified" content="2020-04-10T11:32:50&#43;09:00" />
-<meta itemprop="wordCount" content="1114">
+<meta itemprop="wordCount" content="1062">
 <meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
 
 
@@ -43,7 +43,7 @@
 <meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
 
 <meta name="twitter:title" content="imgurに画像をアップロードするBashスクリプト"/>
-<meta name="twitter:description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi"/>
+<meta name="twitter:description" content="選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと 30 秒程考えた結果、imgur で管理することにしました。 それに応じて imgur に"/>
 
 
 
@@ -135,11 +135,7 @@
                 <div class="toc-title">目次</div>
                     <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#なぜこのブログの画像管理にimgurを選んだか">なぜこのブログの画像管理にimgurを選んだか</a></li>
-      </ul>
-    </li>
+    <li><a href="#なぜこのブログの画像管理に-imgur-を選んだか">なぜこのブログの画像管理に imgur を選んだか</a></li>
     <li><a href="#スクリプト本文">スクリプト本文</a>
       <ul>
         <li><a href="#依存">依存</a></li>
@@ -149,11 +145,11 @@
     <li><a href="#個人的ポイント">個人的ポイント</a>
       <ul>
         <li><a href="#アップロード前のリサイズ">アップロード前のリサイズ</a></li>
-        <li><a href="#アウトプットをhugoのショートコードで出力">アウトプットをHugoのショートコードで出力</a></li>
+        <li><a href="#アウトプットを-hugo-のショートコードで出力">アウトプットを Hugo のショートコードで出力</a></li>
         <li><a href="#rm-の仕様">rm の仕様</a></li>
-        <li><a href="#参考">参考</a></li>
       </ul>
     </li>
+    <li><a href="#参考">参考</a></li>
   </ul>
 </nav>
                 </aside>
@@ -163,12 +159,12 @@
 
             <div class="post-content">
                 <p>選ばれたのは<a href="https://imgur.com/">imgur</a>でした.</p>
-<p>このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。</p>
-<p>それに応じてimgurにブログ用の画像を簡単にアップロードするbashスクリプトを書いたので備忘録。</p>
-<h3 id="なぜこのブログの画像管理にimgurを選んだか">なぜこのブログの画像管理にimgurを選んだか</h3>
-<p>imgurを選んだ理由はこんな感じ</p>
+<p>このブログでの画像の管理をどうしようかと 30 秒程考えた結果、imgur で管理することにしました。</p>
+<p>それに応じて imgur にブログ用の画像を簡単にアップロードする bash スクリプトを書いたので備忘録。</p>
+<h2 id="なぜこのブログの画像管理に-imgur-を選んだか">なぜこのブログの画像管理に imgur を選んだか</h2>
+<p>imgur を選んだ理由はこんな感じ</p>
 <ul>
-<li>apiが使える</li>
+<li>api が使える</li>
 <li>無料であある</li>
 <li>投稿オプションが豊富(匿名、アルバム, タグなど)</li>
 </ul>
@@ -177,7 +173,7 @@
 <li>画像サイズ制限</li>
 <li>使われない画像の自動削除</li>
 </ul>
-<p>などがあるが、画像サイズ制限はそこまで画質を重視しないのと,アップロード時の通信料を考えて元々圧縮した画像をアップロードするつもりなのでOK</p>
+<p>などがあるが、画像サイズ制限はそこまで画質を重視しないのと,アップロード時の通信料を考えて元々圧縮した画像をアップロードするつもりなので OK</p>
 <p>使われない画像の自動削除については正直どうなるか未知数なので、今後の運用を見て適宜考えていくこととする。とはいえそこまで画像を多用するつもりはないので最悪消えても大丈夫だろう。</p>
 <h2 id="スクリプト本文">スクリプト本文</h2>
 <h3 id="依存">依存</h3>
@@ -230,11 +226,11 @@ exit <span style="color:#ae81ff">0</span>
 <h2 id="個人的ポイント">個人的ポイント</h2>
 <h3 id="アップロード前のリサイズ">アップロード前のリサイズ</h3>
 <pre><code>ffmpeg -i &quot;$1&quot; -vf scale=600:-1 $tmp_img
-</code></pre><p>私のMac(MacBook Pro, 13-inch, 2016)でフルサイズのスクリーンショットをすると 2880×1800 の画像が保存される518万画素の3K画質である。</p>
-<p>流石にそんなに高画質な画像は必要ないのと、手軽さを考え横のスケールを600pxに圧縮してアップロードすることにした。</p>
-<p>フルサイズのスクリーンショットだと 2880×1800 が 600×375になるので約1/23のサイズになる</p>
-<h3 id="アウトプットをhugoのショートコードで出力">アウトプットをHugoのショートコードで出力</h3>
-<p>HugoにはMarkdownで使える便利なショートコードがある</p>
+</code></pre><p>私の Mac(MacBook Pro, 13-inch, 2016)でフルサイズのスクリーンショットをすると 2880×1800 の画像が保存される 518 万画素の 3K 画質である。</p>
+<p>流石にそんなに高画質な画像は必要ないのと、手軽さを考え横のスケールを 600px に圧縮してアップロードすることにした。</p>
+<p>フルサイズのスクリーンショットだと 2880×1800 が 600×375 になるので約 1/23 のサイズになる</p>
+<h3 id="アウトプットを-hugo-のショートコードで出力">アウトプットを Hugo のショートコードで出力</h3>
+<p>Hugo には Markdown で使える便利なショートコードがある</p>
 <p><a href="https://gohugo.io/content-management/shortcodes/">Hugo :: Shortcodes</a></p>
 <p>アウトプットの形をショートコードにすることで画像のリサイズ・アップロードから、ショートコードの生成までを一気に任せてしまうことにした。</p>
 <h3 id="rm-の仕様">rm の仕様</h3>
@@ -247,7 +243,7 @@ fi
 rm $tmp_img
 </code></pre><p>自動生成の $tmp_img は <code>rm</code> で、元画像は <code>mv</code> でゴミ箱へって感じで運用しているが、<code>rm</code> は基本的には不可逆削除って認識であってるのかな?</p>
 <p>軽く調べた限り時間が経ってないのであれば復元手段もあるらしいけど&hellip;</p>
-<h3 id="参考">参考</h3>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://newfivefour.com/unix-imgur-basic-upload.html">https://newfivefour.com/unix-imgur-basic-upload.html</a></li>
 <li><a href="https://apidocs.imgur.com/?version=latest">https://apidocs.imgur.com/?version=latest</a></li>
@@ -263,7 +259,7 @@ rm $tmp_img
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/imgur">imgur</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/api">api</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/bash">bash</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1114 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1062 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-10 11:32 &#43;0900</p>
         </div>

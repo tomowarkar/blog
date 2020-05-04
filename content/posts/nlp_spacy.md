@@ -13,7 +13,7 @@ tags:
 
 Google Colab では標準で入っているので簡単に試してみるにはおすすめ
 
-### 参考
+## 参考
 
 [spaCy 101: Everything you need to know](https://spacy.io/usage/spacy-101)
 
@@ -79,7 +79,7 @@ print(token_tidy) # > [So, foul, and, fair, a, day, I, have, not, seen]
 
 参考: [Syntactic Dependency Parsing](https://spacy.io/api/annotation#section-pos-tagging)
 
-### 固有表現
+## 固有表現
 
 ```python
 doc = nlp("Apple bought 10 apples for 100 billion yen.")
@@ -87,17 +87,15 @@ for ent in doc.ents:
     print(ent.text, ent.start_char, ent.end_char, ent.label_)
 ```
 
-##### out
-
-数字の有意性を図るのに使えそう?
-
 ```
 Apple 0 5 ORG
 10 13 15 CARDINAL
 100 billion yen 27 42 MONEY
 ```
 
-### 単語ベクトルと類似性
+数字の有意性を図るのに使えそう?
+
+## 単語ベクトルと類似性
 
 末尾に`sm`とつく`en_core_web_sm`のような言語モデルでは単語ベクトルが含まれておらず精度が低い。
 
@@ -122,7 +120,7 @@ import en_core_web_lg
 nlp = en_core_web_lg.load()
 ```
 
-#### 類似性
+### 類似性
 
 ```python
 dog = nlp("dog")
@@ -175,13 +173,13 @@ print(lexeme.text, lexeme.orth, lexeme.shape_, lexeme.prefix_, lexeme.suffix_,
 > is digit: Does the lexeme consist of digits?
 > 参照: spaCy 101: Everything you need to know より
 
-## ステミング
+## ステミングとレンマ化
 
 spaCy は Stemming(ステミング)に対応しておらず、代わりに レンマ化(Lemmatization)を使うこととなります。
 
 ステミングとレンマ化の違いを説明しろと言われてもまだあまり理解しておらず少し難しいので、`nltk`のスノーボールステマーと簡単な比較をしてみます。
 
-#### Lemmatization
+### Lemmatization
 
 ```python
 doc = nlp("compute computer computed computing computation")
@@ -189,7 +187,7 @@ for token in doc:
     print(token.text+ ' --> ' + token.lemma_)
 ```
 
-#### Stemming
+### Stemming
 
 ```python
 from nltk.stem.snowball import SnowballStemmer
@@ -200,8 +198,6 @@ tokens = "compute computer computed computing computation".split()
 for token in tokens:
     print(token + ' --> ' + stemmer.stem(token))
 ```
-
-##### out
 
 ```
 # Lemmatization
@@ -219,7 +215,7 @@ computing --> comput
 computation --> comput
 ```
 
-#### ステミングとレンマ化の違い 2
+### ステミングとレンマ化の違い
 
 判別の難しい`saw`を使って違いを見てみます。
 比較する文は`a power saw`と`I saw the apple`で, 結果のみを記します。

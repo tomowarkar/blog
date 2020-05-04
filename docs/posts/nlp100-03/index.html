@@ -34,7 +34,7 @@
 <meta itemprop="description" content="言語処理 100 本ノック(第 3 章: 正規表現) Wikipedia の記事を以下のフォーマットで書き出したファイルjawiki-country.json.gzがある． 1">
 <meta itemprop="datePublished" content="2020-04-23T14:16:41&#43;09:00" />
 <meta itemprop="dateModified" content="2020-04-23T14:16:41&#43;09:00" />
-<meta itemprop="wordCount" content="5551">
+<meta itemprop="wordCount" content="5540">
 <meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
 
 
@@ -135,21 +135,40 @@
                 <div class="toc-title">目次</div>
                     <nav id="TableOfContents">
   <ul>
-    <li><a href="#言語処理-100-本ノック第-3-章-正規表現httpsnlp100githubiojach03html"><a href="https://nlp100.github.io/ja/ch03.html">言語処理 100 本ノック(第 3 章: 正規表現)</a></a>
+    <li><a href="#環境">環境</a></li>
+    <li><a href="#20-json-データの読み込み">20. JSON データの読み込み</a></li>
+    <li><a href="#21-カテゴリ名を含む行を抽出">21. カテゴリ名を含む行を抽出</a></li>
+    <li><a href="#22-カテゴリ名の抽出-permalink">22. カテゴリ名の抽出 Permalink</a>
       <ul>
-        <li><a href="#環境">環境</a></li>
-        <li><a href="#20-json-データの読み込み">20. JSON データの読み込み</a></li>
-        <li><a href="#21-カテゴリ名を含む行を抽出">21. カテゴリ名を含む行を抽出</a></li>
-        <li><a href="#22-カテゴリ名の抽出-permalink">22. カテゴリ名の抽出 Permalink</a></li>
-        <li><a href="#23-セクション構造-permalink">23. セクション構造 Permalink</a></li>
-        <li><a href="#24-ファイル参照の抽出">24. ファイル参照の抽出</a></li>
-        <li><a href="#25-テンプレートの抽出">25. テンプレートの抽出</a></li>
-        <li><a href="#26-強調マークアップの除去-permalink">26. 強調マークアップの除去 Permalink</a></li>
-        <li><a href="#27-内部リンクの除去">27. 内部リンクの除去</a></li>
-        <li><a href="#28-mediawiki-マークアップの除去">28. MediaWiki マークアップの除去</a></li>
-        <li><a href="#29-国旗画像の-url-を取得する">29. 国旗画像の URL を取得する</a></li>
+        <li><a href="#純粋なカテゴリ名を取得">純粋なカテゴリ名を取得</a></li>
       </ul>
     </li>
+    <li><a href="#23-セクション構造-permalink">23. セクション構造 Permalink</a>
+      <ul>
+        <li><a href="#きれいに書くならこう">きれいに書くならこう?</a></li>
+        <li><a href="#memo">memo</a></li>
+      </ul>
+    </li>
+    <li><a href="#24-ファイル参照の抽出">24. ファイル参照の抽出</a></li>
+    <li><a href="#25-テンプレートの抽出">25. テンプレートの抽出</a>
+      <ul>
+        <li><a href="#memo-1">memo</a></li>
+        <li><a href="#debug">debug</a></li>
+        <li><a href="#memo-2">memo</a></li>
+      </ul>
+    </li>
+    <li><a href="#26-強調マークアップの除去-permalink">26. 強調マークアップの除去 Permalink</a></li>
+    <li><a href="#27-内部リンクの除去">27. 内部リンクの除去</a>
+      <ul>
+        <li><a href="#memo-3">memo</a></li>
+      </ul>
+    </li>
+    <li><a href="#28-mediawiki-マークアップの除去">28. MediaWiki マークアップの除去</a>
+      <ul>
+        <li><a href="#memo-4">memo</a></li>
+      </ul>
+    </li>
+    <li><a href="#29-国旗画像の-url-を取得する">29. 国旗画像の URL を取得する</a></li>
   </ul>
 </nav>
                 </aside>
@@ -158,7 +177,7 @@
             
 
             <div class="post-content">
-                <h2 id="言語処理-100-本ノック第-3-章-正規表現httpsnlp100githubiojach03html"><a href="https://nlp100.github.io/ja/ch03.html">言語処理 100 本ノック(第 3 章: 正規表現)</a></h2>
+                <p><a href="https://nlp100.github.io/ja/ch03.html">言語処理 100 本ノック(第 3 章: 正規表現)</a></p>
 <blockquote>
 <p>Wikipedia の記事を以下のフォーマットで書き出したファイル<a href="https://nlp100.github.io/data/jawiki-country.json.gz">jawiki-country.json.gz</a>がある．
 1 行に 1 記事の情報が JSON 形式で格納される
@@ -166,7 +185,7 @@
 ファイル全体は gzip で圧縮される
 以下の処理を行うプログラムを作成せよ．</p>
 </blockquote>
-<h3 id="環境">環境</h3>
+<h2 id="環境">環境</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
 ProductName:    Mac OS X
 ProductVersion: 10.15.4
@@ -174,7 +193,7 @@ BuildVersion:   19E266
 
 $ python3 -V
 Python 3.6.8
-</code></pre></div><h3 id="20-json-データの読み込み">20. JSON データの読み込み</h3>
+</code></pre></div><h2 id="20-json-データの読み込み">20. JSON データの読み込み</h2>
 <p>Wikipedia 記事の JSON ファイルを読み込み，「イギリス」に関する記事本文を表示せよ．問題 21-29 では，ここで抽出した記事本文に対して実行せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gzip
 <span style="color:#f92672">import</span> json
@@ -187,20 +206,18 @@ uk, <span style="color:#f92672">*</span>_ <span style="color:#f92672">=</span> l
 
 uk_text <span style="color:#f92672">=</span> uk<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;text&#34;</span>)
 <span style="color:#66d9ef">print</span>(uk_text)
-</code></pre></div><h4 id="out">out</h4>
-<pre><code>{{redirect|UK}}
+</code></pre></div><pre><code>{{redirect|UK}}
 {{redirect|英国|春秋時代の諸侯国|英 (春秋)}}
 {{Otheruses|ヨーロッパの国|長崎県・熊本県の郷土料理|いぎりす}}
 {{基礎情報 国
 |略名  =イギリス
 ...
-</code></pre><h3 id="21-カテゴリ名を含む行を抽出">21. カテゴリ名を含む行を抽出</h3>
+</code></pre><h2 id="21-カテゴリ名を含む行を抽出">21. カテゴリ名を含む行を抽出</h2>
 <p>記事中でカテゴリ名を宣言している行を抽出せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
 category_lines <span style="color:#f92672">=</span> list(filter(<span style="color:#66d9ef">lambda</span> x:re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[Category:.*?\]\]&#34;</span>, x), uk_text<span style="color:#f92672">.</span>splitlines()))
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>category_lines, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-1">out</h4>
-<pre><code>[[Category:イギリス|*]]
+</code></pre></div><pre><code>[[Category:イギリス|*]]
 [[Category:イギリス連邦加盟国]]
 [[Category:英連邦王国|*]]
 [[Category:G8加盟国]]
@@ -209,12 +226,11 @@ category_lines <span style="color:#f92672">=</span> list(filter(<span style="col
 [[Category:現存する君主国]]
 [[Category:島国]]
 [[Category:1801年に成立した国家・領域]]
-</code></pre><h3 id="22-カテゴリ名の抽出-permalink">22. カテゴリ名の抽出 Permalink</h3>
+</code></pre><h2 id="22-カテゴリ名の抽出-permalink">22. カテゴリ名の抽出 Permalink</h2>
 <p>記事のカテゴリ名を（行単位ではなく名前で）抽出せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">categories <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[Category:(.*?)\]\]&#34;</span>, uk_text)
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>categories, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-2">out</h4>
-<pre><code>イギリス|*
+</code></pre></div><pre><code>イギリス|*
 イギリス連邦加盟国
 英連邦王国|*
 G8加盟国
@@ -223,11 +239,10 @@ G8加盟国
 現存する君主国
 島国
 1801年に成立した国家・領域
-</code></pre><h4 id="純粋なカテゴリ名を取得">純粋なカテゴリ名を取得</h4>
+</code></pre><h3 id="純粋なカテゴリ名を取得">純粋なカテゴリ名を取得</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">categories <span style="color:#f92672">=</span> [c <span style="color:#66d9ef">for</span> c, _ <span style="color:#f92672">in</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[Category:(.*?)(\|.*)?\]\]&#34;</span>, uk_text)]
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>categories, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-3">out</h4>
-<pre><code>イギリス
+</code></pre></div><pre><code>イギリス
 イギリス連邦加盟国
 英連邦王国
 G8加盟国
@@ -236,16 +251,15 @@ G8加盟国
 現存する君主国
 島国
 1801年に成立した国家・領域
-</code></pre><h3 id="23-セクション構造-permalink">23. セクション構造 Permalink</h3>
+</code></pre><h2 id="23-セクション構造-permalink">23. セクション構造 Permalink</h2>
 <p>記事中に含まれるセクション名とそのレベル（例えば”== セクション名 ==”なら 1）を表示せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sections <span style="color:#f92672">=</span> list(filter(<span style="color:#66d9ef">lambda</span> x: re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;^=(.+)=$&#34;</span>, x), uk_text<span style="color:#f92672">.</span>splitlines()))
 section_levels <span style="color:#f92672">=</span> [(section<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;=&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>), section<span style="color:#f92672">.</span>count(<span style="color:#e6db74">&#34;=&#34;</span>)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> section <span style="color:#f92672">in</span> sections]
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>section_levels, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="きれいに書くならこう">きれいに書くならこう?</h4>
+</code></pre></div><h3 id="きれいに書くならこう">きれいに書くならこう?</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> section_structure <span style="color:#f92672">=</span> [(j, len(i) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> i, j <span style="color:#f92672">in</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;(=+)(.*?)\1\n&#34;</span>, uk_text)]
  <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>section_structure, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-4">out</h4>
-<pre><code>('国名', 1)
+</code></pre></div><pre><code>('国名', 1)
 ('歴史', 1)
 ('地理', 1)
 ('主要都市', 2)
@@ -300,16 +314,15 @@ section_levels <span style="color:#f92672">=</span> [(section<span style="color:
 ('脚注', 1)
 ('関連項目', 1)
 ('外部リンク', 1)
-</code></pre><h5 id="memo">memo</h5>
+</code></pre><h3 id="memo">memo</h3>
 <ul>
 <li>空白対処しないとなぁ</li>
 </ul>
-<h3 id="24-ファイル参照の抽出">24. ファイル参照の抽出</h3>
+<h2 id="24-ファイル参照の抽出">24. ファイル参照の抽出</h2>
 <p>記事から参照されているメディアファイルをすべて抜き出せ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">media_files <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[ファイル:([^|\]]*)&#34;</span>, uk_text)
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>media_files, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-5">out</h4>
-<pre><code>Royal Coat of Arms of the United Kingdom.svg
+</code></pre></div><pre><code>Royal Coat of Arms of the United Kingdom.svg
 United States Navy Band - God Save the Queen.ogg
 Descriptio Prime Tabulae Europae.jpg
 Lenepveu, Jeanne d'Arc au siège d'Orléans.jpg
@@ -337,9 +350,9 @@ Royal Aberdeen Children's Hospital.jpg
 CHANDOS3.jpg
 The Fabs.JPG
 Wembley Stadium, illuminated.jpg
-</code></pre><h3 id="25-テンプレートの抽出">25. テンプレートの抽出</h3>
+</code></pre><h2 id="25-テンプレートの抽出">25. テンプレートの抽出</h2>
 <p>記事中に含まれる「基礎情報」テンプレートのフィールド名と値を抽出し，辞書オブジェクトとして格納せよ．</p>
-<h5 id="memo-1">memo</h5>
+<h3 id="memo-1">memo</h3>
 <ul>
 <li>何が正解かわからん&hellip;</li>
 </ul>
@@ -359,8 +372,7 @@ Wembley Stadium, illuminated.jpg
 
 ans <span style="color:#f92672">=</span> dict(re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\|(.*?)\ *?=\ ?(.*?)\n&#34;</span>, uk_text[start:end]))
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>ans<span style="color:#f92672">.</span>items(), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-6">out</h4>
-<pre><code>('略名', 'イギリス')
+</code></pre></div><pre><code>('略名', 'イギリス')
 ('日本語国名', 'グレートブリテン及び北アイルランド連合王国')
 ('公式国名', '{{lang|en|United Kingdom of Great Britain and Northern Ireland}}&lt;ref&gt;英語以外での正式国名:&lt;br /&gt;')
 ('国旗画像', 'Flag of the United Kingdom.svg')
@@ -418,22 +430,21 @@ ans <span style="color:#f92672">=</span> dict(re<span style="color:#f92672">.</s
 ('ccTLD', '[[.uk]] / [[.gb]]&lt;ref&gt;使用は.ukに比べ圧倒的少数。&lt;/ref&gt;')
 ('国際電話番号', '44')
 ('注記', '&lt;references/&gt;')
-</code></pre><h4 id="debug">debug</h4>
+</code></pre><h3 id="debug">debug</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">len(list(filter(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;|&#34;</span>), uk_text[start:end]<span style="color:#f92672">.</span>splitlines()))) <span style="color:#f92672">==</span> len(ans)
 <span style="color:#f92672">&gt;&gt;</span> True
-</code></pre></div><h5 id="memo-2">memo</h5>
+</code></pre></div><h3 id="memo-2">memo</h3>
 <ul>
 <li>正規表現だけで空白削除頑張った</li>
 </ul>
-<h3 id="26-強調マークアップの除去-permalink">26. 強調マークアップの除去 Permalink</h3>
+<h2 id="26-強調マークアップの除去-permalink">26. 強調マークアップの除去 Permalink</h2>
 <p>25 の処理時に，テンプレートの値から MediaWiki の強調マークアップ（弱い強調，強調，強い強調のすべて）を除去してテキストに変換せよ（参考: マークアップ早見表）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict((k, re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#39;{2,3}|&#39;{5}&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, v)) <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items())
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before: &#34;</span>, ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態4&#34;</span>))
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;after : &#34;</span>, new_ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態4&#34;</span>))
-</code></pre></div><h4 id="out-7">out</h4>
-<pre><code>before:  現在の国号「'''グレートブリテン及び北アイルランド連合王国'''」に変更
+</code></pre></div><pre><code>before:  現在の国号「'''グレートブリテン及び北アイルランド連合王国'''」に変更
 after :  現在の国号「グレートブリテン及び北アイルランド連合王国」に変更
-</code></pre><h3 id="27-内部リンクの除去">27. 内部リンクの除去</h3>
+</code></pre><h2 id="27-内部リンクの除去">27. 内部リンクの除去</h2>
 <p>26 の処理に加えて，テンプレートの値から MediaWiki の内部リンクマークアップを除去し，テキストに変換せよ（参考: <a href="https://ja.wikipedia.org/wiki/Help:%E6%97%A9%E8%A6%8B%E8%A1%A8">マークアップ早見表</a>）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict((k, re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[(?!.*ファイル)(?!.*Category)([^|\]]+\|)*(.*?)\]\]&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">2&#34;</span>, v)) <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items())
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before: &#34;</span>, ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;通貨&#34;</span>))
@@ -441,20 +452,19 @@ after :  現在の国号「グレートブリテン及び北アイルランド�
 <span style="color:#66d9ef">print</span>()
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before: &#34;</span>, ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態3&#34;</span>))
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;after : &#34;</span>, new_ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態3&#34;</span>))
-</code></pre></div><h4 id="out-8">out</h4>
-<pre><code>before:  [[スターリング・ポンド|UKポンド]] (£)
+</code></pre></div><pre><code>before:  [[スターリング・ポンド|UKポンド]] (£)
 after :  UKポンド (£)
 
 before:  [[グレートブリテン及びアイルランド連合王国]]成立&lt;br /&gt;（[[合同法 (1800年)|1800年合同法]]）
 after :  グレートブリテン及びアイルランド連合王国成立&lt;br /&gt;（1800年合同法）
-</code></pre><h5 id="memo-3">memo</h5>
+</code></pre><h3 id="memo-3">memo</h3>
 <ul>
 <li>漏れてる部分</li>
 <li><code>{{}}</code>が干渉してそうだから先にこれを置換するのがいいか?</li>
 </ul>
 <pre><code>before:  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br /&gt;''神よ女王を護り賜え''&lt;br /&gt;{{center|[[ファイル:United States Navy Band - God Save the Queen.ogg]]}}
 after :  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br /&gt;''神よ女王を護り賜え''&lt;br /&gt;{{center|[[ファイル:United States Navy Band - God Save the Queen.ogg]]}}
-</code></pre><h3 id="28-mediawiki-マークアップの除去">28. MediaWiki マークアップの除去</h3>
+</code></pre><h2 id="28-mediawiki-マークアップの除去">28. MediaWiki マークアップの除去</h2>
 <p>27 の処理に加えて，テンプレートの値から MediaWiki マークアップを可能な限り除去し，国の基本情報を整形せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict()
 <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items():
@@ -465,8 +475,7 @@ after :  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br 
   v <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[([^|\]]+\|)*(.*?)\]\]&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">2&#34;</span>, v) <span style="color:#75715e"># 27改 ファイルもカテゴリーも置換</span>
   new_ans[k] <span style="color:#f92672">=</span> v
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>new_ans<span style="color:#f92672">.</span>items(), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-9">out</h4>
-<pre><code>('略名', 'イギリス')
+</code></pre></div><pre><code>('略名', 'イギリス')
 ('日本語国名', 'グレートブリテン及び北アイルランド連合王国')
 ('公式国名', 'United Kingdom of Great Britain and Northern Ireland&lt;ref&gt;英語以外での正式国名: ')
 ('国旗画像', 'Flag of the United Kingdom.svg')
@@ -524,13 +533,13 @@ after :  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br 
 ('ccTLD', '.uk / .gb')
 ('国際電話番号', '44')
 ('注記', '')
-</code></pre><h5 id="memo-4">memo</h5>
+</code></pre><h3 id="memo-4">memo</h3>
 <ul>
 <li>１行に複数該当がある場合に実装もれがある</li>
 <li>該当を loop で置換するのがいいか?</li>
 <li>疲れたのでここまで</li>
 </ul>
-<h3 id="29-国旗画像の-url-を取得する">29. 国旗画像の URL を取得する</h3>
+<h2 id="29-国旗画像の-url-を取得する">29. 国旗画像の URL を取得する</h2>
 <p>テンプレートの内容を利用し，国旗画像の URL を取得せよ．（ヒント: <a href="https://www.mediawiki.org/wiki/API:Main_page/ja">MediaWiki API</a>の<a href="https://www.mediawiki.org/wiki/API:**Imageinfo**">imageinfo</a>を呼び出して，ファイル参照を URL に変換すればよい）</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
 URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://en.wikipedia.org/w/api.php&#34;</span>
@@ -545,8 +554,7 @@ r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</sp
 pages <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#34;query&#34;</span>][<span style="color:#e6db74">&#34;pages&#34;</span>]
 out <span style="color:#f92672">=</span> list(pages<span style="color:#f92672">.</span>values())[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;imageinfo&#34;</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;url&#34;</span>)
 <span style="color:#66d9ef">print</span>(out)
-</code></pre></div><h4 id="out-10">out</h4>
-<pre><code>https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg
+</code></pre></div><pre><code>https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg
 </code></pre>
             </div>
         </article>
@@ -558,7 +566,7 @@ out <span style="color:#f92672">=</span> list(pages<span style="color:#f92672">.
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/nlp">nlp</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/regex">regex</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>5551 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>5540 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-23 14:16 &#43;0900</p>
         </div>

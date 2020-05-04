@@ -18,7 +18,7 @@
       <pubDate>Wed, 08 Apr 2020 23:04:57 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/posts/nicovideo/</guid>
-      <description>from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &amp;#34;&amp;#34; #ログインに使うメールアドレス PSWD = &amp;#34;&amp;#34; #ログインに使うパスワード class NicoVideo(object): &amp;#34;&amp;#34;&amp;#34;ニコニコ動画の</description>
+      <description>main from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &amp;#34;&amp;#34; #ログインに使うメールアドレス PSWD = &amp;#34;&amp;#34; #ログインに使うパスワード class NicoVideo(object): &amp;#34;&amp;#34;&amp;#34;ニコニコ動画</description>
     </item>
     
   </channel>

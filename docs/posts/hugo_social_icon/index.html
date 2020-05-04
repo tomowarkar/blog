@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="author" content="">
-<meta name="description" content="当然といえば当然だが、hello-friend-ngのREADMEにもあるように、ソーシャルアイコンにQiitaは対応していない。 そこに画像" />
+<meta name="description" content="当然といえば当然だが、hello-friend-ng のREADMEにもあるように、ソーシャルアイコンに Qiita は対応していない。 そこに画像(もしく" />
 <meta name="keywords" content=", hugo" />
 <meta name="robots" content="noodp" />
 <meta name="theme-color" content="" />
@@ -31,10 +31,10 @@
 
 
 <meta itemprop="name" content="HugoのソーシャルアイコンにQiitaアイコンを追加した備忘録">
-<meta itemprop="description" content="当然といえば当然だが、hello-friend-ngのREADMEにもあるように、ソーシャルアイコンにQiitaは対応していない。 そこに画像">
+<meta itemprop="description" content="当然といえば当然だが、hello-friend-ng のREADMEにもあるように、ソーシャルアイコンに Qiita は対応していない。 そこに画像(もしく">
 <meta itemprop="datePublished" content="2020-04-09T15:33:43&#43;09:00" />
 <meta itemprop="dateModified" content="2020-04-09T15:33:43&#43;09:00" />
-<meta itemprop="wordCount" content="687">
+<meta itemprop="wordCount" content="668">
 <meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
 
 
@@ -43,7 +43,7 @@
 <meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
 
 <meta name="twitter:title" content="HugoのソーシャルアイコンにQiitaアイコンを追加した備忘録"/>
-<meta name="twitter:description" content="当然といえば当然だが、hello-friend-ngのREADMEにもあるように、ソーシャルアイコンにQiitaは対応していない。 そこに画像"/>
+<meta name="twitter:description" content="当然といえば当然だが、hello-friend-ng のREADMEにもあるように、ソーシャルアイコンに Qiita は対応していない。 そこに画像(もしく"/>
 
 
 
@@ -135,11 +135,12 @@
                 <div class="toc-title">目次</div>
                     <nav id="TableOfContents">
   <ul>
-    <li><a href="#はじめに">はじめに</a>
+    <li><a href="#はじめに">はじめに</a></li>
+    <li><a href="#テーマの管理に関して">テーマの管理に関して</a></li>
+    <li><a href="#ソーシャルアイコンに関して">ソーシャルアイコンに関して</a></li>
+    <li><a href="#テーマ編集に関して">テーマ編集に関して</a>
       <ul>
-        <li><a href="#テーマの管理に関して">テーマの管理に関して</a></li>
-        <li><a href="#ソーシャルアイコンに関して">ソーシャルアイコンに関して</a></li>
-        <li><a href="#テーマ編集に関して">テーマ編集に関して</a></li>
+        <li><a href="#layoutspartialssvghtml">layouts/partials/svg.html</a></li>
       </ul>
     </li>
   </ul>
@@ -154,28 +155,28 @@
     <img src="https://i.imgur.com/AYyMNK5.png"  alt="blog top page"  class="center"  />
 
 
-<p>当然といえば当然だが、hello-friend-ngの<a href="https://github.com/itsjoeoui/hugo-theme-hello-friend-ng#user-content-available-social-icons">README</a>にもあるように、ソーシャルアイコンにQiitaは対応していない。</p>
-<p>そこに画像(もしくはこのブログの<a href="https://tomowarkar.github.io/blog/">トップページ</a>)のようにqiitaアイコンを追加したという備忘録。</p>
+<p>当然といえば当然だが、hello-friend-ng の<a href="https://github.com/itsjoeoui/hugo-theme-hello-friend-ng#user-content-available-social-icons">README</a>にもあるように、ソーシャルアイコンに Qiita は対応していない。</p>
+<p>そこに画像(もしくはこのブログの<a href="https://tomowarkar.github.io/blog/">トップページ</a>)のように qiita アイコンを追加したという備忘録。</p>
 <p>対応するコミットは<a href="https://github.com/tomowarkar/blog/commit/6b88f224fa1d6e473be03875255b211e4367670c">こちら</a></p>
 <h2 id="はじめに">はじめに</h2>
-<h3 id="テーマの管理に関して">テーマの管理に関して</h3>
+<h2 id="テーマの管理に関して">テーマの管理に関して</h2>
 <ul>
-<li>hugoでのテーマは<code>themes</code> フォルダの配下でサブモジュールとして管理されている。</li>
+<li>hugo でのテーマは<code>themes</code> フォルダの配下でサブモジュールとして管理されている。</li>
 <li>直接ソースコードをいじればもちろん変更は可能だが、サブモジュール自体のアップデートがあった時に変更が消えてしまう。</li>
-<li>なので直接ソースをいじるのは無し(wordpressのテーマなどでもお馴染みではあるが)</li>
+<li>なので直接ソースをいじるのは無し(wordpress のテーマなどでもお馴染みではあるが)</li>
 </ul>
-<h3 id="ソーシャルアイコンに関して">ソーシャルアイコンに関して</h3>
+<h2 id="ソーシャルアイコンに関して">ソーシャルアイコンに関して</h2>
 <p>今現在私が使わせてもらっているテーマは<a href="https://github.com/itsjoeoui/hugo-theme-hello-friend-ng">hugo-theme-hello-friend-ng</a></p>
 <ul>
-<li>READMEを読んでいくとソーシャルアイコンは<a href="https://simpleicons.org/">simpleicons</a>のアイコンを使っている。</li>
+<li>README を読んでいくとソーシャルアイコンは<a href="https://simpleicons.org/">simpleicons</a>のアイコンを使っている。</li>
 <li>テーマ内でのアイコン管理はどうやら<a href="https://github.com/itsjoeoui/hugo-theme-hello-friend-ng/blob/master/layouts/partials/svg.html">ここ</a>で行っている。</li>
 </ul>
-<h3 id="テーマ編集に関して">テーマ編集に関して</h3>
+<h2 id="テーマ編集に関して">テーマ編集に関して</h2>
 <p>どうやら<code>layouts</code>配下に仕様しているテーマの変更したいソースコードパスをコピーしてこればいいらしい。(参考サイト忘れてしまいました。すいません。)</p>
 <p>なので</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp blog/themes/hello-friend-ng/layouts/partials/svg.html blog/layouts/partials/
-</code></pre></div><p>このようにコピーして,コピーしたものを編集すればHugoさんがよしなにしてくれる。</p>
-<h5 id="layoutspartialssvghtml">layouts/partials/svg.html</h5>
+</code></pre></div><p>このようにコピーして,コピーしたものを編集すれば Hugo さんがよしなにしてくれる。</p>
+<h3 id="layoutspartialssvghtml">layouts/partials/svg.html</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">+ {{- else if (eq .name &#34;qiita&#34;) -}}
 +     &lt;<span style="color:#f92672">svg</span> <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2000/svg&#34;</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;26&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;24&#34;</span> <span style="color:#a6e22e">viewBox</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0 0 24 24&#34;</span> <span style="color:#a6e22e">fill</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;none&#34;</span> <span style="color:#a6e22e">stroke</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;currentColor&#34;</span> <span style="color:#a6e22e">stroke-width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">stroke-linecap</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;round&#34;</span> <span style="color:#a6e22e">stroke-linejoin</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;round&#34;</span>&gt;&lt;<span style="color:#f92672">path</span> <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2000/svg&#34;</span> <span style="color:#a6e22e">d</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;M7.883 11.615c0-1.92-1.474-3.904-3.974-3.904C1.987 7.71 0 9.183 0 11.679c0 1.92 1.474 3.905 3.973 3.905.801 0 1.602-.256 2.275-.736L7.402 16l.513-.512-1.09-1.088c.673-.736 1.058-1.696 1.058-2.785zm-3.974-3.2c1.827 0 3.269 1.408 3.269 3.232 0 1.569-1.218 3.233-3.237 3.233-2.018 0-3.236-1.632-3.236-3.2 0-2.049 1.634-3.265 3.204-3.265zm5.864 1.568h.673v5.44h-.673zm.32-.736a.574.574 0 0 1-.576-.576c0-.32.256-.576.576-.576.32 0 .577.256.577.576 0 .32-.256.576-.577.576zm2.724 0a.574.574 0 0 1-.577-.576c0-.32.257-.576.577-.576.32 0 .577.256.577.576 0 .32-.256.576-.577.576zm-.32.736h.673v5.44h-.673zm4.71 5.537c-1.25 0-1.987-.96-1.987-1.92V8.479h.673v1.504h2.371v.672h-2.37v2.977c0 .608.48 1.248 1.313 1.248.224 0 .449-.064.64-.192l.065-.032.32.576-.064.032c-.288.16-.64.256-.961.256zm4.454.032c-1.827 0-2.916-1.44-2.916-2.848 0-1.825 1.442-2.913 2.852-2.913.737 0 1.314.256 1.73.736v-.544H24v5.44h-.673v-.607c-.384.48-.961.736-1.666.736zm-.064-5.089c-1.09 0-2.18.832-2.18 2.24 0 1.089.834 2.177 2.244 2.177.64 0 1.282-.288 1.698-.8v-2.817a2.29 2.29 0 0 0-1.762-.8z&#34;</span>/&gt;&lt;/<span style="color:#f92672">polygon</span>&gt;&lt;/<span style="color:#f92672">svg</span>&gt;
 {{- end -}}
@@ -192,7 +193,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/hugo">hugo</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>687 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>668 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-04-09 15:33 &#43;0900</p>
         </div>

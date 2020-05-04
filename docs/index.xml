@@ -72,7 +72,7 @@
       <pubDate>Tue, 28 Apr 2020 00:49:59 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/posts/bash_line/</guid>
-      <description>Mac で LINE を開くのすら面倒くさい時用 LINE Messaging API send push message line.sh #!/bin/bash # @(#) Send message to line bot. TOKEN=&amp;#34;your token&amp;#34; TO=&amp;#34;your userId on bot&amp;#34; pushMsg() { curl -s -X POST https://api.line.me/v2/bot/message/push \ -H &amp;#34;Content-Type: application/json&amp;#34; \ -H &amp;#34;Authorization: Bearer $TOKEN&amp;#34; \ -d &amp;#34;{ \&amp;#34;to\&amp;#34;: \&amp;#34;$TO\&amp;#34;, \&amp;#34;messages\&amp;#34;:[ { \&amp;#34;type\&amp;#34;:\&amp;#34;text\&amp;#34;, \&amp;#34;text\&amp;#34;:\&amp;#34;$1\&amp;#34; } ] }&amp;#34; } res=$(pushMsg &amp;#34;$1&amp;#34; | jq</description>
+      <description>Mac で LINE を開くのすら面倒くさい時用 参考 LINE Messaging API send push message コード line.sh #!/bin/bash # @(#) Send message to line bot. TOKEN=&amp;#34;your token&amp;#34; TO=&amp;#34;your userId on bot&amp;#34; pushMsg() { curl -s -X POST https://api.line.me/v2/bot/message/push \ -H &amp;#34;Content-Type: application/json&amp;#34; \ -H &amp;#34;Authorization: Bearer $TOKEN&amp;#34; \ -d &amp;#34;{ \&amp;#34;to\&amp;#34;: \&amp;#34;$TO\&amp;#34;, \&amp;#34;messages\&amp;#34;:[ { \&amp;#34;type\&amp;#34;:\&amp;#34;text\&amp;#34;, \&amp;#34;text\&amp;#34;:\&amp;#34;$1\&amp;#34; } ] }&amp;#34;</description>
     </item>
     
     <item>
@@ -171,7 +171,7 @@
       <pubDate>Fri, 10 Apr 2020 11:32:50 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/posts/imgur_api/</guid>
-      <description>選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi</description>
+      <description>選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと 30 秒程考えた結果、imgur で管理することにしました。 それに応じて imgur に</description>
     </item>
     
     <item>
@@ -180,7 +180,7 @@
       <pubDate>Thu, 09 Apr 2020 15:33:43 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/posts/hugo_social_icon/</guid>
-      <description>当然といえば当然だが、hello-friend-ngのREADMEにもあるように、ソーシャルアイコンにQiitaは対応していない。 そこに画像</description>
+      <description>当然といえば当然だが、hello-friend-ng のREADMEにもあるように、ソーシャルアイコンに Qiita は対応していない。 そこに画像(もしく</description>
     </item>
     
     <item>
@@ -189,7 +189,7 @@
       <pubDate>Thu, 09 Apr 2020 01:46:56 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/posts/hatena_api/</guid>
-      <description>はてなブログの投稿を自動化、ローカル管理がしたい ということでHatena api を叩いてみた備忘録 参考 はてな API一覧 下準備 ローカルでの記事管理は</description>
+      <description>はてなブログの投稿を自動化、ローカル管理がしたい ということで Hatena api を叩いてみた備忘録 参考 はてな API 一覧 下準備 ローカルでの記事管理は以下のようなも</description>
     </item>
     
     <item>
@@ -198,7 +198,7 @@
       <pubDate>Wed, 08 Apr 2020 23:04:57 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/posts/nicovideo/</guid>
-      <description>from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &amp;#34;&amp;#34; #ログインに使うメールアドレス PSWD = &amp;#34;&amp;#34; #ログインに使うパスワード class NicoVideo(object): &amp;#34;&amp;#34;&amp;#34;ニコニコ動画の</description>
+      <description>main from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &amp;#34;&amp;#34; #ログインに使うメールアドレス PSWD = &amp;#34;&amp;#34; #ログインに使うパスワード class NicoVideo(object): &amp;#34;&amp;#34;&amp;#34;ニコニコ動画</description>
     </item>
     
     <item>
@@ -207,7 +207,7 @@
       <pubDate>Wed, 08 Apr 2020 22:41:43 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/posts/init/</guid>
-      <description>こんにちは tomowarkar です。 GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。 これまでも他の形でブログを運用していたの</description>
+      <description>Hello Hugo! こんにちは tomowarkar です。 GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。 これまでも他の形でブログを運用してい</description>
     </item>
     
   </channel>

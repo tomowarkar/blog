@@ -8,6 +8,8 @@ tags:
   - dialy
 ---
 
+## Hello Hugo!
+
 こんにちは tomowarkar です。
 
 GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。
@@ -18,7 +20,7 @@ GitHub Pages と Go 製のウェブサイト生成フレームワークである
 
 今回 GitHub Pages と Hugo を使ってブログを始めるにあたって、以下の記事を参考にさせていただきました。ありがとうございます 🙏
 
-### 参考
+## 参考
 
 - https://qiita.com/Blank71/items/88a6c76ca9e162af73fe
 - https://qiita.com/yotsak83/items/017734d5f873f4f194d4

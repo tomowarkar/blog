@@ -23,7 +23,7 @@
 <p>たぶんどのテーマも共通で <code>archetypes</code> 配下にあるのではないだろうか。</p>
 <p><code>themes</code>配下のテーマソースを直接触らないように注意!!</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="color:#f92672">}</span>archetypes/posts.md
-</code></pre></div><h4 id="postsmd">posts.md</h4>
+</code></pre></div><h3 id="postsmd">posts.md</h3>
 <p>そして値を変更する。</p>
 <p><code>hello-friend-ng</code>では<code>toc: true</code>の部分が目次表示の判定部分</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
@@ -40,7 +40,7 @@ tags:
 <p>先ほどと同じ要領で該当ソースを見つけコピーして, 変更する.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir i18n
 cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="color:#f92672">}</span>i18n/en.toml
-</code></pre></div><h4 id="entoml">en.toml</h4>
+</code></pre></div><h3 id="entoml">en.toml</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">tableOfContents</span>]
 <span style="color:#a6e22e">other</span> = <span style="color:#e6db74">&#34;目次&#34;</span>
 </code></pre></div><p>ここはもしかしたら<code>config.toml</code>をいじるだけで変更できるかもしれないが、わからないのでパス。</p>
@@ -54,7 +54,7 @@ cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="colo
 </code></pre></div><p>変更差分を確認して、問題なさそうであれば <code>.bak</code>ファイルも一括で削除する</p>
 <p>パイプラインに渡す前に確認を忘れずに</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">find content/posts/*bak | xargs -n1 rm
-</code></pre></div><h3 id="参考">参考</h3>
+</code></pre></div><h2 id="参考">参考</h2>
 <ul>
 <li>
 <p><a href="https://github.com/rhazdon/hugo-theme-hello-friend-ng/blob/20810b2afdcfc2b0636d0c3277f6f2633af70916/exampleSite/content/posts/goisforlovers.md#hugo-parameters">hello-friend-ng::Hugo Parameters</a></p>
@@ -63,8 +63,7 @@ cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="colo
 <p><a href="https://gohugo.io/content-management/toc/">Hugo::Table of Contents</a></p>
 </li>
 </ul>
-<pre><code>
-</code></pre>]]></content>
+]]></content>
         </item>
         
         <item>
@@ -76,7 +75,7 @@ cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="colo
             <description>2020 年版 言語処理 100 本ノック 第 6 章 で自然言語処理ライブラリのspaCyを使った備忘録 Google Colab では標準で入っているので簡単に試してみるにはおすすめ 参考</description>
             <content type="html"><![CDATA[<p>2020 年版 <a href="https://nlp100.github.io/ja/ch06.html">言語処理 100 本ノック 第 6 章</a> で自然言語処理ライブラリの<code>spaCy</code>を使った備忘録</p>
 <p>Google Colab では標準で入っているので簡単に試してみるにはおすすめ</p>
-<h3 id="参考">参考</h3>
+<h2 id="参考">参考</h2>
 <p><a href="https://spacy.io/usage/spacy-101">spaCy 101: Everything you need to know</a></p>
 <p><a href="https://qiita.com/miorgash/items/0eda4adcc8d9ecd143e6">spaCy 101: Everything you need to know 和訳</a></p>
 <h2 id="環境">環境</h2>
@@ -123,16 +122,15 @@ token_excl_sw <span style="color:#f92672">=</span> [e <span style="color:#66d9ef
 token_tidy <span style="color:#f92672">=</span> [e <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> doc <span style="color:#66d9ef">if</span> e<span style="color:#f92672">.</span>pos_ <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;PUNCT&#34;</span>, <span style="color:#e6db74">&#34;SYM&#34;</span>, <span style="color:#e6db74">&#34;SPACE&#34;</span>]]
 <span style="color:#66d9ef">print</span>(token_tidy) <span style="color:#75715e"># &gt; [So, foul, and, fair, a, day, I, have, not, seen]</span>
 </code></pre></div><p>参考: <a href="https://spacy.io/api/annotation#section-pos-tagging">Syntactic Dependency Parsing</a></p>
-<h3 id="固有表現">固有表現</h3>
+<h2 id="固有表現">固有表現</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">doc <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;Apple bought 10 apples for 100 billion yen.&#34;</span>)
 <span style="color:#66d9ef">for</span> ent <span style="color:#f92672">in</span> doc<span style="color:#f92672">.</span>ents:
     <span style="color:#66d9ef">print</span>(ent<span style="color:#f92672">.</span>text, ent<span style="color:#f92672">.</span>start_char, ent<span style="color:#f92672">.</span>end_char, ent<span style="color:#f92672">.</span>label_)
-</code></pre></div><h5 id="out">out</h5>
-<p>数字の有意性を図るのに使えそう?</p>
-<pre><code>Apple 0 5 ORG
+</code></pre></div><pre><code>Apple 0 5 ORG
 10 13 15 CARDINAL
 100 billion yen 27 42 MONEY
-</code></pre><h3 id="単語ベクトルと類似性">単語ベクトルと類似性</h3>
+</code></pre><p>数字の有意性を図るのに使えそう?</p>
+<h2 id="単語ベクトルと類似性">単語ベクトルと類似性</h2>
 <p>末尾に<code>sm</code>とつく<code>en_core_web_sm</code>のような言語モデルでは単語ベクトルが含まれておらず精度が低い。</p>
 <p>また実行時に<code>ModelsWarning: [W007] The model you're using has no word vectors loaded, so the ...</code>と警告される。</p>
 <p>言語モデルを確認のこと、データ量の大きいモデルをダウンロードすると良い</p>
@@ -144,7 +142,7 @@ python -m spacy download en_core_web_lg
 <p>上記 issue にもあるように以下コードで修正した</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> en_core_web_lg
 nlp <span style="color:#f92672">=</span> en_core_web_lg<span style="color:#f92672">.</span>load()
-</code></pre></div><h4 id="類似性">類似性</h4>
+</code></pre></div><h3 id="類似性">類似性</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dog <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;dog&#34;</span>)
 cat <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;cat&#34;</span>)
 apple <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;apple&#34;</span>)
@@ -180,14 +178,14 @@ is alpha: Does the lexeme consist of alphabetic characters?
 is digit: Does the lexeme consist of digits?
 参照: spaCy 101: Everything you need to know より</p>
 </blockquote>
-<h2 id="ステミング">ステミング</h2>
+<h2 id="ステミングとレンマ化">ステミングとレンマ化</h2>
 <p>spaCy は Stemming(ステミング)に対応しておらず、代わりに レンマ化(Lemmatization)を使うこととなります。</p>
 <p>ステミングとレンマ化の違いを説明しろと言われてもまだあまり理解しておらず少し難しいので、<code>nltk</code>のスノーボールステマーと簡単な比較をしてみます。</p>
-<h4 id="lemmatization">Lemmatization</h4>
+<h3 id="lemmatization">Lemmatization</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">doc <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;compute computer computed computing computation&#34;</span>)
 <span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> doc:
     <span style="color:#66d9ef">print</span>(token<span style="color:#f92672">.</span>text<span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; --&gt; &#39;</span> <span style="color:#f92672">+</span> token<span style="color:#f92672">.</span>lemma_)
-</code></pre></div><h4 id="stemming">Stemming</h4>
+</code></pre></div><h3 id="stemming">Stemming</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> nltk.stem.snowball <span style="color:#f92672">import</span> SnowballStemmer
 
 stemmer <span style="color:#f92672">=</span> SnowballStemmer(language<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;english&#39;</span>)
@@ -195,8 +193,7 @@ tokens <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;com
 
 <span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> tokens:
     <span style="color:#66d9ef">print</span>(token <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; --&gt; &#39;</span> <span style="color:#f92672">+</span> stemmer<span style="color:#f92672">.</span>stem(token))
-</code></pre></div><h5 id="out-1">out</h5>
-<pre><code># Lemmatization
+</code></pre></div><pre><code># Lemmatization
 compute --&gt; compute
 computer --&gt; computer
 computed --&gt; compute
@@ -209,7 +206,7 @@ computer --&gt; comput
 computed --&gt; comput
 computing --&gt; comput
 computation --&gt; comput
-</code></pre><h4 id="ステミングとレンマ化の違い-2">ステミングとレンマ化の違い 2</h4>
+</code></pre><h3 id="ステミングとレンマ化の違い">ステミングとレンマ化の違い</h3>
 <p>判別の難しい<code>saw</code>を使って違いを見てみます。
 比較する文は<code>a power saw</code>と<code>I saw the apple</code>で, 結果のみを記します。</p>
 <pre><code># a power saw (Lemmatization)
@@ -269,8 +266,7 @@ echo <span style="color:#f92672">{</span>1..10<span style="color:#f92672">}</spa
 
 <span style="color:#75715e"># こんなんとか</span>
 echo <span style="color:#f92672">{{</span>a..z<span style="color:#f92672">}</span>,<span style="color:#f92672">{</span>A..Z<span style="color:#f92672">}}</span> <span style="color:#75715e">#&gt; a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z</span>
-</code></pre></div><h4 id="深いディレクトリ操作とかで便利">深いディレクトリ操作とかで便利</h4>
-<p>ファイル名を typo した時の変更とかに</p>
+</code></pre></div><p>ファイル名を typo した時の変更とか, 深いディレクトリ操作とかで便利</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mv content/posts/bash_parallel_<span style="color:#f92672">{</span>braves,brace<span style="color:#f92672">}</span>.md
 </code></pre></div><p>以下と同意</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mv content/posts/bash_parallel_braves.md content/posts/bash_parallel_brace.md
@@ -346,7 +342,7 @@ time -p <span style="color:#f92672">(</span><span style="color:#66d9ef">for</spa
 <span style="color:#75715e"># &gt;real 8.99 user 6.64 sys 14.65</span>
 </code></pre></div><h2 id="並列処理">並列処理</h2>
 <p>ついでなので<code>xargs</code>での並列処理についてメモを残しておく</p>
-<h4 id="基本">基本</h4>
+<h3 id="基本">基本</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ seq <span style="color:#ae81ff">10</span> | xargs echo
 <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
 
@@ -379,7 +375,7 @@ echo <span style="color:#ae81ff">10</span>
 <li><code>-t</code> 実行コマンドを表示</li>
 <li><code>-n</code> 引数の数を指定</li>
 </ul>
-<h4 id="n-コマンドと-l-コマンドの違い">n コマンドと L コマンドの違い</h4>
+<h3 id="n-コマンドと-l-コマンドの違い">n コマンドと L コマンドの違い</h3>
 <ul>
 <li><code>-n</code> 区切り文字 <code>' '</code>(スペース)で分割?</li>
 <li><code>-L</code> 区切り文字 <code>\n</code>で分割?</li>
@@ -401,7 +397,7 @@ echo <span style="color:#ae81ff">10</span>
 $ seq  -s <span style="color:#e6db74">&#39; &#39;</span> <span style="color:#ae81ff">10</span> | xargs -t -L3 echo
 echo <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
 <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span> <span style="color:#ae81ff">3</span> <span style="color:#ae81ff">4</span> <span style="color:#ae81ff">5</span> <span style="color:#ae81ff">6</span> <span style="color:#ae81ff">7</span> <span style="color:#ae81ff">8</span> <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
-</code></pre></div><h4 id="引数の操作">引数の操作</h4>
+</code></pre></div><h3 id="引数の操作">引数の操作</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ seq <span style="color:#ae81ff">10</span> | xargs -t -n2 bash -c <span style="color:#e6db74">&#39;[ $0 -gt $1 ] &amp;&amp; echo $0 || echo $1&#39;</span>
 bash -c <span style="color:#f92672">[</span> $0 -gt $1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $0 <span style="color:#f92672">||</span> echo $1 <span style="color:#ae81ff">1</span> <span style="color:#ae81ff">2</span>
 <span style="color:#ae81ff">2</span>
@@ -413,7 +409,7 @@ bash -c <span style="color:#f92672">[</span> $0 -gt $1 <span style="color:#f9267
 <span style="color:#ae81ff">8</span>
 bash -c <span style="color:#f92672">[</span> $0 -gt $1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $0 <span style="color:#f92672">||</span> echo $1 <span style="color:#ae81ff">9</span> <span style="color:#ae81ff">10</span>
 <span style="color:#ae81ff">10</span>
-</code></pre></div><h4 id="並列処理-1">並列処理</h4>
+</code></pre></div><h3 id="並列処理メイン">並列処理メイン</h3>
 <p>途中経過より正しく並列処理されていることを確認</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">time -p seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="color:#f92672">{}</span> bash -c <span style="color:#e6db74">&#39;echo {} &gt;/dev/null &amp;&amp; sleep 1&#39;</span>
 <span style="color:#75715e"># &gt;real 10.13 user 0.02 sys 0.05</span>
@@ -424,7 +420,7 @@ time -p seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="colo
 </code></pre></div><p>引数の数をしてして実行</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">time seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="color:#f92672">{}</span> -L2 bash -c <span style="color:#e6db74">&#39;echo {} &gt;/dev/null &amp;&amp; sleep 1&#39;</span>
 time seq <span style="color:#ae81ff">10</span> | xargs -t -I<span style="color:#f92672">{}</span> -L2 -P2 bash -c <span style="color:#e6db74">&#39;echo {} &gt;/dev/null &amp;&amp; sleep 1&#39;</span>
-</code></pre></div><h3 id="使わなかったコード供養">使わなかったコード供養</h3>
+</code></pre></div><h2 id="使わなかったコード供養">使わなかったコード供養</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">red<span style="color:#f92672">(){</span> echo <span style="color:#e6db74">$&#39;\e[31m&#39;</span>$1<span style="color:#e6db74">$&#39;\e[0m&#39;</span> ;<span style="color:#f92672">}</span>
 red hoge
 </code></pre></div><p>参考 <a href="https://qiita.com/PruneMazui/items/8a023347772620025ad6">ANSI エスケープシーケンス チートシート</a></p>
@@ -755,7 +751,7 @@ diff &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f9267
 <p>BSD ではなく GNU の<code>sed</code>では以下の様にも描ける様だ(未確認)</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;s/.*5$/Buzz/;3~3s/[0-9]*/Fizz/&#39;</span>
 </code></pre></div><p>参考: <a href="https://qiita.com/gyu-don/items/f5440b16213200da9775">シェルコマンドで FizzBuzz</a></p>
-<h3 id="素数判定">素数判定</h3>
+<h2 id="素数判定">素数判定</h2>
 <p>速度を考えないのであれば&hellip;</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">isprime<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
     <span style="color:#f92672">[</span> $1 -lt <span style="color:#ae81ff">2</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">return</span>
@@ -771,7 +767,7 @@ diff &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f9267
 <span style="color:#66d9ef">done</span>
 </code></pre></div><p><code>gfactor</code>(もしくは<code>factor</code>)を使う手もある(圧倒的に早い)</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">100</span> | gfactor | awk <span style="color:#e6db74">&#39;NF == 2&#39;</span> | cut -d : -f1
-</code></pre></div><h4 id="なんか書いたけど使わなかったコード供養">なんか書いたけど使わなかったコード供養</h4>
+</code></pre></div><h2 id="なんか書いたけど使わなかったコード供養">なんか書いたけど使わなかったコード供養</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">max<span style="color:#f92672">(){</span> <span style="color:#f92672">[</span> $1 -gt $2 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $1 <span style="color:#f92672">||</span> echo $2; <span style="color:#f92672">}</span>
 </code></pre></div>]]></content>
         </item>
@@ -783,10 +779,10 @@ diff &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f9267
             
             <guid>https://tomowarkar.github.io/blog/posts/bash_youtube/</guid>
             <description>チャンネル ID 抜き出し $ echo https://www.youtube.com/user/HikakinTV/videos | cut -d &amp;#34;/&amp;#34; -f 5 HikakinTV タイトルを取得 $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep &amp;#34;yt-lockup-title&amp;#34; | sed -e &amp;#34;s/.*title=\&amp;#34;\([^\&amp;#34;]*\)\&amp;#34;.*/\1/g&amp;#34; 【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコス</description>
-            <content type="html"><![CDATA[<h3 id="チャンネル-id-抜き出し">チャンネル ID 抜き出し</h3>
+            <content type="html"><![CDATA[<h2 id="チャンネル-id-抜き出し">チャンネル ID 抜き出し</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ echo https://www.youtube.com/user/HikakinTV/videos | cut -d <span style="color:#e6db74">&#34;/&#34;</span> -f <span style="color:#ae81ff">5</span>
 HikakinTV
-</code></pre></div><h3 id="タイトルを取得">タイトルを取得</h3>
+</code></pre></div><h2 id="タイトルを取得">タイトルを取得</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*title=\&#34;\([^\&#34;]*\)\&#34;.*/\1/g&#34;</span>
 【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコスパ抜群のiphone!【開封レビュー】【カメラ比較】【ヒカキンTV】
 スーパー店員時代のヤバい話・変なお客さん【金隠しおじさん&amp;amp;クーラーおじさん】
@@ -818,7 +814,7 @@ BTSに間違われて空港がパニックになりました…【ヒカキンTV
 ママと初めてのウーバーイーツ食べ放題で大パニックwww【Uber Eats】
 【わたあめ王決定戦】わたあめ作り＆ 大食いバトルで１位は誰だ!!!【ヒカキンvs関根りさvsマスオ】
 【超簡単】カップヌードルチャーハンを７種類作って1位を決めたらまさかの結果に!!【炒飯】
-</code></pre></div><h3 id="動画-url-を取得">動画 URL を取得</h3>
+</code></pre></div><h2 id="動画-url-を取得">動画 URL を取得</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*href=\&#34;\([^\&#34;]*\)\&#34;.*/https:\/\/www.youtube.com\1/g&#34;</span>
 https://www.youtube.com/watch?v<span style="color:#f92672">=</span>zPHERhDPIJM
 https://www.youtube.com/watch?v<span style="color:#f92672">=</span>KAfULYulCJM
@@ -855,7 +851,7 @@ https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
 
 
 <p>うまくいってそう</p>
-<h4 id="memo">memo</h4>
+<h3 id="memo">memo</h3>
 <ul>
 <li>変更差分を取れば新規動画投稿のトリガーになりそう</li>
 </ul>
@@ -869,7 +865,7 @@ https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
 <li>バックスラッシュの使い方が癖あるなぁ</li>
 </ul>
 <p>参考: <a href="https://qiita.com/hirohiro77/items/771ffb64dddceabf69a3">grep でこういう時はどうする?</a></p>
-<h3 id="変更差分の取得例">変更差分の取得例</h3>
+<h2 id="変更差分の取得例">変更差分の取得例</h2>
 <p>簡単化のためテキストファイルを 5 行にして示す.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*href=\&#34;\([^\&#34;]*\)\&#34;.*/https:\/\/www.youtube.com\1/g&#34;</span> &gt; hikakin<span style="color:#e6db74">`</span>date +%y%m%d<span style="color:#e6db74">`</span>.txt
 
@@ -898,13 +894,15 @@ https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
             <pubDate>Tue, 28 Apr 2020 00:49:59 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/bash_line/</guid>
-            <description>Mac で LINE を開くのすら面倒くさい時用 LINE Messaging API send push message line.sh #!/bin/bash # @(#) Send message to line bot. TOKEN=&amp;#34;your token&amp;#34; TO=&amp;#34;your userId on bot&amp;#34; pushMsg() { curl -s -X POST https://api.line.me/v2/bot/message/push \ -H &amp;#34;Content-Type: application/json&amp;#34; \ -H &amp;#34;Authorization: Bearer $TOKEN&amp;#34; \ -d &amp;#34;{ \&amp;#34;to\&amp;#34;: \&amp;#34;$TO\&amp;#34;, \&amp;#34;messages\&amp;#34;:[ { \&amp;#34;type\&amp;#34;:\&amp;#34;text\&amp;#34;, \&amp;#34;text\&amp;#34;:\&amp;#34;$1\&amp;#34; } ] }&amp;#34; } res=$(pushMsg &amp;#34;$1&amp;#34; | jq</description>
+            <description>Mac で LINE を開くのすら面倒くさい時用 参考 LINE Messaging API send push message コード line.sh #!/bin/bash # @(#) Send message to line bot. TOKEN=&amp;#34;your token&amp;#34; TO=&amp;#34;your userId on bot&amp;#34; pushMsg() { curl -s -X POST https://api.line.me/v2/bot/message/push \ -H &amp;#34;Content-Type: application/json&amp;#34; \ -H &amp;#34;Authorization: Bearer $TOKEN&amp;#34; \ -d &amp;#34;{ \&amp;#34;to\&amp;#34;: \&amp;#34;$TO\&amp;#34;, \&amp;#34;messages\&amp;#34;:[ { \&amp;#34;type\&amp;#34;:\&amp;#34;text\&amp;#34;, \&amp;#34;text\&amp;#34;:\&amp;#34;$1\&amp;#34; } ] }&amp;#34;</description>
             <content type="html"><![CDATA[<p>Mac で LINE を開くのすら面倒くさい時用</p>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://developers.line.biz/ja/services/messaging-api/">LINE Messaging API</a></li>
 <li><a href="https://developers.line.biz/ja/docs/messaging-api/sending-messages/#methods-of-sending-message">send push message</a></li>
 </ul>
-<h4 id="linesh">line.sh</h4>
+<h2 id="コード">コード</h2>
+<h3 id="linesh">line.sh</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
 </span><span style="color:#75715e"></span><span style="color:#75715e"># @(#) Send message to line bot.</span>
 
@@ -934,7 +932,7 @@ res<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>push
     echo $res
 <span style="color:#66d9ef">fi</span>
 exit <span style="color:#ae81ff">0</span>
-</code></pre></div><h3 id="usage">Usage</h3>
+</code></pre></div><h2 id="usage">Usage</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ <span style="color:#75715e"># 成功した場合</span>
 $ sh line.sh こんにちは
 <span style="color:#66d9ef">done</span>!
@@ -1033,7 +1031,7 @@ $ sh line.sh こんにちは
 
     <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">message_detail</span>(self, message_id, userId<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;me&#34;</span>):
         <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>service<span style="color:#f92672">.</span>users()<span style="color:#f92672">.</span>messages()<span style="color:#f92672">.</span>get(userId<span style="color:#f92672">=</span>userId, id<span style="color:#f92672">=</span>message_id)<span style="color:#f92672">.</span>execute()
-</code></pre></div><h2 id="usage">usage</h2>
+</code></pre></div><h3 id="usage">usage</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">gmail <span style="color:#f92672">=</span> GmailApiHandler(<span style="color:#e6db74">&#34;credentials.json&#34;</span>)
 gmail_ids <span style="color:#f92672">=</span> gmail<span style="color:#f92672">.</span>find_messages(count<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>, query<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UQ mobile データ通信量のご案内&#34;</span>)
 gmail_id <span style="color:#f92672">=</span> gmail_ids<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;messages&#34;</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;id&#34;</span>)
@@ -1048,10 +1046,10 @@ message_details <span style="color:#f92672">=</span> gmail<span style="color:#f9
     <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;text: &#34;</span>, message_details<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;snippet&#34;</span>))
 
 show_mail(message_details)
-</code></pre></div><h4 id="out">out</h4>
+</code></pre></div><h3 id="out">out</h3>
 <pre><code>title: UQ mobile データ通信量のご案内（自動送信メール）
 text:  2020/04/27 21:05:31 ID：hogehoge 様日頃よりUQ mobileをご利用いただき誠にありがとうございます。 ご契約回線のデータ通信量のご利用状況について、お知らせいたします。 データ残量がなくなった場合、月末までデータ通信の速度に制限がかかります。 【電話番号】 08000000000 【データプラン】 データ高速（999GB） 【基本データ残量※】 0 MB ※上記
-</code></pre><h3 id="日時とかデータ量とかの抽出">日時とかデータ量とかの抽出</h3>
+</code></pre><h2 id="日時とかデータ量とかの抽出">日時とかデータ量とかの抽出</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
 
 <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">extract</span>(text):
@@ -1069,7 +1067,7 @@ text <span style="color:#f92672">=</span> message_details<span style="color:#f92
 <span style="color:#66d9ef">print</span>(date, amount) <span style="color:#75715e">#&gt; 2020/04/27 21:05:31 0</span>
 </code></pre></div><p>この本文内容を元にデータチャージ実行を行うかを判定し、データチャージの実行をさせると良さげ。</p>
 <p>Gmail API の(初めてさわる)部分ができればあとは難しくないので、気が向けば続き描きます(多分書かない)</p>
-<h3 id="uq-モバイルデータチャージサイト">UQ モバイルデータチャージサイト</h3>
+<h2 id="uq-モバイルデータチャージサイト">UQ モバイルデータチャージサイト</h2>
 <p>追加データが 0 になった時即時にデータチャージをするのであればメールをトリガーにするのがいいが、定時実行であれば以下のが楽かも。</p>
 <h3 id="-注意">※ 注意</h3>
 <p><a href="https://www.uqwimax.jp/signup/term/files/myuqmobile_service.pdf">my UQ mobile 利用規約</a>第８条の以下の部分に該当, 抵触する可能性があります。</p>
@@ -1100,11 +1098,11 @@ $ echo; echo <span style="color:#e6db74">&#34;UQモバイル 追加データの�
             
             <guid>https://tomowarkar.github.io/blog/posts/nlp100-05/</guid>
             <description>言語処理 100 本ノック(第 5 章: 係り受け解析) 夏目漱石の小説『吾輩は猫である』の文章（neko.txt）を CaboCha を使って係り受け解析し，その結果を neko.txt.cabocha</description>
-            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第-5-章-係り受け解析httpsnlp100githubiojach05html"><a href="https://nlp100.github.io/ja/ch05.html">言語処理 100 本ノック(第 5 章: 係り受け解析)</a></h2>
+            <content type="html"><![CDATA[<p><a href="https://nlp100.github.io/ja/ch05.html">言語処理 100 本ノック(第 5 章: 係り受け解析)</a></p>
 <blockquote>
 <p>夏目漱石の小説『吾輩は猫である』の文章（neko.txt）を CaboCha を使って係り受け解析し，その結果を neko.txt.cabocha というファイルに保存せよ．このファイルを用いて，以下の問に対応するプログラムを実装せよ．</p>
 </blockquote>
-<h3 id="環境">環境</h3>
+<h2 id="環境">環境</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
 ProductName:    Mac OS X
 ProductVersion: 10.15.4
@@ -1135,7 +1133,7 @@ EOS
 無い    形容詞,自立,*,*,形容詞・アウオ段,基本形,無い,ナイ,ナイ
 。      記号,句点,*,*,*,*,。,。,。
 EOS
-</code></pre></div><h3 id="40-係り受け解析結果の読み込み形態素">40. 係り受け解析結果の読み込み（形態素）</h3>
+</code></pre></div><h2 id="40-係り受け解析結果の読み込み形態素">40. 係り受け解析結果の読み込み（形態素）</h2>
 <p>形態素を表すクラス Morph を実装せよ．このクラスは表層形（surface），基本形（base），品詞（pos），品詞細分類 1（pos1）をメンバ変数に持つこととする．さらに，CaboCha の解析結果（neko.txt.cabocha）を読み込み，各文を Morph オブジェクトのリストとして表現し，3 文目の形態素列を表示せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
 <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Morph</span>:
@@ -1179,12 +1177,12 @@ sentences <span style="color:#f92672">=</span> list(read_cabocha(<span style="co
 <span style="color:#66d9ef">print</span>(list(map(str, sentences[<span style="color:#ae81ff">2</span>]))) <span style="color:#75715e">#&gt; [&#39;名前&#39;, &#39;は&#39;, &#39;まだ&#39;, &#39;無い&#39;, &#39;。&#39;]</span>
 </code></pre></div><p>参考: <a href="http://taku910.github.io/cabocha/">係り受け解析レイヤの出力フォーマット</a></p>
 <p>sentences ⊃ sentence = chunks ⊃ chunk = morphs ⊃ morph</p>
-<h5 id="memo">memo</h5>
+<h3 id="memo">memo</h3>
 <ul>
 <li>attributes は<code>'名前\t名詞,一般,*,*,*,*,名前,ナマエ,ナマエ\n'</code>のように(surface を除く)9 つがデフォ</li>
 <li><code>'頸筋\t名詞,一般,*,*,*,*,*\n'</code>この様に attributes が 7 つしかないものもある</li>
 </ul>
-<h3 id="41-係り受け解析結果の読み込み文節係り受け">41. 係り受け解析結果の読み込み（文節・係り受け）</h3>
+<h2 id="41-係り受け解析結果の読み込み文節係り受け">41. 係り受け解析結果の読み込み（文節・係り受け）</h2>
 <p>40 に加えて，文節を表すクラス Chunk を実装せよ．このクラスは形態素（Morph オブジェクト）のリスト（morphs），係り先文節インデックス番号（dst），係り元文節インデックス番号のリスト（srcs）をメンバ変数に持つこととする．さらに，入力テキストの CaboCha の解析結果を読み込み，１文を Chunk オブジェクトのリストとして表現し，8 文目の文節の文字列と係り先を表示せよ．第 5 章の残りの問題では，ここで作ったプログラムを活用せよ</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Chunk</span>:
     <span style="color:#66d9ef">def</span> __init__(self, dst):
@@ -1223,28 +1221,26 @@ sentences <span style="color:#f92672">=</span> list(read_cabocha_v2(<span style=
 </code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sentence <span style="color:#f92672">=</span> sentences[<span style="color:#ae81ff">5</span>] <span style="color:#75715e"># 空文を除しているので6行目が該当部</span>
 <span style="color:#66d9ef">for</span> i, chunk <span style="color:#f92672">in</span> enumerate(sentence):
     <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{i}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">{chunk.dst}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, chunk)
-</code></pre></div><h4 id="out">out</h4>
-<pre><code>0	5	 吾輩 は
+</code></pre></div><pre><code>0	5	 吾輩 は
 1	2	 ここ で
 2	3	 始め て
 3	4	 人間 という
 4	5	 もの を
 5	-1	 見 た 。
-</code></pre><h3 id="42-係り元と係り先の文節の表示">42. 係り元と係り先の文節の表示</h3>
+</code></pre><h2 id="42-係り元と係り先の文節の表示">42. 係り元と係り先の文節の表示</h2>
 <p>係り元の文節と係り先の文節のテキストをタブ区切り形式ですべて抽出せよ．ただし，句読点などの記号は出力しないようにせよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sentence <span style="color:#f92672">=</span> sentences[<span style="color:#ae81ff">5</span>]
 <span style="color:#66d9ef">for</span> i, chunk <span style="color:#f92672">in</span> enumerate(sentence):
     f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: list(filter(<span style="color:#66d9ef">lambda</span> y: y<span style="color:#f92672">.</span>pos <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;記号&#34;</span> , x))
     dst <span style="color:#f92672">=</span> i <span style="color:#66d9ef">if</span> chunk<span style="color:#f92672">.</span>dst <span style="color:#f92672">==</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">else</span> chunk<span style="color:#f92672">.</span>dst
     <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>f(chunk<span style="color:#f92672">.</span>morphs),<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>f(sentence[dst]<span style="color:#f92672">.</span>morphs))
-</code></pre></div><h4 id="out-1">out</h4>
-<pre><code>吾輩 は 	 見 た
+</code></pre></div><pre><code>吾輩 は 	 見 た
 ここ で 	 始め て
 始め て 	 人間 という
 人間 という 	 もの を
 もの を 	 見 た
 見 た 	 見 た
-</code></pre><h3 id="43-名詞を含む文節が動詞を含む文節に係るものを抽出">43. 名詞を含む文節が動詞を含む文節に係るものを抽出</h3>
+</code></pre><h2 id="43-名詞を含む文節が動詞を含む文節に係るものを抽出">43. 名詞を含む文節が動詞を含む文節に係るものを抽出</h2>
 <p>名詞を含む文節が，動詞を含む文節に係るとき，これらをタブ区切り形式で抽出せよ．ただし，句読点などの記号は出力しないようにせよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sentence <span style="color:#f92672">=</span> sentences[<span style="color:#ae81ff">5</span>]
 <span style="color:#66d9ef">for</span> i, chunk <span style="color:#f92672">in</span> enumerate(sentence):
@@ -1255,11 +1251,10 @@ sentences <span style="color:#f92672">=</span> list(read_cabocha_v2(<span style=
     <span style="color:#66d9ef">if</span> f(a, <span style="color:#e6db74">&#34;名詞&#34;</span>) <span style="color:#f92672">and</span> f(b, <span style="color:#e6db74">&#34;動詞&#34;</span>):
         f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: list(filter(<span style="color:#66d9ef">lambda</span> y: y<span style="color:#f92672">.</span>pos <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;記号&#34;</span> , x))
         <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>f(a),<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>,<span style="color:#f92672">*</span>f(b))
-</code></pre></div><h4 id="out-2">out</h4>
-<pre><code>吾輩 は 	 見 た
+</code></pre></div><pre><code>吾輩 は 	 見 た
 ここ で 	 始め て
 もの を 	 見 た
-</code></pre><h3 id="44-係り受け木の可視化">44. 係り受け木の可視化</h3>
+</code></pre><h2 id="44-係り受け木の可視化">44. 係り受け木の可視化</h2>
 <p>与えられた文の係り受け木を有向グラフとして可視化せよ．可視化には，係り受け木を DOT 言語に変換し，Graphviz を用いるとよい．また，Python から有向グラフを直接的に可視化するには，pydot を使うとよい．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pydot <span style="color:#f92672">import</span> Dot, Edge, Node
 graph <span style="color:#f92672">=</span> Dot(graph_type <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;digraph&#39;</span>)
@@ -1291,12 +1286,12 @@ img<span style="color:#f92672">.</span>show()
             
             <guid>https://tomowarkar.github.io/blog/posts/nlp100-04/</guid>
             <description>言語処理 100 本ノック(第 4 章: 形態素解析) 夏目漱石の小説『吾輩は猫である』の文章（[neko.txt](https://nlp100.gith</description>
-            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第-4-章-形態素解析httpsnlp100githubiojach04html"><a href="https://nlp100.github.io/ja/ch04.html">言語処理 100 本ノック(第 4 章: 形態素解析)</a></h2>
+            <content type="html"><![CDATA[<p><a href="https://nlp100.github.io/ja/ch04.html">言語処理 100 本ノック(第 4 章: 形態素解析)</a></p>
 <blockquote>
 <p>夏目漱石の小説『吾輩は猫である』の文章（[neko.txt](<a href="https://nlp100.github.io/data/neko.txt">https://nlp100.github.io/data/neko.txt</a>）を MeCab を使って形態素解析し，その結果を neko.txt.mecab というファイルに保存せよ．このファイルを用いて，以下の問に対応するプログラムを実装せよ．</p>
 <p>なお，問題 37, 38, 39 は matplotlib もしくは Gnuplot を用いるとよい．</p>
 </blockquote>
-<h3 id="環境">環境</h3>
+<h2 id="環境">環境</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
 ProductName:    Mac OS X
 ProductVersion: 10.15.4
@@ -1304,7 +1299,7 @@ BuildVersion:   19E266
 
 $ python3 -V
 Python 3.6.8
-</code></pre></div><h4 id="mecab">mecab</h4>
+</code></pre></div><h3 id="mecab">mecab</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mecab --version
 mecab of 0.996
 
@@ -1324,7 +1319,7 @@ userdic <span style="color:#f92672">=</span> /path/to/user.dic
 ; node-format <span style="color:#f92672">=</span> %m<span style="color:#ae81ff">\n</span>
 ; bos-format <span style="color:#f92672">=</span> %S<span style="color:#ae81ff">\n</span>
 ; eos-format <span style="color:#f92672">=</span> EOS<span style="color:#ae81ff">\n</span>
-</code></pre></div><h5 id="memo">memo</h5>
+</code></pre></div><h3 id="memo">memo</h3>
 <ul>
 <li>mecab を通すと<code>surface\tpos,pos1,pos2,pos3,conjugation,form,base,read,spell\n</code>の形に解析結果が出力される</li>
 </ul>
@@ -1332,9 +1327,9 @@ userdic <span style="color:#f92672">=</span> /path/to/user.dic
 <p>なので mecab の設定ファイル(<code>/usr/local/etc/mecabrc</code>(Mac OS X))から<code>userdic = /path/to/user.dic</code>の 1 行を消してあげれば問題なく動く。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ mecab
 viterbi.cpp<span style="color:#f92672">(</span>50<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>tokenizer_-&gt;open<span style="color:#f92672">(</span>param<span style="color:#f92672">)]</span> tokenizer.cpp<span style="color:#f92672">(</span>127<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>d-&gt;open<span style="color:#f92672">(</span>dicfile<span style="color:#f92672">[</span>i<span style="color:#f92672">])]</span> dictionary.cpp<span style="color:#f92672">(</span>79<span style="color:#f92672">)</span> <span style="color:#f92672">[</span>dmmap_-&gt;open<span style="color:#f92672">(</span>file, mode<span style="color:#f92672">)]</span> no such file or directory: /path/to/user.dic
-</code></pre></div><h3 id="30-形態素解析結果の読み込み">30. 形態素解析結果の読み込み)</h3>
+</code></pre></div><h2 id="30-形態素解析結果の読み込み">30. 形態素解析結果の読み込み)</h2>
 <p>形態素解析結果（neko.txt.mecab）を読み込むプログラムを実装せよ．ただし，各形態素は表層形（surface），基本形（base），品詞（pos），品詞細分類 1（pos1）をキーとするマッピング型に格納し，1 文を形態素（マッピング型）のリストとして表現せよ．第 4 章の残りの問題では，ここで作ったプログラムを活用せよ．</p>
-<h4 id="download-nekotxt">Download neko.txt</h4>
+<h3 id="download-nekotxt">Download neko.txt</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -Os https://nlp100.github.io/data/neko.txt
 $ :&gt; neko.txt.mecab <span style="color:#f92672">&amp;&amp;</span> mecab &lt; neko.txt &gt; neko.txt.mecab
 $ more neko.txt.mecab
@@ -1385,11 +1380,10 @@ EOS
 
 wss  <span style="color:#f92672">=</span> list(read_mecab(<span style="color:#e6db74">&#34;neko.txt.mecab&#34;</span>))
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>wss[:<span style="color:#ae81ff">3</span>], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out">out</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;一&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;一&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;名詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;数&#39;</span><span style="color:#f92672">}]</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;一&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;一&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;名詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;数&#39;</span><span style="color:#f92672">}]</span>
 <span style="color:#f92672">[{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;\u3000&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;\u3000&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;記号&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;空白&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;吾輩は猫である&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;吾輩は猫である&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;名詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;固有名詞&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;。&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;。&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;記号&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;句点&#39;</span><span style="color:#f92672">}]</span>
 <span style="color:#f92672">[{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;名前&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;名前&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;名詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;一般&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;は&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;は&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;助詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;係助詞&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;まだ&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;まだ&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;副詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;助詞類接続&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;無い&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;無い&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;形容詞&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;自立&#39;</span><span style="color:#f92672">}</span>, <span style="color:#f92672">{</span><span style="color:#e6db74">&#39;surface&#39;</span>: <span style="color:#e6db74">&#39;。&#39;</span>, <span style="color:#e6db74">&#39;base&#39;</span>: <span style="color:#e6db74">&#39;。&#39;</span>, <span style="color:#e6db74">&#39;pos&#39;</span>: <span style="color:#e6db74">&#39;記号&#39;</span>, <span style="color:#e6db74">&#39;pos1&#39;</span>: <span style="color:#e6db74">&#39;句点&#39;</span><span style="color:#f92672">}]</span>
-</code></pre></div><h3 id="functions">functions</h3>
+</code></pre></div><h2 id="functions">functions</h2>
 <p>今回使うプログラムに対応した関数群.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">filter_</span>(sentences, <span style="color:#f92672">*</span>, f<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x, target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, flatten<span style="color:#f92672">=</span>False):
     <span style="color:#e6db74">&#34;&#34;&#34;辞書型の配列を内包する配列に特化したフィルタ&#34;&#34;&#34;</span>
@@ -1424,17 +1418,17 @@ wss  <span style="color:#f92672">=</span> list(read_mecab(<span style="color:#e6
     <span style="color:#e6db74">&#34;&#34;&#34;出現頻度を棒グラフでプロット&#34;&#34;&#34;</span>
     plt<span style="color:#f92672">.</span>bar(range(<span style="color:#ae81ff">1</span>, len(freq)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>), list(dict(freq)<span style="color:#f92672">.</span>values()))
     plt<span style="color:#f92672">.</span>show()
-</code></pre></div><h3 id="31-動詞">31. 動詞</h3>
+</code></pre></div><h2 id="31-動詞">31. 動詞</h2>
 <p>動詞の表層形をすべて抽出せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">verb_surfaces <span style="color:#f92672">=</span> filter_(wss, f<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;動詞&#34;</span>, target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;surface&#34;</span>, flatten<span style="color:#f92672">=</span>True)
 <span style="color:#66d9ef">print</span>(verb_surfaces) <span style="color:#75715e">#&gt; [&#39;生れ&#39;, &#39;つか&#39;, &#39;泣い&#39;, &#39;し&#39;, &#39;いる&#39;, &#39;始め&#39;, &#39;見&#39;, &#39;聞く&#39;, ...</span>
-</code></pre></div><h3 id="32-動詞の原形">32. 動詞の原形</h3>
+</code></pre></div><h2 id="32-動詞の原形">32. 動詞の原形</h2>
 <p>動詞の原形をすべて抽出せよ</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">verb_bases <span style="color:#f92672">=</span> filter_(wss, f<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;動詞&#34;</span>, target<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;base&#34;</span>, flatten<span style="color:#f92672">=</span>True)
 <span style="color:#66d9ef">print</span>(verb_bases) <span style="color:#75715e">#&gt; [&#39;生れる&#39;, &#39;つく&#39;, &#39;泣く&#39;, &#39;する&#39;, &#39;いる&#39;, &#39;始める&#39;, &#39;見る&#39;, &#39;聞く&#39;, ...</span>
-</code></pre></div><h3 id="33-a-の-b">33. 「A の B」</h3>
+</code></pre></div><h2 id="33-a-の-b">33. 「A の B」</h2>
 <p>2 つの名詞が「の」で連結されている名詞句を抽出せよ．</p>
-<h5 id="memo-1">memo</h5>
+<h3 id="memo-1">memo</h3>
 <ul>
 <li>文意的に連体修飾格の「の」でありそうだが, trigram で実装する</li>
 </ul>
@@ -1447,8 +1441,7 @@ wss  <span style="color:#f92672">=</span> list(read_mecab(<span style="color:#e6
             n2<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;pos&#34;</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;名詞&#34;</span>:
 
             <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{n1.get(&#39;surface&#39;)}の{n2.get(&#39;surface&#39;)}&#34;</span>)
-</code></pre></div><h4 id="out-1">out</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">彼の掌
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">彼の掌
 掌の上
 書生の顔
 はずの顔
@@ -1456,7 +1449,7 @@ wss  <span style="color:#f92672">=</span> list(read_mecab(<span style="color:#e6
 穴の中
 書生の掌
 ...
-</code></pre></div><h3 id="34-名詞の連接">34. 名詞の連接</h3>
+</code></pre></div><h2 id="34-名詞の連接">34. 名詞の連接</h2>
 <p>名詞の連接（連続して出現する名詞）を最長一致で抽出せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">norn_series</span>(word_shapes):
     words <span style="color:#f92672">=</span> []
@@ -1470,12 +1463,10 @@ wss  <span style="color:#f92672">=</span> list(read_mecab(<span style="color:#e6
                 words <span style="color:#f92672">=</span> []
 ns <span style="color:#f92672">=</span> list(norn_series(wss))
 <span style="color:#66d9ef">print</span>(ns) <span style="color:#75715e">#&gt; [&#39;した所&#39;, &#39;人間中&#39;, &#39;一番獰悪&#39;, &#39;時妙&#39;, &#39;一毛&#39;, &#39;その後猫&#39;, &#39;一度&#39;, ...</span>
-</code></pre></div><h3 id="35-単語の出現頻度">35. 単語の出現頻度</h3>
+</code></pre></div><h2 id="35-単語の出現頻度">35. 単語の出現頻度</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">foa <span style="color:#f92672">=</span> frequency(wss)
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>top_n(foa, <span style="color:#ae81ff">10</span>), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-2">out</h4>
-<p>品詞毎に分けずに出すので当然助詞が上位を占めている</p>
-<pre><code>('の', 9101)
+</code></pre></div><pre><code>('の', 9101)
 ('。', 7484)
 ('、', 6772)
 ('て', 6697)
@@ -1485,9 +1476,10 @@ ns <span style="color:#f92672">=</span> list(norn_series(wss))
 ('と', 5474)
 ('が', 5259)
 ('た', 3916)
-</code></pre><h3 id="36-頻度上位-10-語">36. 頻度上位 10 語</h3>
+</code></pre><p>品詞毎に分けずに出すので当然助詞が上位を占めている</p>
+<h2 id="36-頻度上位-10-語">36. 頻度上位 10 語</h2>
 <p>出現頻度が高い 10 語とその出現頻度をグラフ（例えば棒グラフなど）で表示せよ．</p>
-<h5 id="memo-2">memo</h5>
+<h3 id="memo-2">memo</h3>
 <ul>
 <li>せっかくなので名詞で出現頻度が高い 10 語とその出現頻度をグラフにする</li>
 </ul>
@@ -1501,9 +1493,9 @@ wc_plot(foa)
     <img src="https://i.imgur.com/ltYSxbZ.png"  alt="blog top page"  class="center"  />
 
 
-<h3 id="37-猫と共起頻度の高い上位-10-語">37. 「猫」と共起頻度の高い上位 10 語</h3>
+<h2 id="37-猫と共起頻度の高い上位-10-語">37. 「猫」と共起頻度の高い上位 10 語</h2>
 <p>「猫」とよく共起する（共起頻度が高い）10 語とその出現頻度をグラフ（例えば棒グラフなど）で表示せよ．</p>
-<h5 id="memo-3">memo</h5>
+<h3 id="memo-3">memo</h3>
 <ul>
 <li>共起の定義が不明瞭だが、今回は「猫」と同一文中に出現する物を共起すると定義する</li>
 <li>せっかくなので動詞で出現頻度が高い 10 語とその出現頻度をグラフにする</li>
@@ -1521,7 +1513,7 @@ wc_plot(cat_rerations)
     <img src="https://i.imgur.com/dqbrtCT.png"  alt="blog top page"  class="center"  />
 
 
-<h3 id="38-ヒストグラム">38. ヒストグラム</h3>
+<h2 id="38-ヒストグラム">38. ヒストグラム</h2>
 <p>単語の出現頻度のヒストグラム（横軸に出現頻度，縦軸に出現頻度をとる単語の種類数を棒グラフで表したもの）を描け．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">arr <span style="color:#f92672">=</span> list(dict(sorted(foa<span style="color:#f92672">.</span>items(), key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x[<span style="color:#ae81ff">1</span>], reverse<span style="color:#f92672">=</span>True))<span style="color:#f92672">.</span>values())
 plt<span style="color:#f92672">.</span>hist(arr, bins<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, range<span style="color:#f92672">=</span>(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">100</span>))
@@ -1530,7 +1522,7 @@ plt<span style="color:#f92672">.</span>show()
     <img src="https://i.imgur.com/SxRTS3A.png"  alt="blog top page"  class="center"  />
 
 
-<h3 id="39-zipf-の法則">39. Zipf の法則</h3>
+<h2 id="39-zipf-の法則">39. Zipf の法則</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>plot(range(<span style="color:#ae81ff">1</span>, len(arr)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>), arr,marker<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;.&#39;</span>)
 plt<span style="color:#f92672">.</span>xscale(<span style="color:#e6db74">&#39;log&#39;</span>)
 plt<span style="color:#f92672">.</span>yscale(<span style="color:#e6db74">&#39;log&#39;</span>)
@@ -1549,7 +1541,7 @@ plt<span style="color:#f92672">.</span>show()
             
             <guid>https://tomowarkar.github.io/blog/posts/nlp100-03/</guid>
             <description>言語処理 100 本ノック(第 3 章: 正規表現) Wikipedia の記事を以下のフォーマットで書き出したファイルjawiki-country.json.gzがある． 1</description>
-            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第-3-章-正規表現httpsnlp100githubiojach03html"><a href="https://nlp100.github.io/ja/ch03.html">言語処理 100 本ノック(第 3 章: 正規表現)</a></h2>
+            <content type="html"><![CDATA[<p><a href="https://nlp100.github.io/ja/ch03.html">言語処理 100 本ノック(第 3 章: 正規表現)</a></p>
 <blockquote>
 <p>Wikipedia の記事を以下のフォーマットで書き出したファイル<a href="https://nlp100.github.io/data/jawiki-country.json.gz">jawiki-country.json.gz</a>がある．
 1 行に 1 記事の情報が JSON 形式で格納される
@@ -1557,7 +1549,7 @@ plt<span style="color:#f92672">.</span>show()
 ファイル全体は gzip で圧縮される
 以下の処理を行うプログラムを作成せよ．</p>
 </blockquote>
-<h3 id="環境">環境</h3>
+<h2 id="環境">環境</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
 ProductName:    Mac OS X
 ProductVersion: 10.15.4
@@ -1565,7 +1557,7 @@ BuildVersion:   19E266
 
 $ python3 -V
 Python 3.6.8
-</code></pre></div><h3 id="20-json-データの読み込み">20. JSON データの読み込み</h3>
+</code></pre></div><h2 id="20-json-データの読み込み">20. JSON データの読み込み</h2>
 <p>Wikipedia 記事の JSON ファイルを読み込み，「イギリス」に関する記事本文を表示せよ．問題 21-29 では，ここで抽出した記事本文に対して実行せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gzip
 <span style="color:#f92672">import</span> json
@@ -1578,20 +1570,18 @@ uk, <span style="color:#f92672">*</span>_ <span style="color:#f92672">=</span> l
 
 uk_text <span style="color:#f92672">=</span> uk<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;text&#34;</span>)
 <span style="color:#66d9ef">print</span>(uk_text)
-</code></pre></div><h4 id="out">out</h4>
-<pre><code>{{redirect|UK}}
+</code></pre></div><pre><code>{{redirect|UK}}
 {{redirect|英国|春秋時代の諸侯国|英 (春秋)}}
 {{Otheruses|ヨーロッパの国|長崎県・熊本県の郷土料理|いぎりす}}
 {{基礎情報 国
 |略名  =イギリス
 ...
-</code></pre><h3 id="21-カテゴリ名を含む行を抽出">21. カテゴリ名を含む行を抽出</h3>
+</code></pre><h2 id="21-カテゴリ名を含む行を抽出">21. カテゴリ名を含む行を抽出</h2>
 <p>記事中でカテゴリ名を宣言している行を抽出せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> re
 category_lines <span style="color:#f92672">=</span> list(filter(<span style="color:#66d9ef">lambda</span> x:re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[Category:.*?\]\]&#34;</span>, x), uk_text<span style="color:#f92672">.</span>splitlines()))
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>category_lines, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-1">out</h4>
-<pre><code>[[Category:イギリス|*]]
+</code></pre></div><pre><code>[[Category:イギリス|*]]
 [[Category:イギリス連邦加盟国]]
 [[Category:英連邦王国|*]]
 [[Category:G8加盟国]]
@@ -1600,12 +1590,11 @@ category_lines <span style="color:#f92672">=</span> list(filter(<span style="col
 [[Category:現存する君主国]]
 [[Category:島国]]
 [[Category:1801年に成立した国家・領域]]
-</code></pre><h3 id="22-カテゴリ名の抽出-permalink">22. カテゴリ名の抽出 Permalink</h3>
+</code></pre><h2 id="22-カテゴリ名の抽出-permalink">22. カテゴリ名の抽出 Permalink</h2>
 <p>記事のカテゴリ名を（行単位ではなく名前で）抽出せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">categories <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[Category:(.*?)\]\]&#34;</span>, uk_text)
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>categories, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-2">out</h4>
-<pre><code>イギリス|*
+</code></pre></div><pre><code>イギリス|*
 イギリス連邦加盟国
 英連邦王国|*
 G8加盟国
@@ -1614,11 +1603,10 @@ G8加盟国
 現存する君主国
 島国
 1801年に成立した国家・領域
-</code></pre><h4 id="純粋なカテゴリ名を取得">純粋なカテゴリ名を取得</h4>
+</code></pre><h3 id="純粋なカテゴリ名を取得">純粋なカテゴリ名を取得</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">categories <span style="color:#f92672">=</span> [c <span style="color:#66d9ef">for</span> c, _ <span style="color:#f92672">in</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[Category:(.*?)(\|.*)?\]\]&#34;</span>, uk_text)]
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>categories, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-3">out</h4>
-<pre><code>イギリス
+</code></pre></div><pre><code>イギリス
 イギリス連邦加盟国
 英連邦王国
 G8加盟国
@@ -1627,16 +1615,15 @@ G8加盟国
 現存する君主国
 島国
 1801年に成立した国家・領域
-</code></pre><h3 id="23-セクション構造-permalink">23. セクション構造 Permalink</h3>
+</code></pre><h2 id="23-セクション構造-permalink">23. セクション構造 Permalink</h2>
 <p>記事中に含まれるセクション名とそのレベル（例えば”== セクション名 ==”なら 1）を表示せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sections <span style="color:#f92672">=</span> list(filter(<span style="color:#66d9ef">lambda</span> x: re<span style="color:#f92672">.</span>search(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;^=(.+)=$&#34;</span>, x), uk_text<span style="color:#f92672">.</span>splitlines()))
 section_levels <span style="color:#f92672">=</span> [(section<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;=&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>), section<span style="color:#f92672">.</span>count(<span style="color:#e6db74">&#34;=&#34;</span>)<span style="color:#f92672">//</span><span style="color:#ae81ff">2</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> section <span style="color:#f92672">in</span> sections]
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>section_levels, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="きれいに書くならこう">きれいに書くならこう?</h4>
+</code></pre></div><h3 id="きれいに書くならこう">きれいに書くならこう?</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"> section_structure <span style="color:#f92672">=</span> [(j, len(i) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">for</span> i, j <span style="color:#f92672">in</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;(=+)(.*?)\1\n&#34;</span>, uk_text)]
  <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>section_structure, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-4">out</h4>
-<pre><code>('国名', 1)
+</code></pre></div><pre><code>('国名', 1)
 ('歴史', 1)
 ('地理', 1)
 ('主要都市', 2)
@@ -1691,16 +1678,15 @@ section_levels <span style="color:#f92672">=</span> [(section<span style="color:
 ('脚注', 1)
 ('関連項目', 1)
 ('外部リンク', 1)
-</code></pre><h5 id="memo">memo</h5>
+</code></pre><h3 id="memo">memo</h3>
 <ul>
 <li>空白対処しないとなぁ</li>
 </ul>
-<h3 id="24-ファイル参照の抽出">24. ファイル参照の抽出</h3>
+<h2 id="24-ファイル参照の抽出">24. ファイル参照の抽出</h2>
 <p>記事から参照されているメディアファイルをすべて抜き出せ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">media_files <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[ファイル:([^|\]]*)&#34;</span>, uk_text)
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>media_files, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-5">out</h4>
-<pre><code>Royal Coat of Arms of the United Kingdom.svg
+</code></pre></div><pre><code>Royal Coat of Arms of the United Kingdom.svg
 United States Navy Band - God Save the Queen.ogg
 Descriptio Prime Tabulae Europae.jpg
 Lenepveu, Jeanne d'Arc au siège d'Orléans.jpg
@@ -1728,9 +1714,9 @@ Royal Aberdeen Children's Hospital.jpg
 CHANDOS3.jpg
 The Fabs.JPG
 Wembley Stadium, illuminated.jpg
-</code></pre><h3 id="25-テンプレートの抽出">25. テンプレートの抽出</h3>
+</code></pre><h2 id="25-テンプレートの抽出">25. テンプレートの抽出</h2>
 <p>記事中に含まれる「基礎情報」テンプレートのフィールド名と値を抽出し，辞書オブジェクトとして格納せよ．</p>
-<h5 id="memo-1">memo</h5>
+<h3 id="memo-1">memo</h3>
 <ul>
 <li>何が正解かわからん&hellip;</li>
 </ul>
@@ -1750,8 +1736,7 @@ Wembley Stadium, illuminated.jpg
 
 ans <span style="color:#f92672">=</span> dict(re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\|(.*?)\ *?=\ ?(.*?)\n&#34;</span>, uk_text[start:end]))
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>ans<span style="color:#f92672">.</span>items(), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-6">out</h4>
-<pre><code>('略名', 'イギリス')
+</code></pre></div><pre><code>('略名', 'イギリス')
 ('日本語国名', 'グレートブリテン及び北アイルランド連合王国')
 ('公式国名', '{{lang|en|United Kingdom of Great Britain and Northern Ireland}}&lt;ref&gt;英語以外での正式国名:&lt;br /&gt;')
 ('国旗画像', 'Flag of the United Kingdom.svg')
@@ -1809,22 +1794,21 @@ ans <span style="color:#f92672">=</span> dict(re<span style="color:#f92672">.</s
 ('ccTLD', '[[.uk]] / [[.gb]]&lt;ref&gt;使用は.ukに比べ圧倒的少数。&lt;/ref&gt;')
 ('国際電話番号', '44')
 ('注記', '&lt;references/&gt;')
-</code></pre><h4 id="debug">debug</h4>
+</code></pre><h3 id="debug">debug</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">len(list(filter(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;|&#34;</span>), uk_text[start:end]<span style="color:#f92672">.</span>splitlines()))) <span style="color:#f92672">==</span> len(ans)
 <span style="color:#f92672">&gt;&gt;</span> True
-</code></pre></div><h5 id="memo-2">memo</h5>
+</code></pre></div><h3 id="memo-2">memo</h3>
 <ul>
 <li>正規表現だけで空白削除頑張った</li>
 </ul>
-<h3 id="26-強調マークアップの除去-permalink">26. 強調マークアップの除去 Permalink</h3>
+<h2 id="26-強調マークアップの除去-permalink">26. 強調マークアップの除去 Permalink</h2>
 <p>25 の処理時に，テンプレートの値から MediaWiki の強調マークアップ（弱い強調，強調，強い強調のすべて）を除去してテキストに変換せよ（参考: マークアップ早見表）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict((k, re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;&#39;{2,3}|&#39;{5}&#34;</span>, <span style="color:#e6db74">&#34;&#34;</span>, v)) <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items())
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before: &#34;</span>, ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態4&#34;</span>))
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;after : &#34;</span>, new_ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態4&#34;</span>))
-</code></pre></div><h4 id="out-7">out</h4>
-<pre><code>before:  現在の国号「'''グレートブリテン及び北アイルランド連合王国'''」に変更
+</code></pre></div><pre><code>before:  現在の国号「'''グレートブリテン及び北アイルランド連合王国'''」に変更
 after :  現在の国号「グレートブリテン及び北アイルランド連合王国」に変更
-</code></pre><h3 id="27-内部リンクの除去">27. 内部リンクの除去</h3>
+</code></pre><h2 id="27-内部リンクの除去">27. 内部リンクの除去</h2>
 <p>26 の処理に加えて，テンプレートの値から MediaWiki の内部リンクマークアップを除去し，テキストに変換せよ（参考: <a href="https://ja.wikipedia.org/wiki/Help:%E6%97%A9%E8%A6%8B%E8%A1%A8">マークアップ早見表</a>）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict((k, re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[(?!.*ファイル)(?!.*Category)([^|\]]+\|)*(.*?)\]\]&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">2&#34;</span>, v)) <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items())
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before: &#34;</span>, ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;通貨&#34;</span>))
@@ -1832,20 +1816,19 @@ after :  現在の国号「グレートブリテン及び北アイルランド�
 <span style="color:#66d9ef">print</span>()
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before: &#34;</span>, ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態3&#34;</span>))
 <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;after : &#34;</span>, new_ans<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;確立形態3&#34;</span>))
-</code></pre></div><h4 id="out-8">out</h4>
-<pre><code>before:  [[スターリング・ポンド|UKポンド]] (£)
+</code></pre></div><pre><code>before:  [[スターリング・ポンド|UKポンド]] (£)
 after :  UKポンド (£)
 
 before:  [[グレートブリテン及びアイルランド連合王国]]成立&lt;br /&gt;（[[合同法 (1800年)|1800年合同法]]）
 after :  グレートブリテン及びアイルランド連合王国成立&lt;br /&gt;（1800年合同法）
-</code></pre><h5 id="memo-3">memo</h5>
+</code></pre><h3 id="memo-3">memo</h3>
 <ul>
 <li>漏れてる部分</li>
 <li><code>{{}}</code>が干渉してそうだから先にこれを置換するのがいいか?</li>
 </ul>
 <pre><code>before:  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br /&gt;''神よ女王を護り賜え''&lt;br /&gt;{{center|[[ファイル:United States Navy Band - God Save the Queen.ogg]]}}
 after :  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br /&gt;''神よ女王を護り賜え''&lt;br /&gt;{{center|[[ファイル:United States Navy Band - God Save the Queen.ogg]]}}
-</code></pre><h3 id="28-mediawiki-マークアップの除去">28. MediaWiki マークアップの除去</h3>
+</code></pre><h2 id="28-mediawiki-マークアップの除去">28. MediaWiki マークアップの除去</h2>
 <p>27 の処理に加えて，テンプレートの値から MediaWiki マークアップを可能な限り除去し，国の基本情報を整形せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">new_ans <span style="color:#f92672">=</span> dict()
 <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> ans<span style="color:#f92672">.</span>items():
@@ -1856,8 +1839,7 @@ after :  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br 
   v <span style="color:#f92672">=</span> re<span style="color:#f92672">.</span>sub(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\[\[([^|\]]+\|)*(.*?)\]\]&#34;</span>, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">2&#34;</span>, v) <span style="color:#75715e"># 27改 ファイルもカテゴリーも置換</span>
   new_ans[k] <span style="color:#f92672">=</span> v
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>new_ans<span style="color:#f92672">.</span>items(), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h4 id="out-9">out</h4>
-<pre><code>('略名', 'イギリス')
+</code></pre></div><pre><code>('略名', 'イギリス')
 ('日本語国名', 'グレートブリテン及び北アイルランド連合王国')
 ('公式国名', 'United Kingdom of Great Britain and Northern Ireland&lt;ref&gt;英語以外での正式国名: ')
 ('国旗画像', 'Flag of the United Kingdom.svg')
@@ -1915,13 +1897,13 @@ after :  [[女王陛下万歳|{{lang|en|God Save the Queen}}]]{{en icon}}&lt;br 
 ('ccTLD', '.uk / .gb')
 ('国際電話番号', '44')
 ('注記', '')
-</code></pre><h5 id="memo-4">memo</h5>
+</code></pre><h3 id="memo-4">memo</h3>
 <ul>
 <li>１行に複数該当がある場合に実装もれがある</li>
 <li>該当を loop で置換するのがいいか?</li>
 <li>疲れたのでここまで</li>
 </ul>
-<h3 id="29-国旗画像の-url-を取得する">29. 国旗画像の URL を取得する</h3>
+<h2 id="29-国旗画像の-url-を取得する">29. 国旗画像の URL を取得する</h2>
 <p>テンプレートの内容を利用し，国旗画像の URL を取得せよ．（ヒント: <a href="https://www.mediawiki.org/wiki/API:Main_page/ja">MediaWiki API</a>の<a href="https://www.mediawiki.org/wiki/API:**Imageinfo**">imageinfo</a>を呼び出して，ファイル参照を URL に変換すればよい）</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
 URL <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://en.wikipedia.org/w/api.php&#34;</span>
@@ -1936,8 +1918,7 @@ r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</sp
 pages <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#34;query&#34;</span>][<span style="color:#e6db74">&#34;pages&#34;</span>]
 out <span style="color:#f92672">=</span> list(pages<span style="color:#f92672">.</span>values())[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;imageinfo&#34;</span>)[<span style="color:#ae81ff">0</span>]<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;url&#34;</span>)
 <span style="color:#66d9ef">print</span>(out)
-</code></pre></div><h4 id="out-10">out</h4>
-<pre><code>https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg
+</code></pre></div><pre><code>https://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg
 </code></pre>]]></content>
         </item>
         
@@ -1948,11 +1929,11 @@ out <span style="color:#f92672">=</span> list(pages<span style="color:#f92672">.
             
             <guid>https://tomowarkar.github.io/blog/posts/nlp100-02/</guid>
             <description>言語処理 100 本ノック(第 2 章: UNIX コマンド) popular-names.txtは，アメリカで生まれた赤ちゃんの「名前」「性別」「人数」「年」をタ</description>
-            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第-2-章-unix-コマンドhttpsnlp100githubiojach02html"><a href="https://nlp100.github.io/ja/ch02.html">言語処理 100 本ノック(第 2 章: UNIX コマンド)</a></h2>
+            <content type="html"><![CDATA[<p><a href="https://nlp100.github.io/ja/ch02.html">言語処理 100 本ノック(第 2 章: UNIX コマンド)</a></p>
 <blockquote>
 <p><a href="https://nlp100.github.io/data/popular-names.txt">popular-names.txt</a>は，アメリカで生まれた赤ちゃんの「名前」「性別」「人数」「年」をタブ区切り形式で格納したファイルである．以下の処理を行うプログラムを作成し，<a href="https://nlp100.github.io/data/popular-names.txt">popular-names.txt</a>を入力ファイルとして実行せよ．さらに，同様の処理を UNIX コマンドでも実行し，プログラムの実行結果を確認せよ．</p>
 </blockquote>
-<h3 id="環境">環境</h3>
+<h2 id="環境">環境</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
 ProductName:    Mac OS X
 ProductVersion: 10.15.4
@@ -1961,23 +1942,23 @@ BuildVersion:   19E266
 $ sh --version
 GNU bash, version 3.2.57<span style="color:#f92672">(</span>1<span style="color:#f92672">)</span>-release <span style="color:#f92672">(</span>x86_64-apple-darwin19<span style="color:#f92672">)</span>
 Copyright <span style="color:#f92672">(</span>C<span style="color:#f92672">)</span> <span style="color:#ae81ff">2007</span> Free Software Foundation, Inc.
-</code></pre></div><h5 id="popular-namestxt">popular-names.txt</h5>
+</code></pre></div><h3 id="popular-namestxt">popular-names.txt</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ head -n <span style="color:#ae81ff">5</span> popular-names.txt
 Mary    F       <span style="color:#ae81ff">7065</span>    <span style="color:#ae81ff">1880</span>
 Anna    F       <span style="color:#ae81ff">2604</span>    <span style="color:#ae81ff">1880</span>
 Emma    F       <span style="color:#ae81ff">2003</span>    <span style="color:#ae81ff">1880</span>
 Elizabeth       F       <span style="color:#ae81ff">1939</span>    <span style="color:#ae81ff">1880</span>
 Minnie  F       <span style="color:#ae81ff">1746</span>    <span style="color:#ae81ff">1880</span>
-</code></pre></div><h3 id="10-行数のカウント">10. 行数のカウント</h3>
+</code></pre></div><h2 id="10-行数のカウント">10. 行数のカウント</h2>
 <p>行数をカウントせよ．確認には wc コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ wc -l popular-names.txt
     <span style="color:#ae81ff">2780</span> popular-names.txt
 
 $ more popular-names.txt | wc -l
     <span style="color:#ae81ff">2780</span>
-</code></pre></div><h5 id="参考">参考</h5>
+</code></pre></div><h3 id="参考">参考</h3>
 <p><a href="https://www.atmarkit.co.jp/ait/articles/1611/07/news026.html#sample3">【 wc 】コマンド――テキストファイルの文字数や行数を数える</a></p>
-<h3 id="11-タブをスペースに置換">11. タブをスペースに置換</h3>
+<h2 id="11-タブをスペースに置換">11. タブをスペースに置換</h2>
 <p>タブ 1 文字につきスペース 1 文字に置換せよ．確認には sed コマンド，tr コマンド，もしくは expand コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sed -e <span style="color:#e6db74">&#39;s/[[:cntrl:]]/\ /g&#39;</span> popular-names.txt &gt; popular-names-11.txt
 
@@ -1988,28 +1969,28 @@ tr <span style="color:#e6db74">&#34;\t&#34;</span> <span style="color:#e6db74">&
 cat popular-names.txt | tr <span style="color:#e6db74">&#34;\t&#34;</span> <span style="color:#e6db74">&#34;\ &#34;</span> &gt; popular-names-11.txt
 
 expand -t <span style="color:#ae81ff">1</span> popular-names.txt &gt; popular-names-11.txt
-</code></pre></div><h5 id="popular-names-11txt">popular-names-11.txt</h5>
+</code></pre></div><h3 id="popular-names-11txt">popular-names-11.txt</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ head -n <span style="color:#ae81ff">5</span> popular-names-11.txt
 Mary F <span style="color:#ae81ff">7065</span> <span style="color:#ae81ff">1880</span>
 Anna F <span style="color:#ae81ff">2604</span> <span style="color:#ae81ff">1880</span>
 Emma F <span style="color:#ae81ff">2003</span> <span style="color:#ae81ff">1880</span>
 Elizabeth F <span style="color:#ae81ff">1939</span> <span style="color:#ae81ff">1880</span>
 Minnie F <span style="color:#ae81ff">1746</span> <span style="color:#ae81ff">1880</span>
-</code></pre></div><h5 id="memo">memo</h5>
+</code></pre></div><h3 id="memo">memo</h3>
 <ul>
 <li>mac の sed でタブを置換できないのでつまづき</li>
 <li>cat の&ndash;show-tabs オプションでタブを置換してからサイド置換が個人的には良さげ</li>
 <li>gsed コマンドをインストールするのもいいと思われる</li>
 </ul>
-<h5 id="参考-1">参考</h5>
+<h3 id="参考-1">参考</h3>
 <p><a href="https://qiita.com/kohashi/items/73708dea71a3ac233b29">mac OSX で sed を使って tab の文字列を置換</a>
 <a href="https://www.atmarkit.co.jp/ait/articles/1610/03/news017.html">【 tr 】コマンド――テキストファイルの文字を置換する／削除する</a>
 <a href="https://eng-entrance.com/linux-command-expand">expand コマンドについて詳しくまとめました 【Linux コマンド集】</a></p>
-<h3 id="12-1-列目を-col1txt-に2-列目を-col2txt-に保存-permalink">12. 1 列目を col1.txt に，2 列目を col2.txt に保存 Permalink</h3>
+<h2 id="12-1-列目を-col1txt-に2-列目を-col2txt-に保存-permalink">12. 1 列目を col1.txt に，2 列目を col2.txt に保存 Permalink</h2>
 <p>各行の 1 列目だけを抜き出したものを col1.txt に，2 列目だけを抜き出したものを col2.txt としてファイルに保存せよ．確認には cut コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cut -f <span style="color:#ae81ff">1</span> popular-names.txt &gt; col1.txt
 $ cut -f <span style="color:#ae81ff">2</span> popular-names.txt &gt; col2.txt
-</code></pre></div><h5 id="col1txt-col2txt">col1.txt, col2.txt</h5>
+</code></pre></div><h3 id="col1txt-col2txt">col1.txt, col2.txt</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ head -n <span style="color:#ae81ff">5</span> col1.txt
 Mary
 Anna
@@ -2023,24 +2004,24 @@ F
 F
 F
 F
-</code></pre></div><h5 id="memo-1">memo</h5>
+</code></pre></div><h3 id="memo-1">memo</h3>
 <p>とりあえず cut コマンドを動かしてみたらうまくいった</p>
-<h5 id="参考-2">参考</h5>
+<h3 id="参考-2">参考</h3>
 <p><a href="https://qiita.com/pekepek/items/c28bc87171983d756e32">CSV ファイルの特定の列を取り出す</a></p>
-<h3 id="13-col1txt-と-col2txt-をマージ">13. col1.txt と col2.txt をマージ</h3>
+<h2 id="13-col1txt-と-col2txt-をマージ">13. col1.txt と col2.txt をマージ</h2>
 <p>12 で作った col1.txt と col2.txt を結合し，元のファイルの 1 列目と 2 列目をタブ区切りで並べたテキストファイルを作成せよ．確認には paste コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ paste col1.txt col2.txt &gt; cols.txt
-</code></pre></div><h5 id="colstxt">cols.txt</h5>
+</code></pre></div><h3 id="colstxt">cols.txt</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ head -n <span style="color:#ae81ff">5</span> cols.txt
 Mary    F
 Anna    F
 Emma    F
 Elizabeth       F
 Minnie  F
-</code></pre></div><h3 id="14-先頭から-n-行を出力">14. 先頭から N 行を出力</h3>
+</code></pre></div><h2 id="14-先頭から-n-行を出力">14. 先頭から N 行を出力</h2>
 <p>自然数 N をコマンドライン引数などの手段で受け取り，入力のうち先頭の N 行だけを表示せよ．確認には head コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># デバックで使っていたので割愛</span>
-</code></pre></div><h3 id="15-末尾の-n-行を出力">15. 末尾の N 行を出力</h3>
+</code></pre></div><h2 id="15-末尾の-n-行を出力">15. 末尾の N 行を出力</h2>
 <p>自然数 N をコマンドライン引数などの手段で受け取り，入力のうち末尾の N 行だけを表示せよ．確認には tail コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ tail -n <span style="color:#ae81ff">5</span> popular-names.txt
 Benjamin        M       <span style="color:#ae81ff">13381</span>   <span style="color:#ae81ff">2018</span>
@@ -2048,12 +2029,12 @@ Elijah  M       <span style="color:#ae81ff">12886</span>   <span style="color:#a
 Lucas   M       <span style="color:#ae81ff">12585</span>   <span style="color:#ae81ff">2018</span>
 Mason   M       <span style="color:#ae81ff">12435</span>   <span style="color:#ae81ff">2018</span>
 Logan   M       <span style="color:#ae81ff">12352</span>   <span style="color:#ae81ff">2018</span>
-</code></pre></div><h3 id="16-ファイルを-n-分割する">16. ファイルを N 分割する</h3>
+</code></pre></div><h2 id="16-ファイルを-n-分割する">16. ファイルを N 分割する</h2>
 <p>自然数 N をコマンドライン引数などの手段で受け取り，入力のファイルを行単位で N 分割せよ．同様の処理を split コマンドで実現せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ split -l  <span style="color:#66d9ef">$(</span>expr <span style="color:#66d9ef">$(</span>expr <span style="color:#e6db74">`</span>cat popular-names.txt | wc -l<span style="color:#e6db74">`</span> / 3<span style="color:#66d9ef">)</span> + 1<span style="color:#66d9ef">)</span> popular-names.txt  popular-names-
 
 $ read chunks <span style="color:#f92672">&amp;&amp;</span> split -l  <span style="color:#66d9ef">$(</span>expr <span style="color:#66d9ef">$(</span>expr <span style="color:#e6db74">`</span>cat popular-names.txt | wc -l<span style="color:#e6db74">`</span> / $chunks<span style="color:#66d9ef">)</span> + 1<span style="color:#66d9ef">)</span> popular-names.txt  popular-names-
-</code></pre></div><h5 id="memo-2">memo</h5>
+</code></pre></div><h3 id="memo-2">memo</h3>
 <ul>
 <li>mac OSX の仕様?で split に n オプションがないのでむりくり実装</li>
 <li><code>行数 % n == 0</code>のときの要素数が違ってくる</li>
@@ -2062,9 +2043,9 @@ $ read chunks <span style="color:#f92672">&amp;&amp;</span> split -l  <span styl
 split: illegal option -- h
 usage: split <span style="color:#f92672">[</span>-a sufflen<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-b byte_count<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-l line_count<span style="color:#f92672">]</span> <span style="color:#f92672">[</span>-p pattern<span style="color:#f92672">]</span>
              <span style="color:#f92672">[</span>file <span style="color:#f92672">[</span>prefix<span style="color:#f92672">]]</span>
-</code></pre></div><h5 id="参考-3">参考</h5>
+</code></pre></div><h3 id="参考-3">参考</h3>
 <p><a href="https://stackoverflow.com/questions/2016894/how-to-split-a-large-text-file-into-smaller-files-with-equal-number-of-lines">How to split a large text file into smaller files with equal number of lines?</a></p>
-<h3 id="17-１列目の文字列の異なり">17. １列目の文字列の異なり</h3>
+<h2 id="17-１列目の文字列の異なり">17. １列目の文字列の異なり</h2>
 <p>1 列目の文字列の種類（異なる文字列の集合）を求めよ．確認には cut, sort, uniq コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cut -f <span style="color:#ae81ff">1</span> popular-names.txt | sort | uniq | head -n <span style="color:#ae81ff">5</span>
 Abigail
@@ -2072,7 +2053,7 @@ Aiden
 Alexander
 Alexis
 Alice
-</code></pre></div><h3 id="18-各行を-3-コラム目の数値の降順にソート">18. 各行を 3 コラム目の数値の降順にソート</h3>
+</code></pre></div><h2 id="18-各行を-3-コラム目の数値の降順にソート">18. 各行を 3 コラム目の数値の降順にソート</h2>
 <p>各行を 3 コラム目の数値の逆順で整列せよ（注意: 各行の内容は変更せずに並び替えよ）．確認には sort コマンドを用いよ（この問題はコマンドで実行した時の結果と合わなくてもよい）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat -t popular-names.txt | sed -e <span style="color:#e6db74">&#34;s/\^I/\ /g&#34;</span> | sort -r -n -t <span style="color:#e6db74">&#34; &#34;</span> -k <span style="color:#ae81ff">3</span> | head -n <span style="color:#ae81ff">5</span>
 Linda F <span style="color:#ae81ff">99689</span> <span style="color:#ae81ff">1947</span>
@@ -2080,16 +2061,16 @@ Linda F <span style="color:#ae81ff">96211</span> <span style="color:#ae81ff">194
 James M <span style="color:#ae81ff">94757</span> <span style="color:#ae81ff">1947</span>
 Michael M <span style="color:#ae81ff">92704</span> <span style="color:#ae81ff">1957</span>
 Robert M <span style="color:#ae81ff">91640</span> <span style="color:#ae81ff">1947</span>
-</code></pre></div><h5 id="memo-3">memo</h5>
+</code></pre></div><h3 id="memo-3">memo</h3>
 <ul>
 <li><code>r</code> リバース</li>
 <li><code>n</code> 数字順を明示</li>
 <li><code>t</code> 区切り文字</li>
 <li><code>k</code> 列番号</li>
 </ul>
-<h5 id="参考-4">参考</h5>
+<h3 id="参考-4">参考</h3>
 <p><a href="https://genzouw.com/entry/2019/04/24/083709">sort コマンドで CSV ファイルをソートする場合はソート列の指定方法に注意</a></p>
-<h3 id="19-各行の-1-コラム目の文字列の出現頻度を求め出現頻度の高い順に並べる">19. 各行の 1 コラム目の文字列の出現頻度を求め，出現頻度の高い順に並べる</h3>
+<h2 id="19-各行の-1-コラム目の文字列の出現頻度を求め出現頻度の高い順に並べる">19. 各行の 1 コラム目の文字列の出現頻度を求め，出現頻度の高い順に並べる</h2>
 <p>各行の 1 列目の文字列の出現頻度を求め，その高い順に並べて表示せよ．確認には cut, uniq, sort コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cut -f <span style="color:#ae81ff">1</span> popular-names.txt | sort | uniq -c | sort -r | head -n <span style="color:#ae81ff">5</span>
  <span style="color:#ae81ff">118</span> James
@@ -2107,11 +2088,11 @@ Robert M <span style="color:#ae81ff">91640</span> <span style="color:#ae81ff">19
             
             <guid>https://tomowarkar.github.io/blog/posts/nlp100-02-py/</guid>
             <description>言語処理 100 本ノック(第 2 章: UNIX コマンド) popular-names.txtは，アメリカで生まれた赤ちゃんの「名前」「性別」「人数」「年」をタ</description>
-            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第-2-章-unix-コマンドhttpsnlp100githubiojach02html"><a href="https://nlp100.github.io/ja/ch02.html">言語処理 100 本ノック(第 2 章: UNIX コマンド)</a></h2>
+            <content type="html"><![CDATA[<p><a href="https://nlp100.github.io/ja/ch02.html">言語処理 100 本ノック(第 2 章: UNIX コマンド)</a></p>
 <blockquote>
 <p><a href="https://nlp100.github.io/data/popular-names.txt">popular-names.txt</a>は，アメリカで生まれた赤ちゃんの「名前」「性別」「人数」「年」をタブ区切り形式で格納したファイルである．以下の処理を行うプログラムを作成し，<a href="https://nlp100.github.io/data/popular-names.txt">popular-names.txt</a>を入力ファイルとして実行せよ．さらに，同様の処理を UNIX コマンドでも実行し，プログラムの実行結果を確認せよ．</p>
 </blockquote>
-<h3 id="環境">環境</h3>
+<h2 id="環境">環境</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sw_vers
 ProductName:    Mac OS X
 ProductVersion: 10.15.4
@@ -2119,27 +2100,27 @@ BuildVersion:   19E266
 
 $ python3 -V
 Python 3.6.8
-</code></pre></div><h5 id="popular-namestxt">popular-names.txt</h5>
+</code></pre></div><h3 id="popular-namestxt">popular-names.txt</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ head -n <span style="color:#ae81ff">5</span> popular-names.txt
 Mary    F       <span style="color:#ae81ff">7065</span>    <span style="color:#ae81ff">1880</span>
 Anna    F       <span style="color:#ae81ff">2604</span>    <span style="color:#ae81ff">1880</span>
 Emma    F       <span style="color:#ae81ff">2003</span>    <span style="color:#ae81ff">1880</span>
 Elizabeth       F       <span style="color:#ae81ff">1939</span>    <span style="color:#ae81ff">1880</span>
 Minnie  F       <span style="color:#ae81ff">1746</span>    <span style="color:#ae81ff">1880</span>
-</code></pre></div><h3 id="10-行数のカウント">10. 行数のカウント</h3>
+</code></pre></div><h2 id="10-行数のカウント">10. 行数のカウント</h2>
 <p>行数をカウントせよ．確認には wc コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     <span style="color:#66d9ef">print</span>(len(f<span style="color:#f92672">.</span>readlines()))
 
 <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">2780</span>
-</code></pre></div><h3 id="11-タブをスペースに置換">11. タブをスペースに置換</h3>
+</code></pre></div><h2 id="11-タブをスペースに置換">11. タブをスペースに置換</h2>
 <p>タブ 1 文字につきスペース 1 文字に置換せよ．確認には sed コマンド，tr コマンド，もしくは expand コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     text <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()
 
 replaced_text <span style="color:#f92672">=</span> text<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, <span style="color:#e6db74">&#34; &#34;</span>)
 <span style="color:#66d9ef">print</span>(replaced_text)
-</code></pre></div><h3 id="12-1-列目を-col1txt-に2-列目を-col2txt-に保存-permalink">12. 1 列目を col1.txt に，2 列目を col2.txt に保存 Permalink</h3>
+</code></pre></div><h2 id="12-1-列目を-col1txt-に2-列目を-col2txt-に保存-permalink">12. 1 列目を col1.txt に，2 列目を col2.txt に保存 Permalink</h2>
 <p>各行の 1 列目だけを抜き出したものを col1.txt に，2 列目だけを抜き出したものを col2.txt としてファイルに保存せよ．確認には cut コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
@@ -2152,7 +2133,7 @@ col2 <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">l
 
 <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;col2-py.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f:
     f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(col2) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h3 id="13-col1txt-と-col2txt-をマージ">13. col1.txt と col2.txt をマージ</h3>
+</code></pre></div><h2 id="13-col1txt-と-col2txt-をマージ">13. col1.txt と col2.txt をマージ</h2>
 <p>12 で作った col1.txt と col2.txt を結合し，元のファイルの 1 列目と 2 列目をタブ区切りで並べたテキストファイルを作成せよ．確認には paste コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;col1-py.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     col1 <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
@@ -2163,19 +2144,19 @@ col2 <span style="color:#f92672">=</span> list(map(<span style="color:#66d9ef">l
 lines <span style="color:#f92672">=</span> [f<span style="color:#e6db74">&#34;{x}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">{y}&#34;</span> <span style="color:#66d9ef">for</span> x, y <span style="color:#f92672">in</span> zip(col1, col2)]
 <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;cols-py.txt&#34;</span>, <span style="color:#e6db74">&#34;w&#34;</span>) <span style="color:#66d9ef">as</span> f:
     f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>join(lines))
-</code></pre></div><h3 id="14-先頭から-n-行を出力">14. 先頭から N 行を出力</h3>
+</code></pre></div><h2 id="14-先頭から-n-行を出力">14. 先頭から N 行を出力</h2>
 <p>自然数 N をコマンドライン引数などの手段で受け取り，入力のうち先頭の N 行だけを表示せよ．確認には head コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">N <span style="color:#f92672">=</span> int(input())
 <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
     <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>lines[:N], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
-</code></pre></div><h3 id="15-末尾の-n-行を出力">15. 末尾の N 行を出力</h3>
+</code></pre></div><h2 id="15-末尾の-n-行を出力">15. 末尾の N 行を出力</h2>
 <p>自然数 N をコマンドライン引数などの手段で受け取り，入力のうち末尾の N 行だけを表示せよ．確認には tail コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">N <span style="color:#f92672">=</span> int(input())
 <span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
     <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>lines[<span style="color:#f92672">-</span>N:], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
-</code></pre></div><h3 id="16-ファイルを-n-分割する">16. ファイルを N 分割する</h3>
+</code></pre></div><h2 id="16-ファイルを-n-分割する">16. ファイルを N 分割する</h2>
 <p>自然数 N をコマンドライン引数などの手段で受け取り，入力のファイルを行単位で N 分割せよ．同様の処理を split コマンドで実現せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
 
@@ -2186,26 +2167,26 @@ N <span style="color:#f92672">=</span> int(input())
 idx <span style="color:#f92672">=</span> list(map(int, np<span style="color:#f92672">.</span>linspace(<span style="color:#ae81ff">0</span>, len(lines), N <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)))
 files <span style="color:#f92672">=</span> [lines[idx[i]:idx[i<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>]] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(N)]
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>files, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h5 id="memo">memo</h5>
+</code></pre></div><h3 id="memo">memo</h3>
 <ul>
 <li>bash の方とは違う実装をしている</li>
 <li>小数点の扱いがざる</li>
 </ul>
-<h3 id="17-１列目の文字列の異なり">17. １列目の文字列の異なり</h3>
+<h2 id="17-１列目の文字列の異なり">17. １列目の文字列の異なり</h2>
 <p>1 列目の文字列の種類（異なる文字列の集合）を求めよ．確認には cut, sort, uniq コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
 
 uniq_names <span style="color:#f92672">=</span> set([line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines])
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>sorted(uniq_names), sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h3 id="18-各行を-3-コラム目の数値の降順にソート">18. 各行を 3 コラム目の数値の降順にソート</h3>
+</code></pre></div><h2 id="18-各行を-3-コラム目の数値の降順にソート">18. 各行を 3 コラム目の数値の降順にソート</h2>
 <p>各行を 3 コラム目の数値の逆順で整列せよ（注意: 各行の内容は変更せずに並び替えよ）．確認には sort コマンドを用いよ（この問題はコマンドで実行した時の結果と合わなくてもよい）．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
 
 sorted_lines <span style="color:#f92672">=</span> sorted(lines, key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: int(x<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">2</span>]), reverse<span style="color:#f92672">=</span>True)
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>sorted_lines, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)
-</code></pre></div><h3 id="19-各行の-1-コラム目の文字列の出現頻度を求め出現頻度の高い順に並べる">19. 各行の 1 コラム目の文字列の出現頻度を求め，出現頻度の高い順に並べる</h3>
+</code></pre></div><h2 id="19-各行の-1-コラム目の文字列の出現頻度を求め出現頻度の高い順に並べる">19. 各行の 1 コラム目の文字列の出現頻度を求め，出現頻度の高い順に並べる</h2>
 <p>各行の 1 列目の文字列の出現頻度を求め，その高い順に並べて表示せよ．確認には cut, uniq, sort コマンドを用いよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;popular-names.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
     lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
@@ -2219,7 +2200,7 @@ col1_count <span style="color:#f92672">=</span> dict()
         col1_count[c] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
 sorted_col1 <span style="color:#f92672">=</span> sorted(col1_count<span style="color:#f92672">.</span>items(), key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x[<span style="color:#ae81ff">1</span>], reverse<span style="color:#f92672">=</span>True)
 <span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>sorted_col1, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
-</code></pre></div><h5 id="memo-1">memo</h5>
+</code></pre></div><h3 id="memo-1">memo</h3>
 
     <img src="https://i.imgur.com/2PTQM3P.png"  alt="blog top page"  class="center"  />
 
@@ -2363,35 +2344,35 @@ shift <span style="color:#66d9ef">$((</span>$OPTIND <span style="color:#f92672">
             
             <guid>https://tomowarkar.github.io/blog/posts/nlp100-01/</guid>
             <description>言語処理 100 本ノック(第 1 章: 準備運動) 環境 Python 3.6.8 00. 文字列の逆順 Permalink 文字列”stressed”の文字を逆に（末尾から先頭に向かって）並べた文字列を</description>
-            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック第-1-章-準備運動httpsnlp100githubiojach01html"><a href="https://nlp100.github.io/ja/ch01.html">言語処理 100 本ノック(第 1 章: 準備運動)</a></h2>
-<h3 id="環境">環境</h3>
+            <content type="html"><![CDATA[<p><a href="https://nlp100.github.io/ja/ch01.html">言語処理 100 本ノック(第 1 章: 準備運動)</a></p>
+<h2 id="環境">環境</h2>
 <p>Python 3.6.8</p>
-<h3 id="00-文字列の逆順-permalink">00. 文字列の逆順 Permalink</h3>
+<h2 id="00-文字列の逆順-permalink">00. 文字列の逆順 Permalink</h2>
 <p>文字列”stressed”の文字を逆に（末尾から先頭に向かって）並べた文字列を得よ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#e6db74">&#34;stressed&#34;</span>[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
 <span style="color:#e6db74">&#39;desserts&#39;</span>
-</code></pre></div><h3 id="01-パタトクカシーーpermalink">01. 「パタトクカシーー」Permalink</h3>
+</code></pre></div><h2 id="01-パタトクカシーーpermalink">01. 「パタトクカシーー」Permalink</h2>
 <p>「パタトクカシーー」という文字列の 1,3,5,7 文字目を取り出して連結した文字列を得よ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#e6db74">&#34;パタトクカシーー&#34;</span>[<span style="color:#ae81ff">1</span>::<span style="color:#ae81ff">2</span>]
 <span style="color:#e6db74">&#39;タクシー&#39;</span>
-</code></pre></div><h3 id="02-パトカータクシーパタトクカシーー">02. 「パトカー」＋「タクシー」＝「パタトクカシーー」</h3>
+</code></pre></div><h2 id="02-パトカータクシーパタトクカシーー">02. 「パトカー」＋「タクシー」＝「パタトクカシーー」</h2>
 <p>「パトカー」＋「タクシー」の文字を先頭から交互に連結して文字列「パタトクカシーー」を得よ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([i <span style="color:#f92672">+</span> j <span style="color:#66d9ef">for</span> i, j <span style="color:#f92672">in</span> zip(<span style="color:#e6db74">&#34;パトカー&#34;</span>, <span style="color:#e6db74">&#34;タクシー&#34;</span>)])
 <span style="color:#e6db74">&#39;パタトクカシーー&#39;</span>
-</code></pre></div><h3 id="03-円周率">03. 円周率</h3>
+</code></pre></div><h2 id="03-円周率">03. 円周率</h2>
 <p>“Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.”という文を単語に分解し，各単語の（アルファベットの）文字数を先頭から出現順に並べたリストを作成せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> re
 <span style="color:#f92672">&gt;&gt;&gt;</span> s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Now I need a drink, alcoholic of course, after the heavy lectures involving quantum mechanics.&#34;</span>
 <span style="color:#f92672">&gt;&gt;&gt;</span> list(map(<span style="color:#66d9ef">lambda</span> x: len(x), re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;[a-zA-Z]+&#34;</span>, s)))
 [<span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">9</span>]
-</code></pre></div><h3 id="04-元素記号-permalink">04. 元素記号 Permalink</h3>
+</code></pre></div><h2 id="04-元素記号-permalink">04. 元素記号 Permalink</h2>
 <p>“Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.”という文を単語に分解し，1, 5, 6, 7, 8, 9, 15, 16, 19 番目の単語は先頭の 1 文字，それ以外の単語は先頭に 2 文字を取り出し，取り出した文字列から単語の位置（先頭から何番目の単語か）への連想配列（辞書型もしくはマップ型）を作成せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> re
 <span style="color:#f92672">&gt;&gt;&gt;</span> s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Hi He Lied Because Boron Could Not Oxidize Fluorine. New Nations Might Also Sign Peace Security Clause. Arthur King Can.&#34;</span>
 <span style="color:#f92672">&gt;&gt;&gt;</span> p <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>, <span style="color:#ae81ff">7</span>, <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">9</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">16</span>, <span style="color:#ae81ff">19</span>)
 <span style="color:#f92672">&gt;&gt;&gt;</span> {word[<span style="color:#ae81ff">0</span>] <span style="color:#66d9ef">if</span> i <span style="color:#f92672">in</span> p <span style="color:#66d9ef">else</span> word[:<span style="color:#ae81ff">2</span>] :i <span style="color:#66d9ef">for</span> i, word <span style="color:#f92672">in</span> enumerate(re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;[a-zA-Z]+&#34;</span>, s), start<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)}
 {<span style="color:#e6db74">&#39;H&#39;</span>: <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#39;He&#39;</span>: <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#39;Li&#39;</span>: <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#39;Be&#39;</span>: <span style="color:#ae81ff">4</span>, <span style="color:#e6db74">&#39;B&#39;</span>: <span style="color:#ae81ff">5</span>, <span style="color:#e6db74">&#39;C&#39;</span>: <span style="color:#ae81ff">6</span>, <span style="color:#e6db74">&#39;N&#39;</span>: <span style="color:#ae81ff">7</span>, <span style="color:#e6db74">&#39;O&#39;</span>: <span style="color:#ae81ff">8</span>, <span style="color:#e6db74">&#39;F&#39;</span>: <span style="color:#ae81ff">9</span>, <span style="color:#e6db74">&#39;Ne&#39;</span>: <span style="color:#ae81ff">10</span>, <span style="color:#e6db74">&#39;Na&#39;</span>: <span style="color:#ae81ff">11</span>, <span style="color:#e6db74">&#39;Mi&#39;</span>: <span style="color:#ae81ff">12</span>, <span style="color:#e6db74">&#39;Al&#39;</span>: <span style="color:#ae81ff">13</span>, <span style="color:#e6db74">&#39;Si&#39;</span>: <span style="color:#ae81ff">14</span>, <span style="color:#e6db74">&#39;P&#39;</span>: <span style="color:#ae81ff">15</span>, <span style="color:#e6db74">&#39;S&#39;</span>: <span style="color:#ae81ff">16</span>, <span style="color:#e6db74">&#39;Cl&#39;</span>: <span style="color:#ae81ff">17</span>, <span style="color:#e6db74">&#39;Ar&#39;</span>: <span style="color:#ae81ff">18</span>, <span style="color:#e6db74">&#39;K&#39;</span>: <span style="color:#ae81ff">19</span>, <span style="color:#e6db74">&#39;Ca&#39;</span>: <span style="color:#ae81ff">20</span>}
-</code></pre></div><h3 id="05-n-grampermalink">05. n-gramPermalink</h3>
+</code></pre></div><h2 id="05-n-grampermalink">05. n-gramPermalink</h2>
 <p>与えられたシーケンス（文字列やリストなど）から n-gram を作る関数を作成せよ．この関数を用い，”I am an NLPer”という文から単語 bi-gram，文字 bi-gram を得よ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">import</span> re
 <span style="color:#f92672">&gt;&gt;&gt;</span> s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;I am an NLPer&#34;</span>
@@ -2410,7 +2391,7 @@ shift <span style="color:#66d9ef">$((</span>$OPTIND <span style="color:#f92672">
 [<span style="color:#e6db74">&#39;Iam&#39;</span>, <span style="color:#e6db74">&#39;aman&#39;</span>, <span style="color:#e6db74">&#39;anNLPer&#39;</span>]
 <span style="color:#f92672">&gt;&gt;&gt;</span> n_gram(re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;[a-zA-Z]+&#34;</span>, s), <span style="color:#ae81ff">3</span>)
 [<span style="color:#e6db74">&#39;Iaman&#39;</span>, <span style="color:#e6db74">&#39;amanNLPer&#39;</span>]
-</code></pre></div><h3 id="06-集合-permalink">06. 集合 Permalink</h3>
+</code></pre></div><h2 id="06-集合-permalink">06. 集合 Permalink</h2>
 <p>“paraparaparadise”と”paragraph”に含まれる文字 bi-gram の集合を，それぞれ, X と Y として求め，X と Y の和集合，積集合，差集合を求めよ．さらに，’se’という bi-gram が X および Y に含まれるかどうかを調べよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> bi_gram <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: [ x[i:i<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>] <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(x) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>)]
 <span style="color:#f92672">&gt;&gt;&gt;</span> X <span style="color:#f92672">=</span> bi_gram(<span style="color:#e6db74">&#34;paraparaparadise&#34;</span>)
@@ -2431,12 +2412,12 @@ shift <span style="color:#66d9ef">$((</span>$OPTIND <span style="color:#f92672">
 True
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#e6db74">&#34;se&#34;</span> <span style="color:#f92672">in</span> Y
 False
-</code></pre></div><h3 id="07-テンプレートによる文生成">07. テンプレートによる文生成</h3>
+</code></pre></div><h2 id="07-テンプレートによる文生成">07. テンプレートによる文生成</h2>
 <p>引数 x, y, z を受け取り「x 時の y は z」という文字列を返す関数を実装せよ．さらに，x=12, y=”気温”, z=22.4 として，実行結果を確認せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x, y, z: <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;{x} 時の {y} は {z}&#34;</span>)
 <span style="color:#f92672">&gt;&gt;&gt;</span> f(x<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span>, y<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;気温&#34;</span>, z<span style="color:#f92672">=</span><span style="color:#ae81ff">22.4</span>)
 <span style="color:#ae81ff">12</span> <span style="color:#960050;background-color:#1e0010">時の</span> <span style="color:#960050;background-color:#1e0010">気温</span> <span style="color:#960050;background-color:#1e0010">は</span> <span style="color:#ae81ff">22.4</span>
-</code></pre></div><h3 id="08-暗号文">08. 暗号文</h3>
+</code></pre></div><h2 id="08-暗号文">08. 暗号文</h2>
 <p>与えられた文字列の各文字を，以下の仕様で変換する関数 cipher を実装せよ．</p>
 <ul>
 <li>英小文字ならば(219 - 文字コード)の文字に置換</li>
@@ -2459,15 +2440,15 @@ False
 <span style="color:#e6db74">&#39;abCdeFghIjkLmnOpqRstUvwXyz&#39;</span>
 <span style="color:#f92672">&gt;&gt;&gt;</span> cipher(s)
 <span style="color:#e6db74">&#39;zyCwvFtsIqpLnmOkjRhgUedXba&#39;</span>
-</code></pre></div><h5 id="memo">memo</h5>
+</code></pre></div><h3 id="memo">memo</h3>
 <p>英小文字の文字コード範囲は 79-122</p>
 <p>219 - 文字コードの範囲は 122-79</p>
 <p>つまり丁度 反転の形をとり cipher によって a-z が z-a に対応するよう暗号化されることがわかる。</p>
 <p>また同じく cipher を 1 度かけると暗号化, 2 度かけると複合化されることがわかる.</p>
-<h5 id="参考">参考</h5>
+<h3 id="参考">参考</h3>
 <p><a href="https://docs.python.org/ja/3/library/functions.html#ord">Python 組み込み関数</a></p>
 <p><a href="https://note.nkmk.me/python-chr-ord-unicode-code-point/">Python で Unicode コードポイントと文字を相互変換（chr, ord, \x, \u, \U）</a></p>
-<h3 id="09-typoglycemia">09. Typoglycemia</h3>
+<h2 id="09-typoglycemia">09. Typoglycemia</h2>
 <p>スペースで区切られた単語列に対して，各単語の先頭と末尾の文字は残し，それ以外の文字の順序をランダムに並び替えるプログラムを作成せよ．ただし，長さが４以下の単語は並び替えないこととする．適当な英語の文（例えば”I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind .”）を与え，その実行結果を確認せよ．</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;&gt;</span> s <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;I couldn’t believe that I could actually understand what I was reading : the phenomenal power of the human mind .&#34;</span>
 <span style="color:#f92672">&gt;&gt;&gt;</span> <span style="color:#f92672">from</span> random <span style="color:#f92672">import</span> sample
@@ -2486,7 +2467,7 @@ False
 <span style="color:#e6db74">&#39;I culn’odt belivee that I culod acalulty uraetndnsd what I was reaindg : the pennoeamhl peowr of the haumn mind .&#39;</span>
 <span style="color:#f92672">&gt;&gt;&gt;</span> f2(s)
 <span style="color:#e6db74">&#39;I codlnu’t beevile that I cloud atluclay unrntsaedd what I was rneidag : the paeehnomnl peowr of the hmaun mind .&#39;</span>
-</code></pre></div><h5 id="参考-1">参考</h5>
+</code></pre></div><h3 id="参考-1">参考</h3>
 <p><a href="https://note.nkmk.me/python-random-shuffle/#_1">文字列やタプルのシャッフル</a></p>
 <h2 id="おわりに">おわりに</h2>
 <p><a href="https://github.com/yoyoyo-yo/Gasyori100knock">画像処理 100 本ノック!!</a>もあるようなので言語処理 100 本ノック が終わり次第やりたい。</p>
@@ -2566,7 +2547,7 @@ $ kill PID
 <p>定期的に確認すると良さげですね</p>
 <h2 id="vscode-プラグイン一覧の表示">VSCode プラグイン一覧の表示</h2>
 <pre><code>code --list-extensions | xargs -L 1 echo code --install-extension
-</code></pre><h3 id="20200410-現在">2020/04/10 現在</h3>
+</code></pre><h1 id="20200410-現在">2020/04/10 現在</h1>
 <pre><code>code --install-extension bbenoist.shell
 code --install-extension christian-kohler.npm-intellisense
 code --install-extension christian-kohler.path-intellisense
@@ -2599,154 +2580,154 @@ code --install-extension xabikos.JavaScriptSnippets
 code --install-extension xaver.clang-format
 code --install-extension yzhang.markdown-all-in-one
 </code></pre><h2 id="用途">用途</h2>
-<h5 id="bbenoistshellhttpsmarketplacevisualstudiocomitemsitemnamebbenoistshell"><a href="https://marketplace.visualstudio.com/items?itemName=bbenoist.shell">bbenoist.shell</a></h5>
+<h3 id="bbenoistshellhttpsmarketplacevisualstudiocomitemsitemnamebbenoistshell"><a href="https://marketplace.visualstudio.com/items?itemName=bbenoist.shell">bbenoist.shell</a></h3>
 <ul>
-<li>エディタから直接shellコマンドを実行できる</li>
+<li>エディタから直接 shell コマンドを実行できる</li>
 <li>ほぼ使っていない</li>
 </ul>
-<h5 id="christian-kohlerpath-intellisensehttpsmarketplacevisualstudiocomitemsitemnamechristian-kohlerpath-intellisense"><a href="https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense">christian-kohler.path-intellisense</a></h5>
+<h3 id="christian-kohlerpath-intellisensehttpsmarketplacevisualstudiocomitemsitemnamechristian-kohlerpath-intellisense"><a href="https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense">christian-kohler.path-intellisense</a></h3>
 <ul>
 <li>ファイル名を自動補完</li>
 <li>賢くて良き</li>
 </ul>
-<h5 id="dbaeumervscode-eslinthttpsmarketplacevisualstudiocomitemsitemnamedbaeumervscode-eslint"><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint">dbaeumer.vscode-eslint</a></h5>
+<h3 id="dbaeumervscode-eslinthttpsmarketplacevisualstudiocomitemsitemnamedbaeumervscode-eslint"><a href="https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint">dbaeumer.vscode-eslint</a></h3>
 <ul>
 <li>コードフォーマッター</li>
 <li>よくわからん</li>
 </ul>
-<h5 id="esbenpprettier-vscodehttpsmarketplacevisualstudiocomitemsitemnameesbenpprettier-vscode"><a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">esbenp.prettier-vscode</a></h5>
+<h3 id="esbenpprettier-vscodehttpsmarketplacevisualstudiocomitemsitemnameesbenpprettier-vscode"><a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">esbenp.prettier-vscode</a></h3>
 <ul>
 <li>コードフォーマッター</li>
-<li><a href="https://qiita.com/soarflat/items/06377f3b96964964a65d">Prettier 入門 ～ESLintとの違いを理解して併用する～</a></li>
+<li><a href="https://qiita.com/soarflat/items/06377f3b96964964a65d">Prettier 入門 ～ ESLint との違いを理解して併用する～</a></li>
 </ul>
-<h5 id="eg2vscode-npm-scripthttpsmarketplacevisualstudiocomitemsitemnameeg2vscode-npm-script"><a href="https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script">eg2.vscode-npm-script</a></h5>
+<h3 id="eg2vscode-npm-scripthttpsmarketplacevisualstudiocomitemsitemnameeg2vscode-npm-script"><a href="https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script">eg2.vscode-npm-script</a></h3>
 <ul>
-<li>npm のhogehoge</li>
+<li>npm の hogehoge</li>
 <li>よくわからん</li>
 </ul>
-<h5 id="christian-kohlernpm-intellisensehttpsmarketplacevisualstudiocomitemsitemnamechristian-kohlernpm-intellisense"><a href="https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense">christian-kohler.npm-intellisense</a></h5>
+<h3 id="christian-kohlernpm-intellisensehttpsmarketplacevisualstudiocomitemsitemnamechristian-kohlernpm-intellisense"><a href="https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense">christian-kohler.npm-intellisense</a></h3>
 <ul>
-<li>npmモジュールを自動補完</li>
+<li>npm モジュールを自動補完</li>
 </ul>
-<h5 id="dariofuzinatovue-peekhttpsmarketplacevisualstudiocomitemsitemnamedariofuzinatovue-peek"><a href="https://marketplace.visualstudio.com/items?itemName=dariofuzinato.vue-peek">dariofuzinato.vue-peek</a></h5>
+<h3 id="dariofuzinatovue-peekhttpsmarketplacevisualstudiocomitemsitemnamedariofuzinatovue-peek"><a href="https://marketplace.visualstudio.com/items?itemName=dariofuzinato.vue-peek">dariofuzinato.vue-peek</a></h3>
 <ul>
-<li>vue のhogehoge</li>
-<li>vueをあまり書いてないからよくわからん</li>
+<li>vue の hogehoge</li>
+<li>vue をあまり書いてないからよくわからん</li>
 </ul>
-<h5 id="jcbuissonvuehttpsmarketplacevisualstudiocomitemsitemnamejcbuissonvue"><a href="https://marketplace.visualstudio.com/items?itemName=jcbuisson.vue">jcbuisson.vue</a></h5>
+<h3 id="jcbuissonvuehttpsmarketplacevisualstudiocomitemsitemnamejcbuissonvue"><a href="https://marketplace.visualstudio.com/items?itemName=jcbuisson.vue">jcbuisson.vue</a></h3>
 <ul>
-<li>vue のSyntax Highlight</li>
+<li>vue の Syntax Highlight</li>
 <li>まあいるよね</li>
 </ul>
-<h5 id="mubaidrvuejs-extension-packhttpsmarketplacevisualstudiocomitemsitemnamemubaidrvuejs-extension-pack"><a href="https://marketplace.visualstudio.com/items?itemName=mubaidr.vuejs-extension-pack">mubaidr.vuejs-extension-pack</a></h5>
+<h3 id="mubaidrvuejs-extension-packhttpsmarketplacevisualstudiocomitemsitemnamemubaidrvuejs-extension-pack"><a href="https://marketplace.visualstudio.com/items?itemName=mubaidr.vuejs-extension-pack">mubaidr.vuejs-extension-pack</a></h3>
 <ul>
 <li>vue 関連</li>
 </ul>
-<h5 id="octrefveturhttpsmarketplacevisualstudiocomitemsitemnameoctrefvetur"><a href="https://marketplace.visualstudio.com/items?itemName=octref.vetur">octref.vetur</a></h5>
+<h3 id="octrefveturhttpsmarketplacevisualstudiocomitemsitemnameoctrefvetur"><a href="https://marketplace.visualstudio.com/items?itemName=octref.vetur">octref.vetur</a></h3>
 <ul>
 <li>同上</li>
 </ul>
-<h5 id="formulahendryauto-complete-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-complete-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-complete-tag">formulahendry.auto-complete-tag</a></h5>
+<h3 id="formulahendryauto-complete-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-complete-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-complete-tag">formulahendry.auto-complete-tag</a></h3>
 <ul>
 <li>以下二つのまとめ役</li>
 </ul>
-<h5 id="formulahendryauto-close-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-close-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag">formulahendry.auto-close-tag</a></h5>
+<h3 id="formulahendryauto-close-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-close-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag">formulahendry.auto-close-tag</a></h3>
 <ul>
 <li>html などの close tag 自動補完</li>
 <li>必須</li>
 </ul>
-<h5 id="formulahendryauto-rename-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-rename-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag">formulahendry.auto-rename-tag</a></h5>
+<h3 id="formulahendryauto-rename-taghttpsmarketplacevisualstudiocomitemsitemnameformulahendryauto-rename-tag"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag">formulahendry.auto-rename-tag</a></h3>
 <ul>
 <li>便利</li>
 <li>時々うざい</li>
 </ul>
-<h5 id="formulahendrycode-runnerhttpsmarketplacevisualstudiocomitemsitemnameformulahendrycode-runner"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner">formulahendry.code-runner</a></h5>
+<h3 id="formulahendrycode-runnerhttpsmarketplacevisualstudiocomitemsitemnameformulahendrycode-runner"><a href="https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner">formulahendry.code-runner</a></h3>
 <ul>
-<li>VScode上でのショートカット操作で外部のshell scriptを実行できる</li>
+<li>VScode 上でのショートカット操作で外部の shell script を実行できる</li>
 <li>入れたてホヤホヤ未使用様</li>
 </ul>
-<h5 id="knisterpetervscode-githubhttpsmarketplacevisualstudiocomitemsitemnameknisterpetervscode-github"><a href="https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-github">KnisterPeter.vscode-github</a></h5>
+<h3 id="knisterpetervscode-githubhttpsmarketplacevisualstudiocomitemsitemnameknisterpetervscode-github"><a href="https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-github">KnisterPeter.vscode-github</a></h3>
 <ul>
-<li>github関連</li>
+<li>github 関連</li>
 <li>どこからどこまで何をしているのかわからない</li>
 </ul>
-<h5 id="ms-azuretoolsvscode-dockerhttpsmarketplacevisualstudiocomitemsitemnamems-azuretoolsvscode-docker"><a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker">ms-azuretools.vscode-docker</a></h5>
+<h3 id="ms-azuretoolsvscode-dockerhttpsmarketplacevisualstudiocomitemsitemnamems-azuretoolsvscode-docker"><a href="https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker">ms-azuretools.vscode-docker</a></h3>
 <ul>
 <li>docker for vscode</li>
-<li>あまりdocker触ってないなぁ</li>
+<li>あまり docker 触ってないなぁ</li>
 </ul>
-<h5 id="ms-ceintlvscode-language-pack-jahttpsmarketplacevisualstudiocomitemsitemnamems-ceintlvscode-language-pack-ja"><a href="https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja">MS-CEINTL.vscode-language-pack-ja</a></h5>
+<h3 id="ms-ceintlvscode-language-pack-jahttpsmarketplacevisualstudiocomitemsitemnamems-ceintlvscode-language-pack-ja"><a href="https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja">MS-CEINTL.vscode-language-pack-ja</a></h3>
 <ul>
-<li>VSCodeの日本語対応</li>
+<li>VSCode の日本語対応</li>
 <li>必須</li>
 </ul>
-<h5 id="ms-mssqlmssqlhttpsmarketplacevisualstudiocomitemsitemnamems-mssqlmssql"><a href="https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql">ms-mssql.mssql</a></h5>
+<h3 id="ms-mssqlmssqlhttpsmarketplacevisualstudiocomitemsitemnamems-mssqlmssql"><a href="https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql">ms-mssql.mssql</a></h3>
 <ul>
-<li>sql関連</li>
+<li>sql 関連</li>
 </ul>
-<h5 id="ms-pythonpythonhttpsmarketplacevisualstudiocomitemsitemnamems-pythonpython"><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">ms-python.python</a></h5>
+<h3 id="ms-pythonpythonhttpsmarketplacevisualstudiocomitemsitemnamems-pythonpython"><a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">ms-python.python</a></h3>
 <ul>
-<li>python関連</li>
+<li>python 関連</li>
 <li>必須</li>
 </ul>
-<h5 id="tht13pythonhttpsmarketplacevisualstudiocomitemsitemnametht13python"><a href="https://marketplace.visualstudio.com/items?itemName=tht13.python">tht13.python</a></h5>
+<h3 id="tht13pythonhttpsmarketplacevisualstudiocomitemsitemnametht13python"><a href="https://marketplace.visualstudio.com/items?itemName=tht13.python">tht13.python</a></h3>
 <ul>
-<li>python関連</li>
+<li>python 関連</li>
 <li>よくわからん</li>
 </ul>
-<h5 id="donjayamannejupyterhttpsmarketplacevisualstudiocomitemsitemnamedonjayamannejupyter"><a href="https://marketplace.visualstudio.com/items?itemName=donjayamanne.jupyter">donjayamanne.jupyter</a></h5>
+<h3 id="donjayamannejupyterhttpsmarketplacevisualstudiocomitemsitemnamedonjayamannejupyter"><a href="https://marketplace.visualstudio.com/items?itemName=donjayamanne.jupyter">donjayamanne.jupyter</a></h3>
 <ul>
-<li>jupyter notebook　のhogehoge</li>
+<li>jupyter notebook 　の hogehoge</li>
 <li>あると便利</li>
 <li>なくても困らん</li>
 </ul>
-<h5 id="xaverclang-formathttpsmarketplacevisualstudiocomitemsitemnamexaverclang-format"><a href="https://marketplace.visualstudio.com/items?itemName=xaver.clang-format">xaver.clang-format</a></h5>
+<h3 id="xaverclang-formathttpsmarketplacevisualstudiocomitemsitemnamexaverclang-format"><a href="https://marketplace.visualstudio.com/items?itemName=xaver.clang-format">xaver.clang-format</a></h3>
 <ul>
-<li>c関連</li>
+<li>c 関連</li>
 </ul>
-<h5 id="ms-vscodecpptoolshttpsmarketplacevisualstudiocomitemsitemnamems-vscodecpptools"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">ms-vscode.cpptools</a></h5>
+<h3 id="ms-vscodecpptoolshttpsmarketplacevisualstudiocomitemsitemnamems-vscodecpptools"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">ms-vscode.cpptools</a></h3>
 <ul>
 <li>c/c++関連</li>
 </ul>
-<h5 id="ms-vscodegohttpsmarketplacevisualstudiocomitemsitemnamems-vscodego"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go">ms-vscode.Go</a></h5>
+<h3 id="ms-vscodegohttpsmarketplacevisualstudiocomitemsitemnamems-vscodego"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go">ms-vscode.Go</a></h3>
 <ul>
 <li>go 関連</li>
 <li>必須</li>
 </ul>
-<h5 id="ms-vscodevscode-typescript-tslint-pluginhttpsmarketplacevisualstudiocomitemsitemnamems-vscodevscode-typescript-tslint-plugin"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin">ms-vscode.vscode-typescript-tslint-plugin</a></h5>
+<h3 id="ms-vscodevscode-typescript-tslint-pluginhttpsmarketplacevisualstudiocomitemsitemnamems-vscodevscode-typescript-tslint-plugin"><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin">ms-vscode.vscode-typescript-tslint-plugin</a></h3>
 <ul>
 <li>使ってないなぁ</li>
 </ul>
-<h5 id="robertoacharvscode-essentials-snippetshttpsmarketplacevisualstudiocomitemsitemnamerobertoacharvscode-essentials-snippets"><a href="https://marketplace.visualstudio.com/items?itemName=robertoachar.vscode-essentials-snippets">robertoachar.vscode-essentials-snippets</a></h5>
+<h3 id="robertoacharvscode-essentials-snippetshttpsmarketplacevisualstudiocomitemsitemnamerobertoacharvscode-essentials-snippets"><a href="https://marketplace.visualstudio.com/items?itemName=robertoachar.vscode-essentials-snippets">robertoachar.vscode-essentials-snippets</a></h3>
 <ul>
 <li>見た感じ便利そう</li>
 <li>なお使ったことはない</li>
 </ul>
-<h5 id="tombonnikevscode-status-bar-format-togglehttpsmarketplacevisualstudiocomitemsitemnametombonnikevscode-status-bar-format-toggle"><a href="https://marketplace.visualstudio.com/items?itemName=tombonnike.vscode-status-bar-format-toggle">tombonnike.vscode-status-bar-format-toggle</a></h5>
+<h3 id="tombonnikevscode-status-bar-format-togglehttpsmarketplacevisualstudiocomitemsitemnametombonnikevscode-status-bar-format-toggle"><a href="https://marketplace.visualstudio.com/items?itemName=tombonnike.vscode-status-bar-format-toggle">tombonnike.vscode-status-bar-format-toggle</a></h3>
 <ul>
 <li>なんだ&hellip; これは&hellip;</li>
 </ul>
-<h5 id="tomoki1207pdfhttpsmarketplacevisualstudiocomitemsitemnametomoki1207pdf"><a href="https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf">tomoki1207.pdf</a></h5>
+<h3 id="tomoki1207pdfhttpsmarketplacevisualstudiocomitemsitemnametomoki1207pdf"><a href="https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf">tomoki1207.pdf</a></h3>
 <ul>
-<li>VSCodeでPDFが見れる</li>
+<li>VSCode で PDF が見れる</li>
 <li>benri</li>
 </ul>
-<h5 id="visualstudioexptteamvscodeintellicodehttpsmarketplacevisualstudiocomitemsitemnamevisualstudioexptteamvscodeintellicode"><a href="https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode">VisualStudioExptTeam.vscodeintellicode</a></h5>
+<h3 id="visualstudioexptteamvscodeintellicodehttpsmarketplacevisualstudiocomitemsitemnamevisualstudioexptteamvscodeintellicode"><a href="https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode">VisualStudioExptTeam.vscodeintellicode</a></h3>
 <ul>
 <li>ものゴッツ便利</li>
 </ul>
-<h5 id="xabikosjavascriptsnippetshttpsmarketplacevisualstudiocomitemsitemnamexabikosjavascriptsnippets"><a href="https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets">xabikos.JavaScriptSnippets</a></h5>
+<h3 id="xabikosjavascriptsnippetshttpsmarketplacevisualstudiocomitemsitemnamexabikosjavascriptsnippets"><a href="https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets">xabikos.JavaScriptSnippets</a></h3>
 <ul>
 <li>JS</li>
 <li>こんなん知らんかった</li>
 <li>今度使いたい</li>
 </ul>
-<h5 id="yzhangmarkdown-all-in-onehttpsmarketplacevisualstudiocomitemsitemnameyzhangmarkdown-all-in-one"><a href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one">yzhang.markdown-all-in-one</a></h5>
+<h3 id="yzhangmarkdown-all-in-onehttpsmarketplacevisualstudiocomitemsitemnameyzhangmarkdown-all-in-one"><a href="https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one">yzhang.markdown-all-in-one</a></h3>
 <ul>
-<li>markdown関連</li>
+<li>markdown 関連</li>
 <li>必須</li>
 </ul>
-<h3 id="参考">参考</h3>
+<h2 id="参考">参考</h2>
 <p><a href="https://qiita.com/koshilife/items/3ed4b1c28de233f39ebb">Qiita::VSCode インストール済 プラグイン一覧の確認方法 (コマンド)</a></p>
 ]]></content>
         </item>
@@ -2757,14 +2738,14 @@ code --install-extension yzhang.markdown-all-in-one
             <pubDate>Fri, 10 Apr 2020 11:32:50 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/imgur_api/</guid>
-            <description>選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。 それに応じてi</description>
+            <description>選ばれたのはimgurでした. このブログでの画像の管理をどうしようかと 30 秒程考えた結果、imgur で管理することにしました。 それに応じて imgur に</description>
             <content type="html"><![CDATA[<p>選ばれたのは<a href="https://imgur.com/">imgur</a>でした.</p>
-<p>このブログでの画像の管理をどうしようかと30秒程考えた結果、imgurで管理することにしました。</p>
-<p>それに応じてimgurにブログ用の画像を簡単にアップロードするbashスクリプトを書いたので備忘録。</p>
-<h3 id="なぜこのブログの画像管理にimgurを選んだか">なぜこのブログの画像管理にimgurを選んだか</h3>
-<p>imgurを選んだ理由はこんな感じ</p>
+<p>このブログでの画像の管理をどうしようかと 30 秒程考えた結果、imgur で管理することにしました。</p>
+<p>それに応じて imgur にブログ用の画像を簡単にアップロードする bash スクリプトを書いたので備忘録。</p>
+<h2 id="なぜこのブログの画像管理に-imgur-を選んだか">なぜこのブログの画像管理に imgur を選んだか</h2>
+<p>imgur を選んだ理由はこんな感じ</p>
 <ul>
-<li>apiが使える</li>
+<li>api が使える</li>
 <li>無料であある</li>
 <li>投稿オプションが豊富(匿名、アルバム, タグなど)</li>
 </ul>
@@ -2773,7 +2754,7 @@ code --install-extension yzhang.markdown-all-in-one
 <li>画像サイズ制限</li>
 <li>使われない画像の自動削除</li>
 </ul>
-<p>などがあるが、画像サイズ制限はそこまで画質を重視しないのと,アップロード時の通信料を考えて元々圧縮した画像をアップロードするつもりなのでOK</p>
+<p>などがあるが、画像サイズ制限はそこまで画質を重視しないのと,アップロード時の通信料を考えて元々圧縮した画像をアップロードするつもりなので OK</p>
 <p>使われない画像の自動削除については正直どうなるか未知数なので、今後の運用を見て適宜考えていくこととする。とはいえそこまで画像を多用するつもりはないので最悪消えても大丈夫だろう。</p>
 <h2 id="スクリプト本文">スクリプト本文</h2>
 <h3 id="依存">依存</h3>
@@ -2826,11 +2807,11 @@ exit <span style="color:#ae81ff">0</span>
 <h2 id="個人的ポイント">個人的ポイント</h2>
 <h3 id="アップロード前のリサイズ">アップロード前のリサイズ</h3>
 <pre><code>ffmpeg -i &quot;$1&quot; -vf scale=600:-1 $tmp_img
-</code></pre><p>私のMac(MacBook Pro, 13-inch, 2016)でフルサイズのスクリーンショットをすると 2880×1800 の画像が保存される518万画素の3K画質である。</p>
-<p>流石にそんなに高画質な画像は必要ないのと、手軽さを考え横のスケールを600pxに圧縮してアップロードすることにした。</p>
-<p>フルサイズのスクリーンショットだと 2880×1800 が 600×375になるので約1/23のサイズになる</p>
-<h3 id="アウトプットをhugoのショートコードで出力">アウトプットをHugoのショートコードで出力</h3>
-<p>HugoにはMarkdownで使える便利なショートコードがある</p>
+</code></pre><p>私の Mac(MacBook Pro, 13-inch, 2016)でフルサイズのスクリーンショットをすると 2880×1800 の画像が保存される 518 万画素の 3K 画質である。</p>
+<p>流石にそんなに高画質な画像は必要ないのと、手軽さを考え横のスケールを 600px に圧縮してアップロードすることにした。</p>
+<p>フルサイズのスクリーンショットだと 2880×1800 が 600×375 になるので約 1/23 のサイズになる</p>
+<h3 id="アウトプットを-hugo-のショートコードで出力">アウトプットを Hugo のショートコードで出力</h3>
+<p>Hugo には Markdown で使える便利なショートコードがある</p>
 <p><a href="https://gohugo.io/content-management/shortcodes/">Hugo :: Shortcodes</a></p>
 <p>アウトプットの形をショートコードにすることで画像のリサイズ・アップロードから、ショートコードの生成までを一気に任せてしまうことにした。</p>
 <h3 id="rm-の仕様">rm の仕様</h3>
@@ -2843,7 +2824,7 @@ fi
 rm $tmp_img
 </code></pre><p>自動生成の $tmp_img は <code>rm</code> で、元画像は <code>mv</code> でゴミ箱へって感じで運用しているが、<code>rm</code> は基本的には不可逆削除って認識であってるのかな?</p>
 <p>軽く調べた限り時間が経ってないのであれば復元手段もあるらしいけど&hellip;</p>
-<h3 id="参考">参考</h3>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://newfivefour.com/unix-imgur-basic-upload.html">https://newfivefour.com/unix-imgur-basic-upload.html</a></li>
 <li><a href="https://apidocs.imgur.com/?version=latest">https://apidocs.imgur.com/?version=latest</a></li>
@@ -2857,33 +2838,33 @@ rm $tmp_img
             <pubDate>Thu, 09 Apr 2020 15:33:43 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/hugo_social_icon/</guid>
-            <description>当然といえば当然だが、hello-friend-ngのREADMEにもあるように、ソーシャルアイコンにQiitaは対応していない。 そこに画像</description>
+            <description>当然といえば当然だが、hello-friend-ng のREADMEにもあるように、ソーシャルアイコンに Qiita は対応していない。 そこに画像(もしく</description>
             <content type="html"><![CDATA[
     <img src="https://i.imgur.com/AYyMNK5.png"  alt="blog top page"  class="center"  />
 
 
-<p>当然といえば当然だが、hello-friend-ngの<a href="https://github.com/itsjoeoui/hugo-theme-hello-friend-ng#user-content-available-social-icons">README</a>にもあるように、ソーシャルアイコンにQiitaは対応していない。</p>
-<p>そこに画像(もしくはこのブログの<a href="https://tomowarkar.github.io/blog/">トップページ</a>)のようにqiitaアイコンを追加したという備忘録。</p>
+<p>当然といえば当然だが、hello-friend-ng の<a href="https://github.com/itsjoeoui/hugo-theme-hello-friend-ng#user-content-available-social-icons">README</a>にもあるように、ソーシャルアイコンに Qiita は対応していない。</p>
+<p>そこに画像(もしくはこのブログの<a href="https://tomowarkar.github.io/blog/">トップページ</a>)のように qiita アイコンを追加したという備忘録。</p>
 <p>対応するコミットは<a href="https://github.com/tomowarkar/blog/commit/6b88f224fa1d6e473be03875255b211e4367670c">こちら</a></p>
 <h2 id="はじめに">はじめに</h2>
-<h3 id="テーマの管理に関して">テーマの管理に関して</h3>
+<h2 id="テーマの管理に関して">テーマの管理に関して</h2>
 <ul>
-<li>hugoでのテーマは<code>themes</code> フォルダの配下でサブモジュールとして管理されている。</li>
+<li>hugo でのテーマは<code>themes</code> フォルダの配下でサブモジュールとして管理されている。</li>
 <li>直接ソースコードをいじればもちろん変更は可能だが、サブモジュール自体のアップデートがあった時に変更が消えてしまう。</li>
-<li>なので直接ソースをいじるのは無し(wordpressのテーマなどでもお馴染みではあるが)</li>
+<li>なので直接ソースをいじるのは無し(wordpress のテーマなどでもお馴染みではあるが)</li>
 </ul>
-<h3 id="ソーシャルアイコンに関して">ソーシャルアイコンに関して</h3>
+<h2 id="ソーシャルアイコンに関して">ソーシャルアイコンに関して</h2>
 <p>今現在私が使わせてもらっているテーマは<a href="https://github.com/itsjoeoui/hugo-theme-hello-friend-ng">hugo-theme-hello-friend-ng</a></p>
 <ul>
-<li>READMEを読んでいくとソーシャルアイコンは<a href="https://simpleicons.org/">simpleicons</a>のアイコンを使っている。</li>
+<li>README を読んでいくとソーシャルアイコンは<a href="https://simpleicons.org/">simpleicons</a>のアイコンを使っている。</li>
 <li>テーマ内でのアイコン管理はどうやら<a href="https://github.com/itsjoeoui/hugo-theme-hello-friend-ng/blob/master/layouts/partials/svg.html">ここ</a>で行っている。</li>
 </ul>
-<h3 id="テーマ編集に関して">テーマ編集に関して</h3>
+<h2 id="テーマ編集に関して">テーマ編集に関して</h2>
 <p>どうやら<code>layouts</code>配下に仕様しているテーマの変更したいソースコードパスをコピーしてこればいいらしい。(参考サイト忘れてしまいました。すいません。)</p>
 <p>なので</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp blog/themes/hello-friend-ng/layouts/partials/svg.html blog/layouts/partials/
-</code></pre></div><p>このようにコピーして,コピーしたものを編集すればHugoさんがよしなにしてくれる。</p>
-<h5 id="layoutspartialssvghtml">layouts/partials/svg.html</h5>
+</code></pre></div><p>このようにコピーして,コピーしたものを編集すれば Hugo さんがよしなにしてくれる。</p>
+<h3 id="layoutspartialssvghtml">layouts/partials/svg.html</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">+ {{- else if (eq .name &#34;qiita&#34;) -}}
 +     &lt;<span style="color:#f92672">svg</span> <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2000/svg&#34;</span> <span style="color:#a6e22e">width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;26&#34;</span> <span style="color:#a6e22e">height</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;24&#34;</span> <span style="color:#a6e22e">viewBox</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0 0 24 24&#34;</span> <span style="color:#a6e22e">fill</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;none&#34;</span> <span style="color:#a6e22e">stroke</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;currentColor&#34;</span> <span style="color:#a6e22e">stroke-width</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;2&#34;</span> <span style="color:#a6e22e">stroke-linecap</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;round&#34;</span> <span style="color:#a6e22e">stroke-linejoin</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;round&#34;</span>&gt;&lt;<span style="color:#f92672">path</span> <span style="color:#a6e22e">xmlns</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;http://www.w3.org/2000/svg&#34;</span> <span style="color:#a6e22e">d</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;M7.883 11.615c0-1.92-1.474-3.904-3.974-3.904C1.987 7.71 0 9.183 0 11.679c0 1.92 1.474 3.905 3.973 3.905.801 0 1.602-.256 2.275-.736L7.402 16l.513-.512-1.09-1.088c.673-.736 1.058-1.696 1.058-2.785zm-3.974-3.2c1.827 0 3.269 1.408 3.269 3.232 0 1.569-1.218 3.233-3.237 3.233-2.018 0-3.236-1.632-3.236-3.2 0-2.049 1.634-3.265 3.204-3.265zm5.864 1.568h.673v5.44h-.673zm.32-.736a.574.574 0 0 1-.576-.576c0-.32.256-.576.576-.576.32 0 .577.256.577.576 0 .32-.256.576-.577.576zm2.724 0a.574.574 0 0 1-.577-.576c0-.32.257-.576.577-.576.32 0 .577.256.577.576 0 .32-.256.576-.577.576zm-.32.736h.673v5.44h-.673zm4.71 5.537c-1.25 0-1.987-.96-1.987-1.92V8.479h.673v1.504h2.371v.672h-2.37v2.977c0 .608.48 1.248 1.313 1.248.224 0 .449-.064.64-.192l.065-.032.32.576-.064.032c-.288.16-.64.256-.961.256zm4.454.032c-1.827 0-2.916-1.44-2.916-2.848 0-1.825 1.442-2.913 2.852-2.913.737 0 1.314.256 1.73.736v-.544H24v5.44h-.673v-.607c-.384.48-.961.736-1.666.736zm-.064-5.089c-1.09 0-2.18.832-2.18 2.24 0 1.089.834 2.177 2.244 2.177.64 0 1.282-.288 1.698-.8v-2.817a2.29 2.29 0 0 0-1.762-.8z&#34;</span>/&gt;&lt;/<span style="color:#f92672">polygon</span>&gt;&lt;/<span style="color:#f92672">svg</span>&gt;
 {{- end -}}
@@ -2898,29 +2879,32 @@ rm $tmp_img
             <pubDate>Thu, 09 Apr 2020 01:46:56 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/hatena_api/</guid>
-            <description>はてなブログの投稿を自動化、ローカル管理がしたい ということでHatena api を叩いてみた備忘録 参考 はてな API一覧 下準備 ローカルでの記事管理は</description>
+            <description>はてなブログの投稿を自動化、ローカル管理がしたい ということで Hatena api を叩いてみた備忘録 参考 はてな API 一覧 下準備 ローカルでの記事管理は以下のようなも</description>
             <content type="html"><![CDATA[<p>はてなブログの投稿を自動化、ローカル管理がしたい</p>
-<p>ということでHatena api を叩いてみた備忘録</p>
-<h3 id="参考">参考</h3>
+<p>ということで Hatena api を叩いてみた備忘録</p>
+<h2 id="参考">参考</h2>
 <ul>
-<li><a href="http://developer.hatena.ne.jp/ja/documents/apis">はてな API一覧</a></li>
+<li><a href="http://developer.hatena.ne.jp/ja/documents/apis">はてな API 一覧</a></li>
 </ul>
 <h2 id="下準備">下準備</h2>
 <p>ローカルでの記事管理は以下のようなものを想定する</p>
 <ul>
-<li>markdown形式</li>
-<li>1行目にブログタイトル</li>
-<li>2行目にブログタグ</li>
-<li>3行目以降は本文</li>
+<li>markdown 形式</li>
+<li>1 行目にブログタイトル</li>
+<li>2 行目にブログタグ</li>
+<li>3 行目以降は本文</li>
 </ul>
 <h3 id="examplemd">example.md</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">タイトル
 Python,日常,hoge
+
 <span style="color:#75715e">## 今日の
-</span><span style="color:#75715e"></span>hugahuga
+</span><span style="color:#75715e"></span>
+hugahuga
 
 <span style="color:#75715e">### 天気は
-</span><span style="color:#75715e"></span>hogahoga
+</span><span style="color:#75715e"></span>
+hogahoga
 </code></pre></div><p>ローカルでの投稿済みか未投稿かの判別や、投稿日時の判別は対応できないが最低限の仕様ではあると思う。</p>
 <h2 id="python-スクリプト">Python スクリプト</h2>
 <h3 id="mainpy">main.py</h3>
@@ -2940,8 +2924,8 @@ BASE_URL <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;
 </span><span style="color:#e6db74">
 </span><span style="color:#e6db74">    Args:
 </span><span style="color:#e6db74">      title (str):
-</span><span style="color:#e6db74">      content (str): 
-</span><span style="color:#e6db74">      categorys (List[str]): 
+</span><span style="color:#e6db74">      content (str):
+</span><span style="color:#e6db74">      categorys (List[str]):
 </span><span style="color:#e6db74">      updated (str): %Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">T%H:%M:%S
 </span><span style="color:#e6db74">      draft (bool):
 </span><span style="color:#e6db74">
@@ -2974,7 +2958,7 @@ BASE_URL <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;
     r <span style="color:#f92672">=</span> hatena_entry(title, content, categorys)
     <span style="color:#66d9ef">print</span>(r)
 
-</code></pre></div><p>はてなブログのapiではxmlを扱う。これまでxmlにあまり触れてこなかったが、自動投稿ぐらいだと大して詰まることもなく書けた。</p>
+</code></pre></div><p>はてなブログの api では xml を扱う。これまで xml にあまり触れてこなかったが、自動投稿ぐらいだと大して詰まることもなく書けた。</p>
 <h2 id="usage">usage</h2>
 <pre><code>python3 main.py example.md
 </code></pre>]]></content>
@@ -2986,8 +2970,9 @@ BASE_URL <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;
             <pubDate>Wed, 08 Apr 2020 23:04:57 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/nicovideo/</guid>
-            <description>from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &amp;#34;&amp;#34; #ログインに使うメールアドレス PSWD = &amp;#34;&amp;#34; #ログインに使うパスワード class NicoVideo(object): &amp;#34;&amp;#34;&amp;#34;ニコニコ動画の</description>
-            <content type="html"><![CDATA[<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> sleep
+            <description>main from time import sleep from selenium import webdriver from selenium.webdriver.chrome.options import Options MAIL = &amp;#34;&amp;#34; #ログインに使うメールアドレス PSWD = &amp;#34;&amp;#34; #ログインに使うパスワード class NicoVideo(object): &amp;#34;&amp;#34;&amp;#34;ニコニコ動画</description>
+            <content type="html"><![CDATA[<h2 id="main">main</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> sleep
 <span style="color:#f92672">from</span> selenium <span style="color:#f92672">import</span> webdriver
 <span style="color:#f92672">from</span> selenium.webdriver.chrome.options <span style="color:#f92672">import</span> Options
 
@@ -3075,13 +3060,14 @@ PSWD <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;
             <pubDate>Wed, 08 Apr 2020 22:41:43 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/init/</guid>
-            <description>こんにちは tomowarkar です。 GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。 これまでも他の形でブログを運用していたの</description>
-            <content type="html"><![CDATA[<p>こんにちは tomowarkar です。</p>
+            <description>Hello Hugo! こんにちは tomowarkar です。 GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。 これまでも他の形でブログを運用してい</description>
+            <content type="html"><![CDATA[<h2 id="hello-hugo">Hello Hugo!</h2>
+<p>こんにちは tomowarkar です。</p>
 <p>GitHub Pages と Go 製のウェブサイト生成フレームワークである Hugo を使って Github でブログを始めました。</p>
 <p>これまでも他の形でブログを運用していたのですが、技術ブログと日常ブログが混じってしまったり、サーバーやらドメインやらの管理が面倒になってきた(技術的なアウトプットをするだけなら、それ以外の運営コストをできるだけ下げたい)ので新しく Github でブログを始めた次第です。</p>
 <p>あまり硬くならずとりあえず書いたコードの供養の場として使っていけたらと思っています。</p>
 <p>今回 GitHub Pages と Hugo を使ってブログを始めるにあたって、以下の記事を参考にさせていただきました。ありがとうございます 🙏</p>
-<h3 id="参考">参考</h3>
+<h2 id="参考">参考</h2>
 <ul>
 <li><a href="https://qiita.com/Blank71/items/88a6c76ca9e162af73fe">https://qiita.com/Blank71/items/88a6c76ca9e162af73fe</a></li>
 <li><a href="https://qiita.com/yotsak83/items/017734d5f873f4f194d4">https://qiita.com/yotsak83/items/017734d5f873f4f194d4</a></li>

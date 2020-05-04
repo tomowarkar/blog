@@ -135,14 +135,14 @@
                 <div class="toc-title">目次</div>
                     <nav id="TableOfContents">
   <ul>
-    <li>
+    <li><a href="#チャンネル-id-抜き出し">チャンネル ID 抜き出し</a></li>
+    <li><a href="#タイトルを取得">タイトルを取得</a></li>
+    <li><a href="#動画-url-を取得">動画 URL を取得</a>
       <ul>
-        <li><a href="#チャンネル-id-抜き出し">チャンネル ID 抜き出し</a></li>
-        <li><a href="#タイトルを取得">タイトルを取得</a></li>
-        <li><a href="#動画-url-を取得">動画 URL を取得</a></li>
-        <li><a href="#変更差分の取得例">変更差分の取得例</a></li>
+        <li><a href="#memo">memo</a></li>
       </ul>
     </li>
+    <li><a href="#変更差分の取得例">変更差分の取得例</a></li>
   </ul>
 </nav>
                 </aside>
@@ -151,10 +151,10 @@
             
 
             <div class="post-content">
-                <h3 id="チャンネル-id-抜き出し">チャンネル ID 抜き出し</h3>
+                <h2 id="チャンネル-id-抜き出し">チャンネル ID 抜き出し</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ echo https://www.youtube.com/user/HikakinTV/videos | cut -d <span style="color:#e6db74">&#34;/&#34;</span> -f <span style="color:#ae81ff">5</span>
 HikakinTV
-</code></pre></div><h3 id="タイトルを取得">タイトルを取得</h3>
+</code></pre></div><h2 id="タイトルを取得">タイトルを取得</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*title=\&#34;\([^\&#34;]*\)\&#34;.*/\1/g&#34;</span>
 【悲報】新iPhone SE全色自分ごと水没！４万円台で買えるコスパ抜群のiphone!【開封レビュー】【カメラ比較】【ヒカキンTV】
 スーパー店員時代のヤバい話・変なお客さん【金隠しおじさん&amp;amp;クーラーおじさん】
@@ -186,7 +186,7 @@ BTSに間違われて空港がパニックになりました…【ヒカキンTV
 ママと初めてのウーバーイーツ食べ放題で大パニックwww【Uber Eats】
 【わたあめ王決定戦】わたあめ作り＆ 大食いバトルで１位は誰だ!!!【ヒカキンvs関根りさvsマスオ】
 【超簡単】カップヌードルチャーハンを７種類作って1位を決めたらまさかの結果に!!【炒飯】
-</code></pre></div><h3 id="動画-url-を取得">動画 URL を取得</h3>
+</code></pre></div><h2 id="動画-url-を取得">動画 URL を取得</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*href=\&#34;\([^\&#34;]*\)\&#34;.*/https:\/\/www.youtube.com\1/g&#34;</span>
 https://www.youtube.com/watch?v<span style="color:#f92672">=</span>zPHERhDPIJM
 https://www.youtube.com/watch?v<span style="color:#f92672">=</span>KAfULYulCJM
@@ -223,7 +223,7 @@ https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
 
 
 <p>うまくいってそう</p>
-<h4 id="memo">memo</h4>
+<h3 id="memo">memo</h3>
 <ul>
 <li>変更差分を取れば新規動画投稿のトリガーになりそう</li>
 </ul>
@@ -237,7 +237,7 @@ https://www.youtube.com/watch?v<span style="color:#f92672">=</span>jGbevSbPwOI
 <li>バックスラッシュの使い方が癖あるなぁ</li>
 </ul>
 <p>参考: <a href="https://qiita.com/hirohiro77/items/771ffb64dddceabf69a3">grep でこういう時はどうする?</a></p>
-<h3 id="変更差分の取得例">変更差分の取得例</h3>
+<h2 id="変更差分の取得例">変更差分の取得例</h2>
 <p>簡単化のためテキストファイルを 5 行にして示す.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s https://www.youtube.com/user/HikakinTV/videos | grep <span style="color:#e6db74">&#34;yt-lockup-title&#34;</span> | sed -e <span style="color:#e6db74">&#34;s/.*href=\&#34;\([^\&#34;]*\)\&#34;.*/https:\/\/www.youtube.com\1/g&#34;</span> &gt; hikakin<span style="color:#e6db74">`</span>date +%y%m%d<span style="color:#e6db74">`</span>.txt
 

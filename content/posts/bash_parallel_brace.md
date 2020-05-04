@@ -19,9 +19,7 @@ echo {1..10} #> 1 2 3 4 5 6 7 8 9 10
 echo {{a..z},{A..Z}} #> a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 ```
 
-#### 深いディレクトリ操作とかで便利
-
-ファイル名を typo した時の変更とかに
+ファイル名を typo した時の変更とか, 深いディレクトリ操作とかで便利
 
 ```bash
 mv content/posts/bash_parallel_{braves,brace}.md
@@ -133,7 +131,7 @@ time -p (for i in {1..1000}; do echo {2020..2020}{{01,02,03,04,05,06,07,0
 
 ついでなので`xargs`での並列処理についてメモを残しておく
 
-#### 基本
+### 基本
 
 ```bash
 $ seq 10 | xargs echo
@@ -169,7 +167,7 @@ echo 10
 - `-t` 実行コマンドを表示
 - `-n` 引数の数を指定
 
-#### n コマンドと L コマンドの違い
+### n コマンドと L コマンドの違い
 
 - `-n` 区切り文字 `' '`(スペース)で分割?
 - `-L` 区切り文字 `\n`で分割?
@@ -194,7 +192,7 @@ echo 1 2 3 4 5 6 7 8 9 10
 1 2 3 4 5 6 7 8 9 10
 ```
 
-#### 引数の操作
+### 引数の操作
 
 ```bash
 $ seq 10 | xargs -t -n2 bash -c '[ $0 -gt $1 ] && echo $0 || echo $1'
@@ -210,7 +208,7 @@ bash -c [ $0 -gt $1 ] && echo $0 || echo $1 9 10
 10
 ```
 
-#### 並列処理
+### 並列処理メイン
 
 途中経過より正しく並列処理されていることを確認
 
@@ -230,7 +228,7 @@ time seq 10 | xargs -t -I{} -L2 bash -c 'echo {} >/dev/null && sleep 1'
 time seq 10 | xargs -t -I{} -L2 -P2 bash -c 'echo {} >/dev/null && sleep 1'
 ```
 
-### 使わなかったコード供養
+## 使わなかったコード供養
 
 ```bash
 red(){ echo $'\e[31m'$1$'\e[0m' ;}

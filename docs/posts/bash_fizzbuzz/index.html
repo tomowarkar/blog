@@ -142,9 +142,10 @@
         <li><a href="#0-から始まる場合">0 から始まる場合</a></li>
         <li><a href="#面倒なところ">面倒なところ</a></li>
         <li><a href="#動作確認">動作確認</a></li>
-        <li><a href="#素数判定">素数判定</a></li>
       </ul>
     </li>
+    <li><a href="#素数判定">素数判定</a></li>
+    <li><a href="#なんか書いたけど使わなかったコード供養">なんか書いたけど使わなかったコード供養</a></li>
   </ul>
 </nav>
                 </aside>
@@ -222,7 +223,7 @@ diff &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f9267
 <p>BSD ではなく GNU の<code>sed</code>では以下の様にも描ける様だ(未確認)</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">30</span> | sed <span style="color:#e6db74">&#39;s/.*5$/Buzz/;3~3s/[0-9]*/Fizz/&#39;</span>
 </code></pre></div><p>参考: <a href="https://qiita.com/gyu-don/items/f5440b16213200da9775">シェルコマンドで FizzBuzz</a></p>
-<h3 id="素数判定">素数判定</h3>
+<h2 id="素数判定">素数判定</h2>
 <p>速度を考えないのであれば&hellip;</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">isprime<span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
     <span style="color:#f92672">[</span> $1 -lt <span style="color:#ae81ff">2</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">return</span>
@@ -238,7 +239,7 @@ diff &lt;<span style="color:#f92672">(</span>echo $ans3<span style="color:#f9267
 <span style="color:#66d9ef">done</span>
 </code></pre></div><p><code>gfactor</code>(もしくは<code>factor</code>)を使う手もある(圧倒的に早い)</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">seq <span style="color:#ae81ff">100</span> | gfactor | awk <span style="color:#e6db74">&#39;NF == 2&#39;</span> | cut -d : -f1
-</code></pre></div><h4 id="なんか書いたけど使わなかったコード供養">なんか書いたけど使わなかったコード供養</h4>
+</code></pre></div><h2 id="なんか書いたけど使わなかったコード供養">なんか書いたけど使わなかったコード供養</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">max<span style="color:#f92672">(){</span> <span style="color:#f92672">[</span> $1 -gt $2 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> echo $1 <span style="color:#f92672">||</span> echo $2; <span style="color:#f92672">}</span>
 </code></pre></div>
             </div>

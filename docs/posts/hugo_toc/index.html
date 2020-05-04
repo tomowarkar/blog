@@ -137,19 +137,16 @@
   <ul>
     <li><a href="#記事のテンプレートをコピー">記事のテンプレートをコピー</a>
       <ul>
-        <li></li>
+        <li><a href="#postsmd">posts.md</a></li>
       </ul>
     </li>
     <li><a href="#目次のトピック文字変更">目次のトピック文字変更</a>
       <ul>
-        <li></li>
+        <li><a href="#entoml">en.toml</a></li>
       </ul>
     </li>
-    <li><a href="#過去記事を一括変更">過去記事を一括変更</a>
-      <ul>
-        <li><a href="#参考">参考</a></li>
-      </ul>
-    </li>
+    <li><a href="#過去記事を一括変更">過去記事を一括変更</a></li>
+    <li><a href="#参考">参考</a></li>
   </ul>
 </nav>
                 </aside>
@@ -165,7 +162,7 @@
 <p>たぶんどのテーマも共通で <code>archetypes</code> 配下にあるのではないだろうか。</p>
 <p><code>themes</code>配下のテーマソースを直接触らないように注意!!</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="color:#f92672">}</span>archetypes/posts.md
-</code></pre></div><h4 id="postsmd">posts.md</h4>
+</code></pre></div><h3 id="postsmd">posts.md</h3>
 <p>そして値を変更する。</p>
 <p><code>hello-friend-ng</code>では<code>toc: true</code>の部分が目次表示の判定部分</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
@@ -182,7 +179,7 @@ tags:
 <p>先ほどと同じ要領で該当ソースを見つけコピーして, 変更する.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir i18n
 cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="color:#f92672">}</span>i18n/en.toml
-</code></pre></div><h4 id="entoml">en.toml</h4>
+</code></pre></div><h3 id="entoml">en.toml</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">tableOfContents</span>]
 <span style="color:#a6e22e">other</span> = <span style="color:#e6db74">&#34;目次&#34;</span>
 </code></pre></div><p>ここはもしかしたら<code>config.toml</code>をいじるだけで変更できるかもしれないが、わからないのでパス。</p>
@@ -196,7 +193,7 @@ cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="colo
 </code></pre></div><p>変更差分を確認して、問題なさそうであれば <code>.bak</code>ファイルも一括で削除する</p>
 <p>パイプラインに渡す前に確認を忘れずに</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">find content/posts/*bak | xargs -n1 rm
-</code></pre></div><h3 id="参考">参考</h3>
+</code></pre></div><h2 id="参考">参考</h2>
 <ul>
 <li>
 <p><a href="https://github.com/rhazdon/hugo-theme-hello-friend-ng/blob/20810b2afdcfc2b0636d0c3277f6f2633af70916/exampleSite/content/posts/goisforlovers.md#hugo-parameters">hello-friend-ng::Hugo Parameters</a></p>
@@ -205,8 +202,7 @@ cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="colo
 <p><a href="https://gohugo.io/content-management/toc/">Hugo::Table of Contents</a></p>
 </li>
 </ul>
-<pre><code>
-</code></pre>
+
             </div>
         </article>
 

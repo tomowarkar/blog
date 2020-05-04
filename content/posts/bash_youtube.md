@@ -10,14 +10,14 @@ tags:
   - regex
 ---
 
-### チャンネル ID 抜き出し
+## チャンネル ID 抜き出し
 
 ```bash
 $ echo https://www.youtube.com/user/HikakinTV/videos | cut -d "/" -f 5
 HikakinTV
 ```
 
-### タイトルを取得
+## タイトルを取得
 
 ```bash
 $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep "yt-lockup-title" | sed -e "s/.*title=\"\([^\"]*\)\".*/\1/g"
@@ -53,7 +53,7 @@ BTSに間違われて空港がパニックになりました…【ヒカキンTV
 【超簡単】カップヌードルチャーハンを７種類作って1位を決めたらまさかの結果に!!【炒飯】
 ```
 
-### 動画 URL を取得
+## 動画 URL を取得
 
 ```bash
 $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep "yt-lockup-title" | sed -e "s/.*href=\"\([^\"]*\)\".*/https:\/\/www.youtube.com\1/g"
@@ -93,7 +93,7 @@ https://www.youtube.com/watch?v=jGbevSbPwOI
 
 うまくいってそう
 
-#### memo
+### memo
 
 - 変更差分を取れば新規動画投稿のトリガーになりそう
 
@@ -110,7 +110,7 @@ $ curl -s https://www.youtube.com/user/HikakinTV/videos | grep -c "yt-lockup-tit
 
 参考: [grep でこういう時はどうする?](https://qiita.com/hirohiro77/items/771ffb64dddceabf69a3)
 
-### 変更差分の取得例
+## 変更差分の取得例
 
 簡単化のためテキストファイルを 5 行にして示す.
 

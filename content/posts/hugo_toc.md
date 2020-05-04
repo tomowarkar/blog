@@ -26,7 +26,7 @@ tags:
 cp {themes/hello-friend-ng/,}archetypes/posts.md
 ```
 
-#### posts.md
+### posts.md
 
 そして値を変更する。
 
@@ -55,7 +55,7 @@ mkdir i18n
 cp {themes/hello-friend-ng/,}i18n/en.toml
 ```
 
-#### en.toml
+### en.toml
 
 ```toml
 [tableOfContents]
@@ -90,12 +90,8 @@ git checkout content/posts/
 find content/posts/*bak | xargs -n1 rm
 ```
 
-### 参考
+## 参考
 
 - [hello-friend-ng::Hugo Parameters](https://github.com/rhazdon/hugo-theme-hello-friend-ng/blob/20810b2afdcfc2b0636d0c3277f6f2633af70916/exampleSite/content/posts/goisforlovers.md#hugo-parameters)
 
 - [Hugo::Table of Contents](https://gohugo.io/content-management/toc/)
-
-```
-
-```

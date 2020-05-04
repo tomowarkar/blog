@@ -34,7 +34,7 @@
 <meta itemprop="description" content="2020 年版 言語処理 100 本ノック 第 6 章 で自然言語処理ライブラリのspaCyを使った備忘録 Google Colab では標準で入っているので簡単に試してみるにはおすすめ 参考">
 <meta itemprop="datePublished" content="2020-05-04T22:19:10&#43;09:00" />
 <meta itemprop="dateModified" content="2020-05-04T22:19:10&#43;09:00" />
-<meta itemprop="wordCount" content="1967">
+<meta itemprop="wordCount" content="1969">
 <meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
 
 
@@ -135,22 +135,21 @@
                 <div class="toc-title">目次</div>
                     <nav id="TableOfContents">
   <ul>
-    <li>
-      <ul>
-        <li><a href="#参考">参考</a></li>
-      </ul>
-    </li>
+    <li><a href="#参考">参考</a></li>
     <li><a href="#環境">環境</a></li>
-    <li><a href="#トークン化">トークン化</a>
+    <li><a href="#トークン化">トークン化</a></li>
+    <li><a href="#固有表現">固有表現</a></li>
+    <li><a href="#単語ベクトルと類似性">単語ベクトルと類似性</a>
       <ul>
-        <li><a href="#固有表現">固有表現</a></li>
-        <li><a href="#単語ベクトルと類似性">単語ベクトルと類似性</a></li>
+        <li><a href="#類似性">類似性</a></li>
       </ul>
     </li>
     <li><a href="#ハッシュ化">ハッシュ化</a></li>
-    <li><a href="#ステミング">ステミング</a>
+    <li><a href="#ステミングとレンマ化">ステミングとレンマ化</a>
       <ul>
-        <li></li>
+        <li><a href="#lemmatization">Lemmatization</a></li>
+        <li><a href="#stemming">Stemming</a></li>
+        <li><a href="#ステミングとレンマ化の違い">ステミングとレンマ化の違い</a></li>
       </ul>
     </li>
     <li><a href="#おわりに">おわりに</a></li>
@@ -164,7 +163,7 @@
             <div class="post-content">
                 <p>2020 年版 <a href="https://nlp100.github.io/ja/ch06.html">言語処理 100 本ノック 第 6 章</a> で自然言語処理ライブラリの<code>spaCy</code>を使った備忘録</p>
 <p>Google Colab では標準で入っているので簡単に試してみるにはおすすめ</p>
-<h3 id="参考">参考</h3>
+<h2 id="参考">参考</h2>
 <p><a href="https://spacy.io/usage/spacy-101">spaCy 101: Everything you need to know</a></p>
 <p><a href="https://qiita.com/miorgash/items/0eda4adcc8d9ecd143e6">spaCy 101: Everything you need to know 和訳</a></p>
 <h2 id="環境">環境</h2>
@@ -211,16 +210,15 @@ token_excl_sw <span style="color:#f92672">=</span> [e <span style="color:#66d9ef
 token_tidy <span style="color:#f92672">=</span> [e <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> doc <span style="color:#66d9ef">if</span> e<span style="color:#f92672">.</span>pos_ <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;PUNCT&#34;</span>, <span style="color:#e6db74">&#34;SYM&#34;</span>, <span style="color:#e6db74">&#34;SPACE&#34;</span>]]
 <span style="color:#66d9ef">print</span>(token_tidy) <span style="color:#75715e"># &gt; [So, foul, and, fair, a, day, I, have, not, seen]</span>
 </code></pre></div><p>参考: <a href="https://spacy.io/api/annotation#section-pos-tagging">Syntactic Dependency Parsing</a></p>
-<h3 id="固有表現">固有表現</h3>
+<h2 id="固有表現">固有表現</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">doc <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;Apple bought 10 apples for 100 billion yen.&#34;</span>)
 <span style="color:#66d9ef">for</span> ent <span style="color:#f92672">in</span> doc<span style="color:#f92672">.</span>ents:
     <span style="color:#66d9ef">print</span>(ent<span style="color:#f92672">.</span>text, ent<span style="color:#f92672">.</span>start_char, ent<span style="color:#f92672">.</span>end_char, ent<span style="color:#f92672">.</span>label_)
-</code></pre></div><h5 id="out">out</h5>
-<p>数字の有意性を図るのに使えそう?</p>
-<pre><code>Apple 0 5 ORG
+</code></pre></div><pre><code>Apple 0 5 ORG
 10 13 15 CARDINAL
 100 billion yen 27 42 MONEY
-</code></pre><h3 id="単語ベクトルと類似性">単語ベクトルと類似性</h3>
+</code></pre><p>数字の有意性を図るのに使えそう?</p>
+<h2 id="単語ベクトルと類似性">単語ベクトルと類似性</h2>
 <p>末尾に<code>sm</code>とつく<code>en_core_web_sm</code>のような言語モデルでは単語ベクトルが含まれておらず精度が低い。</p>
 <p>また実行時に<code>ModelsWarning: [W007] The model you're using has no word vectors loaded, so the ...</code>と警告される。</p>
 <p>言語モデルを確認のこと、データ量の大きいモデルをダウンロードすると良い</p>
@@ -232,7 +230,7 @@ python -m spacy download en_core_web_lg
 <p>上記 issue にもあるように以下コードで修正した</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> en_core_web_lg
 nlp <span style="color:#f92672">=</span> en_core_web_lg<span style="color:#f92672">.</span>load()
-</code></pre></div><h4 id="類似性">類似性</h4>
+</code></pre></div><h3 id="類似性">類似性</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">dog <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;dog&#34;</span>)
 cat <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;cat&#34;</span>)
 apple <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;apple&#34;</span>)
@@ -268,14 +266,14 @@ is alpha: Does the lexeme consist of alphabetic characters?
 is digit: Does the lexeme consist of digits?
 参照: spaCy 101: Everything you need to know より</p>
 </blockquote>
-<h2 id="ステミング">ステミング</h2>
+<h2 id="ステミングとレンマ化">ステミングとレンマ化</h2>
 <p>spaCy は Stemming(ステミング)に対応しておらず、代わりに レンマ化(Lemmatization)を使うこととなります。</p>
 <p>ステミングとレンマ化の違いを説明しろと言われてもまだあまり理解しておらず少し難しいので、<code>nltk</code>のスノーボールステマーと簡単な比較をしてみます。</p>
-<h4 id="lemmatization">Lemmatization</h4>
+<h3 id="lemmatization">Lemmatization</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">doc <span style="color:#f92672">=</span> nlp(<span style="color:#e6db74">&#34;compute computer computed computing computation&#34;</span>)
 <span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> doc:
     <span style="color:#66d9ef">print</span>(token<span style="color:#f92672">.</span>text<span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; --&gt; &#39;</span> <span style="color:#f92672">+</span> token<span style="color:#f92672">.</span>lemma_)
-</code></pre></div><h4 id="stemming">Stemming</h4>
+</code></pre></div><h3 id="stemming">Stemming</h3>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> nltk.stem.snowball <span style="color:#f92672">import</span> SnowballStemmer
 
 stemmer <span style="color:#f92672">=</span> SnowballStemmer(language<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;english&#39;</span>)
@@ -283,8 +281,7 @@ tokens <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;com
 
 <span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> tokens:
     <span style="color:#66d9ef">print</span>(token <span style="color:#f92672">+</span> <span style="color:#e6db74">&#39; --&gt; &#39;</span> <span style="color:#f92672">+</span> stemmer<span style="color:#f92672">.</span>stem(token))
-</code></pre></div><h5 id="out-1">out</h5>
-<pre><code># Lemmatization
+</code></pre></div><pre><code># Lemmatization
 compute --&gt; compute
 computer --&gt; computer
 computed --&gt; compute
@@ -297,7 +294,7 @@ computer --&gt; comput
 computed --&gt; comput
 computing --&gt; comput
 computation --&gt; comput
-</code></pre><h4 id="ステミングとレンマ化の違い-2">ステミングとレンマ化の違い 2</h4>
+</code></pre><h3 id="ステミングとレンマ化の違い">ステミングとレンマ化の違い</h3>
 <p>判別の難しい<code>saw</code>を使って違いを見てみます。
 比較する文は<code>a power saw</code>と<code>I saw the apple</code>で, 結果のみを記します。</p>
 <pre><code># a power saw (Lemmatization)
@@ -352,7 +349,7 @@ apple --&gt; appl
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/nlp">nlp</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1967 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1969 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-04 22:19 &#43;0900</p>
         </div>

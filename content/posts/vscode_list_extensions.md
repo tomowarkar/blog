@@ -14,10 +14,13 @@ tags:
 定期的に確認すると良さげですね
 
 ## VSCode プラグイン一覧の表示
+
 ```
 code --list-extensions | xargs -L 1 echo code --install-extension
 ```
-### 2020/04/10 現在
+
+# 2020/04/10 現在
+
 ```
 code --install-extension bbenoist.shell
 code --install-extension christian-kohler.npm-intellisense
@@ -51,131 +54,156 @@ code --install-extension xabikos.JavaScriptSnippets
 code --install-extension xaver.clang-format
 code --install-extension yzhang.markdown-all-in-one
 ```
+
 ## 用途
-##### [bbenoist.shell](https://marketplace.visualstudio.com/items?itemName=bbenoist.shell)
-- エディタから直接shellコマンドを実行できる
+
+### [bbenoist.shell](https://marketplace.visualstudio.com/items?itemName=bbenoist.shell)
+
+- エディタから直接 shell コマンドを実行できる
 - ほぼ使っていない
 
+### [christian-kohler.path-intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
 
-##### [christian-kohler.path-intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.path-intellisense)
 - ファイル名を自動補完
 - 賢くて良き
 
-##### [dbaeumer.vscode-eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+### [dbaeumer.vscode-eslint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+
 - コードフォーマッター
 - よくわからん
 
-##### [esbenp.prettier-vscode](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- コードフォーマッター
-- [Prettier 入門 ～ESLintとの違いを理解して併用する～](https://qiita.com/soarflat/items/06377f3b96964964a65d)
+### [esbenp.prettier-vscode](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
 
-##### [eg2.vscode-npm-script](https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script)
-- npm のhogehoge
+- コードフォーマッター
+- [Prettier 入門 ～ ESLint との違いを理解して併用する～](https://qiita.com/soarflat/items/06377f3b96964964a65d)
+
+### [eg2.vscode-npm-script](https://marketplace.visualstudio.com/items?itemName=eg2.vscode-npm-script)
+
+- npm の hogehoge
 - よくわからん
 
-##### [christian-kohler.npm-intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
-- npmモジュールを自動補完
+### [christian-kohler.npm-intellisense](https://marketplace.visualstudio.com/items?itemName=christian-kohler.npm-intellisense)
 
-##### [dariofuzinato.vue-peek](https://marketplace.visualstudio.com/items?itemName=dariofuzinato.vue-peek)
-- vue のhogehoge
-- vueをあまり書いてないからよくわからん
+- npm モジュールを自動補完
 
-##### [jcbuisson.vue](https://marketplace.visualstudio.com/items?itemName=jcbuisson.vue)
-- vue のSyntax Highlight
+### [dariofuzinato.vue-peek](https://marketplace.visualstudio.com/items?itemName=dariofuzinato.vue-peek)
+
+- vue の hogehoge
+- vue をあまり書いてないからよくわからん
+
+### [jcbuisson.vue](https://marketplace.visualstudio.com/items?itemName=jcbuisson.vue)
+
+- vue の Syntax Highlight
 - まあいるよね
 
-##### [mubaidr.vuejs-extension-pack](https://marketplace.visualstudio.com/items?itemName=mubaidr.vuejs-extension-pack)
+### [mubaidr.vuejs-extension-pack](https://marketplace.visualstudio.com/items?itemName=mubaidr.vuejs-extension-pack)
+
 - vue 関連
 
-##### [octref.vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
+### [octref.vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur)
+
 - 同上
 
-##### [formulahendry.auto-complete-tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-complete-tag)
+### [formulahendry.auto-complete-tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-complete-tag)
+
 - 以下二つのまとめ役
 
-##### [formulahendry.auto-close-tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+### [formulahendry.auto-close-tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-close-tag)
+
 - html などの close tag 自動補完
 - 必須
 
-##### [formulahendry.auto-rename-tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
+### [formulahendry.auto-rename-tag](https://marketplace.visualstudio.com/items?itemName=formulahendry.auto-rename-tag)
+
 - 便利
 - 時々うざい
 
-##### [formulahendry.code-runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner)
-- VScode上でのショートカット操作で外部のshell scriptを実行できる
+### [formulahendry.code-runner](https://marketplace.visualstudio.com/items?itemName=formulahendry.code-runner)
+
+- VScode 上でのショートカット操作で外部の shell script を実行できる
 - 入れたてホヤホヤ未使用様
 
+### [KnisterPeter.vscode-github](https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-github)
 
-##### [KnisterPeter.vscode-github](https://marketplace.visualstudio.com/items?itemName=KnisterPeter.vscode-github)
-- github関連
+- github 関連
 - どこからどこまで何をしているのかわからない
 
-##### [ms-azuretools.vscode-docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+### [ms-azuretools.vscode-docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
+
 - docker for vscode
-- あまりdocker触ってないなぁ
+- あまり docker 触ってないなぁ
 
-##### [MS-CEINTL.vscode-language-pack-ja](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja)
-- VSCodeの日本語対応
+### [MS-CEINTL.vscode-language-pack-ja](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja)
+
+- VSCode の日本語対応
 - 必須
 
-##### [ms-mssql.mssql](https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql)
-- sql関連
+### [ms-mssql.mssql](https://marketplace.visualstudio.com/items?itemName=ms-mssql.mssql)
 
-##### [ms-python.python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
-- python関連
+- sql 関連
+
+### [ms-python.python](https://marketplace.visualstudio.com/items?itemName=ms-python.python)
+
+- python 関連
 - 必須
 
-##### [tht13.python](https://marketplace.visualstudio.com/items?itemName=tht13.python)
-- python関連
+### [tht13.python](https://marketplace.visualstudio.com/items?itemName=tht13.python)
+
+- python 関連
 - よくわからん
 
-##### [donjayamanne.jupyter](https://marketplace.visualstudio.com/items?itemName=donjayamanne.jupyter)
-- jupyter notebook　のhogehoge
+### [donjayamanne.jupyter](https://marketplace.visualstudio.com/items?itemName=donjayamanne.jupyter)
+
+- jupyter notebook 　の hogehoge
 - あると便利
 - なくても困らん
 
-##### [xaver.clang-format](https://marketplace.visualstudio.com/items?itemName=xaver.clang-format)
-- c関連
+### [xaver.clang-format](https://marketplace.visualstudio.com/items?itemName=xaver.clang-format)
 
-##### [ms-vscode.cpptools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+- c 関連
+
+### [ms-vscode.cpptools](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools)
+
 - c/c++関連
 
-##### [ms-vscode.Go](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go)
+### [ms-vscode.Go](https://marketplace.visualstudio.com/items?itemName=ms-vscode.Go)
+
 - go 関連
 - 必須
 
-##### [ms-vscode.vscode-typescript-tslint-plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin)
+### [ms-vscode.vscode-typescript-tslint-plugin](https://marketplace.visualstudio.com/items?itemName=ms-vscode.vscode-typescript-tslint-plugin)
+
 - 使ってないなぁ
 
+### [robertoachar.vscode-essentials-snippets](https://marketplace.visualstudio.com/items?itemName=robertoachar.vscode-essentials-snippets)
 
-##### [robertoachar.vscode-essentials-snippets](https://marketplace.visualstudio.com/items?itemName=robertoachar.vscode-essentials-snippets)
 - 見た感じ便利そう
 - なお使ったことはない
 
+### [tombonnike.vscode-status-bar-format-toggle](https://marketplace.visualstudio.com/items?itemName=tombonnike.vscode-status-bar-format-toggle)
 
-##### [tombonnike.vscode-status-bar-format-toggle](https://marketplace.visualstudio.com/items?itemName=tombonnike.vscode-status-bar-format-toggle)
 - なんだ... これは...
 
+### [tomoki1207.pdf](https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf)
 
-##### [tomoki1207.pdf](https://marketplace.visualstudio.com/items?itemName=tomoki1207.pdf)
-- VSCodeでPDFが見れる
+- VSCode で PDF が見れる
 - benri
 
-##### [VisualStudioExptTeam.vscodeintellicode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
+### [VisualStudioExptTeam.vscodeintellicode](https://marketplace.visualstudio.com/items?itemName=VisualStudioExptTeam.vscodeintellicode)
+
 - ものゴッツ便利
 
+### [xabikos.JavaScriptSnippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets)
 
-##### [xabikos.JavaScriptSnippets](https://marketplace.visualstudio.com/items?itemName=xabikos.JavaScriptSnippets)
 - JS
 - こんなん知らんかった
 - 今度使いたい
 
+### [yzhang.markdown-all-in-one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
 
-
-
-##### [yzhang.markdown-all-in-one](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one)
-- markdown関連
+- markdown 関連
 - 必須
 
-### 参考
+## 参考
+
 [Qiita::VSCode インストール済 プラグイン一覧の確認方法 (コマンド)](https://qiita.com/koshilife/items/3ed4b1c28de233f39ebb)

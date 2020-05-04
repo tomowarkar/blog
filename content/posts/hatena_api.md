@@ -12,34 +12,42 @@ tags:
 
 はてなブログの投稿を自動化、ローカル管理がしたい
 
-ということでHatena api を叩いてみた備忘録
+ということで Hatena api を叩いてみた備忘録
 
-### 参考
-- [はてな API一覧](http://developer.hatena.ne.jp/ja/documents/apis)
+## 参考
+
+- [はてな API 一覧](http://developer.hatena.ne.jp/ja/documents/apis)
 
 ## 下準備
 
 ローカルでの記事管理は以下のようなものを想定する
 
-- markdown形式
-- 1行目にブログタイトル
-- 2行目にブログタグ
-- 3行目以降は本文
+- markdown 形式
+- 1 行目にブログタイトル
+- 2 行目にブログタグ
+- 3 行目以降は本文
 
 ### example.md
+
 ```markdown
 タイトル
 Python,日常,hoge
+
 ## 今日の
+
 hugahuga
 
 ### 天気は
+
 hogahoga
 ```
+
 ローカルでの投稿済みか未投稿かの判別や、投稿日時の判別は対応できないが最低限の仕様ではあると思う。
 
 ## Python スクリプト
+
 ### main.py
+
 ```python
 from datetime import datetime
 import requests as req
@@ -57,8 +65,8 @@ def hatena_entry(title, content, categorys=[], updated="", draft=False):
 
     Args:
       title (str):
-      content (str): 
-      categorys (List[str]): 
+      content (str):
+      categorys (List[str]):
       updated (str): %Y-%m-%dT%H:%M:%S
       draft (bool):
 
@@ -93,9 +101,10 @@ if __name__ == "__main__":
 
 ```
 
-はてなブログのapiではxmlを扱う。これまでxmlにあまり触れてこなかったが、自動投稿ぐらいだと大して詰まることもなく書けた。
+はてなブログの api では xml を扱う。これまで xml にあまり触れてこなかったが、自動投稿ぐらいだと大して詰まることもなく書けた。
 
 ## usage
+
 ```
 python3 main.py example.md
 ```
