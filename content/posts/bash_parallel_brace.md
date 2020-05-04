@@ -2,7 +2,7 @@
 title: "Bashにおけるloopとかブレース展開とか並列行処理とか"
 date: 2020-05-03T06:47:36+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - bash

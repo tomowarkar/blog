@@ -2,7 +2,7 @@
 title: "BashでFizzBuzzとか素数判定とか"
 date: 2020-04-28T20:05:19+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - bash

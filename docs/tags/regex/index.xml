@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Tue, 28 Apr 2020 12:26:31 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2020 02:36:57 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/regex/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Hugo の目次機能を ON にしてみた</title>
+      <link>https://tomowarkar.github.io/blog/posts/hugo_toc/</link>
+      <pubDate>Tue, 05 May 2020 02:36:57 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/hugo_toc/</guid>
+      <description>このブログで使用している Hugo のテーマは hello-friend-ng なのだが、目次機能がデフォルトでオフになっている。 そのためそもそもそんな機能あったのかというレベルだっ</description>
+    </item>
     
     <item>
       <title>コマンドラインからyoutubeの再生リストを取得する</title>

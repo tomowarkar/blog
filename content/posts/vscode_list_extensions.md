@@ -2,7 +2,7 @@
 title: "VSCodeのインストール済み拡張機能とその用途"
 date: 2020-04-10T15:16:15+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - vscode

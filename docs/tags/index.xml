@@ -7,10 +7,37 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Mon, 04 May 2020 22:19:10 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2020 02:36:57 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>bash</title>
+      <link>https://tomowarkar.github.io/blog/tags/bash/</link>
+      <pubDate>Tue, 05 May 2020 02:36:57 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/bash/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>hugo</title>
+      <link>https://tomowarkar.github.io/blog/tags/hugo/</link>
+      <pubDate>Tue, 05 May 2020 02:36:57 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/hugo/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>regex</title>
+      <link>https://tomowarkar.github.io/blog/tags/regex/</link>
+      <pubDate>Tue, 05 May 2020 02:36:57 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/regex/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>nlp</title>
@@ -27,15 +54,6 @@
       <pubDate>Mon, 04 May 2020 22:19:10 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>bash</title>
-      <link>https://tomowarkar.github.io/blog/tags/bash/</link>
-      <pubDate>Sun, 03 May 2020 06:47:36 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/bash/</guid>
       <description></description>
     </item>
     
@@ -63,15 +81,6 @@
       <pubDate>Tue, 28 Apr 2020 20:05:19 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/algorithm/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>regex</title>
-      <link>https://tomowarkar.github.io/blog/tags/regex/</link>
-      <pubDate>Tue, 28 Apr 2020 12:26:31 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/regex/</guid>
       <description></description>
     </item>
     
@@ -126,15 +135,6 @@
       <pubDate>Fri, 10 Apr 2020 11:32:50 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/imgur/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hugo</title>
-      <link>https://tomowarkar.github.io/blog/tags/hugo/</link>
-      <pubDate>Thu, 09 Apr 2020 15:33:43 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/hugo/</guid>
       <description></description>
     </item>
     

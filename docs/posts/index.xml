@@ -6,8 +6,66 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Mon, 04 May 2020 22:19:10 +0900</lastBuildDate>
+        <lastBuildDate>Tue, 05 May 2020 02:36:57 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Hugo の目次機能を ON にしてみた</title>
+            <link>https://tomowarkar.github.io/blog/posts/hugo_toc/</link>
+            <pubDate>Tue, 05 May 2020 02:36:57 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/hugo_toc/</guid>
+            <description>このブログで使用している Hugo のテーマは hello-friend-ng なのだが、目次機能がデフォルトでオフになっている。 そのためそもそもそんな機能あったのかというレベルだっ</description>
+            <content type="html"><![CDATA[<p>このブログで使用している <code>Hugo</code> のテーマは <code>hello-friend-ng</code> なのだが、目次機能がデフォルトでオフになっている。</p>
+<p>そのためそもそもそんな機能あったのかというレベルだったのだが、デフォルトをオンに変更し、今まで書いた記事も一括で目次がつくように変更してみた。</p>
+<h2 id="記事のテンプレートをコピー">記事のテンプレートをコピー</h2>
+<p><code>themes</code>配下のテーマソースの中から記事のテンプレートとなっている部分をコピーしてくる。</p>
+<p>たぶんどのテーマも共通で <code>archetypes</code> 配下にあるのではないだろうか。</p>
+<p><code>themes</code>配下のテーマソースを直接触らないように注意!!</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="color:#f92672">}</span>archetypes/posts.md
+</code></pre></div><h4 id="postsmd">posts.md</h4>
+<p>そして値を変更する。</p>
+<p><code>hello-friend-ng</code>では<code>toc: true</code>の部分が目次表示の判定部分</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-markdown" data-lang="markdown">---
+title: &#34;{{ replace .Name &#34;-&#34; &#34; &#34; | title }}&#34;
+date: {{ .Date }}
+draft: false
+toc: true
+images:
+tags:
+  <span style="color:#66d9ef">-</span> untagged
+---
+</code></pre></div><h2 id="目次のトピック文字変更">目次のトピック文字変更</h2>
+<p><code>hello-friend-ng</code>では目次のタイトルが<code>Table of Contents</code>になっているのでそれを変更する。</p>
+<p>先ほどと同じ要領で該当ソースを見つけコピーして, 変更する.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">mkdir i18n
+cp <span style="color:#f92672">{</span>themes/hello-friend-ng/,<span style="color:#f92672">}</span>i18n/en.toml
+</code></pre></div><h4 id="entoml">en.toml</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-toml" data-lang="toml">[<span style="color:#a6e22e">tableOfContents</span>]
+<span style="color:#a6e22e">other</span> = <span style="color:#e6db74">&#34;目次&#34;</span>
+</code></pre></div><p>ここはもしかしたら<code>config.toml</code>をいじるだけで変更できるかもしれないが、わからないのでパス。</p>
+<h2 id="過去記事を一括変更">過去記事を一括変更</h2>
+<p>デフォルト値を変更しただけでは過去記事は目次非表示のままなので一括変更する。</p>
+<p>みんな大好きシェルスクリプトだ。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">grep -rl -e <span style="color:#e6db74">&#39;^toc: false$&#39;</span> content/posts/ | xargs -n1 sed -i.bak <span style="color:#e6db74">&#39;s/^toc: false$/toc: true/g&#39;</span>
+</code></pre></div><p><code>toc: false</code> -&gt; <code>toc: true</code>に変更するだけなのですぐにできる。</p>
+<p>git 管理しているのでミスがあれば <code>git checkout</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">git checkout content/posts/
+</code></pre></div><p>変更差分を確認して、問題なさそうであれば <code>.bak</code>ファイルも一括で削除する</p>
+<p>パイプラインに渡す前に確認を忘れずに</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">find content/posts/*bak | xargs -n1 rm
+</code></pre></div><h3 id="参考">参考</h3>
+<ul>
+<li>
+<p><a href="https://github.com/rhazdon/hugo-theme-hello-friend-ng/blob/20810b2afdcfc2b0636d0c3277f6f2633af70916/exampleSite/content/posts/goisforlovers.md#hugo-parameters">hello-friend-ng::Hugo Parameters</a></p>
+</li>
+<li>
+<p><a href="https://gohugo.io/content-management/toc/">Hugo::Table of Contents</a></p>
+</li>
+</ul>
+<pre><code>
+</code></pre>]]></content>
+        </item>
         
         <item>
             <title>spaCyを使ってみた ~レンマ化とステミングの違い~</title>

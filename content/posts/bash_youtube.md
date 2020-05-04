@@ -2,7 +2,7 @@
 title: "コマンドラインからyoutubeの再生リストを取得する"
 date: 2020-04-28T12:26:31+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - bash

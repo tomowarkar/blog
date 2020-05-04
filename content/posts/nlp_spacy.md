@@ -2,7 +2,7 @@
 title: "spaCyを使ってみた ~レンマ化とステミングの違い~"
 date: 2020-05-04T22:19:10+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - python

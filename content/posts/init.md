@@ -2,7 +2,7 @@
 title: "Github Pages でブログ始めました。"
 date: 2020-04-08T22:41:43+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - dialy

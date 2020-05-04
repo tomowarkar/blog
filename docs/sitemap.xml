@@ -3,12 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>https://tomowarkar.github.io/blog/tags/nlp/</loc>
-    <lastmod>2020-05-04T22:19:10+09:00</lastmod>
+    <loc>https://tomowarkar.github.io/blog/tags/bash/</loc>
+    <lastmod>2020-05-05T02:36:57+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/hugo/</loc>
+    <lastmod>2020-05-05T02:36:57+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/posts/hugo_toc/</loc>
+    <lastmod>2020-05-05T02:36:57+09:00</lastmod>
   </url>
   
   <url>
     <loc>https://tomowarkar.github.io/blog/posts/</loc>
+    <lastmod>2020-05-05T02:36:57+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/regex/</loc>
+    <lastmod>2020-05-05T02:36:57+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/</loc>
+    <lastmod>2020-05-05T02:36:57+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/</loc>
+    <lastmod>2020-05-05T02:36:57+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/nlp/</loc>
     <lastmod>2020-05-04T22:19:10+09:00</lastmod>
   </url>
   
@@ -20,21 +50,6 @@
   <url>
     <loc>https://tomowarkar.github.io/blog/posts/nlp_spacy/</loc>
     <lastmod>2020-05-04T22:19:10+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/</loc>
-    <lastmod>2020-05-04T22:19:10+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/</loc>
-    <lastmod>2020-05-04T22:19:10+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/bash/</loc>
-    <lastmod>2020-05-03T06:47:36+09:00</lastmod>
   </url>
   
   <url>
@@ -65,11 +80,6 @@
   <url>
     <loc>https://tomowarkar.github.io/blog/posts/bash_fizzbuzz/</loc>
     <lastmod>2020-04-28T20:05:19+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/regex/</loc>
-    <lastmod>2020-04-28T12:26:31+09:00</lastmod>
   </url>
   
   <url>
@@ -165,11 +175,6 @@
   <url>
     <loc>https://tomowarkar.github.io/blog/posts/imgur_api/</loc>
     <lastmod>2020-04-10T11:32:50+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/hugo/</loc>
-    <lastmod>2020-04-09T15:33:43+09:00</lastmod>
   </url>
   
   <url>

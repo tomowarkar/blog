@@ -2,7 +2,7 @@
 title: "imgurに画像をアップロードするBashスクリプト"
 date: 2020-04-10T11:32:50+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - imgur

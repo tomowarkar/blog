@@ -2,7 +2,7 @@
 title: "[macOS] コマンドラインで音楽を流したい"
 date: 2020-04-12T23:33:30+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - bash

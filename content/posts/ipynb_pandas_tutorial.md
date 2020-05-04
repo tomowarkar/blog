@@ -2,7 +2,7 @@
 title: "Pandasの基本操作まとめ"
 date: 2020-05-02T21:09:14+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - python

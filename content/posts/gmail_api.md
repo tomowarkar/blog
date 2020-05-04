@@ -2,7 +2,7 @@
 title: "Gmail API 受信フォルダの内容確認"
 date: 2020-04-28T00:01:07+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - python

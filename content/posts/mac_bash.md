@@ -2,7 +2,7 @@
 title: "最近よく書くシェルスクリプトの備忘録"
 date: 2020-04-21T19:16:51+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - bash

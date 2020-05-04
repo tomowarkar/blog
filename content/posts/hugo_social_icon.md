@@ -2,7 +2,7 @@
 title: "HugoのソーシャルアイコンにQiitaアイコンを追加した備忘録"
 date: 2020-04-09T15:33:43+09:00
 draft: false
-toc: false
+toc: true
 images:
 tags:
   - hugo
