@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="ソースコード Gist 概要 MeCab MeCab 公式サイト 本体 src: mecab-0.996.tar.gz DLlink:https://drive.google.com/uc?export=download&amp;amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE 辞書 src: mecab-ipadic-2.7.0-20070801.tar.gz DLlink: https://drive.google.com/uc?export=download&amp;amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM CaboCha CaboCha 公式サイト 本体 src: cabocha-0.69.tar.bz2 DLlink: https://drive.google.com/uc?export=download&amp;amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU Versions: https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM 依存: CRF&#43;&#43; (0.55 以降), MeCab (0.993 以降), mecab-ipadic, mecab-jumandic, unidic のいずれか CRF&#43;&#43; CRF&#43;&#43; 公式サ" />
+<meta name="keywords" content=", colab, bash, python" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/colab_mecab/" />
+
+
+    <title>
+        
+            Google Colab で MeCab と CaboCha を使う。 :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="Google Colab で MeCab と CaboCha を使う。">
+<meta itemprop="description" content="ソースコード Gist 概要 MeCab MeCab 公式サイト 本体 src: mecab-0.996.tar.gz DLlink:https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE 辞書 src: mecab-ipadic-2.7.0-20070801.tar.gz DLlink: https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM CaboCha CaboCha 公式サイト 本体 src: cabocha-0.69.tar.bz2 DLlink: https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU Versions: https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM 依存: CRF&#43;&#43; (0.55 以降), MeCab (0.993 以降), mecab-ipadic, mecab-jumandic, unidic のいずれか CRF&#43;&#43; CRF&#43;&#43; 公式サ">
+<meta itemprop="datePublished" content="2020-05-06T01:41:30&#43;09:00" />
+<meta itemprop="dateModified" content="2020-05-06T01:41:30&#43;09:00" />
+<meta itemprop="wordCount" content="819">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="colab,bash,python," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="Google Colab で MeCab と CaboCha を使う。"/>
+<meta name="twitter:description" content="ソースコード Gist 概要 MeCab MeCab 公式サイト 本体 src: mecab-0.996.tar.gz DLlink:https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE 辞書 src: mecab-ipadic-2.7.0-20070801.tar.gz DLlink: https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM CaboCha CaboCha 公式サイト 本体 src: cabocha-0.69.tar.bz2 DLlink: https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU Versions: https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM 依存: CRF&#43;&#43; (0.55 以降), MeCab (0.993 以降), mecab-ipadic, mecab-jumandic, unidic のいずれか CRF&#43;&#43; CRF&#43;&#43; 公式サ"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-05-06 01:41:30 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/colab_mecab/">Google Colab で MeCab と CaboCha を使う。</a>
+            </h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">目次</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#概要">概要</a>
+      <ul>
+        <li><a href="#mecab">MeCab</a></li>
+        <li><a href="#cabocha">CaboCha</a></li>
+        <li><a href="#crf">CRF++</a></li>
+      </ul>
+    </li>
+    <li><a href="#mecab-インストール">MeCab インストール</a></li>
+    <li><a href="#crf-インストール">CRF++ インストール</a></li>
+    <li><a href="#cabocha-インストール">CaboCha インストール</a></li>
+    <li><a href="#結果確認">結果確認</a></li>
+    <li><a href="#補足">補足</a>
+      <ul>
+        <li><a href="#mecab-をソースからビルド">MeCab をソースからビルド</a></li>
+        <li><a href="#make-に失敗するエラー">make に失敗するエラー</a></li>
+      </ul>
+    </li>
+    <li><a href="#おわりに">おわりに</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                <p><a href="https://gist.github.com/tomowarkar/021580fa52781ed0b0d913f46c8bb7e5">ソースコード Gist</a></p>
+<h2 id="概要">概要</h2>
+<h3 id="mecab">MeCab</h3>
+<p><a href="http://taku910.github.io/mecab/">MeCab 公式サイト</a></p>
+<p>本体 src: <code>mecab-0.996.tar.gz</code></p>
+<p>DLlink:<code>https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE</code></p>
+<p>辞書 src: <code>mecab-ipadic-2.7.0-20070801.tar.gz</code></p>
+<p>DLlink: <code>https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM</code></p>
+<h3 id="cabocha">CaboCha</h3>
+<p><a href="http://taku910.github.io/cabocha/">CaboCha 公式サイト</a></p>
+<p>本体 src: <code>cabocha-0.69.tar.bz2</code></p>
+<p>DLlink: <code>https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU</code></p>
+<p>Versions: <a href="https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM">https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM</a></p>
+<p>依存: CRF++ (0.55 以降), MeCab (0.993 以降), mecab-ipadic, mecab-jumandic, unidic のいずれか</p>
+<h3 id="crf">CRF++</h3>
+<p><a href="http://taku910.github.io/crfpp/">CRF++ 公式サイト</a></p>
+<p>本体 src: <code>CRF++-0.58.tar.gz</code></p>
+<p>DLlink: <code>https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7QVR6VXJ5dWExSTQ</code></p>
+<p>Versions: <a href="https://drive.google.com/drive/folders/0B4y35FiV1wh7fngteFhHQUN2Y1B5eUJBNHZUemJYQV9VWlBUb3JlX0xBdWVZTWtSbVBneU0">https://drive.google.com/drive/folders/0B4y35FiV1wh7fngteFhHQUN2Y1B5eUJBNHZUemJYQV9VWlBUb3JlX0xBdWVZTWtSbVBneU0</a></p>
+<p>依存: C++ compiler (gcc 3.0 or higher)</p>
+<h2 id="mecab-インストール">MeCab インストール</h2>
+<p><code>%%bash</code>も含めること</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+<span style="color:#75715e"># mecabのインストール</span>
+apt-get install mecab swig libmecab-dev mecab-ipadic-utf8 &gt;/dev/null
+<span style="color:#75715e"># mecab-pythonのインストール</span>
+pip -q install mecab-python3
+</code></pre></div><h2 id="crf-インストール">CRF++ インストール</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+<span style="color:#75715e"># crfppソースファイルダウンロード</span>
+fname<span style="color:#f92672">=</span>CRF++-0.58
+curl -sL -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz <span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7QVR6VXJ5dWExSTQ&#34;</span>
+tar -zxf <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz
+cd <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>
+<span style="color:#75715e"># crfppインストール</span>
+./configure --quiet
+make &gt;/dev/null
+make install &gt;/dev/null
+ldconfig
+cd ..
+</code></pre></div><h2 id="cabocha-インストール">CaboCha インストール</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+<span style="color:#75715e"># cabochaソースファイルダウンロード</span>
+fname<span style="color:#f92672">=</span>cabocha-0.69
+url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU&#34;</span>
+curl -sc /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span> &gt;/dev/null
+code<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>awk <span style="color:#e6db74">&#39;/_warning_/ {print $NF}&#39;</span> /tmp/cookie<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+curl -sLb /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&amp;confirm=</span><span style="color:#e6db74">${</span>code<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;id=</span><span style="color:#e6db74">${</span>FILE_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.bz2
+
+<span style="color:#75715e"># 少し時間がかかる</span>
+tar -jxf <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.bz2
+<span style="color:#75715e"># cabochaインストール</span>
+cd <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>
+./configure  --quiet -with-charset<span style="color:#f92672">=</span>utf-8
+make &gt;/dev/null
+make check &gt;/dev/null
+make install &gt;/dev/null
+ldconfig
+cd ..
+
+<span style="color:#75715e"># cabocha-pythonのインストール</span>
+pip -q install cabocha-0.69/python/
+</code></pre></div><h2 id="結果確認">結果確認</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">!mecab -v
+!pip show mecab-python3
+!cabocha -v
+!pip show cabocha-python
+</code></pre></div><pre><code>mecab of 0.996
+
+Name: mecab-python3
+Version: 0.996.5
+
+cabocha of 0.69
+
+Name: cabocha-python
+Version: 0.69
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> MeCab
+tagger <span style="color:#f92672">=</span> MeCab<span style="color:#f92672">.</span>Tagger()
+<span style="color:#66d9ef">print</span>(tagger<span style="color:#f92672">.</span>parse(<span style="color:#e6db74">&#34;隣の客はよく柿食う客だ。&#34;</span>))
+
+<span style="color:#f92672">import</span> CaboCha
+cp <span style="color:#f92672">=</span> CaboCha<span style="color:#f92672">.</span>Parser()
+<span style="color:#66d9ef">print</span>(cp<span style="color:#f92672">.</span>parseToString(<span style="color:#e6db74">&#34;隣の客はよく柿食う客だ。&#34;</span>))
+</code></pre></div><h2 id="補足">補足</h2>
+<h3 id="mecab-をソースからビルド">MeCab をソースからビルド</h3>
+<h4 id="mecab-本体">mecab 本体</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+fname<span style="color:#f92672">=</span>mecab-0.996
+curl -sL -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz <span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE&#34;</span>
+tar zxfv <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz
+cd <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>
+./configure
+make
+make check
+sudo make install
+ldconfig
+cd ..
+</code></pre></div><h4 id="辞書mecab-ipadic">辞書(mecab-ipadic)</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+fname<span style="color:#f92672">=</span>mecab-ipadic-2.7.0-20070801
+curl -L -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz <span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM&#34;</span>
+tar zxfv <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz
+cd <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>
+./configure --with-charset<span style="color:#f92672">=</span>utf8
+make
+sudo make install
+ldconfig
+cd ..
+</code></pre></div><h3 id="make-に失敗するエラー">make に失敗するエラー</h3>
+<p>現象: <code>No such file or directory</code>とでて<code>make</code>に失敗する</p>
+<p>原因: インストールしたばかりのファイルのリンクができていない</p>
+<p>解決法 1: <code>ldconfig</code>を使う</p>
+<p>解決法 2: 自分でシンボリックリンクを作成</p>
+<p>参考: <a href="https://irukanobox.blogspot.com/2017/09/raspberry-pipython3mecab.html">Raspberry Pi の Python3 で Mecab を使う</a></p>
+<h2 id="おわりに">おわりに</h2>
+<p><code>apt</code>と<code>make</code>のサイレントコマンドがうまく機能せず,とりあえず<code>&gt;/dev/null</code>にぶち込む形になってしまった。</p>
+<p>とはいえこれで<a href="https://nlp100.github.io/ja/">言語処理 100 本ノック 2020</a>の 5, 6 章が Google Colab 上で完結できるようになりました。</p>
+<p>Colab でのインストールは永続化されないので、何度も使う場合は<code>drive</code>上で<code>tar</code>ファイルと依存の<code>deb</code>ファイルを保存しておくのが良さそうです。</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/colab">colab</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/bash">bash</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>819 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-06 01:41 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/colab_tips/">
+                                <span class="button__text">Google Colab の個人的 Tips</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

@@ -6,8 +6,136 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Tue, 05 May 2020 22:39:13 +0900</lastBuildDate>
+        <lastBuildDate>Wed, 06 May 2020 01:41:30 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Google Colab で MeCab と CaboCha を使う。</title>
+            <link>https://tomowarkar.github.io/blog/posts/colab_mecab/</link>
+            <pubDate>Wed, 06 May 2020 01:41:30 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/colab_mecab/</guid>
+            <description>ソースコード Gist 概要 MeCab MeCab 公式サイト 本体 src: mecab-0.996.tar.gz DLlink:https://drive.google.com/uc?export=download&amp;amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE 辞書 src: mecab-ipadic-2.7.0-20070801.tar.gz DLlink: https://drive.google.com/uc?export=download&amp;amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM CaboCha CaboCha 公式サイト 本体 src: cabocha-0.69.tar.bz2 DLlink: https://drive.google.com/uc?export=download&amp;amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU Versions: https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM 依存: CRF++ (0.55 以降), MeCab (0.993 以降), mecab-ipadic, mecab-jumandic, unidic のいずれか CRF++ CRF++ 公式サ</description>
+            <content type="html"><![CDATA[<p><a href="https://gist.github.com/tomowarkar/021580fa52781ed0b0d913f46c8bb7e5">ソースコード Gist</a></p>
+<h2 id="概要">概要</h2>
+<h3 id="mecab">MeCab</h3>
+<p><a href="http://taku910.github.io/mecab/">MeCab 公式サイト</a></p>
+<p>本体 src: <code>mecab-0.996.tar.gz</code></p>
+<p>DLlink:<code>https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE</code></p>
+<p>辞書 src: <code>mecab-ipadic-2.7.0-20070801.tar.gz</code></p>
+<p>DLlink: <code>https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM</code></p>
+<h3 id="cabocha">CaboCha</h3>
+<p><a href="http://taku910.github.io/cabocha/">CaboCha 公式サイト</a></p>
+<p>本体 src: <code>cabocha-0.69.tar.bz2</code></p>
+<p>DLlink: <code>https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU</code></p>
+<p>Versions: <a href="https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM">https://drive.google.com/drive/folders/0B4y35FiV1wh7cGRCUUJHVTNJRnM</a></p>
+<p>依存: CRF++ (0.55 以降), MeCab (0.993 以降), mecab-ipadic, mecab-jumandic, unidic のいずれか</p>
+<h3 id="crf">CRF++</h3>
+<p><a href="http://taku910.github.io/crfpp/">CRF++ 公式サイト</a></p>
+<p>本体 src: <code>CRF++-0.58.tar.gz</code></p>
+<p>DLlink: <code>https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7QVR6VXJ5dWExSTQ</code></p>
+<p>Versions: <a href="https://drive.google.com/drive/folders/0B4y35FiV1wh7fngteFhHQUN2Y1B5eUJBNHZUemJYQV9VWlBUb3JlX0xBdWVZTWtSbVBneU0">https://drive.google.com/drive/folders/0B4y35FiV1wh7fngteFhHQUN2Y1B5eUJBNHZUemJYQV9VWlBUb3JlX0xBdWVZTWtSbVBneU0</a></p>
+<p>依存: C++ compiler (gcc 3.0 or higher)</p>
+<h2 id="mecab-インストール">MeCab インストール</h2>
+<p><code>%%bash</code>も含めること</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+<span style="color:#75715e"># mecabのインストール</span>
+apt-get install mecab swig libmecab-dev mecab-ipadic-utf8 &gt;/dev/null
+<span style="color:#75715e"># mecab-pythonのインストール</span>
+pip -q install mecab-python3
+</code></pre></div><h2 id="crf-インストール">CRF++ インストール</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+<span style="color:#75715e"># crfppソースファイルダウンロード</span>
+fname<span style="color:#f92672">=</span>CRF++-0.58
+curl -sL -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz <span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7QVR6VXJ5dWExSTQ&#34;</span>
+tar -zxf <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz
+cd <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>
+<span style="color:#75715e"># crfppインストール</span>
+./configure --quiet
+make &gt;/dev/null
+make install &gt;/dev/null
+ldconfig
+cd ..
+</code></pre></div><h2 id="cabocha-インストール">CaboCha インストール</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+<span style="color:#75715e"># cabochaソースファイルダウンロード</span>
+fname<span style="color:#f92672">=</span>cabocha-0.69
+url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU&#34;</span>
+curl -sc /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span> &gt;/dev/null
+code<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>awk <span style="color:#e6db74">&#39;/_warning_/ {print $NF}&#39;</span> /tmp/cookie<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+curl -sLb /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&amp;confirm=</span><span style="color:#e6db74">${</span>code<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;id=</span><span style="color:#e6db74">${</span>FILE_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.bz2
+
+<span style="color:#75715e"># 少し時間がかかる</span>
+tar -jxf <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.bz2
+<span style="color:#75715e"># cabochaインストール</span>
+cd <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>
+./configure  --quiet -with-charset<span style="color:#f92672">=</span>utf-8
+make &gt;/dev/null
+make check &gt;/dev/null
+make install &gt;/dev/null
+ldconfig
+cd ..
+
+<span style="color:#75715e"># cabocha-pythonのインストール</span>
+pip -q install cabocha-0.69/python/
+</code></pre></div><h2 id="結果確認">結果確認</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">!mecab -v
+!pip show mecab-python3
+!cabocha -v
+!pip show cabocha-python
+</code></pre></div><pre><code>mecab of 0.996
+
+Name: mecab-python3
+Version: 0.996.5
+
+cabocha of 0.69
+
+Name: cabocha-python
+Version: 0.69
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> MeCab
+tagger <span style="color:#f92672">=</span> MeCab<span style="color:#f92672">.</span>Tagger()
+<span style="color:#66d9ef">print</span>(tagger<span style="color:#f92672">.</span>parse(<span style="color:#e6db74">&#34;隣の客はよく柿食う客だ。&#34;</span>))
+
+<span style="color:#f92672">import</span> CaboCha
+cp <span style="color:#f92672">=</span> CaboCha<span style="color:#f92672">.</span>Parser()
+<span style="color:#66d9ef">print</span>(cp<span style="color:#f92672">.</span>parseToString(<span style="color:#e6db74">&#34;隣の客はよく柿食う客だ。&#34;</span>))
+</code></pre></div><h2 id="補足">補足</h2>
+<h3 id="mecab-をソースからビルド">MeCab をソースからビルド</h3>
+<h4 id="mecab-本体">mecab 本体</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+fname<span style="color:#f92672">=</span>mecab-0.996
+curl -sL -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz <span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7cENtOXlicTFaRUE&#34;</span>
+tar zxfv <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz
+cd <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>
+./configure
+make
+make check
+sudo make install
+ldconfig
+cd ..
+</code></pre></div><h4 id="辞書mecab-ipadic">辞書(mecab-ipadic)</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+fname<span style="color:#f92672">=</span>mecab-ipadic-2.7.0-20070801
+curl -L -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz <span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7MWVlSDBCSXZMTXM&#34;</span>
+tar zxfv <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.gz
+cd <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>
+./configure --with-charset<span style="color:#f92672">=</span>utf8
+make
+sudo make install
+ldconfig
+cd ..
+</code></pre></div><h3 id="make-に失敗するエラー">make に失敗するエラー</h3>
+<p>現象: <code>No such file or directory</code>とでて<code>make</code>に失敗する</p>
+<p>原因: インストールしたばかりのファイルのリンクができていない</p>
+<p>解決法 1: <code>ldconfig</code>を使う</p>
+<p>解決法 2: 自分でシンボリックリンクを作成</p>
+<p>参考: <a href="https://irukanobox.blogspot.com/2017/09/raspberry-pipython3mecab.html">Raspberry Pi の Python3 で Mecab を使う</a></p>
+<h2 id="おわりに">おわりに</h2>
+<p><code>apt</code>と<code>make</code>のサイレントコマンドがうまく機能せず,とりあえず<code>&gt;/dev/null</code>にぶち込む形になってしまった。</p>
+<p>とはいえこれで<a href="https://nlp100.github.io/ja/">言語処理 100 本ノック 2020</a>の 5, 6 章が Google Colab 上で完結できるようになりました。</p>
+<p>Colab でのインストールは永続化されないので、何度も使う場合は<code>drive</code>上で<code>tar</code>ファイルと依存の<code>deb</code>ファイルを保存しておくのが良さそうです。</p>
+]]></content>
+        </item>
         
         <item>
             <title>Google Colab の個人的 Tips</title>
