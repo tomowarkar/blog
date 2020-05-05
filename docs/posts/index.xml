@@ -6,8 +6,118 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Tue, 05 May 2020 02:36:57 +0900</lastBuildDate>
+        <lastBuildDate>Tue, 05 May 2020 22:39:13 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Google Colab の個人的 Tips</title>
+            <link>https://tomowarkar.github.io/blog/posts/colab_tips/</link>
+            <pubDate>Tue, 05 May 2020 22:39:13 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/colab_tips/</guid>
+            <description>Google Drive のマウント 1 GUI を操作して Google Drive をマウントする 左側にある 🗂:file_folder: から ドライブをマウント アクセスを許可の確認 &amp;gt; GOOGLE ドライブに</description>
+            <content type="html"><![CDATA[<h2 id="google-drive-のマウント-1">Google Drive のマウント 1</h2>
+<p>GUI を操作して Google Drive をマウントする</p>
+<ol>
+<li>左側にある 🗂:file_folder: から</li>
+<li>ドライブをマウント</li>
+<li>アクセスを許可の確認 &gt; GOOGLE ドライブに接続</li>
+<li>カレントディレクトリ配下に<code>drive</code>ファイルが作成されマウント完了</li>
+</ol>
+
+    <img src="https://i.imgur.com/RScyikA.png"  alt="blog top page"  class="center"  />
+
+
+<h2 id="google-drive-のマウント-2">Google Drive のマウント 2</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># mount google drive</span>
+<span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> drive
+drive<span style="color:#f92672">.</span>mount(<span style="color:#e6db74">&#39;drive&#39;</span>)
+</code></pre></div><p>上記コードを実行すると以下のように認証のための URL と認証コード入力画面が出る</p>
+<pre><code>Go to this URL in a browser: path/to/auth
+
+Enter your authorization code:
+
+</code></pre><ol>
+<li>認証 URL をクリック</li>
+<li>アカウントの選択 &gt; 許可</li>
+<li>ログインコードをコピーしてコード入力画面に貼り付け, 実行</li>
+<li>カレントディレクトリ配下に<code>drive</code>(もしくは任意の)ファイルが作成されマウント完了</li>
+</ol>
+<h2 id="google-colab-の-ディレクトリ変更">Google Colab の ディレクトリ変更</h2>
+<p>他のシェル実行コマンドと同じように <code>! cd path/to/dir</code> としてもディレクトリ変更がなされない。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">% cd path/to/dir
+</code></pre></div><p><code>% cd /content/drive/My\ Drive</code> としておくと直接 drive のファイルを操作できる</p>
+<h2 id="ローカルからのファイルアップロード">ローカルからのファイルアップロード</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> files
+uploaded <span style="color:#f92672">=</span> files<span style="color:#f92672">.</span>upload()
+</code></pre></div><h2 id="ローカルへのファイルダウンロード">ローカルへのファイルダウンロード</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> google.colab <span style="color:#f92672">import</span> files
+
+files<span style="color:#f92672">.</span>download(<span style="color:#e6db74">&#39;path/to/file.txt&#39;</span>)
+</code></pre></div><h2 id="画像の表示">画像の表示</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> IPython.display <span style="color:#f92672">import</span> Image
+Image(<span style="color:#e6db74">&#39;path/to/image.png&#39;</span>, width<span style="color:#f92672">=</span><span style="color:#ae81ff">200</span>)
+</code></pre></div><p>参考: <a href="https://colab.research.google.com/notebooks/io.ipynb">ローカル ファイル システム</a></p>
+<h2 id="個人的メモ">個人的メモ</h2>
+<h3 id="util-コマンド">util コマンド</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># drive に直接アクセス</span>
+% cd /content/drive/My<span style="color:#ae81ff">\ </span>Drive
+
+! grep <span style="color:#e6db74">&#39;hoge&#39;</span> -ilr . --include<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;*.py&#39;</span>
+
+! find . -name *txt
+</code></pre></div><h3 id="pip-系コマンド">pip 系コマンド</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># pip install</span>
+! pip install pkg
+
+<span style="color:#75715e"># pip の パッケージリストの取得</span>
+! pip list
+
+<span style="color:#75715e"># パッケージのバージョンとか詳細</span>
+! pip show pkg
+</code></pre></div><h3 id="apt-系コマンド">apt 系コマンド</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># インストール</span>
+! apt-get install pkg
+
+<span style="color:#75715e"># dpkg系</span>
+! dpkg --help
+! dpkg -L pkg
+
+<span style="color:#75715e"># パッケージの削除</span>
+! apt-get purge pkg
+</code></pre></div><p><a href="https://qiita.com/white_aspara25/items/723ae4ebf0bfefe2115c">[Ubuntu] apt-get まとめ</a></p>
+<h3 id="mecab-インストール">MeCab インストール</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># See: https://pypi.org/project/mecab-python3/</span>
+! apt-get install swig libmecab-dev mecab-ipadic-utf8
+! pip install mecab-python3
+
+<span style="color:#75715e"># 必要に応じてdicdirやuserdicを書き換える</span>
+! find . -name mecabrc
+! cat /etc/mecabrc
+</code></pre></div><h3 id="拾い画像">拾い画像</h3>
+
+    <img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2020/03/ct14.png"  alt="blog top page"  class="center"  />
+
+
+<h3 id="ドライブにパッケージを保存したかったり検証途中">ドライブにパッケージを保存したかったり(検証途中)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># ドライブ内にパッケージのダウンロード</span>
+! apt-get --download-only -o dir::cache<span style="color:#f92672">=</span>/content/drive/My<span style="color:#ae81ff">\ </span>Drive/src/apt install pkg
+! pip download -d /content/drive/My<span style="color:#ae81ff">\ </span>Drive/src/pip --no-binary :all: pkg
+
+<span style="color:#75715e"># ドライブ内からのパッケージのインストール</span>
+! apt-get install /content/drive/My<span style="color:#ae81ff">\ </span>Drive/src/apt/archives/*.deb
+! pip install /content/drive/My<span style="color:#ae81ff">\ </span>Drive/src/pip/*.tar.gz
+</code></pre></div><h4 id="パッケージインストールの永続化のベストアンサー募集">パッケージインストールの永続化のベストアンサー募集</h4>
+<p>必須ってわけじゃないけど、重いパッケージを毎回インストールするのは面倒だよね</p>
+<p>とは言いつつも全部をドライブ内で管理しようとしても依存関係とかめんどそうだしどうしようかなーっていう現状</p>
+<ul>
+<li><a href="https://stackoverflow.com/questions/55253498/how-do-i-install-a-library-permanently-in-colab">How do I install a library permanently in Colab?</a></li>
+<li><a href="https://stackoverflow.com/questions/49308803/is-there-any-way-to-not-installing-packages-on-google-colab-every-time?rq=1">is there any way to not installing packages on Google Colab every time?</a></li>
+<li><a href="https://qiita.com/saten/items/d2ac85947583723246bf">pip install をオフラインで行う</a></li>
+<li><a href="https://dawtrav.skr.jp/blog/ubuntu/install-package-offline/">オフラインの Ubuntu にパッケージインストール</a></li>
+</ul>
+]]></content>
+        </item>
         
         <item>
             <title>Hugo の目次機能を ON にしてみた</title>

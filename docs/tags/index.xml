@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Tue, 05 May 2020 02:36:57 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 05 May 2020 22:39:13 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>colab</title>
+      <link>https://tomowarkar.github.io/blog/tags/colab/</link>
+      <pubDate>Tue, 05 May 2020 22:39:13 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/colab/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>google</title>
+      <link>https://tomowarkar.github.io/blog/tags/google/</link>
+      <pubDate>Tue, 05 May 2020 22:39:13 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/google/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>bash</title>
@@ -67,15 +85,6 @@
     </item>
     
     <item>
-      <title>colab</title>
-      <link>https://tomowarkar.github.io/blog/tags/colab/</link>
-      <pubDate>Sat, 02 May 2020 21:09:14 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/colab/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>algorithm</title>
       <link>https://tomowarkar.github.io/blog/tags/algorithm/</link>
       <pubDate>Tue, 28 Apr 2020 20:05:19 +0900</pubDate>
@@ -108,15 +117,6 @@
       <pubDate>Tue, 28 Apr 2020 00:49:59 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/line/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>google</title>
-      <link>https://tomowarkar.github.io/blog/tags/google/</link>
-      <pubDate>Tue, 28 Apr 2020 00:01:07 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/google/</guid>
       <description></description>
     </item>
     
