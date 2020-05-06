@@ -222,6 +222,32 @@ Image(<span style="color:#e6db74">&#39;path/to/image.png&#39;</span>, width<span
 <span style="color:#75715e"># 必要に応じてdicdirやuserdicを書き換える</span>
 ! find . -name mecabrc
 ! cat /etc/mecabrc
+</code></pre></div><h3 id="cabocha-インストール">CaboCha インストール</h3>
+<p>予めcabochaとCRF++のソースをdrive内に置いていて、driveをマウントしていることが前提</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/content/drive/My Drive/src
+└── make
+    ├── cabocha-0.69.tar.bz2
+    └── CRF++-0.58.tar.gz
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+<span style="color:#75715e"># mecabとその依存関係もドライブ内に置いている場合</span>
+<span style="color:#75715e"># apt-get install /content/drive/My\ Drive/src/apt/archives/*.deb &gt;/dev/null</span>
+<span style="color:#75715e"># pip -q install /content/drive/My\ Drive/src/pip/*.tar.gz</span>
+
+<span style="color:#75715e"># カレントディレクトリ(/content)にソースをコピー</span>
+cp -R /content/drive/My<span style="color:#ae81ff">\ </span>Drive/src/make/<span style="color:#f92672">{</span>cabocha-0.69.tar.bz2,CRF++-0.58.tar.gz<span style="color:#f92672">}</span> .
+
+<span style="color:#75715e"># crfppインストール</span>
+tar -zxf CRF++-0.58.tar.gz
+cd CRF++-0.58  
+./configure --quiet <span style="color:#f92672">&amp;&amp;</span> make &gt;/dev/null <span style="color:#f92672">&amp;&amp;</span> make install &gt;/dev/null <span style="color:#f92672">&amp;&amp;</span> ldconfig  
+cd ..
+
+<span style="color:#75715e"># cabochaインストール</span>
+tar -jxf cabocha-0.69.tar.bz2
+cd cabocha-0.69
+./configure  --quiet -with-charset<span style="color:#f92672">=</span>utf-8 <span style="color:#f92672">&amp;&amp;</span> make &gt;/dev/null <span style="color:#f92672">&amp;&amp;</span> make check &gt;/dev/null <span style="color:#f92672">&amp;&amp;</span> make install &gt;/dev/null <span style="color:#f92672">&amp;&amp;</span> ldconfig
+pip -q install python/
+cd ..
 </code></pre></div><h3 id="拾い画像">拾い画像</h3>
 
     <img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2020/03/ct14.png"  alt="blog top page"  class="center"  />

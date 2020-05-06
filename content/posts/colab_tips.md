@@ -130,6 +130,40 @@ Image('path/to/image.png', width=200)
 ! cat /etc/mecabrc
 ```
 
+### CaboCha インストール
+
+予めcabochaとCRF++のソースをdrive内に置いていて、driveをマウントしていることが前提
+
+```bash
+/content/drive/My Drive/src
+└── make
+    ├── cabocha-0.69.tar.bz2
+    └── CRF++-0.58.tar.gz
+```
+
+```bash
+%%bash
+# mecabとその依存関係もドライブ内に置いている場合
+# apt-get install /content/drive/My\ Drive/src/apt/archives/*.deb >/dev/null
+# pip -q install /content/drive/My\ Drive/src/pip/*.tar.gz
+
+# カレントディレクトリ(/content)にソースをコピー
+cp -R /content/drive/My\ Drive/src/make/{cabocha-0.69.tar.bz2,CRF++-0.58.tar.gz} .
+
+# crfppインストール
+tar -zxf CRF++-0.58.tar.gz
+cd CRF++-0.58  
+./configure --quiet && make >/dev/null && make install >/dev/null && ldconfig  
+cd ..
+
+# cabochaインストール
+tar -jxf cabocha-0.69.tar.bz2
+cd cabocha-0.69
+./configure  --quiet -with-charset=utf-8 && make >/dev/null && make check >/dev/null && make install >/dev/null && ldconfig
+pip -q install python/
+cd ..
+```
+
 ### 拾い画像
 
 {{<image src="https://cdn.analyticsvidhya.com/wp-content/uploads/2020/03/ct14.png" alt="blog top page" position="center">}}
