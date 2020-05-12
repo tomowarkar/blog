@@ -88,7 +88,7 @@ fname=cabocha-0.69
 url="https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU"
 curl -sc /tmp/cookie ${url} >/dev/null
 code="$(awk '/_warning_/ {print $NF}' /tmp/cookie)"
-curl -sLb /tmp/cookie ${url}"&confirm=${code}&id=${FILE_ID}" -o ${fname}.tar.bz2
+curl -sLb /tmp/cookie ${url}"&confirm=${code}" -o ${fname}.tar.bz2
 
 # 少し時間がかかる
 tar -jxf ${fname}.tar.bz2

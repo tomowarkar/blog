@@ -6,8 +6,164 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Wed, 06 May 2020 01:41:30 +0900</lastBuildDate>
+        <lastBuildDate>Tue, 12 May 2020 20:27:32 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>MarkdownからHTMLに変換する系のやつ</title>
+            <link>https://tomowarkar.github.io/blog/posts/markdown_parser/</link>
+            <pubDate>Tue, 12 May 2020 20:27:32 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/markdown_parser/</guid>
+            <description>マークダウンから html に変換コンバーターを bash で書いた。 pandocとか使えば良いやんって話だけど、自家製で作りたいお年頃ですよね。 とは言っても、</description>
+            <content type="html"><![CDATA[<p>マークダウンから html に変換コンバーターを bash で書いた。</p>
+<p><a href="https://pandoc.org/">pandoc</a>とか使えば良いやんって話だけど、自家製で作りたいお年頃ですよね。</p>
+<p>とは言っても、既存のものをガッツリ使用するのでサクッと作れてしまった。</p>
+<h2 id="require">require</h2>
+<ol>
+<li><a href="https://github.com/jasonm23/markdown-css-themes">マークダウンのスタイルを整えてくれるやつ</a></li>
+<li><a href="https://github.com/markedjs/marked">マークダウンを HTML にしてくれるやつ</a></li>
+<li><a href="https://highlightjs.org/">コードにハイライト入れてくれるやつ</a></li>
+</ol>
+<p>を使います。</p>
+<h2 id="マークダウンを-html-にしてくれるやつ-のインストール">マークダウンを HTML にしてくれるやつ のインストール</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">npm install -g marked
+</code></pre></div><h2 id="ファイル構成">ファイル構成</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">.
+├── footer.html
+├── header.html
+├── hoge.md
+├── parse.sh
+└── style.css
+</code></pre></div><h3 id="hogemd">hoge.md</h3>
+<p><a href="#hogemd-1">今回のターゲット</a></p>
+<h3 id="footerhtml">footer.html</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!-- highlight.js パーサー--&gt;</span>
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;<span style="color:#f92672">script</span>&gt;<span style="color:#a6e22e">hljs</span>.<span style="color:#a6e22e">initHighlightingOnLoad</span>();&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h3 id="headerhtml">header.html</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ja&#34;</span>&gt;
+
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+    <span style="color:#75715e">&lt;!-- markdown 全体 css --&gt;</span>
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://rawgithub.com/jasonm23/markdown-css-themes/gh-pages/markdown7.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span>&gt;
+    &lt;/<span style="color:#f92672">link</span>&gt;
+    <span style="color:#75715e">&lt;!-- markdown highlight.js css--&gt;</span>
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/vs.min.css&#34;</span>&gt;
+    <span style="color:#75715e">&lt;!-- 調整用 css --&gt;</span>
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/css&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;style.css&#34;</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+
+&lt;<span style="color:#f92672">body</span>&gt;
+</code></pre></div><h3 id="stylecss">style.css</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-css" data-lang="css">.<span style="color:#a6e22e">hljs</span> {
+  <span style="color:#66d9ef">background</span>: <span style="color:#66d9ef">none</span>;
+}
+
+.<span style="color:#a6e22e">code-title</span> {
+  <span style="color:#66d9ef">display</span>: <span style="color:#66d9ef">inline</span><span style="color:#f92672">-</span><span style="color:#66d9ef">block</span>;
+  <span style="color:#66d9ef">padding</span>: <span style="color:#ae81ff">2</span><span style="color:#66d9ef">px</span> <span style="color:#ae81ff">4</span><span style="color:#66d9ef">px</span>;
+  <span style="color:#66d9ef">color</span>: <span style="color:#ae81ff">#333</span>;
+  <span style="color:#66d9ef">transform</span>: translateY(<span style="color:#ae81ff">-0.5</span><span style="color:#66d9ef">em</span>);
+  <span style="color:#66d9ef">padding-bottom</span>: <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">font-weight</span>: <span style="color:#66d9ef">bold</span>;
+  <span style="color:#66d9ef">background-color</span>: <span style="color:#ae81ff">#999</span>;
+}
+</code></pre></div><h2 id="メインコード">メインコード</h2>
+<p><code>header</code> と <code>footer</code>はテンプレートで使用し、マークダウンを HTML に変換した結果をサンドイッチする形をとります。</p>
+<h3 id="parsesh">parse.sh</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash -eu
+</span><span style="color:#75715e"></span><span style="color:#75715e"># @(#) セルフパーサー</span>
+
+<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">${</span>1##*.<span style="color:#e6db74">}</span> !<span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;md&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">||</span> <span style="color:#f92672">[</span> ! -f $1 <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+    echo <span style="color:#f92672">[</span>error<span style="color:#f92672">]</span> $1 is not markdown or valid file
+    exit <span style="color:#ae81ff">0</span>
+<span style="color:#66d9ef">fi</span>
+
+tmpfile<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>mktemp<span style="color:#66d9ef">)</span>
+
+cat $1 |
+    marked |
+    sed <span style="color:#e6db74">&#39;s/&lt;code class=&#34;language-\([^:]*:\)\([^&#34;]*\)&#34;&gt;/&lt;div class=&#34;code-title&#34;&gt;\2&lt;\/div&gt;&lt;code class=&#34;language-\1\2&#34;&gt;/g&#39;</span> &gt;<span style="color:#e6db74">${</span>tmpfile<span style="color:#e6db74">}</span>
+
+cat header.html <span style="color:#e6db74">${</span>tmpfile<span style="color:#e6db74">}</span> footer.html &gt;<span style="color:#e6db74">${</span>1%.*<span style="color:#e6db74">}</span>.html
+
+rm <span style="color:#e6db74">${</span>tmpfile<span style="color:#e6db74">}</span>
+
+</code></pre></div><ol>
+<li>とりあえず申し訳程度に入力形式を<code>md</code>に絞って、ファイルの存在を確かめてあげてから</li>
+<li>一時ファイルにマークダウンを HTML に変換した結果を格納</li>
+<li>あとはテンプレートでサンドイッチ</li>
+</ol>
+<p>としました。</p>
+<p>間に使っている <code>sed</code> 処理は、マークダウンのコード部分にタイトルを挿入するためのやつです</p>
+
+    <img src="https://i.imgur.com/iIWAQ7M.png"  alt="blog top page"  class="center"  />
+
+
+<p>正直これをしたいがためにマークダウン コンバーターを作りました。</p>
+<p>ただ CSS をいじれば良いだけなのに無駄に労力を使った感じです。</p>
+<h2 id="動作検証">動作検証</h2>
+<p>これが</p>
+<h3 id="hogemd-1">hoge.md</h3>
+<pre><code># H1
+## H2
+
+\`\`\`python:main.py
+import numpy as np
+
+arr = np.array([1, 2, 3])
+\`\`\`
+
+&gt; 参照
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">sh parse.sh hoge.md
+</code></pre></div><h3 id="hogehtml">hoge.html</h3>
+<p>こうなって</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html"><span style="color:#75715e">&lt;!DOCTYPE html&gt;</span>
+&lt;<span style="color:#f92672">html</span> <span style="color:#a6e22e">lang</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ja&#34;</span>&gt;
+
+&lt;<span style="color:#f92672">head</span>&gt;
+    &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">charset</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>&gt;
+    <span style="color:#75715e">&lt;!-- markdown 全体 css --&gt;</span>
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://rawgithub.com/jasonm23/markdown-css-themes/gh-pages/markdown7.css&#34;</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span>&gt;
+    &lt;/<span style="color:#f92672">link</span>&gt;
+    <span style="color:#75715e">&lt;!-- markdown highlight.js css--&gt;</span>
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/styles/vs.min.css&#34;</span>&gt;
+    <span style="color:#75715e">&lt;!-- 調整用 css --&gt;</span>
+    &lt;<span style="color:#f92672">link</span> <span style="color:#a6e22e">rel</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;stylesheet&#34;</span> <span style="color:#a6e22e">type</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;text/css&#34;</span> <span style="color:#a6e22e">href</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;style.css&#34;</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+
+&lt;<span style="color:#f92672">body</span>&gt;&lt;<span style="color:#f92672">h1</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;h1&#34;</span>&gt;H1&lt;/<span style="color:#f92672">h1</span>&gt;
+&lt;<span style="color:#f92672">h2</span> <span style="color:#a6e22e">id</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;h2&#34;</span>&gt;H2&lt;/<span style="color:#f92672">h2</span>&gt;
+&lt;<span style="color:#f92672">pre</span>&gt;&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;code-title&#34;</span>&gt;main.py&lt;/<span style="color:#f92672">div</span>&gt;&lt;<span style="color:#f92672">code</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;language-python:main.py&#34;</span>&gt;import numpy as np
+
+arr = np.array([1, 2, 3])&lt;/<span style="color:#f92672">code</span>&gt;&lt;/<span style="color:#f92672">pre</span>&gt;
+&lt;<span style="color:#f92672">blockquote</span>&gt;
+&lt;<span style="color:#f92672">p</span>&gt;参照&lt;/<span style="color:#f92672">p</span>&gt;
+&lt;/<span style="color:#f92672">blockquote</span>&gt;
+
+<span style="color:#75715e">&lt;!-- highlight.js パーサー--&gt;</span>
+&lt;<span style="color:#f92672">script</span> <span style="color:#a6e22e">src</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.10/highlight.min.js&#34;</span>&gt;&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;<span style="color:#f92672">script</span>&gt;<span style="color:#a6e22e">hljs</span>.<span style="color:#a6e22e">initHighlightingOnLoad</span>();&lt;/<span style="color:#f92672">script</span>&gt;
+&lt;/<span style="color:#f92672">body</span>&gt;
+
+&lt;/<span style="color:#f92672">html</span>&gt;
+</code></pre></div><h3 id="blowser">blowser</h3>
+<p>こうなります
+
+    <img src="https://i.imgur.com/PCnvKeK.png"  alt="blog top page"  class="center"  />
+
+</p>
+<p>やりたかったコードのタイトル部分もうまくできていて良きです。</p>
+<h2 id="まとめ">まとめ</h2>
+<p>Github でドキュメント作るときに変なプラグインを入れずに作れるので良さそう</p>
+]]></content>
+        </item>
         
         <item>
             <title>Google Colab で MeCab と CaboCha を使う。</title>
@@ -63,7 +219,7 @@ fname<span style="color:#f92672">=</span>cabocha-0.69
 url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B4y35FiV1wh7SDd1Q1dUQkZQaUU&#34;</span>
 curl -sc /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span> &gt;/dev/null
 code<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>awk <span style="color:#e6db74">&#39;/_warning_/ {print $NF}&#39;</span> /tmp/cookie<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-curl -sLb /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&amp;confirm=</span><span style="color:#e6db74">${</span>code<span style="color:#e6db74">}</span><span style="color:#e6db74">&amp;id=</span><span style="color:#e6db74">${</span>FILE_ID<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.bz2
+curl -sLb /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&amp;confirm=</span><span style="color:#e6db74">${</span>code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> -o <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.bz2
 
 <span style="color:#75715e"># 少し時間がかかる</span>
 tar -jxf <span style="color:#e6db74">${</span>fname<span style="color:#e6db74">}</span>.tar.bz2

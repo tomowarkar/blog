@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Wed, 06 May 2020 01:41:30 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 12 May 2020 20:27:32 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/bash/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>MarkdownからHTMLに変換する系のやつ</title>
+      <link>https://tomowarkar.github.io/blog/posts/markdown_parser/</link>
+      <pubDate>Tue, 12 May 2020 20:27:32 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/markdown_parser/</guid>
+      <description>マークダウンから html に変換コンバーターを bash で書いた。 pandocとか使えば良いやんって話だけど、自家製で作りたいお年頃ですよね。 とは言っても、</description>
+    </item>
     
     <item>
       <title>Google Colab で MeCab と CaboCha を使う。</title>
