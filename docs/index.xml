@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Fri, 15 May 2020 11:14:25 +0900</lastBuildDate>
+    <lastBuildDate>Wed, 20 May 2020 23:22:46 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>今さら言語処理100本ノック #05 後半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-05_2/</link>
+      <pubDate>Wed, 20 May 2020 23:22:46 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-05_2/</guid>
+      <description>途中でかなりめんどくさくなってしまって関数名とか実行時間と考えず適当になったのは内緒。 自作ライブラリのインストール MeCab と CaboCha の解析結果をパースし</description>
+    </item>
     
     <item>
       <title>RaspbianをDocker イメージに変換した(for Mac)</title>
