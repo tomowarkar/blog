@@ -6,8 +6,96 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Wed, 20 May 2020 23:22:46 +0900</lastBuildDate>
+        <lastBuildDate>Fri, 22 May 2020 21:55:40 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Raspberry Pi セットアップのTips</title>
+            <link>https://tomowarkar.github.io/blog/posts/raspberrypi/</link>
+            <pubDate>Fri, 22 May 2020 21:55:40 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/raspberrypi/</guid>
+            <description>raspberry pi の環境を作っては壊し、壊しては作りを繰り返しているので備忘録 実行環境 Mac Book Pro により ssh 接続でraspberry piに接続、CUI操作をメイン</description>
+            <content type="html"><![CDATA[<p>raspberry pi の環境を作っては壊し、壊しては作りを繰り返しているので備忘録</p>
+<h2 id="実行環境">実行環境</h2>
+<p>Mac Book Pro により ssh 接続で<code>raspberry pi</code>に接続、<code>CUI</code>操作をメインとする。</p>
+<h3 id="mac">Mac</h3>
+<pre><code>ProductName:    Mac OS X
+ProductVersion: 10.15.4
+BuildVersion:   19E266
+</code></pre><h3 id="raspberry-pi">Raspberry pi</h3>
+<p>基本的に<code>Zero WH</code>で動作確認をしているが、一部<code>4</code>でも動作確認済み</p>
+<ul>
+<li>Raspberry Pi Zero WH</li>
+<li><a href="https://amzn.to/2LQ2y1Z">Raspberry Pi 4 Model B (2GB)</a></li>
+</ul>
+<h2 id="raspbian-のダウンロード">Raspbian のダウンロード</h2>
+<ul>
+<li><a href="https://www.raspberrypi.org/downloads/raspbian/">公式</a></li>
+<li><a href="http://ftp.jaist.ac.jp/pub/raspberrypi/">日本ミラーサイト</a></li>
+</ul>
+<h3 id="raspbian-litevar20200213-の例">raspbian-lite(var.2020/02/13) の例</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -O http://ftp.jaist.ac.jp/pub/raspberrypi/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip
+</code></pre></div><h2 id="sd-カードのフォーマット">SD カードのフォーマット</h2>
+<h3 id="ディスクの確認">ディスクの確認</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diskutil list
+</code></pre></div><p>自分の場合他の外部デバイス接続をしていない場合基本的に <code>/dev/disk2</code> に SD カードが割り当てられている。</p>
+<h3 id="sd-カードフォーマット">SD カードフォーマット</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diskutil eraseDisk MS-DOS RPI /dev/disk2
+</code></pre></div><p>フォーマット形式(<code>MS-DOS</code>)、ディスクの名前(<code>RPI</code>)、フォーマット対象ディスク(<code>/dev/disk2</code>)の順</p>
+<h4 id="memo">memo</h4>
+<p><a href="https://www.raspberrypi.org/documentation/installation/noobs.md">NOOBS のインストールドキュメント</a>を見てると <code>~32GB</code> 容量の SD カードであれば <code>MS-DOS</code> でフォーマットしてやれば良さげ。</p>
+<h2 id="イメージの書き込み">イメージの書き込み</h2>
+<p><code>dd</code>コマンドなるものでもできるらしいが、<a href="https://www.balena.io/etcher/">Etcher</a>で行った。</p>
+<p><a href="https://www.raspberrypi.org/documentation/installation/installing-images/mac.md">Copying an operating system image to an SD card using Mac OS</a></p>
+<h2 id="無線-lan-設定">無線 LAN 設定</h2>
+<p>Mac でイメージを書き込んだあとに SD カードの名前が　<code>/Volumes/boot</code> と変わっている。</p>
+<p>よってこのファイル内を変更することにより Mac 側で<code>raspberry pi</code>の設定を行う。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">touch /Volumes/boot/ssh
+</code></pre></div><h2 id="ネットワーク設定">ネットワーク設定</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">read -p <span style="color:#e6db74">&#39;wifi_ssid: &#39;</span> wifi_ssid
+read -sp <span style="color:#e6db74">&#39;wifi_pswd: &#39;</span> wifi_pswd
+
+cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.conf
+</span><span style="color:#e6db74">country=JP
+</span><span style="color:#e6db74">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+</span><span style="color:#e6db74">update_config=1
+</span><span style="color:#e6db74">network={
+</span><span style="color:#e6db74">    ssid=&#34;$wifi_ssid&#34;
+</span><span style="color:#e6db74">    psk=&#34;$wifi_pswd&#34;
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">EOF</span>
+</code></pre></div><p>平文パスワードを嫌う場合<a href="http://jorisvr.nl/wpapsk.html">WPA key calculation</a>を使ってパスワードを暗号化して記載することもできる。</p>
+<p>また以下コマンドで Mac が接続している<code>Wi-Fi</code>を確認できる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">networksetup -getairportnetwork en0
+</code></pre></div><h2 id="ssh-接続">ssh 接続</h2>
+<p><code>ssh ユーザー名@IPアドレス</code>で接続することができる。</p>
+<p>初期パスワードは<code>raspberry</code></p>
+<h3 id="raspberry-pi-の-ip-アドレス確認">raspberry pi の IP アドレス確認</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">arp -a
+</code></pre></div><h3 id="raspberrypi-への接続">raspberrypi への接続</h3>
+<p>より簡単には以下でも可能</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh pi@raspberrypi.local
+</code></pre></div><h2 id="これより以下-mac-上で-raspberri-pi-に-ssh-接続していることが前提">これより以下 Mac 上で Raspberri Pi に ssh 接続していることが前提</h2>
+<h2 id="pi-ユーザーのパスワード変更">pi ユーザーのパスワード変更</h2>
+<p>raspberrypi の初期ユーザーとパスワードは公開されているため、一番最低限のセキュリティ対策として<code>pi</code>ユーザーのパスワード変更をすべきである。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ passwd
+</code></pre></div><h2 id="root-ユーザーのパスワード変更">root ユーザーのパスワード変更</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo passwd root
+</code></pre></div><h2 id="新規ユーザーの追加">新規ユーザーの追加</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo adduser ユーザー名
+</code></pre></div><h2 id="新規ユーザーに-sudo-権限を追加">新規ユーザーに sudo 権限を追加</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo gpasswd -a ユーザー名 sudo
+</code></pre></div><h2 id="pi-ユーザを-sudo-から外す">pi ユーザを sudo から外す</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo gpasswd -d pi sudo
+</code></pre></div><h2 id="記載予定-cron-のログ出力">[記載予定] cron のログ出力</h2>
+<pre><code># sed -i -e 's/^#cron.* /^cron.* /' /etc/rsyslog.conf
+</code></pre><h2 id="記載予定-ip-アドレスの固定化">[記載予定] ip アドレスの固定化</h2>
+<h2 id="記載予定-エディタ設定">[記載予定] エディタ設定</h2>
+<p><code>nano</code> も良いが、せっかくだし<code>vim</code>を使えるようになりたい</p>
+<p><a href="https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E6%88%A6%E4%BA%89">エディタ戦争</a></p>
+]]></content>
+        </item>
         
         <item>
             <title>今さら言語処理100本ノック #05 後半</title>

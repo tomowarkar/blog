@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Wed, 20 May 2020 23:22:46 +0900</lastBuildDate>
+    <lastBuildDate>Fri, 22 May 2020 21:55:40 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>raspberrypi</title>
+      <link>https://tomowarkar.github.io/blog/tags/raspberrypi/</link>
+      <pubDate>Fri, 22 May 2020 21:55:40 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/raspberrypi/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>nlp</title>

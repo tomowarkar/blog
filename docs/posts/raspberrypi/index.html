@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="raspberry pi の環境を作っては壊し、壊しては作りを繰り返しているので備忘録 実行環境 Mac Book Pro により ssh 接続でraspberry piに接続、CUI操作をメイン" />
+<meta name="keywords" content=", raspberrypi" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/raspberrypi/" />
+
+
+    <title>
+        
+            Raspberry Pi セットアップのTips :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="Raspberry Pi セットアップのTips">
+<meta itemprop="description" content="raspberry pi の環境を作っては壊し、壊しては作りを繰り返しているので備忘録 実行環境 Mac Book Pro により ssh 接続でraspberry piに接続、CUI操作をメイン">
+<meta itemprop="datePublished" content="2020-05-22T21:55:40&#43;09:00" />
+<meta itemprop="dateModified" content="2020-05-22T21:55:40&#43;09:00" />
+<meta itemprop="wordCount" content="914">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="raspberrypi," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="Raspberry Pi セットアップのTips"/>
+<meta name="twitter:description" content="raspberry pi の環境を作っては壊し、壊しては作りを繰り返しているので備忘録 実行環境 Mac Book Pro により ssh 接続でraspberry piに接続、CUI操作をメイン"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-05-22 21:55:40 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/raspberrypi/">Raspberry Pi セットアップのTips</a>
+            </h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">目次</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#実行環境">実行環境</a>
+      <ul>
+        <li><a href="#mac">Mac</a></li>
+        <li><a href="#raspberry-pi">Raspberry pi</a></li>
+      </ul>
+    </li>
+    <li><a href="#raspbian-のダウンロード">Raspbian のダウンロード</a>
+      <ul>
+        <li><a href="#raspbian-litevar20200213-の例">raspbian-lite(var.2020/02/13) の例</a></li>
+      </ul>
+    </li>
+    <li><a href="#sd-カードのフォーマット">SD カードのフォーマット</a>
+      <ul>
+        <li><a href="#ディスクの確認">ディスクの確認</a></li>
+        <li><a href="#sd-カードフォーマット">SD カードフォーマット</a></li>
+      </ul>
+    </li>
+    <li><a href="#イメージの書き込み">イメージの書き込み</a></li>
+    <li><a href="#無線-lan-設定">無線 LAN 設定</a></li>
+    <li><a href="#ネットワーク設定">ネットワーク設定</a></li>
+    <li><a href="#ssh-接続">ssh 接続</a>
+      <ul>
+        <li><a href="#raspberry-pi-の-ip-アドレス確認">raspberry pi の IP アドレス確認</a></li>
+        <li><a href="#raspberrypi-への接続">raspberrypi への接続</a></li>
+      </ul>
+    </li>
+    <li><a href="#これより以下-mac-上で-raspberri-pi-に-ssh-接続していることが前提">これより以下 Mac 上で Raspberri Pi に ssh 接続していることが前提</a></li>
+    <li><a href="#pi-ユーザーのパスワード変更">pi ユーザーのパスワード変更</a></li>
+    <li><a href="#root-ユーザーのパスワード変更">root ユーザーのパスワード変更</a></li>
+    <li><a href="#新規ユーザーの追加">新規ユーザーの追加</a></li>
+    <li><a href="#新規ユーザーに-sudo-権限を追加">新規ユーザーに sudo 権限を追加</a></li>
+    <li><a href="#pi-ユーザを-sudo-から外す">pi ユーザを sudo から外す</a></li>
+    <li><a href="#記載予定-cron-のログ出力">[記載予定] cron のログ出力</a></li>
+    <li><a href="#記載予定-ip-アドレスの固定化">[記載予定] ip アドレスの固定化</a></li>
+    <li><a href="#記載予定-エディタ設定">[記載予定] エディタ設定</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                <p>raspberry pi の環境を作っては壊し、壊しては作りを繰り返しているので備忘録</p>
+<h2 id="実行環境">実行環境</h2>
+<p>Mac Book Pro により ssh 接続で<code>raspberry pi</code>に接続、<code>CUI</code>操作をメインとする。</p>
+<h3 id="mac">Mac</h3>
+<pre><code>ProductName:    Mac OS X
+ProductVersion: 10.15.4
+BuildVersion:   19E266
+</code></pre><h3 id="raspberry-pi">Raspberry pi</h3>
+<p>基本的に<code>Zero WH</code>で動作確認をしているが、一部<code>4</code>でも動作確認済み</p>
+<ul>
+<li>Raspberry Pi Zero WH</li>
+<li><a href="https://amzn.to/2LQ2y1Z">Raspberry Pi 4 Model B (2GB)</a></li>
+</ul>
+<h2 id="raspbian-のダウンロード">Raspbian のダウンロード</h2>
+<ul>
+<li><a href="https://www.raspberrypi.org/downloads/raspbian/">公式</a></li>
+<li><a href="http://ftp.jaist.ac.jp/pub/raspberrypi/">日本ミラーサイト</a></li>
+</ul>
+<h3 id="raspbian-litevar20200213-の例">raspbian-lite(var.2020/02/13) の例</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -O http://ftp.jaist.ac.jp/pub/raspberrypi/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip
+</code></pre></div><h2 id="sd-カードのフォーマット">SD カードのフォーマット</h2>
+<h3 id="ディスクの確認">ディスクの確認</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diskutil list
+</code></pre></div><p>自分の場合他の外部デバイス接続をしていない場合基本的に <code>/dev/disk2</code> に SD カードが割り当てられている。</p>
+<h3 id="sd-カードフォーマット">SD カードフォーマット</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diskutil eraseDisk MS-DOS RPI /dev/disk2
+</code></pre></div><p>フォーマット形式(<code>MS-DOS</code>)、ディスクの名前(<code>RPI</code>)、フォーマット対象ディスク(<code>/dev/disk2</code>)の順</p>
+<h4 id="memo">memo</h4>
+<p><a href="https://www.raspberrypi.org/documentation/installation/noobs.md">NOOBS のインストールドキュメント</a>を見てると <code>~32GB</code> 容量の SD カードであれば <code>MS-DOS</code> でフォーマットしてやれば良さげ。</p>
+<h2 id="イメージの書き込み">イメージの書き込み</h2>
+<p><code>dd</code>コマンドなるものでもできるらしいが、<a href="https://www.balena.io/etcher/">Etcher</a>で行った。</p>
+<p><a href="https://www.raspberrypi.org/documentation/installation/installing-images/mac.md">Copying an operating system image to an SD card using Mac OS</a></p>
+<h2 id="無線-lan-設定">無線 LAN 設定</h2>
+<p>Mac でイメージを書き込んだあとに SD カードの名前が　<code>/Volumes/boot</code> と変わっている。</p>
+<p>よってこのファイル内を変更することにより Mac 側で<code>raspberry pi</code>の設定を行う。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">touch /Volumes/boot/ssh
+</code></pre></div><h2 id="ネットワーク設定">ネットワーク設定</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">read -p <span style="color:#e6db74">&#39;wifi_ssid: &#39;</span> wifi_ssid
+read -sp <span style="color:#e6db74">&#39;wifi_pswd: &#39;</span> wifi_pswd
+
+cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.conf
+</span><span style="color:#e6db74">country=JP
+</span><span style="color:#e6db74">ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+</span><span style="color:#e6db74">update_config=1
+</span><span style="color:#e6db74">network={
+</span><span style="color:#e6db74">    ssid=&#34;$wifi_ssid&#34;
+</span><span style="color:#e6db74">    psk=&#34;$wifi_pswd&#34;
+</span><span style="color:#e6db74">}
+</span><span style="color:#e6db74">EOF</span>
+</code></pre></div><p>平文パスワードを嫌う場合<a href="http://jorisvr.nl/wpapsk.html">WPA key calculation</a>を使ってパスワードを暗号化して記載することもできる。</p>
+<p>また以下コマンドで Mac が接続している<code>Wi-Fi</code>を確認できる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">networksetup -getairportnetwork en0
+</code></pre></div><h2 id="ssh-接続">ssh 接続</h2>
+<p><code>ssh ユーザー名@IPアドレス</code>で接続することができる。</p>
+<p>初期パスワードは<code>raspberry</code></p>
+<h3 id="raspberry-pi-の-ip-アドレス確認">raspberry pi の IP アドレス確認</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">arp -a
+</code></pre></div><h3 id="raspberrypi-への接続">raspberrypi への接続</h3>
+<p>より簡単には以下でも可能</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh pi@raspberrypi.local
+</code></pre></div><h2 id="これより以下-mac-上で-raspberri-pi-に-ssh-接続していることが前提">これより以下 Mac 上で Raspberri Pi に ssh 接続していることが前提</h2>
+<h2 id="pi-ユーザーのパスワード変更">pi ユーザーのパスワード変更</h2>
+<p>raspberrypi の初期ユーザーとパスワードは公開されているため、一番最低限のセキュリティ対策として<code>pi</code>ユーザーのパスワード変更をすべきである。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ passwd
+</code></pre></div><h2 id="root-ユーザーのパスワード変更">root ユーザーのパスワード変更</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo passwd root
+</code></pre></div><h2 id="新規ユーザーの追加">新規ユーザーの追加</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo adduser ユーザー名
+</code></pre></div><h2 id="新規ユーザーに-sudo-権限を追加">新規ユーザーに sudo 権限を追加</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo gpasswd -a ユーザー名 sudo
+</code></pre></div><h2 id="pi-ユーザを-sudo-から外す">pi ユーザを sudo から外す</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo gpasswd -d pi sudo
+</code></pre></div><h2 id="記載予定-cron-のログ出力">[記載予定] cron のログ出力</h2>
+<pre><code># sed -i -e 's/^#cron.* /^cron.* /' /etc/rsyslog.conf
+</code></pre><h2 id="記載予定-ip-アドレスの固定化">[記載予定] ip アドレスの固定化</h2>
+<h2 id="記載予定-エディタ設定">[記載予定] エディタ設定</h2>
+<p><code>nano</code> も良いが、せっかくだし<code>vim</code>を使えるようになりたい</p>
+<p><a href="https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E6%88%A6%E4%BA%89">エディタ戦争</a></p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/raspberrypi">raspberrypi</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>914 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-22 21:55 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/nlp100-05_2/">
+                                <span class="button__text">今さら言語処理100本ノック #05 後半</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

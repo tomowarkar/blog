@@ -3,27 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tomowarkar.github.io/blog/posts/</loc>
+    <lastmod>2020-05-22T21:55:40+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/posts/raspberrypi/</loc>
+    <lastmod>2020-05-22T21:55:40+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/raspberrypi/</loc>
+    <lastmod>2020-05-22T21:55:40+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/</loc>
+    <lastmod>2020-05-22T21:55:40+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/</loc>
+    <lastmod>2020-05-22T21:55:40+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tomowarkar.github.io/blog/tags/nlp/</loc>
     <lastmod>2020-05-20T23:22:46+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://tomowarkar.github.io/blog/posts/</loc>
-    <lastmod>2020-05-20T23:22:46+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://tomowarkar.github.io/blog/tags/python/</loc>
-    <lastmod>2020-05-20T23:22:46+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/</loc>
-    <lastmod>2020-05-20T23:22:46+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/</loc>
     <lastmod>2020-05-20T23:22:46+09:00</lastmod>
   </url>
   

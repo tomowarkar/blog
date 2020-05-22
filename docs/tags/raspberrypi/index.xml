@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>raspberrypi on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/raspberrypi/</link>
+    <description>Recent content in raspberrypi on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>tomowarkar</copyright>
+    <lastBuildDate>Fri, 22 May 2020 21:55:40 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/raspberrypi/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Raspberry Pi セットアップのTips</title>
+      <link>https://tomowarkar.github.io/blog/posts/raspberrypi/</link>
+      <pubDate>Fri, 22 May 2020 21:55:40 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/raspberrypi/</guid>
+      <description>raspberry pi の環境を作っては壊し、壊しては作りを繰り返しているので備忘録 実行環境 Mac Book Pro により ssh 接続でraspberry piに接続、CUI操作をメイン</description>
+    </item>
+    
+  </channel>
+</rss>
