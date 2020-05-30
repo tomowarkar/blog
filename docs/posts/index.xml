@@ -6,8 +6,247 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Fri, 22 May 2020 21:55:40 +0900</lastBuildDate>
+        <lastBuildDate>Sat, 30 May 2020 17:16:34 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>今さら言語処理100本ノック #6 前半</title>
+            <link>https://tomowarkar.github.io/blog/posts/nlp100-06/</link>
+            <pubDate>Sat, 30 May 2020 17:16:34 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/nlp100-06/</guid>
+            <description>言語処理 100 本ノック(第 6 章: 機械学習) 50. データの入手・整形 News Aggregator Data Setをダウンロードし、以下の要領で学習データ（train.txt），検証デ</description>
+            <content type="html"><![CDATA[<p><a href="https://nlp100.github.io/ja/ch06.html">言語処理 100 本ノック(第 6 章: 機械学習)</a></p>
+<h2 id="50-データの入手整形">50. データの入手・整形</h2>
+<blockquote>
+<p><a href="https://archive.ics.uci.edu/ml/datasets/News+Aggregator">News Aggregator Data Set</a>をダウンロードし、以下の要領で学習データ（train.txt），検証データ（valid.txt），評価データ（test.txt）を作成せよ．</p>
+<ol>
+<li>ダウンロードした zip ファイルを解凍し，readme.txt の説明を読む．</li>
+<li>情報源（publisher）が&quot;Reuters&rdquo;, &ldquo;Huffington Post&rdquo;, &ldquo;Businessweek&rdquo;, &ldquo;Contactmusic.com&rdquo;, &ldquo;Daily Mail&quot;の事例（記事）のみを抽出する．</li>
+<li>抽出された事例をランダムに並び替える．</li>
+<li>抽出された事例の 80%を学習データ，残りの 10%ずつを検証データと評価データに分割し，それぞれ train.txt，valid.txt，test.txt というファイル名で保存する．ファイルには，１行に１事例を書き出すこととし，カテゴリ名と記事見出しのタブ区切り形式とせよ（このファイルは後に問題 70 で再利用する）．</li>
+</ol>
+<p>学習データと評価データを作成したら，各カテゴリの事例数を確認せよ．</p>
+</blockquote>
+<h3 id="ダウンロードと解凍">ダウンロードと解凍</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -O https://archive.ics.uci.edu/ml/machine-learning-databases/00359/NewsAggregatorDataset.zip
+$ unzip NewsAggregatorDataset.zip
+$ cat readme.txt
+</code></pre></div><h3 id="メインコード">メインコード</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;newsCorpora.csv&#34;</span>) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+<span style="color:#75715e"># 2. 記事の抽出</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">filter_articles</span>(lines):
+    allow_publishers <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;Reuters&#34;</span>, <span style="color:#e6db74">&#34;Huffington Post&#34;</span>, <span style="color:#e6db74">&#34;Businessweek&#34;</span>, <span style="color:#e6db74">&#34;Contactmusic.com&#34;</span>, <span style="color:#e6db74">&#34;Daily Mail&#34;</span>]
+    <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+        _, title, _, publisher, category, <span style="color:#f92672">*</span>_  <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)
+        <span style="color:#66d9ef">if</span> publisher <span style="color:#f92672">in</span> allow_publishers:
+            <span style="color:#66d9ef">yield</span> <span style="color:#e6db74">&#34;{}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">{}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(category, title)
+
+allow_articles <span style="color:#f92672">=</span> list(filter_articles(lines))
+<span style="color:#66d9ef">print</span>(len(allow_articles)) <span style="color:#75715e">#&gt; 13356</span>
+
+<span style="color:#75715e"># 3. 並び替え</span>
+<span style="color:#f92672">import</span> random
+random<span style="color:#f92672">.</span>seed(<span style="color:#ae81ff">0</span>)
+random<span style="color:#f92672">.</span>shuffle(allow_articles)
+
+<span style="color:#75715e"># 4. データの分割と書き出し</span>
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">write_articles</span>(fname, lines):
+    <span style="color:#66d9ef">with</span> open(fname, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;x&#39;</span>) <span style="color:#66d9ef">as</span> f:
+        f<span style="color:#f92672">.</span>write(<span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(lines))
+
+len_allow_articles <span style="color:#f92672">=</span> len(allow_articles)
+s1, s2 <span style="color:#f92672">=</span> int(len_allow_articles<span style="color:#f92672">*</span><span style="color:#ae81ff">0.8</span>), int(len_allow_articles<span style="color:#f92672">*</span><span style="color:#ae81ff">0.9</span>)
+train, valid, test <span style="color:#f92672">=</span> allow_articles[:s1], allow_articles[s1:s2], allow_articles[s2:]
+
+write_articles(<span style="color:#e6db74">&#34;train.txt&#34;</span>, train)
+write_articles(<span style="color:#e6db74">&#34;valid.txt&#34;</span>, valid)
+write_articles(<span style="color:#e6db74">&#34;test.txt&#34;</span>, test)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">! cat train.txt | wc -l <span style="color:#75715e"># 10684</span>
+! cat valid.txt | wc -l <span style="color:#75715e"># 1336</span>
+! cat test.txt | wc -l <span style="color:#75715e"># 1336</span>
+</code></pre></div><h4 id="memo">memo</h4>
+<p>おそらく csv 形式の問題で<code>pandas</code>を使って読み込むと読み込み後の行数が変わる。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ cat newsCorpora.csv | wc -l <span style="color:#75715e"># 422937</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas <span style="color:#f92672">as</span> pd
+df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;newsCorpora.csv&#34;</span>,sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, header<span style="color:#f92672">=</span>None)
+<span style="color:#66d9ef">print</span>(len(df<span style="color:#f92672">.</span>index)) <span style="color:#75715e">#&gt; 422419</span>
+</code></pre></div><h5 id="検証">検証</h5>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;newsCorpora.csv&#34;</span>,sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, header<span style="color:#f92672">=</span>None, engine<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;python&#34;</span>, error_bad_lines<span style="color:#f92672">=</span>False)
+</code></pre></div><pre><code># エラー一部抽出
+Skipping line 9180: '	' expected after '&quot;'
+Skipping line 10581: '	' expected after '&quot;'
+</code></pre><h5 id="他の方法">他の方法</h5>
+<p><code>cat newsCorpora.csv | awk -F '\t' '{print $4}'</code> とかでうまく分けられると思う。</p>
+<h3 id="各カテゴリ事例数">各カテゴリ事例数</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">echo <span style="color:#e6db74">&#34;train.txt&#34;</span>; cut -f <span style="color:#ae81ff">1</span> train.txt | sort | uniq -c | sort -r; echo;
+echo <span style="color:#e6db74">&#34;valid.txt&#34;</span>; cut -f <span style="color:#ae81ff">1</span> valid.txt | sort | uniq -c | sort -r; echo;
+echo <span style="color:#e6db74">&#34;test.txt&#34;</span>; cut -f <span style="color:#ae81ff">1</span> test.txt | sort | uniq -c | sort -r; echo;
+</code></pre></div><pre><code>train.txt
+4557 b
+4180 e
+1203 t
+ 744 m
+
+valid.txt
+ 543 b
+ 542 e
+ 159 t
+  92 m
+
+test.txt
+ 572 e
+ 527 b
+ 163 t
+  74 m
+
+
+</code></pre><h2 id="51-特徴量抽出">51. 特徴量抽出</h2>
+<blockquote>
+<p>学習データ，検証データ，評価データから特徴量を抽出し，それぞれ train.feature.txt，valid.feature.txt，test.feature.txt というファイル名で保存せよ． なお，カテゴリ分類に有用そうな特徴量は各自で自由に設計せよ．記事の見出しを単語列に変換したものが最低限のベースラインとなるであろう．</p>
+</blockquote>
+<p>いまいち何をすれば良いのかわからないので以下の処理をしようと思う</p>
+<ol>
+<li>記事見出しのトークン化</li>
+<li>クリーニングとフィルタリング</li>
+<li>レンマ化</li>
+</ol>
+<h3 id="中間ファイルの作成">中間ファイルの作成</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> spacy
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">generate_middle</span>(fname1, fname2):
+  <span style="color:#66d9ef">with</span> open (fname1) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+  nlp <span style="color:#f92672">=</span> spacy<span style="color:#f92672">.</span>load(<span style="color:#e6db74">&#34;en_core_web_sm&#34;</span>)
+  text <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+  <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+    category, topic <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)
+    doc <span style="color:#f92672">=</span> nlp(topic)
+    tokens <span style="color:#f92672">=</span> [e<span style="color:#f92672">.</span>lemma_ <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> doc <span style="color:#66d9ef">if</span> e<span style="color:#f92672">.</span>pos_ <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;PUNCT&#34;</span>, <span style="color:#e6db74">&#34;SYM&#34;</span>, <span style="color:#e6db74">&#34;NUM&#34;</span>, <span style="color:#e6db74">&#34;SPACE&#34;</span>] <span style="color:#f92672">and</span> <span style="color:#f92672">not</span>  e<span style="color:#f92672">.</span>is_stop]
+    text <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;{}</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">{}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(category, <span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">.</span>join(tokens))
+
+  <span style="color:#66d9ef">with</span> open (fname2, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;x&#39;</span>) <span style="color:#66d9ef">as</span> f:
+    f<span style="color:#f92672">.</span>write(text)
+
+generate_middle(<span style="color:#e6db74">&#34;train.txt&#34;</span>, <span style="color:#e6db74">&#34;train.middle.txt&#34;</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ diff &lt;<span style="color:#f92672">(</span>head -n <span style="color:#ae81ff">5</span> train.txt<span style="color:#f92672">)</span> &lt;<span style="color:#f92672">(</span>head -n <span style="color:#ae81ff">5</span> train.middle.txt<span style="color:#f92672">)</span>
+</code></pre></div><pre><code>1,5c1,5
+&lt; t	White House Science Fair Will Focus On Girls In STEM
+&lt; b	US STOCKS-Wall St dips after Fed's Bullard talks about rates
+&lt; m	UPDATE 1-Some on downed Malaysian plane were heading to AIDS conference
+&lt; b	FOREX-Euro struggles after German data, nears 2-year low vs sterling
+&lt; b	Fitch Affirms Tula Region at 'BB'; Outlook Stable
+---
+&gt; t	White House Science Fair focus girl STEM
+&gt; b	stock Wall St dip Fed Bullard talk rate
+&gt; m	UPDATE down malaysian plane head AIDS conference
+&gt; b	FOREX Euro struggle german datum near low vs sterling
+&gt; b	Fitch Affirms Tula Region BB Outlook Stable
+</code></pre><h3 id="train-データを元に特徴量作成">train データを元に特徴量作成</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> gensim <span style="color:#f92672">import</span> corpora
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;train.middle.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+docs <span style="color:#f92672">=</span> [line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">1</span>] <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines]
+tokens <span style="color:#f92672">=</span> [doc<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34; &#34;</span>) <span style="color:#66d9ef">for</span> doc <span style="color:#f92672">in</span> docs]
+
+dct <span style="color:#f92672">=</span> corpora<span style="color:#f92672">.</span>Dictionary(tokens)
+<span style="color:#66d9ef">print</span>(len(dct)) <span style="color:#75715e">#&gt; 13945</span>
+
+dct<span style="color:#f92672">.</span>filter_extremes(no_below<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+<span style="color:#66d9ef">print</span>(len(dct)) <span style="color:#75715e">#&gt; 7469</span>
+
+dct<span style="color:#f92672">.</span>save_as_text(<span style="color:#e6db74">&#39;train.feature.dict.txt&#39;</span>)
+</code></pre></div><p>参考: <a href="https://tedboy.github.io/nlps/generated/generated/gensim.corpora.Dictionary.filter_extremes.html">https://tedboy.github.io/nlps/generated/generated/gensim.corpora.Dictionary.filter_extremes.html</a></p>
+<p>参考: <a href="https://qiita.com/tatsuya-miyamoto/items/f505dfa8d5307f8c6e98">https://qiita.com/tatsuya-miyamoto/items/f505dfa8d5307f8c6e98</a></p>
+<h2 id="52-学習">52. 学習</h2>
+<blockquote>
+<p>51 で構築した学習データを用いて，ロジスティック回帰モデルを学習せよ．</p>
+</blockquote>
+<h3 id="トレーニングデータ検証データの読み込み">トレーニングデータ、検証データの読み込み</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> chain
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">read_f</span>(path):
+  <span style="color:#66d9ef">with</span> open(path) <span style="color:#66d9ef">as</span> f:
+    lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+  docs <span style="color:#f92672">=</span> [line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>) <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines]
+  flatten_docs <span style="color:#f92672">=</span> list(chain<span style="color:#f92672">.</span>from_iterable(docs))
+  cats <span style="color:#f92672">=</span> flatten_docs[::<span style="color:#ae81ff">2</span>]
+  texts <span style="color:#f92672">=</span> flatten_docs[<span style="color:#ae81ff">1</span>::<span style="color:#ae81ff">2</span>]
+
+  <span style="color:#66d9ef">return</span> cats, texts
+
+train_cats, train_texts <span style="color:#f92672">=</span> read_f(<span style="color:#e6db74">&#34;train.middle.txt&#34;</span>)
+valid_cats, valid_texts <span style="color:#f92672">=</span> read_f(<span style="color:#e6db74">&#34;valid.middle.txt&#34;</span>)
+</code></pre></div><h3 id="学習データの作成">学習データの作成</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> gensim <span style="color:#f92672">import</span> corpora
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">c_mat</span>(texts, dct):
+  tokens <span style="color:#f92672">=</span> [text<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34; &#34;</span>) <span style="color:#66d9ef">for</span> text <span style="color:#f92672">in</span> texts]
+  corpus <span style="color:#f92672">=</span> [dct<span style="color:#f92672">.</span>doc2bow(token) <span style="color:#66d9ef">for</span> token <span style="color:#f92672">in</span> tokens]
+
+  NUM <span style="color:#f92672">=</span> len(dct)
+  <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">corpus_to_list</span>(arr):
+    ll <span style="color:#f92672">=</span> [<span style="color:#ae81ff">0</span>] <span style="color:#f92672">*</span> NUM
+    <span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> arr:
+      ll[k] <span style="color:#f92672">=</span> v
+    <span style="color:#66d9ef">return</span> ll
+
+  <span style="color:#66d9ef">return</span>  [corpus_to_list(c) <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> corpus]
+
+dct <span style="color:#f92672">=</span> corpora<span style="color:#f92672">.</span>Dictionary<span style="color:#f92672">.</span>load_from_text(<span style="color:#e6db74">&#39;train.feature.dict.txt&#39;</span>)
+train_X <span style="color:#f92672">=</span> c_mat(train_texts, dct)
+valid_X <span style="color:#f92672">=</span> c_mat(valid_texts, dct)
+
+cat_d <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;b&#34;</span> : <span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;e&#34;</span> : <span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;m&#34;</span> : <span style="color:#ae81ff">3</span>, <span style="color:#e6db74">&#34;t&#34;</span> : <span style="color:#ae81ff">4</span>}
+train_Y <span style="color:#f92672">=</span> [cat_d[e] <span style="color:#66d9ef">if</span> cat_d<span style="color:#f92672">.</span>get(e) <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> train_cats]
+valid_Y <span style="color:#f92672">=</span> [cat_d[e] <span style="color:#66d9ef">if</span> cat_d<span style="color:#f92672">.</span>get(e) <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> valid_cats]
+
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>map(len, [train_X, train_Y, valid_X, valid_Y])) <span style="color:#75715e">#&gt; 10684 10684 1336 1336</span>
+</code></pre></div><h3 id="フィッティング">フィッティング</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LogisticRegression
+lr <span style="color:#f92672">=</span> LogisticRegression(max_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+lr<span style="color:#f92672">.</span>fit(train_X, train_Y)
+</code></pre></div><pre><code>LogisticRegression(C=1.0, class_weight=None, dual=False, fit_intercept=True,
+                   intercept_scaling=1, l1_ratio=None, max_iter=1000,
+                   multi_class='auto', n_jobs=None, penalty='l2',
+                   random_state=None, solver='lbfgs', tol=0.0001, verbose=0,
+                   warm_start=False)
+</code></pre><p>参考: <a href="https://qiita.com/nymwa/items/774ca6c542c1eaff160d">https://qiita.com/nymwa/items/774ca6c542c1eaff160d</a></p>
+<h2 id="53-予測">53. 予測</h2>
+<blockquote>
+<p>52 で学習したロジスティック回帰モデルを用い，与えられた記事見出しからカテゴリとその予測確率を計算するプログラムを実装せよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">train_Y_pred <span style="color:#f92672">=</span> lr<span style="color:#f92672">.</span>predict(train_X)
+valid_Y_pred <span style="color:#f92672">=</span> lr<span style="color:#f92672">.</span>predict(valid_X)
+
+train_Y_prob <span style="color:#f92672">=</span> list(map(max, lr<span style="color:#f92672">.</span>predict_proba(train_X)))
+valid_Y_prob <span style="color:#f92672">=</span> list(map(max, lr<span style="color:#f92672">.</span>predict_proba(valid_X)))
+</code></pre></div><p>予測カテゴリと確率の導出だけで許してください。</p>
+<h2 id="54-正解率の計測">54. 正解率の計測</h2>
+<blockquote>
+<p>52 で学習したロジスティック回帰モデルの正解率を，学習データおよび評価データ上で計測せよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> accuracy_score
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;訓練データ&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;accuracy = &#39;</span>, accuracy_score(y_true<span style="color:#f92672">=</span>train_Y, y_pred<span style="color:#f92672">=</span>train_Y_pred))
+<span style="color:#66d9ef">print</span>()
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;検証データ&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;accuracy = &#39;</span>, accuracy_score(y_true<span style="color:#f92672">=</span>valid_Y, y_pred<span style="color:#f92672">=</span>valid_Y_pred))
+</code></pre></div><pre><code>訓練データ
+accuracy =  0.9873642830400599
+
+検証データ
+accuracy =  0.8959580838323353
+</code></pre><p>参考: <a href="https://qiita.com/0NE_shoT_/items/b702ab482466df6e5569">https://qiita.com/0NE_shoT_/items/b702ab482466df6e5569</a></p>
+]]></content>
+        </item>
         
         <item>
             <title>Raspberry Pi セットアップのTips</title>

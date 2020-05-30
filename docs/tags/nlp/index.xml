@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Wed, 20 May 2020 23:22:46 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 30 May 2020 17:16:34 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>今さら言語処理100本ノック #6 前半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-06/</link>
+      <pubDate>Sat, 30 May 2020 17:16:34 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-06/</guid>
+      <description>言語処理 100 本ノック(第 6 章: 機械学習) 50. データの入手・整形 News Aggregator Data Setをダウンロードし、以下の要領で学習データ（train.txt），検証デ</description>
+    </item>
     
     <item>
       <title>今さら言語処理100本ノック #05 後半</title>
