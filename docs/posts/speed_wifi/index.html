@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="モチベーション Speed Wi-Fi NEXT は直近 3 日の通信量が 10GB を超えると速度制限がかかるので, Mac からでもデータ通信量がわかるようにしたい。 参考 【W01】Spee" />
+<meta name="keywords" content=", python" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/speed_wifi/" />
+
+
+    <title>
+        
+            Speed Wi-Fi 接続端末からデータ通信量を確認する :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="Speed Wi-Fi 接続端末からデータ通信量を確認する">
+<meta itemprop="description" content="モチベーション Speed Wi-Fi NEXT は直近 3 日の通信量が 10GB を超えると速度制限がかかるので, Mac からでもデータ通信量がわかるようにしたい。 参考 【W01】Spee">
+<meta itemprop="datePublished" content="2020-05-31T19:37:06&#43;09:00" />
+<meta itemprop="dateModified" content="2020-05-31T19:37:06&#43;09:00" />
+<meta itemprop="wordCount" content="576">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="python," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="Speed Wi-Fi 接続端末からデータ通信量を確認する"/>
+<meta name="twitter:description" content="モチベーション Speed Wi-Fi NEXT は直近 3 日の通信量が 10GB を超えると速度制限がかかるので, Mac からでもデータ通信量がわかるようにしたい。 参考 【W01】Spee"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-05-31 19:37:06 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/speed_wifi/">Speed Wi-Fi 接続端末からデータ通信量を確認する</a>
+            </h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">目次</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#モチベーション">モチベーション</a></li>
+    <li><a href="#参考">参考</a></li>
+    <li><a href="#メインコード">メインコード</a></li>
+    <li><a href="#動作確認">動作確認</a></li>
+    <li><a href="#後書き">後書き</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                <h2 id="モチベーション">モチベーション</h2>
+<p>Speed Wi-Fi NEXT は直近 3 日の通信量が 10GB を超えると速度制限がかかるので, Mac からでもデータ通信量がわかるようにしたい。</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://faq.uqwimax.jp/faq/show/1613?site_domain=wimax">【W01】Speed Wi-Fi NEXT 設定ツールにログインする方法は？ | よくあるご質問｜【公式】UQ WiMAX ｜ UQ コミュニケーションズ</a></p>
+<h2 id="メインコード">メインコード</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> loguru <span style="color:#f92672">import</span> logger
+
+<span style="color:#f92672">from</span> selenium <span style="color:#f92672">import</span> webdriver
+<span style="color:#f92672">from</span> selenium.common.exceptions <span style="color:#f92672">import</span> TimeoutException
+<span style="color:#f92672">from</span> selenium.webdriver.chrome.options <span style="color:#f92672">import</span> Options
+<span style="color:#f92672">from</span> selenium.webdriver.common.by <span style="color:#f92672">import</span> By
+<span style="color:#f92672">from</span> selenium.webdriver.support <span style="color:#f92672">import</span> expected_conditions <span style="color:#66d9ef">as</span> EC
+<span style="color:#f92672">from</span> selenium.webdriver.support.ui <span style="color:#f92672">import</span> WebDriverWait
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BrowserOperator</span>(object):
+    <span style="color:#66d9ef">def</span> __init__(self, headless<span style="color:#f92672">=</span>False):
+        options <span style="color:#f92672">=</span> Options()
+        options<span style="color:#f92672">.</span>headless <span style="color:#f92672">=</span> headless
+        self<span style="color:#f92672">.</span>driver <span style="color:#f92672">=</span> webdriver<span style="color:#f92672">.</span>Chrome(options<span style="color:#f92672">=</span>options)
+
+    <span style="color:#66d9ef">def</span> __del__(self):
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>close()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wait</span>(self, f, until_not<span style="color:#f92672">=</span>False):
+        wt <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+        <span style="color:#66d9ef">try</span>:
+            <span style="color:#66d9ef">if</span> until_not:
+                <span style="color:#66d9ef">return</span> WebDriverWait(self<span style="color:#f92672">.</span>driver, wt)<span style="color:#f92672">.</span>until_not(f)
+            <span style="color:#66d9ef">return</span> WebDriverWait(self<span style="color:#f92672">.</span>driver, wt)<span style="color:#f92672">.</span>until(f)
+        <span style="color:#66d9ef">except</span> TimeoutException:
+            logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;[timeout]&#34;</span>)
+            <span style="color:#66d9ef">return</span> False
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self, url):
+        logger<span style="color:#f92672">.</span>debug(f<span style="color:#e6db74">&#34;[get] {url}&#34;</span>)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>get(url)
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpeedwifiNext</span>(BrowserOperator):
+    BASE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://speedwifi-next.home/html/&#34;</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">login</span>(self, user: str, pswd: str) <span style="color:#f92672">-&gt;</span> None:
+        self<span style="color:#f92672">.</span>get(self<span style="color:#f92672">.</span>BASE <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;login.htm&#34;</span>)
+
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;user_type&#34;</span>)<span style="color:#f92672">.</span>send_keys(user)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;input_password&#34;</span>)<span style="color:#f92672">.</span>send_keys(pswd)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;login&#34;</span>)<span style="color:#f92672">.</span>click()
+
+        status <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>wait(EC<span style="color:#f92672">.</span>url_to_be(self<span style="color:#f92672">.</span>BASE <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;status.htm&#34;</span>))
+        <span style="color:#66d9ef">if</span> status:
+            logger<span style="color:#f92672">.</span>debug(<span style="color:#e6db74">&#34;login success&#34;</span>)
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;login failed</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Please check your User and Pass!&#34;</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">statistics</span>(self) <span style="color:#f92672">-&gt;</span> None:
+        self<span style="color:#f92672">.</span>get(self<span style="color:#f92672">.</span>BASE <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;statistics.htm&#34;</span>)
+        self<span style="color:#f92672">.</span>wait(
+            EC<span style="color:#f92672">.</span>text_to_be_present_in_element((By<span style="color:#f92672">.</span>ID, <span style="color:#e6db74">&#34;label_usedData&#34;</span>), <span style="color:#e6db74">&#34;0 KB&#34;</span>),
+            until_not<span style="color:#f92672">=</span>True,
+        )
+
+        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>(x) <span style="color:#f92672">-&gt;</span> str:
+            <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(x)<span style="color:#f92672">.</span>get_attribute(<span style="color:#e6db74">&#34;innerText&#34;</span>)
+
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;1ヶ月間：&#34;</span>, f(<span style="color:#e6db74">&#34;label_usedData&#34;</span>))
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;前日までの3日間：&#34;</span>, f(<span style="color:#e6db74">&#34;label_usedData_yesterday&#34;</span>))
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;本日までの3日間：&#34;</span>, f(<span style="color:#e6db74">&#34;label_usedData_today&#34;</span>))
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+    pswd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+
+    sn <span style="color:#f92672">=</span> SpeedwifiNext(headless<span style="color:#f92672">=</span>True)
+    sn<span style="color:#f92672">.</span>login(user, pswd)
+    sn<span style="color:#f92672">.</span>statistics()
+
+</code></pre></div><h2 id="動作確認">動作確認</h2>
+<pre><code>2020-05-31 19:34:22.570 | DEBUG    | __main__:get:31 - [get] http://speedwifi-next.home/html/login.htm
+2020-05-31 19:34:25.238 | DEBUG    | __main__:login:47 - login success
+2020-05-31 19:34:25.238 | DEBUG    | __main__:get:31 - [get] http://speedwifi-next.home/html/statistics.htm
+1ヶ月間： 129.68 GB
+前日までの3日間： 12.51 GB
+本日までの3日間： 13.77 GB
+</code></pre><h2 id="後書き">後書き</h2>
+<p>python のログ関連ってあまり素直に使えないですよね<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>そんな中<code>Loguru</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>という ライブラリを見つけたので使ってみました。</p>
+<ul>
+<li>デフォルトのログレベルが DEBUG</li>
+<li>CUI カラー表示</li>
+<li>import するだけで使える</li>
+</ul>
+<p>とかなり使い勝手が良かったです。今後簡単なデバックにも<code>print</code>に変わり使って行きたいなと思いました。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://qiita.com/amedama/items/b856b2f30c2f38665701">ログ出力のための print と import logging はやめてほしい - Qiita</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://python.libhunt.com/loguru-alternatives">Loguru Alternatives - Python Logging | LibHunt</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>576 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-31 19:37 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/nlp100-06/">
+                                <span class="button__text">今さら言語処理100本ノック #6 前半</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

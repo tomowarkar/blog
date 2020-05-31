@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Sat, 30 May 2020 17:16:34 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 31 May 2020 19:37:06 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Speed Wi-Fi 接続端末からデータ通信量を確認する</title>
+      <link>https://tomowarkar.github.io/blog/posts/speed_wifi/</link>
+      <pubDate>Sun, 31 May 2020 19:37:06 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/speed_wifi/</guid>
+      <description>モチベーション Speed Wi-Fi NEXT は直近 3 日の通信量が 10GB を超えると速度制限がかかるので, Mac からでもデータ通信量がわかるようにしたい。 参考 【W01】Spee</description>
+    </item>
     
     <item>
       <title>今さら言語処理100本ノック #6 前半</title>

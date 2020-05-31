@@ -6,8 +6,123 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Sat, 30 May 2020 17:16:34 +0900</lastBuildDate>
+        <lastBuildDate>Sun, 31 May 2020 19:37:06 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Speed Wi-Fi 接続端末からデータ通信量を確認する</title>
+            <link>https://tomowarkar.github.io/blog/posts/speed_wifi/</link>
+            <pubDate>Sun, 31 May 2020 19:37:06 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/speed_wifi/</guid>
+            <description>モチベーション Speed Wi-Fi NEXT は直近 3 日の通信量が 10GB を超えると速度制限がかかるので, Mac からでもデータ通信量がわかるようにしたい。 参考 【W01】Spee</description>
+            <content type="html"><![CDATA[<h2 id="モチベーション">モチベーション</h2>
+<p>Speed Wi-Fi NEXT は直近 3 日の通信量が 10GB を超えると速度制限がかかるので, Mac からでもデータ通信量がわかるようにしたい。</p>
+<h2 id="参考">参考</h2>
+<p><a href="https://faq.uqwimax.jp/faq/show/1613?site_domain=wimax">【W01】Speed Wi-Fi NEXT 設定ツールにログインする方法は？ | よくあるご質問｜【公式】UQ WiMAX ｜ UQ コミュニケーションズ</a></p>
+<h2 id="メインコード">メインコード</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> loguru <span style="color:#f92672">import</span> logger
+
+<span style="color:#f92672">from</span> selenium <span style="color:#f92672">import</span> webdriver
+<span style="color:#f92672">from</span> selenium.common.exceptions <span style="color:#f92672">import</span> TimeoutException
+<span style="color:#f92672">from</span> selenium.webdriver.chrome.options <span style="color:#f92672">import</span> Options
+<span style="color:#f92672">from</span> selenium.webdriver.common.by <span style="color:#f92672">import</span> By
+<span style="color:#f92672">from</span> selenium.webdriver.support <span style="color:#f92672">import</span> expected_conditions <span style="color:#66d9ef">as</span> EC
+<span style="color:#f92672">from</span> selenium.webdriver.support.ui <span style="color:#f92672">import</span> WebDriverWait
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BrowserOperator</span>(object):
+    <span style="color:#66d9ef">def</span> __init__(self, headless<span style="color:#f92672">=</span>False):
+        options <span style="color:#f92672">=</span> Options()
+        options<span style="color:#f92672">.</span>headless <span style="color:#f92672">=</span> headless
+        self<span style="color:#f92672">.</span>driver <span style="color:#f92672">=</span> webdriver<span style="color:#f92672">.</span>Chrome(options<span style="color:#f92672">=</span>options)
+
+    <span style="color:#66d9ef">def</span> __del__(self):
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>close()
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">wait</span>(self, f, until_not<span style="color:#f92672">=</span>False):
+        wt <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>
+        <span style="color:#66d9ef">try</span>:
+            <span style="color:#66d9ef">if</span> until_not:
+                <span style="color:#66d9ef">return</span> WebDriverWait(self<span style="color:#f92672">.</span>driver, wt)<span style="color:#f92672">.</span>until_not(f)
+            <span style="color:#66d9ef">return</span> WebDriverWait(self<span style="color:#f92672">.</span>driver, wt)<span style="color:#f92672">.</span>until(f)
+        <span style="color:#66d9ef">except</span> TimeoutException:
+            logger<span style="color:#f92672">.</span>error(<span style="color:#e6db74">&#34;[timeout]&#34;</span>)
+            <span style="color:#66d9ef">return</span> False
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get</span>(self, url):
+        logger<span style="color:#f92672">.</span>debug(f<span style="color:#e6db74">&#34;[get] {url}&#34;</span>)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>get(url)
+
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">SpeedwifiNext</span>(BrowserOperator):
+    BASE <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://speedwifi-next.home/html/&#34;</span>
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">login</span>(self, user: str, pswd: str) <span style="color:#f92672">-&gt;</span> None:
+        self<span style="color:#f92672">.</span>get(self<span style="color:#f92672">.</span>BASE <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;login.htm&#34;</span>)
+
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;user_type&#34;</span>)<span style="color:#f92672">.</span>send_keys(user)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;input_password&#34;</span>)<span style="color:#f92672">.</span>send_keys(pswd)
+        self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(<span style="color:#e6db74">&#34;login&#34;</span>)<span style="color:#f92672">.</span>click()
+
+        status <span style="color:#f92672">=</span> self<span style="color:#f92672">.</span>wait(EC<span style="color:#f92672">.</span>url_to_be(self<span style="color:#f92672">.</span>BASE <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;status.htm&#34;</span>))
+        <span style="color:#66d9ef">if</span> status:
+            logger<span style="color:#f92672">.</span>debug(<span style="color:#e6db74">&#34;login success&#34;</span>)
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">Exception</span>(<span style="color:#e6db74">&#34;login failed</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">Please check your User and Pass!&#34;</span>)
+
+    <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">statistics</span>(self) <span style="color:#f92672">-&gt;</span> None:
+        self<span style="color:#f92672">.</span>get(self<span style="color:#f92672">.</span>BASE <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;statistics.htm&#34;</span>)
+        self<span style="color:#f92672">.</span>wait(
+            EC<span style="color:#f92672">.</span>text_to_be_present_in_element((By<span style="color:#f92672">.</span>ID, <span style="color:#e6db74">&#34;label_usedData&#34;</span>), <span style="color:#e6db74">&#34;0 KB&#34;</span>),
+            until_not<span style="color:#f92672">=</span>True,
+        )
+
+        <span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>(x) <span style="color:#f92672">-&gt;</span> str:
+            <span style="color:#66d9ef">return</span> self<span style="color:#f92672">.</span>driver<span style="color:#f92672">.</span>find_element_by_id(x)<span style="color:#f92672">.</span>get_attribute(<span style="color:#e6db74">&#34;innerText&#34;</span>)
+
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;1ヶ月間：&#34;</span>, f(<span style="color:#e6db74">&#34;label_usedData&#34;</span>))
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;前日までの3日間：&#34;</span>, f(<span style="color:#e6db74">&#34;label_usedData_yesterday&#34;</span>))
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;本日までの3日間：&#34;</span>, f(<span style="color:#e6db74">&#34;label_usedData_today&#34;</span>))
+
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;__main__&#34;</span>:
+    user <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+    pswd <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+
+    sn <span style="color:#f92672">=</span> SpeedwifiNext(headless<span style="color:#f92672">=</span>True)
+    sn<span style="color:#f92672">.</span>login(user, pswd)
+    sn<span style="color:#f92672">.</span>statistics()
+
+</code></pre></div><h2 id="動作確認">動作確認</h2>
+<pre><code>2020-05-31 19:34:22.570 | DEBUG    | __main__:get:31 - [get] http://speedwifi-next.home/html/login.htm
+2020-05-31 19:34:25.238 | DEBUG    | __main__:login:47 - login success
+2020-05-31 19:34:25.238 | DEBUG    | __main__:get:31 - [get] http://speedwifi-next.home/html/statistics.htm
+1ヶ月間： 129.68 GB
+前日までの3日間： 12.51 GB
+本日までの3日間： 13.77 GB
+</code></pre><h2 id="後書き">後書き</h2>
+<p>python のログ関連ってあまり素直に使えないですよね<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup></p>
+<p>そんな中<code>Loguru</code><sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup>という ライブラリを見つけたので使ってみました。</p>
+<ul>
+<li>デフォルトのログレベルが DEBUG</li>
+<li>CUI カラー表示</li>
+<li>import するだけで使える</li>
+</ul>
+<p>とかなり使い勝手が良かったです。今後簡単なデバックにも<code>print</code>に変わり使って行きたいなと思いました。</p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><a href="https://qiita.com/amedama/items/b856b2f30c2f38665701">ログ出力のための print と import logging はやめてほしい - Qiita</a> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2" role="doc-endnote">
+<p><a href="https://python.libhunt.com/loguru-alternatives">Loguru Alternatives - Python Logging | LibHunt</a> <a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+        </item>
         
         <item>
             <title>今さら言語処理100本ノック #6 前半</title>
