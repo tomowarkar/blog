@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>画像処理 on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/</link>
+    <description>Recent content in 画像処理 on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>tomowarkar</copyright>
+    <lastBuildDate>Sat, 06 Jun 2020 16:16:14 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/%E7%94%BB%E5%83%8F%E5%87%A6%E7%90%86/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>opencv ランダムノイズ画像の生成</title>
+      <link>https://tomowarkar.github.io/blog/posts/random_noise_video/</link>
+      <pubDate>Sat, 06 Jun 2020 16:16:14 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/random_noise_video/</guid>
+      <description>忘れるので備忘録 コード import cv2 import numpy as np from tqdm import tqdm h, w = 400, 600 size = (w, h) fps = 60 filename = &amp;#34;hoge.mp4&amp;#34; fourcc = cv2.VideoWriter_fourcc(&amp;#34;m&amp;#34;, &amp;#34;p&amp;#34;, &amp;#34;4&amp;#34;, &amp;#34;v&amp;#34;) video = cv2.VideoWriter(filename, fourcc, fps, size) for _ in tqdm(range(fps * 10)): img = np.random.randint(0, 256, (h, w, 3), np.uint8) video.write(img) video.release() 画像を用いる</description>
+    </item>
+    
+  </channel>
+</rss>
