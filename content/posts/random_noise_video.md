@@ -23,7 +23,7 @@ size = (w, h)
 fps = 60
 filename = "hoge.mp4"
 
-fourcc = cv2.VideoWriter_fourcc("m", "p", "4", "v")
+fourcc = cv2.VideoWriter_fourcc(*"mp4v")
 video = cv2.VideoWriter(filename, fourcc, fps, size)
 
 for _ in tqdm(range(fps * 10)):
@@ -39,3 +39,8 @@ video.release()
 img = cv2.imread("path/to/img", 1)
 h, w, _ = img.shape
 ```
+
+## memo
+
+- 出力動画のバイト数が 0 なのは入出力のサイズが合っていないのが原因
+- 動画のコーデックは`avc1`の方がいい時もある

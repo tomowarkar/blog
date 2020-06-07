@@ -7,18 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Fri, 22 May 2020 21:55:40 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2020 20:33:47 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/untagged/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Raspberrypi</title>
-      <link>https://tomowarkar.github.io/blog/posts/raspberrypi/</link>
-      <pubDate>Fri, 22 May 2020 21:55:40 +0900</pubDate>
+      <title>Nlp100_2020</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100_2020/</link>
+      <pubDate>Sun, 07 Jun 2020 20:33:47 +0900</pubDate>
       
-      <guid>https://tomowarkar.github.io/blog/posts/raspberrypi/</guid>
-      <description>raspberry pi の環境を作っては壊し、壊しては作りをクリエしているので備忘録 Raspbian のダウンロード 公式 日本ミラーサイト raspbian-lite(var.2020/02/13) の例 curl -O http://ftp.jaist.ac.jp/pub/raspberrypi/raspbian_lite/images/raspbian_lite-2020-02-14/2020-02-13-raspbian-buster-lite.zip SD カードのフォーマット ディス</description>
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100_2020/</guid>
+      <description>00. 文字列の逆順 01. 「パタトクカシーー」 02. 「パトカー」＋「タクシー」＝「パタトクカシーー」 03. 円周率 04. 元素記号 05. n-gram 06. 集合 07. テンプレートによる文生成</description>
     </item>
     
   </channel>

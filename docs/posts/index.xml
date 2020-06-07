@@ -6,8 +6,153 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Sat, 06 Jun 2020 16:16:14 +0900</lastBuildDate>
+        <lastBuildDate>Sun, 07 Jun 2020 04:24:15 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>今さら言語処理100本ノック #6 後半</title>
+            <link>https://tomowarkar.github.io/blog/posts/nlp100-06_2/</link>
+            <pubDate>Sun, 07 Jun 2020 04:24:15 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/nlp100-06_2/</guid>
+            <description>言語処理 100 本ノック(第 6 章: 機械学習) 使用するパラメータや変数の一部は前半で使用したものを使っています。 55. 混同行列の作成 52 で学習したロジステ</description>
+            <content type="html"><![CDATA[<p><a href="https://nlp100.github.io/ja/ch06.html">言語処理 100 本ノック(第 6 章: 機械学習)</a></p>
+<p>使用するパラメータや変数の一部は<a href="https://tomowarkar.github.io/blog/posts/nlp100-06/">前半</a>で使用したものを使っています。</p>
+<h2 id="55-混同行列の作成">55. 混同行列の作成</h2>
+<blockquote>
+<p>52 で学習したロジスティック回帰モデルの混同行列（confusion matrix）を，学習データおよび評価データ上で作成せよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> confusion_matrix
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;訓練データ&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;confusion matrix = </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, confusion_matrix(y_true<span style="color:#f92672">=</span>train_Y, y_pred<span style="color:#f92672">=</span>train_Y_pred))
+<span style="color:#66d9ef">print</span>()
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;検証データ&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;confusion matrix = </span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>, confusion_matrix(y_true<span style="color:#f92672">=</span>valid_Y, y_pred<span style="color:#f92672">=</span>valid_Y_pred))
+</code></pre></div><pre><code>訓練データ
+confusion matrix =
+ [[4522   12    0   23]
+ [  13 4165    0    2]
+ [  10    7  727    0]
+ [  50   17    1 1135]]
+
+検証データ
+confusion matrix =
+ [[511  11   3  18]
+ [ 13 524   2   3]
+ [ 15  11  62   4]
+ [ 33  26   0 100]]
+</code></pre><p><a href="../nlp100-06/#%E5%90%84%E3%82%AB%E3%83%86%E3%82%B4%E3%83%AA%E4%BA%8B%E4%BE%8B%E6%95%B0">前回記事</a>と比較してみて要素数は合っていそうです。</p>
+<h2 id="56-適合率再現率f1-スコアの計測">56. 適合率，再現率，F1 スコアの計測</h2>
+<blockquote>
+<p>52 で学習したロジスティック回帰モデルの適合率，再現率，F1 スコアを，評価データ上で計測せよ．カテゴリごとに適合率，再現率，F1 スコアを求め，カテゴリごとの性能をマイクロ平均（micro-average）とマクロ平均（macro-average）で統合せよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> precision_score, recall_score, f1_score
+
+<span style="color:#75715e"># 適合率，再現率，F1スコア</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;適合率: &#39;</span>, precision_score(y_true<span style="color:#f92672">=</span>valid_Y, y_pred<span style="color:#f92672">=</span>valid_Y_pred, average<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;macro&#39;</span>))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;再現率: &#39;</span>, recall_score(y_true<span style="color:#f92672">=</span>valid_Y, y_pred<span style="color:#f92672">=</span>valid_Y_pred, average<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;macro&#39;</span>))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;F1スコア: &#39;</span>, f1_score(y_true<span style="color:#f92672">=</span>valid_Y, y_pred<span style="color:#f92672">=</span>valid_Y_pred, average<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;macro&#39;</span>))
+</code></pre></div><pre><code class="language-out" data-lang="out">適合率:  0.8837034234422294
+再現率:  0.8026754172370425
+F1スコア:  0.8353613834243956
+</code></pre><p><code>適合率</code>は分類されたものが実際にそのクラスである割合、</p>
+<p><code>再現率</code>はあるクラスのうち、実際にそのクラスに分類された割合</p>
+<p><code>F1スコア</code>は適合率と再現率の調和平均</p>
+<h2 id="57-特徴量の重みの確認">57. 特徴量の重みの確認</h2>
+<blockquote>
+<p>52 で学習したロジスティック回帰モデルの中で，重みの高い特徴量トップ 10 と，重みの低い特徴量トップ 10 を確認せよ.</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">weights <span style="color:#f92672">=</span> {}
+<span style="color:#66d9ef">for</span> i,w <span style="color:#f92672">in</span> enumerate(lr<span style="color:#f92672">.</span>coef_[<span style="color:#ae81ff">0</span>]):
+  weights[dct[i]] <span style="color:#f92672">=</span> w
+
+sw <span style="color:#f92672">=</span> sorted(weights<span style="color:#f92672">.</span>items(), key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x[<span style="color:#ae81ff">1</span>])
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;低いの&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>sw[:<span style="color:#ae81ff">10</span>], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+<span style="color:#66d9ef">print</span>()
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;重いの&#34;</span>)
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>sw[<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>:], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><pre><code>低いの
+('Aereo', -1.4943036354257244)
+('Ebola', -1.1926602012817413)
+('past', -1.1663878014633782)
+('virus', -1.1543506450531948)
+('video', -1.1108024121277575)
+('Hat', -1.101384620566056)
+('baby', -1.0766692762320573)
+('child', -1.0604199141307464)
+('soda', -1.0543633796789418)
+('Activision', -1.041767185267918)
+
+重いの
+('Uber', 1.4360522689124577)
+('profit', 1.456241534603359)
+('China', 1.4986359849111417)
+('bank', 1.5456660201232657)
+('Argentina', 1.5867187020325588)
+('ECB', 1.7131083455287186)
+('Yellen', 1.749698918090413)
+('Fed', 1.8263312436827537)
+('Ukraine', 1.8665880775606447)
+('Bank', 1.9822040580267537)
+</code></pre><h2 id="58-正則化パラメータの変更">58. 正則化パラメータの変更</h2>
+<blockquote>
+<p>ロジスティック回帰モデルを学習するとき，正則化パラメータを調整することで，学習時の過学習（overfitting）の度合いを制御できる．異なる正則化パラメータでロジスティック回帰モデルを学習し，学習データ，検証データ，および評価データ上の正解率を求めよ．実験の結果は，正則化パラメータを横軸，正解率を縦軸としたグラフにまとめよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.linear_model <span style="color:#f92672">import</span> LogisticRegression
+<span style="color:#f92672">from</span> sklearn.metrics <span style="color:#f92672">import</span> accuracy_score
+
+lrl1 <span style="color:#f92672">=</span> LogisticRegression(penalty<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;l1&#34;</span>, solver<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;liblinear&#39;</span>, max_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+lrl1<span style="color:#f92672">.</span>fit(train_X, train_Y)
+
+train_Y_pred <span style="color:#f92672">=</span> lrl1<span style="color:#f92672">.</span>predict(train_X)
+valid_Y_pred <span style="color:#f92672">=</span> lrl1<span style="color:#f92672">.</span>predict(valid_X)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;訓練データ:&#39;</span>, accuracy_score(y_true<span style="color:#f92672">=</span>train_Y, y_pred<span style="color:#f92672">=</span>train_Y_pred))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;検証データ:&#39;</span>, accuracy_score(y_true<span style="color:#f92672">=</span>valid_Y, y_pred<span style="color:#f92672">=</span>valid_Y_pred))
+</code></pre></div><pre><code>訓練データ: 0.9514226881317859
+検証データ: 0.875748502994012
+</code></pre><p><a href="../nlp100-06/#52-%E5%AD%A6%E7%BF%92">前回記事</a>をまんま流用<code>L1正則化</code>で学習させました。</p>
+<h2 id="59-ハイパーパラメータの探索">59. ハイパーパラメータの探索</h2>
+<blockquote>
+<p>学習アルゴリズムや学習パラメータを変えながら，カテゴリ分類モデルを学習せよ．検証データ上の正解率が最も高くなる学習アルゴリズム・パラメータを求めよ．また，その学習アルゴリズム・パラメータを用いたときの評価データ上の正解率を求めよ．</p>
+</blockquote>
+<p>アルゴリズム<code>l1</code>, <code>l2</code>においてそれぞれ<code>C</code>を<code>1/100, 1/10, 1, 10, 100</code>と変化させつつ学習結果を見る。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">params <span style="color:#f92672">=</span> [{
+    <span style="color:#e6db74">&#34;model&#34;</span>: LogisticRegression,
+    <span style="color:#e6db74">&#34;penalty&#34;</span>: penalty,
+    <span style="color:#e6db74">&#34;solver&#34;</span>: solver,
+    <span style="color:#e6db74">&#34;C&#34;</span>: <span style="color:#ae81ff">10</span><span style="color:#f92672">**</span>i,
+    }
+    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>)
+    <span style="color:#66d9ef">for</span> penalty, solver <span style="color:#f92672">in</span>  [(<span style="color:#e6db74">&#34;l1&#34;</span>, <span style="color:#e6db74">&#34;liblinear&#34;</span>), (<span style="color:#e6db74">&#34;l2&#34;</span>, <span style="color:#e6db74">&#34;lbfgs&#34;</span>)]]
+
+<span style="color:#66d9ef">for</span> p <span style="color:#f92672">in</span> params:
+  lr <span style="color:#f92672">=</span> p[<span style="color:#e6db74">&#34;model&#34;</span>](C<span style="color:#f92672">=</span>p[<span style="color:#e6db74">&#34;C&#34;</span>], penalty<span style="color:#f92672">=</span>p[<span style="color:#e6db74">&#34;penalty&#34;</span>], solver<span style="color:#f92672">=</span>p[<span style="color:#e6db74">&#34;solver&#34;</span>], max_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">1000</span>)
+  lr<span style="color:#f92672">.</span>fit(train_X, train_Y)
+
+  valid_Y_pred <span style="color:#f92672">=</span> lr<span style="color:#f92672">.</span>predict(valid_X)
+  acc <span style="color:#f92672">=</span> accuracy_score(y_true<span style="color:#f92672">=</span>valid_Y, y_pred<span style="color:#f92672">=</span>valid_Y_pred)
+  p[<span style="color:#e6db74">&#34;acc&#34;</span>] <span style="color:#f92672">=</span> acc
+
+params<span style="color:#f92672">.</span>sort(key<span style="color:#f92672">=</span><span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>get(<span style="color:#e6db74">&#34;acc&#34;</span>))
+<span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>params, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</code></pre></div><pre><code>{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l1', 'solver': 'liblinear', 'C': 0.01, 'acc': 0.5883233532934131}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l2', 'solver': 'lbfgs', 'C': 0.01, 'acc': 0.7567365269461078}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l1', 'solver': 'liblinear', 'C': 0.1, 'acc': 0.7574850299401198}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l2', 'solver': 'lbfgs', 'C': 0.1, 'acc': 0.8562874251497006}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l1', 'solver': 'liblinear', 'C': 1, 'acc': 0.875748502994012}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l1', 'solver': 'liblinear', 'C': 100, 'acc': 0.8809880239520959}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l2', 'solver': 'lbfgs', 'C': 100, 'acc': 0.8832335329341318}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l1', 'solver': 'liblinear', 'C': 10, 'acc': 0.8884730538922155}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l2', 'solver': 'lbfgs', 'C': 1, 'acc': 0.8959580838323353}
+{'model': &lt;class 'sklearn.linear_model._logistic.LogisticRegression'&gt;, 'penalty': 'l2', 'solver': 'lbfgs', 'C': 10, 'acc': 0.8974550898203593}
+</code></pre><p>正規化度合い(C 値)が影響を与えているのがよくわかりますね。</p>
+<p>その中でも<code>L2正規化</code>の<code>C=10</code>が一番いい結果になりました。</p>
+]]></content>
+        </item>
         
         <item>
             <title>opencv ランダムノイズ画像の生成</title>
@@ -15,7 +160,7 @@
             <pubDate>Sat, 06 Jun 2020 16:16:14 +0900</pubDate>
             
             <guid>https://tomowarkar.github.io/blog/posts/random_noise_video/</guid>
-            <description>忘れるので備忘録 コード import cv2 import numpy as np from tqdm import tqdm h, w = 400, 600 size = (w, h) fps = 60 filename = &amp;#34;hoge.mp4&amp;#34; fourcc = cv2.VideoWriter_fourcc(&amp;#34;m&amp;#34;, &amp;#34;p&amp;#34;, &amp;#34;4&amp;#34;, &amp;#34;v&amp;#34;) video = cv2.VideoWriter(filename, fourcc, fps, size) for _ in tqdm(range(fps * 10)): img = np.random.randint(0, 256, (h, w, 3), np.uint8) video.write(img) video.release() 画像を用いる</description>
+            <description>忘れるので備忘録 コード import cv2 import numpy as np from tqdm import tqdm h, w = 400, 600 size = (w, h) fps = 60 filename = &amp;#34;hoge.mp4&amp;#34; fourcc = cv2.VideoWriter_fourcc(*&amp;#34;mp4v&amp;#34;) video = cv2.VideoWriter(filename, fourcc, fps, size) for _ in tqdm(range(fps * 10)): img = np.random.randint(0, 256, (h, w, 3), np.uint8) video.write(img) video.release() 画像を用いる場合 img</description>
             <content type="html"><![CDATA[<p>忘れるので備忘録</p>
 <h2 id="コード">コード</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> cv2
@@ -27,7 +172,7 @@ size <span style="color:#f92672">=</span> (w, h)
 fps <span style="color:#f92672">=</span> <span style="color:#ae81ff">60</span>
 filename <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;hoge.mp4&#34;</span>
 
-fourcc <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>VideoWriter_fourcc(<span style="color:#e6db74">&#34;m&#34;</span>, <span style="color:#e6db74">&#34;p&#34;</span>, <span style="color:#e6db74">&#34;4&#34;</span>, <span style="color:#e6db74">&#34;v&#34;</span>)
+fourcc <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>VideoWriter_fourcc(<span style="color:#f92672">*</span><span style="color:#e6db74">&#34;mp4v&#34;</span>)
 video <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>VideoWriter(filename, fourcc, fps, size)
 
 <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> tqdm(range(fps <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>)):
@@ -38,7 +183,12 @@ video<span style="color:#f92672">.</span>release()
 </code></pre></div><h2 id="画像を用いる場合">画像を用いる場合</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">img <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>imread(<span style="color:#e6db74">&#34;path/to/img&#34;</span>, <span style="color:#ae81ff">1</span>)
 h, w, _ <span style="color:#f92672">=</span> img<span style="color:#f92672">.</span>shape
-</code></pre></div>]]></content>
+</code></pre></div><h2 id="memo">memo</h2>
+<ul>
+<li>出力動画のバイト数が 0 なのは入出力のサイズが合っていないのが原因</li>
+<li>動画のコーデックは<code>avc1</code>の方がいい時もある</li>
+</ul>
+]]></content>
         </item>
         
         <item>
