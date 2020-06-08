@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="言語処理 100 本ノック(第 7 章: 単語ベクトル) 60. 単語ベクトルの読み込みと表示 Google News データセット（約 1,000 億単語）での学習済み単語ベクトル（300 万単語" />
+<meta name="keywords" content=", nlp, python" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/nlp100-07/" />
+
+
+    <title>
+        
+            今さら言語処理100本ノック #7 :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="今さら言語処理100本ノック #7">
+<meta itemprop="description" content="言語処理 100 本ノック(第 7 章: 単語ベクトル) 60. 単語ベクトルの読み込みと表示 Google News データセット（約 1,000 億単語）での学習済み単語ベクトル（300 万単語">
+<meta itemprop="datePublished" content="2020-06-07T21:39:51&#43;09:00" />
+<meta itemprop="dateModified" content="2020-06-07T21:39:51&#43;09:00" />
+<meta itemprop="wordCount" content="2637">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="nlp,python," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="今さら言語処理100本ノック #7"/>
+<meta name="twitter:description" content="言語処理 100 本ノック(第 7 章: 単語ベクトル) 60. 単語ベクトルの読み込みと表示 Google News データセット（約 1,000 億単語）での学習済み単語ベクトル（300 万単語"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-06-07 21:39:51 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>6 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/nlp100-07/">今さら言語処理100本ノック #7</a>
+            </h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">目次</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#60-単語ベクトルの読み込みと表示">60. 単語ベクトルの読み込みと表示</a>
+      <ul>
+        <li><a href="#ファイルダウンロードgoogle-colab">ファイルダウンロード(Google colab)</a></li>
+      </ul>
+    </li>
+    <li><a href="#61-単語の類似度">61. 単語の類似度</a>
+      <ul>
+        <li><a href="#genisum-のビルドインを使う">genisum のビルドインを使う</a></li>
+        <li><a href="#numpy-で頑張る">numpy で頑張る</a></li>
+      </ul>
+    </li>
+    <li><a href="#62-類似度の高い単語-10-件">62. 類似度の高い単語 10 件</a></li>
+    <li><a href="#63-加法構成性によるアナロジー">63. 加法構成性によるアナロジー</a>
+      <ul>
+        <li><a href="#おまけ">おまけ</a></li>
+      </ul>
+    </li>
+    <li><a href="#64-アナロジーデータでの実験">64. アナロジーデータでの実験</a>
+      <ul>
+        <li><a href="#ダウンロード">ダウンロード</a></li>
+        <li><a href="#メイン">メイン</a></li>
+      </ul>
+    </li>
+    <li><a href="#65-アナロジータスクでの正解率">65. アナロジータスクでの正解率</a>
+      <ul>
+        <li><a href="#メイン-1">メイン</a></li>
+      </ul>
+    </li>
+    <li><a href="#66-wordsimilarity-353-での評価">66. WordSimilarity-353 での評価</a></li>
+    <li><a href="#67-k-means-クラスタリング">67. k-means クラスタリング</a>
+      <ul>
+        <li><a href="#国名を収集する-単語ベクトル化">国名を収集する, 単語ベクトル化</a></li>
+        <li><a href="#sklearn-kmeans-でクラスタリング">sklearn KMeans でクラスタリング</a></li>
+      </ul>
+    </li>
+    <li><a href="#68-ward-法によるクラスタリング">68. Ward 法によるクラスタリング</a></li>
+    <li><a href="#69-t-sne-による可視化">69. t-SNE による可視化</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                <p><a href="https://nlp100.github.io/ja/ch07.html">言語処理 100 本ノック(第 7 章: 単語ベクトル)</a></p>
+<h2 id="60-単語ベクトルの読み込みと表示">60. 単語ベクトルの読み込みと表示</h2>
+<blockquote>
+<p>Google News データセット（約 1,000 億単語）での<a href="https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?usp=sharing">学習済み単語ベクトル</a>（300 万単語・フレーズ，300 次元）をダウンロードし，”United States”の単語ベクトルを表示せよ．ただし，”United States”は内部的には”United_States”と表現されていることに注意せよ．</p>
+</blockquote>
+<p>ファイルサイズが<code>1.5GB</code>もあってやばいので<code>Google Colab</code>などを使うことをお勧めします。</p>
+<h3 id="ファイルダウンロードgoogle-colab">ファイルダウンロード(Google colab)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">%%bash
+url<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;https://drive.google.com/uc?export=download&amp;id=0B7XkCwpI5KDYNlNUTTlSS21pQmM&#34;</span>
+curl -sc /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span> &gt;/dev/null
+code<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>awk <span style="color:#e6db74">&#39;/_warning_/ {print $NF}&#39;</span> /tmp/cookie<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
+curl -sLb /tmp/cookie <span style="color:#e6db74">${</span>url<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;&amp;confirm=</span><span style="color:#e6db74">${</span>code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span> -o GoogleNews-vectors-negative300.bin.gz
+</code></pre></div><p>一応 sha256 も載せておく</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">! sha256sum GoogleNews-vectors-negative300.bin.gz
+21c05ae916a67a4da59b1d006903355cced7de7da1e42bff9f0504198c748da8  GoogleNews-vectors-negative300.bin.gz
+</code></pre></div><p>###　メイン</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> KeyedVectors
+model <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(<span style="color:#e6db74">&#39;GoogleNews-vectors-negative300.bin.gz&#39;</span>, binary<span style="color:#f92672">=</span>True)
+
+model[<span style="color:#e6db74">&#34;United_States&#34;</span>]
+</code></pre></div><pre><code>array([-3.61328125e-02, -4.83398438e-02,  2.35351562e-01,  1.74804688e-01,
+       -1.46484375e-01, -7.42187500e-02, -1.01562500e-01, -7.71484375e-02,
+        1.09375000e-01, -5.71289062e-02, -1.48437500e-01, -6.00585938e-02,
+        1.74804688e-01, -7.71484375e-02,  2.58789062e-02, -7.66601562e-02,
+       -3.80859375e-02,  1.35742188e-01,  3.75976562e-02, -4.19921875e-02,
+       -3.56445312e-02,  5.34667969e-02,  3.68118286e-04, -1.66992188e-01,
+       -1.17187500e-01,  1.41601562e-01, -1.69921875e-01, -6.49414062e-02,
+       -1.66992188e-01,  1.00585938e-01,  1.15722656e-01, -2.18750000e-01,
+       -9.86328125e-02, -2.56347656e-02,  1.23046875e-01, -3.54003906e-02,
+       -1.58203125e-01, -1.60156250e-01,  2.94189453e-02,  8.15429688e-02,
+        6.88476562e-02,  1.87500000e-01,  6.49414062e-02,  1.15234375e-01,
+       -2.27050781e-02,  3.32031250e-01, -3.27148438e-02,  1.77734375e-01,
+       -2.08007812e-01,  4.54101562e-02, -1.23901367e-02,  1.19628906e-01,
+        7.44628906e-03, -9.03320312e-03,  1.14257812e-01,  1.69921875e-01,
+       -2.38281250e-01, -2.79541016e-02, -1.21093750e-01,  2.47802734e-02,
+        7.71484375e-02, -2.81982422e-02, -4.71191406e-02,  1.78222656e-02,
+       -1.23046875e-01, -5.32226562e-02,  2.68554688e-02, -3.11279297e-02,
+       -5.59082031e-02, -5.00488281e-02, -3.73535156e-02,  1.25976562e-01,
+        5.61523438e-02,  1.51367188e-01,  4.29687500e-02, -2.08007812e-01,
+       -4.78515625e-02,  2.78320312e-02,  1.81640625e-01,  2.20703125e-01,
+       -3.61328125e-02, -8.39843750e-02, -3.69548798e-05, -9.52148438e-02,
+       -1.25000000e-01, -1.95312500e-01, -1.50390625e-01, -4.15039062e-02,
+        1.31835938e-01,  1.17675781e-01,  1.91650391e-02,  5.51757812e-02,
+       -9.42382812e-02, -1.08886719e-01,  7.32421875e-02, -1.15234375e-01,
+        8.93554688e-02, -1.40625000e-01,  1.45507812e-01,  4.49218750e-02,
+       -1.10473633e-02, -1.62353516e-02,  4.05883789e-03,  3.75976562e-02,
+       -6.98242188e-02, -5.46875000e-02,  2.17285156e-02, -9.47265625e-02,
+        4.24804688e-02,  1.81884766e-02, -1.73339844e-02,  4.63867188e-02,
+       -1.42578125e-01,  1.99218750e-01,  1.10839844e-01,  2.58789062e-02,
+       -7.08007812e-02, -5.54199219e-02,  3.45703125e-01,  1.61132812e-01,
+       -2.44140625e-01, -2.59765625e-01, -9.71679688e-02,  8.00781250e-02,
+       -8.78906250e-02, -7.22656250e-02,  1.42578125e-01, -8.54492188e-02,
+       -3.18359375e-01,  8.30078125e-02,  6.34765625e-02,  1.64062500e-01,
+       -1.92382812e-01, -1.17675781e-01, -5.41992188e-02, -1.56250000e-01,
+       -1.21582031e-01, -4.95605469e-02,  1.20117188e-01, -3.83300781e-02,
+        5.51757812e-02, -8.97216797e-03,  4.32128906e-02,  6.93359375e-02,
+        8.93554688e-02,  2.53906250e-01,  1.65039062e-01,  1.64062500e-01,
+       -1.41601562e-01,  4.58984375e-02,  1.97265625e-01, -8.98437500e-02,
+        3.90625000e-02, -1.51367188e-01, -8.60595703e-03, -1.17675781e-01,
+       -1.97265625e-01, -1.12792969e-01,  1.29882812e-01,  1.96289062e-01,
+        1.56402588e-03,  3.93066406e-02,  2.17773438e-01, -1.43554688e-01,
+        6.03027344e-02, -1.35742188e-01,  1.16210938e-01, -1.59912109e-02,
+        2.79296875e-01,  1.46484375e-01, -1.19628906e-01,  1.76757812e-01,
+        1.28906250e-01, -1.49414062e-01,  6.93359375e-02, -1.72851562e-01,
+        9.22851562e-02,  1.33056641e-02, -2.00195312e-01, -9.76562500e-02,
+       -1.65039062e-01, -2.46093750e-01, -2.35595703e-02, -2.11914062e-01,
+        1.84570312e-01, -1.85546875e-02,  2.16796875e-01,  5.05371094e-02,
+        2.02636719e-02,  4.25781250e-01,  1.28906250e-01, -2.77099609e-02,
+        1.29882812e-01, -1.15722656e-01, -2.05078125e-02,  1.49414062e-01,
+        7.81250000e-03, -2.05078125e-01, -8.05664062e-02, -2.67578125e-01,
+       -2.29492188e-02, -8.20312500e-02,  8.64257812e-02,  7.61718750e-02,
+       -3.66210938e-02,  5.22460938e-02, -1.22070312e-01, -1.44042969e-02,
+       -2.69531250e-01,  8.44726562e-02, -2.52685547e-02, -2.96630859e-02,
+       -1.68945312e-01,  1.93359375e-01, -1.08398438e-01,  1.94091797e-02,
+       -1.80664062e-01,  1.93359375e-01, -7.08007812e-02,  5.85937500e-02,
+       -1.01562500e-01, -1.31835938e-01,  7.51953125e-02, -7.66601562e-02,
+        3.37219238e-03, -8.59375000e-02,  1.25000000e-01,  2.92968750e-02,
+        1.70898438e-01, -9.37500000e-02, -1.09375000e-01, -2.50244141e-02,
+        2.11914062e-01, -4.44335938e-02,  6.12792969e-02,  2.62451172e-02,
+       -1.77734375e-01,  1.23046875e-01, -7.42187500e-02, -1.67968750e-01,
+       -1.08886719e-01, -9.04083252e-04, -7.37304688e-02,  5.49316406e-02,
+        6.03027344e-02,  8.39843750e-02,  9.17968750e-02, -1.32812500e-01,
+        1.22070312e-01, -8.78906250e-03,  1.19140625e-01, -1.94335938e-01,
+       -6.64062500e-02, -2.07031250e-01,  7.37304688e-02,  8.93554688e-02,
+        1.81884766e-02, -1.20605469e-01, -2.61230469e-02,  2.67333984e-02,
+        7.76367188e-02, -8.30078125e-02,  6.78710938e-02, -3.54003906e-02,
+        3.10546875e-01, -2.42919922e-02, -1.41601562e-01, -2.08007812e-01,
+       -4.57763672e-03, -6.54296875e-02, -4.95605469e-02,  2.22656250e-01,
+        1.53320312e-01, -1.38671875e-01, -5.24902344e-02,  4.24804688e-02,
+       -2.38281250e-01,  1.56250000e-01,  5.83648682e-04, -1.20605469e-01,
+       -9.22851562e-02, -4.44335938e-02,  3.61328125e-02, -1.86767578e-02,
+       -8.25195312e-02, -8.25195312e-02, -4.05273438e-02,  1.19018555e-02,
+        1.69921875e-01, -2.80761719e-02,  3.03649902e-03,  9.32617188e-02,
+       -8.49609375e-02,  1.57470703e-02,  7.03125000e-02,  1.62353516e-02,
+       -2.27050781e-02,  3.51562500e-02,  2.47070312e-01, -2.67333984e-02],
+      dtype=float32)
+</code></pre><h2 id="61-単語の類似度">61. 単語の類似度</h2>
+<blockquote>
+<p>“United States”と”U.S.”のコサイン類似度を計算せよ．</p>
+</blockquote>
+<h3 id="genisum-のビルドインを使う">genisum のビルドインを使う</h3>
+<p>参考: <a href="https://radimrehurek.com/gensim/models/deprecated/word2vec.html">gensim: models.deprecated.word2vec – Deep learning with word2vec</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model<span style="color:#f92672">.</span>similarity(<span style="color:#e6db74">&#34;U.S.&#34;</span>, <span style="color:#e6db74">&#34;United_States&#34;</span>) <span style="color:#75715e">#&gt; 0.73107743</span>
+</code></pre></div><h3 id="numpy-で頑張る">numpy で頑張る</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">cos_sim</span>(v1, v2):
+    <span style="color:#e6db74">&#34;&#34;&#34;2ベクトル間のコサイン類似度を返す&#34;&#34;&#34;</span>
+    <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>dot(v1, v2) <span style="color:#f92672">/</span> (np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(v1) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>norm(v2))
+
+cos_sim(model[<span style="color:#e6db74">&#34;United_States&#34;</span>], model[<span style="color:#e6db74">&#34;U.S.&#34;</span>]) <span style="color:#75715e">#&gt; 0.7310775</span>
+</code></pre></div><h2 id="62-類似度の高い単語-10-件">62. 類似度の高い単語 10 件</h2>
+<blockquote>
+<p>“United States”とコサイン類似度が高い 10 語と，その類似度を出力せよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model<span style="color:#f92672">.</span>most_similar_cosmul(<span style="color:#e6db74">&#34;United_States&#34;</span>)
+</code></pre></div><pre><code>[('Unites_States', 0.8938615918159485),
+ ('Untied_States', 0.8770676851272583),
+ ('United_Sates', 0.8700354099273682),
+ ('U.S.', 0.8655378818511963),
+ ('theUnited_States', 0.8202189207077026),
+ ('America', 0.8089197278022766),
+ ('UnitedStates', 0.8083648085594177),
+ ('Europe', 0.8066486716270447),
+ ('countries', 0.8022394776344299),
+ ('Canada', 0.8009527325630188)]
+</code></pre><h2 id="63-加法構成性によるアナロジー">63. 加法構成性によるアナロジー</h2>
+<blockquote>
+<p>“Spain”の単語ベクトルから”Madrid”のベクトルを引き，”Athens”のベクトルを足したベクトルを計算し，そのベクトルと類似度の高い 10 語とその類似度を出力せよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[(<span style="color:#e6db74">&#39;Greece&#39;</span>, <span style="color:#ae81ff">0.9562304615974426</span>),
+ (<span style="color:#e6db74">&#39;Aristeidis_Grigoriadis&#39;</span>, <span style="color:#ae81ff">0.8694582581520081</span>),
+ (<span style="color:#e6db74">&#39;Ioannis_Drymonakos&#39;</span>, <span style="color:#ae81ff">0.8600285053253174</span>),
+ (<span style="color:#e6db74">&#39;Ioannis_Christou&#39;</span>, <span style="color:#ae81ff">0.8544448614120483</span>),
+ (<span style="color:#e6db74">&#39;Greeks&#39;</span>, <span style="color:#ae81ff">0.8521003127098083</span>),
+ (<span style="color:#e6db74">&#39;Hrysopiyi_Devetzi&#39;</span>, <span style="color:#ae81ff">0.8383888006210327</span>),
+ (<span style="color:#e6db74">&#39;Panagiotis_Gionis&#39;</span>, <span style="color:#ae81ff">0.8323913216590881</span>),
+ (<span style="color:#e6db74">&#39;Heraklio&#39;</span>, <span style="color:#ae81ff">0.8297829627990723</span>),
+ (<span style="color:#e6db74">&#39;Lithuania&#39;</span>, <span style="color:#ae81ff">0.8291547298431396</span>),
+ (<span style="color:#e6db74">&#39;Periklis_Iakovakis&#39;</span>, <span style="color:#ae81ff">0.8289119601249695</span>)]
+</code></pre></div><h3 id="おまけ">おまけ</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">[(<span style="color:#e6db74">&#39;Japan&#39;</span>, <span style="color:#ae81ff">1.0016356706619263</span>),
+ (<span style="color:#e6db74">&#39;Japanese&#39;</span>, <span style="color:#ae81ff">0.8822101950645447</span>),
+ (<span style="color:#e6db74">&#39;South_Korea&#39;</span>, <span style="color:#ae81ff">0.8762961626052856</span>),
+ (<span style="color:#e6db74">&#39;Korea&#39;</span>, <span style="color:#ae81ff">0.8596336245536804</span>),
+ (<span style="color:#e6db74">&#39;Japans&#39;</span>, <span style="color:#ae81ff">0.8564624190330505</span>),
+ (<span style="color:#e6db74">&#39;Shimane_Prefecture&#39;</span>, <span style="color:#ae81ff">0.8264696598052979</span>),
+ (<span style="color:#e6db74">&#39;Nagasaki_Prefecture&#39;</span>, <span style="color:#ae81ff">0.824508011341095</span>),
+ (<span style="color:#e6db74">&#39;Kyushu&#39;</span>, <span style="color:#ae81ff">0.8202904462814331</span>),
+ (<span style="color:#e6db74">&#39;Kanto_region&#39;</span>, <span style="color:#ae81ff">0.8149427771568298</span>),
+ (<span style="color:#e6db74">&#39;Takao&#39;</span>, <span style="color:#ae81ff">0.8107433915138245</span>)]
+</code></pre></div><h2 id="64-アナロジーデータでの実験">64. アナロジーデータでの実験</h2>
+<blockquote>
+<p><a href="http://download.tensorflow.org/data/questions-words.txt">単語アナロジーの評価データ</a>をダウンロードし，vec(2 列目の単語) - vec(1 列目の単語) + vec(3 列目の単語)を計算し，そのベクトルと類似度が最も高い単語と，その類似度を求めよ．求めた単語と類似度は，各事例の末尾に追記せよ．</p>
+</blockquote>
+<h3 id="ダウンロード">ダウンロード</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">curl -O http://download.tensorflow.org/data/questions-words.txt
+</code></pre></div><h3 id="メイン">メイン</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;questions-words.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solve</span>(lines):
+  <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+    <span style="color:#66d9ef">if</span> line<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;:&#34;</span>):
+      <span style="color:#66d9ef">yield</span> line
+      <span style="color:#66d9ef">continue</span>
+
+    cols <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split()
+    <span style="color:#66d9ef">if</span> len(cols) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">4</span>:
+      <span style="color:#66d9ef">yield</span> line
+      <span style="color:#66d9ef">continue</span>
+
+    word, _ <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>most_similar_cosmul(positive<span style="color:#f92672">=</span>cols[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>], negative<span style="color:#f92672">=</span>cols[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">1</span>])[<span style="color:#ae81ff">0</span>]
+    <span style="color:#66d9ef">yield</span> <span style="color:#e6db74">&#34;{} {} {} {} {}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#f92672">*</span>cols, word)
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;questions-words.txt.v1&#34;</span>, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;x&#39;</span>) <span style="color:#66d9ef">as</span> f:
+  <span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> solve(lines):
+    f<span style="color:#f92672">.</span>write(e)
+
+</code></pre></div><p>Google Colab で寝ているときに回していたけど、多分 7 時間くらいかかった。</p>
+<p>19558 行 x1s で 5 時間半くらいなので 1 行 1 秒ちょっとの時間がかかっている。</p>
+<pre><code>$ awk 'NR % 500 == 0' questions-words.txt.v1
+Tokyo Japan Madrid Spain Spain
+Baku Azerbaijan Dhaka Bangladesh Bangladesh
+Bucharest Romania Georgetown Guyana Villanova
+Dublin Ireland Jakarta Indonesia Indonesia
+Kathmandu Nepal Kigali Rwanda Rwanda
+Lusaka Zambia Tashkent Uzbekistan Uzbekistan
+Nassau Bahamas Tokyo Japan Japan
+Rome Italy Vientiane Laos Laos
+Thimphu Bhutan Abuja Nigeria Nigeria
+Zagreb Croatia Apia Samoa Samoa
+Latvia lats Nigeria naira naira
+Philadelphia Pennsylvania Cleveland Ohio Ohio
+Louisville Kentucky Lubbock Texas Texas
+Wichita Kansas Irving Texas lawyer_Elmar_Kresbach
+Orlando Florida Worcester Massachusetts Massachusetts
+Modesto California Miami Florida Florida
+grandfather grandmother father mother mother
+complete completely efficient efficiently inefficient
+quiet quietly serious seriously already
+comfortable uncomfortable rational irrational irrational
+possibly impossibly decided undecided unadorned
+fast faster bright brighter brighter
+safe safer heavy heavier heavier
+young younger safe safer safer
+low lowest cool coolest coolest
+warm warmest strange strangest strangest
+increase increasing scream screaming screaming
+sit sitting shuffle shuffling shuffling
+Cambodia Cambodian Ukraine Ukrainian Ukrainian
+Ireland Irish Brazil Brazilian Brazilian
+Portugal Portuguese Croatia Croatian Croatian
+feeding fed looking looked hoping
+paying paid running ran ran
+sleeping slept selling sold sold
+car cars cat cats cats
+eye eyes donkey donkeys donkeys
+pig pigs machine machines machines
+listen listens eat eats eats
+walk walks vanish vanishes vanishes
+</code></pre><h4 id="memo">memo</h4>
+<p>並列処理しようとしてうまくいかなかった</p>
+<p><a href="https://qiita.com/simonritchie/items/1ce3914eb5444d2157ac">Python の並列処理・並行処理をしっかり調べてみた - Qiita</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">solve</span>(index, lines):
+  line <span style="color:#f92672">=</span> lines[index]
+  <span style="color:#66d9ef">if</span> line<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;:&#34;</span>):
+    lines[index] <span style="color:#f92672">=</span>  line
+    <span style="color:#66d9ef">return</span>
+
+  cols <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split()
+  <span style="color:#66d9ef">if</span> len(cols) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">4</span>:
+    lines[index] <span style="color:#f92672">=</span>  line
+    <span style="color:#66d9ef">return</span>
+
+  word, _ <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>most_similar_cosmul(positive<span style="color:#f92672">=</span>cols[<span style="color:#ae81ff">1</span>:<span style="color:#ae81ff">3</span>], negative<span style="color:#f92672">=</span>cols[<span style="color:#ae81ff">0</span>:<span style="color:#ae81ff">1</span>])[<span style="color:#ae81ff">0</span>]
+  lines[index] <span style="color:#f92672">=</span>  <span style="color:#e6db74">&#34;{} {} {} {} {}</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(<span style="color:#f92672">*</span>cols, word)
+  <span style="color:#66d9ef">return</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 並列処理</span>
+<span style="color:#f92672">from</span> multiprocessing <span style="color:#f92672">import</span> Process, Manager
+ll <span style="color:#f92672">=</span> lines[:<span style="color:#ae81ff">30</span>]
+manager <span style="color:#f92672">=</span> Manager()
+returned <span style="color:#f92672">=</span> manager<span style="color:#f92672">.</span>list(ll)
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(ll)):
+  process <span style="color:#f92672">=</span> Process(
+      target<span style="color:#f92672">=</span>solve,
+      kwargs<span style="color:#f92672">=</span>{
+          <span style="color:#e6db74">&#34;index&#34;</span>:i,
+          <span style="color:#e6db74">&#39;lines&#39;</span>: returned,
+      })
+
+  process<span style="color:#f92672">.</span>start()
+  process_list<span style="color:#f92672">.</span>append(process)
+
+<span style="color:#66d9ef">for</span> process <span style="color:#f92672">in</span> process_list:
+    process<span style="color:#f92672">.</span>join()
+
+<span style="color:#75715e"># 通常処理</span>
+ll <span style="color:#f92672">=</span> lines[:<span style="color:#ae81ff">30</span>]
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(ll)):
+  solve(i, ll)
+
+<span style="color:#66d9ef">print</span>(ll <span style="color:#f92672">==</span> list(returned)) <span style="color:#75715e">#&gt; True</span>
+</code></pre></div><p>並列処理と通常処理の timeit 結果はそれぞれ<code>1 loop, best of 3: 36 s per loop</code>, <code>1 loop, best of 3: 30.4 s per loop</code></p>
+<p>期待する返り値は得られているけど、実行速度がむしろ遅くなってる。並行処理わからんぞ;(</p>
+<h2 id="65-アナロジータスクでの正解率">65. アナロジータスクでの正解率</h2>
+<blockquote>
+<p>64 の実行結果を用い，意味的アナロジー（semantic analogy）と文法的アナロジー（syntactic analogy）の正解率を測定せよ．</p>
+</blockquote>
+<p>最初何を言っているのかわからなかったのですが、どうやら<code>意味的アナロジー</code>と<code>文法的アナロジー</code>は<code>questions-words.txt</code>における分類のようです。</p>
+<pre><code>$ cat questions-words.txt | grep &quot;:&quot;
+: capital-common-countries
+: capital-world
+: currency
+: city-in-state
+: family
+: gram1-adjective-to-adverb
+: gram2-opposite
+: gram3-comparative
+: gram4-superlative
+: gram5-present-participle
+: gram6-nationality-adjective
+: gram7-past-tense
+: gram8-plural
+: gram9-plural-verbs
+</code></pre><p>カテゴリ名に<code>gram</code>が含まれるものを<code>文法的アナロジー</code>, そうでないものを<code>意味的アナロジー</code>とします。</p>
+<h3 id="メイン-1">メイン</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> numpy <span style="color:#f92672">as</span> np
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;questions-words.txt.v1&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+semantic, syntactic <span style="color:#f92672">=</span> [], []
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+  <span style="color:#66d9ef">if</span> line<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;: gram&#34;</span>):
+    ctg <span style="color:#f92672">=</span>  <span style="color:#e6db74">&#34;syntactic&#34;</span>
+  <span style="color:#66d9ef">elif</span> line<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;:&#34;</span>):
+    ctg <span style="color:#f92672">=</span>  <span style="color:#e6db74">&#34;semantic&#34;</span>
+  <span style="color:#66d9ef">else</span>:
+    <span style="color:#66d9ef">if</span> ctg <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;semantic&#34;</span>:
+      semantic<span style="color:#f92672">.</span>append(line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split())
+    <span style="color:#66d9ef">if</span> ctg <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;syntactic&#34;</span>:
+      syntactic<span style="color:#f92672">.</span>append(line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split())
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">calc</span>(data):
+  <span style="color:#e6db74">&#34;&#34;&#34;data: List[List[str]{5}]&#34;&#34;&#34;</span>
+  ndarray <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(data)
+  ans, prd <span style="color:#f92672">=</span> ndarray[:, <span style="color:#ae81ff">3</span>:<span style="color:#ae81ff">5</span>]<span style="color:#f92672">.</span>T
+  <span style="color:#66d9ef">return</span> np<span style="color:#f92672">.</span>mean(ans<span style="color:#f92672">==</span>prd)
+
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;semantic: &#34;</span>, calc(semantic)) <span style="color:#75715e">#&gt; semantic:  0.7411207576953434</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;syntactic: &#34;</span>, calc(syntactic)) <span style="color:#75715e">#&gt; syntactic:  0.7600936768149883</span>
+
+</code></pre></div><p><code>文法的アナロジー</code>の方が正答率は良さげですね。</p>
+<h2 id="66-wordsimilarity-353-での評価">66. WordSimilarity-353 での評価</h2>
+<blockquote>
+<p><a href="http://www.gabrilovich.com/resources/data/wordsim353/wordsim353.html">The WordSimilarity-353 Test Collection</a>の評価データをダウンロードし，単語ベクトルにより計算される類似度のランキングと，人間の類似度判定のランキングの間のスピアマン相関係数を計算せよ．</p>
+</blockquote>
+<p><a href="https://www.monotalk.xyz/blog/python%E3%81%A7%E7%9B%B8%E9%96%A2%E4%BF%82%E6%95%B0%E3%81%AE%E8%A8%88%E7%AE%97%E3%82%92%E3%81%99%E3%82%8B/">python で相関係数の計算をする | Monotalk</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -s http://www.gabrilovich.com/resources/data/wordsim353/wordsim353.zip -o wordsim353.zip
+$ unzip wordsim353.zip
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;combined.tab&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">nlp100_66_pre</span>(lines):
+  <span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+    w1, w2, human <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)
+    <span style="color:#66d9ef">if</span> (w1 <span style="color:#f92672">in</span> model <span style="color:#f92672">and</span> w1 <span style="color:#f92672">in</span> model):
+      vec <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>similarity(w1, w2)
+      <span style="color:#66d9ef">yield</span> np<span style="color:#f92672">.</span>float32(human), vec
+
+score <span style="color:#f92672">=</span> nlp100_66_pre(lines[<span style="color:#ae81ff">1</span>:])
+human, vec <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array(list(score))<span style="color:#f92672">.</span>T
+<span style="color:#f92672">from</span> scipy.stats <span style="color:#f92672">import</span> spearmanr
+
+correlation, pvalue <span style="color:#f92672">=</span> spearmanr(human, vec)
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;相関係数&#34;</span>, correlation) <span style="color:#75715e">#&gt; 相関係数 0.7000166486272194</span>
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;p値&#34;</span>, pvalue) <span style="color:#75715e">#&gt; p値 2.86866666051422e-53</span>
+</code></pre></div><h2 id="67-k-means-クラスタリング">67. k-means クラスタリング</h2>
+<blockquote>
+<p>国名に関する単語ベクトルを抽出し，k-means クラスタリングをクラスタ数 k=5 として実行せよ．</p>
+</blockquote>
+<h3 id="国名を収集する-単語ベクトル化">国名を収集する, 単語ベクトル化</h3>
+<p><code>questions-words.txt</code>のカテゴリ<code>capital-common-countries</code>, <code>capital-world</code>から国名を収集する。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;questions-words.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+cots <span style="color:#f92672">=</span> []
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+  <span style="color:#66d9ef">if</span> line<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;: currency&#34;</span>):
+    <span style="color:#66d9ef">break</span>
+  <span style="color:#66d9ef">elif</span> line<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;:&#34;</span>):
+    <span style="color:#66d9ef">continue</span>
+  <span style="color:#66d9ef">else</span>:
+    _, a, _, b <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split()
+    cots <span style="color:#f92672">+=</span> [a, b]
+
+dct <span style="color:#f92672">=</span> {}
+<span style="color:#66d9ef">for</span> e <span style="color:#f92672">in</span> set(cots):
+  <span style="color:#66d9ef">if</span> e <span style="color:#f92672">in</span> model:
+    dct[e] <span style="color:#f92672">=</span> model[e]
+
+</code></pre></div><h3 id="sklearn-kmeans-でクラスタリング">sklearn KMeans でクラスタリング</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.cluster <span style="color:#f92672">import</span> KMeans
+pred <span style="color:#f92672">=</span> KMeans(n_clusters<span style="color:#f92672">=</span><span style="color:#ae81ff">5</span>)<span style="color:#f92672">.</span>fit_predict(list(dct<span style="color:#f92672">.</span>values()))
+
+<span style="color:#66d9ef">print</span>([list(dct<span style="color:#f92672">.</span>keys())[i] <span style="color:#66d9ef">for</span> i, p <span style="color:#f92672">in</span> enumerate(pred) <span style="color:#66d9ef">if</span> p <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>])
+<span style="color:#75715e">#&gt; [&#39;Suriname&#39;, &#39;Nepal&#39;, &#39;Tuvalu&#39;, &#39;Peru&#39;, &#39;Thailand&#39;, &#39;Jamaica&#39;, &#39;Honduras&#39;, &#39;China&#39;, &#39;Dominica&#39;, &#39;Vietnam&#39;, &#39;Fiji&#39;, &#39;Indonesia&#39;, &#39;Bangladesh&#39;, &#39;Bhutan&#39;, &#39;Australia&#39;, &#39;Samoa&#39;, &#39;Guyana&#39;, &#39;Japan&#39;, &#39;Venezuela&#39;, &#39;Cuba&#39;, &#39;Canada&#39;, &#39;Laos&#39;, &#39;Philippines&#39;, &#39;Bahamas&#39;, &#39;Uruguay&#39;, &#39;Belize&#39;, &#39;Nicaragua&#39;, &#39;Chile&#39;, &#39;Ecuador&#39;, &#39;Taiwan&#39;]</span>
+</code></pre></div><p>日本が属するラベルは東南アジアと島国という特徴が出ていますね。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> collections <span style="color:#f92672">import</span> Counter
+c <span style="color:#f92672">=</span> Counter(pred)
+<span style="color:#66d9ef">print</span>(c) <span style="color:#75715e">#&gt; Counter({0: 30, 4: 27, 1: 25, 2: 19, 3: 15})</span>
+</code></pre></div><h2 id="68-ward-法によるクラスタリング">68. Ward 法によるクラスタリング</h2>
+<blockquote>
+<p>国名に関する単語ベクトルに対し，Ward 法による階層型クラスタリングを実行せよ．さらに，クラスタリング結果をデンドログラムとして可視化せよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> scipy.cluster.hierarchy <span style="color:#f92672">import</span> dendrogram, linkage
+<span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+
+plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">24</span>, <span style="color:#ae81ff">12</span>))
+Z <span style="color:#f92672">=</span> linkage(list(dct<span style="color:#f92672">.</span>values()), method<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;weighted&#34;</span>, metric<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;euclidean&#34;</span>)
+dendrogram(Z, labels<span style="color:#f92672">=</span>list(dct<span style="color:#f92672">.</span>keys()))
+plt<span style="color:#f92672">.</span>xticks(fontsize<span style="color:#f92672">=</span><span style="color:#ae81ff">12</span>)
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div>
+    <img src="https://tomowarkar.github.io/blog/imgs/nlp100_07/01.png"  alt="68結果"  class="center"  style="border-radius: 8px;"  />
+
+
+<h2 id="69-t-sne-による可視化">69. t-SNE による可視化</h2>
+<blockquote>
+<p>ベクトル空間上の国名に関する単語ベクトルを t-SNE で可視化せよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.manifold <span style="color:#f92672">import</span> TSNE
+tsne <span style="color:#f92672">=</span> TSNE()
+tsne<span style="color:#f92672">.</span>fit(list(dct<span style="color:#f92672">.</span>values()))
+</code></pre></div><pre><code>TSNE(angle=0.5, early_exaggeration=12.0, init='random', learning_rate=200.0,
+     method='barnes_hut', metric='euclidean', min_grad_norm=1e-07,
+     n_components=2, n_iter=1000, n_iter_without_progress=300, n_jobs=None,
+     perplexity=30.0, random_state=None, verbose=0)
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">8</span>))
+plt<span style="color:#f92672">.</span>scatter(tsne<span style="color:#f92672">.</span>embedding_[:, <span style="color:#ae81ff">0</span>], tsne<span style="color:#f92672">.</span>embedding_[:, <span style="color:#ae81ff">1</span>])
+<span style="color:#66d9ef">for</span> (x, y), name <span style="color:#f92672">in</span> zip(tsne<span style="color:#f92672">.</span>embedding_, list(dct<span style="color:#f92672">.</span>keys())):
+    <span style="color:#66d9ef">if</span> name <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Japan&#34;</span>:
+      plt<span style="color:#f92672">.</span>annotate(name, (x, y), color<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;r&#39;</span>)
+    <span style="color:#66d9ef">else</span>:
+      plt<span style="color:#f92672">.</span>annotate(name, (x, y))
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div>
+    <img src="https://tomowarkar.github.io/blog/imgs/nlp100_07/02.png"  alt="69結果"  class="center"  style="border-radius: 8px;"  />
+
+
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/nlp">nlp</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2637 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-07 21:39 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/nlp100-06_2/">
+                                <span class="button__text">今さら言語処理100本ノック #6 後半</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

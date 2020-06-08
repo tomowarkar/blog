@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Sun, 07 Jun 2020 04:24:15 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 07 Jun 2020 21:39:51 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/nlp/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>今さら言語処理100本ノック #7</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-07/</link>
+      <pubDate>Sun, 07 Jun 2020 21:39:51 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-07/</guid>
+      <description>言語処理 100 本ノック(第 7 章: 単語ベクトル) 60. 単語ベクトルの読み込みと表示 Google News データセット（約 1,000 億単語）での学習済み単語ベクトル（300 万単語</description>
+    </item>
     
     <item>
       <title>今さら言語処理100本ノック #6 後半</title>
