@@ -6,8 +6,37 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Sun, 07 Jun 2020 21:39:51 +0900</lastBuildDate>
+        <lastBuildDate>Mon, 08 Jun 2020 14:58:53 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>100本ノックシリーズ</title>
+            <link>https://tomowarkar.github.io/blog/posts/100series/</link>
+            <pubDate>Mon, 08 Jun 2020 14:58:53 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/100series/</guid>
+            <description>言語処理 100 本ノック 2020 言語処理 100 本ノック 2020 - NLP100 2020 00 ~ 09 今さら言語処理 100 本ノック #01 10 ~ 19 今さら言語処理 100 本ノック #02-bash 今さら言語処理 100 本ノック #02-python 20 ~</description>
+            <content type="html"><![CDATA[<h2 id="言語処理-100-本ノック-2020">言語処理 100 本ノック 2020</h2>
+<p><a href="https://nlp100.github.io/ja/">言語処理 100 本ノック 2020 - NLP100 2020</a></p>
+<h3 id="00--09">00 ~ 09</h3>
+<p><a href="/posts/nlp100-01/">今さら言語処理 100 本ノック #01</a></p>
+<h3 id="10--19">10 ~ 19</h3>
+<p><a href="/posts/nlp100-02/">今さら言語処理 100 本ノック #02-bash</a></p>
+<p><a href="/posts/nlp100-02-py/">今さら言語処理 100 本ノック #02-python</a></p>
+<h3 id="20--29">20 ~ 29</h3>
+<p><a href="/posts/nlp100-03/">今さら言語処理 100 本ノック #03</a></p>
+<h3 id="30--39">30 ~ 39</h3>
+<p><a href="/posts/nlp100-04/">今さら言語処理 100 本ノック #04</a></p>
+<h3 id="40--49">40 ~ 49</h3>
+<p><a href="/posts/nlp100-05/">今さら言語処理 100 本ノック #05 前半</a></p>
+<p><a href="/posts/nlp100-05_2/">今さら言語処理 100 本ノック #05 後半</a></p>
+<h3 id="50--59">50 ~ 59</h3>
+<p><a href="/posts/nlp100-06/">今さら言語処理 100 本ノック #06 前半</a></p>
+<p><a href="/posts/nlp100-06_2/">今さら言語処理 100 本ノック #06 後半</a></p>
+<h3 id="60--69">60 ~ 69</h3>
+<p><a href="/posts/nlp100-07/">今さら言語処理 100 本ノック #07</a></p>
+]]></content>
+        </item>
         
         <item>
             <title>今さら言語処理100本ノック #7</title>
