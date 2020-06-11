@@ -6,8 +6,95 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Wed, 10 Jun 2020 23:05:15 +0900</lastBuildDate>
+        <lastBuildDate>Thu, 11 Jun 2020 08:29:53 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>streamlit で画像処理アプリを作る。</title>
+            <link>https://tomowarkar.github.io/blog/posts/heroku_streamlit/</link>
+            <pubDate>Thu, 11 Jun 2020 08:29:53 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/heroku_streamlit/</guid>
+            <description>最近流行のstreamlitを使って簡単な画像処理アプリを作ったので備忘録 デモページ ソースページ (Github) パッケージ管理にはpipenvを使用。 顔検</description>
+            <content type="html"><![CDATA[<p>最近流行の<code>streamlit</code>を使って簡単な画像処理アプリを作ったので備忘録</p>
+<p><a href="https://still-sands-82310.herokuapp.com/">デモページ</a></p>
+<p><a href="https://github.com/tomowarkar/stapp">ソースページ (Github)</a></p>
+
+    <img src="/imgs/heroku_streamlit/01.gif"  alt="アプリデモ"  class="center"  style="border-radius: 8px;"  />
+
+
+<p>パッケージ管理には<code>pipenv</code>を使用。</p>
+<h2 id="顔検出モデル">顔検出モデル</h2>
+<p><a href="https://github.com/opencv/opencv/tree/master/data/haarcascades">opencv/data/haarcascades at master · opencv/opencv</a></p>
+<p>かなり昔に書いたのコードを流用した。</p>
+<h2 id="streamlit-どうやって-heroku-にデプロイするの">streamlit どうやって Heroku にデプロイするの?</h2>
+<p><code>Procfile</code>に以下のように記載。</p>
+<pre><code class="language-Procfile" data-lang="Procfile">web: streamlit run --server.enableCORS false --server.port $PORT app.py
+</code></pre><p><a href="https://discuss.streamlit.io/t/hosting-streamlit-on-heroku/132/12">Hosting streamlit on Heroku - Questions - Streamlit</a></p>
+<p>より詳細は以下記事参照。</p>
+<p><a href="https://qiita.com/tomowarkar/items/f41f778b6ae003d9a027">Streamlit を Heroku にデプロイする。</a></p>
+<h2 id="python-ファイル分割しないの">Python ファイル分割しないの?</h2>
+<p>streamlit の面白いところは以下のように<code>clone</code>とかなしに直接ローカル環境で試すことができる点だと思う。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ streamlit run https://github.com/tomowarkar/stapp/blob/master/app.py
+</code></pre></div><p>これをするにあたってできるだけシングルページにまとめた方がいいかな(分けるにしてもそのあたりを考えつつ)という意図。</p>
+<h2 id="heroku-で-opencv-が使えない">Heroku で OpenCV が使えない</h2>
+<p>何も知らずに Heroku で OpenCV をつかおうとすると以下のエラーが&hellip;</p>
+<pre><code>...
+import cv2
+from .cv2 import *
+...
+ImportError: libSM.so.6: cannot open shared object file: No such file or directory
+</code></pre><h3 id="heroku-のビルドパックに-heroku-buildpack-apt-を追加">Heroku のビルドパックに heroku-buildpack-apt を追加</h3>
+<p><a href="https://github.com/heroku/heroku-buildpack-apt">heroku/heroku-buildpack-apt</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ heroku buildpacks:add --index <span style="color:#ae81ff">1</span> https://github.com/heroku/heroku-buildpack-apt
+</code></pre></div><h3 id="aptfile-を追加しopencv-の依存関係を入れる">Aptfile を追加し、OpenCV の依存関係を入れる</h3>
+<p><code>Aptfile</code>を作成し、 <code>libsm6</code>, <code>libxrender1</code>, <code>libfontconfig1</code>, <code>libice6</code> の 4 つのライブラリを 1 行毎に記載</p>
+<pre><code>libsm6
+libxrender1
+libfontconfig1
+libice6
+</code></pre><p><a href="https://stackoverflow.com/questions/49469764/how-to-use-opencv-with-heroku">python - How to use OpenCV with Heroku - Stack Overflow</a></p>
+<p><a href="https://qiita.com/haru1843/items/210cb08024195b9d1bc8">heroku で OpenCV を利用する [Python3] - Qiita</a></p>
+<h2 id="heroku-の無料枠を最大限使いたい">Heroku の無料枠を最大限使いたい</h2>
+<p><a href="https://devcenter.heroku.com/articles/free-dyno-hours">Free Dyno Hours | Heroku Dev Center</a></p>
+<p>Heroku のアプリはアクセスや内部実行がなければ 30 分間でスリープ状態に入り、スリープからの起動には少し時間がかかる。</p>
+<p>無料枠を超えない範囲でアプリをスリープさせないようにトラフィックを送ってやればいい。</p>
+<p>定期実行できればなんでもいいが、コードと一緒に管理できる<code>GitHub Actions</code>が個人的に扱いやすいのでこれで行う。</p>
+<p><a href="https://help.github.com/ja/actions/getting-started-with-github-actions/about-github-actions#usage-limits">GitHub Actions について - GitHub ヘルプ</a></p>
+<h3 id="github-actions-で-20-分毎にアプリにトラフィックを送る">GitHub Actions で 20 分毎にアプリにトラフィックを送る</h3>
+<p><code>Procfile</code> と 同階層に<code>.github/workflows/heroku.yml</code>を作成する。</p>
+<p><code>heroku.yml</code>に以下のように記載。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">name</span>: Heroku Alarm Clock
+
+<span style="color:#66d9ef">on</span>:
+  <span style="color:#66d9ef">schedule</span>:
+    - <span style="color:#66d9ef">cron</span>: <span style="color:#e6db74">&#34;*/20 * * * *&#34;</span>
+
+<span style="color:#66d9ef">jobs</span>:
+  <span style="color:#66d9ef">build</span>:
+    <span style="color:#66d9ef">runs-on</span>: ubuntu-latest
+
+    <span style="color:#66d9ef">steps</span>:
+      - <span style="color:#66d9ef">name</span>: Alarm
+        <span style="color:#66d9ef">run</span>: curl YOUR_HEROKU_APP_URL
+</code></pre></div><p>cron を 20 分おきに実行し、curl でアプリにアクセスするというだけの内容だ。これだとデフォルトの無料枠は超えてしまうので好きに変更されたし。</p>
+<p>ちなみに Heroku の個人アカウントにはデフォルトで毎月 550 時間の無料枠が割り当てられていて(アカウントに紐づく全てのアプリの総起動時間と思われる。)、超過すると月の残りは強制スリープになるので注意。</p>
+<h2 id="できなかったこと">できなかったこと</h2>
+<p>クライアント側のパラメータに応じてその場で動画を生成し、表示すること。</p>
+<p><code>/tmp</code>に<code>filename</code>を作成しそれを元に<code>st.video(video)</code>で表示する。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fourcc <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>VideoWriter_fourcc(<span style="color:#f92672">*</span><span style="color:#e6db74">&#34;avc1&#34;</span>)
+video <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>VideoWriter(filename, fourcc, fps, (width, height))
+
+steps <span style="color:#f92672">=</span> fps <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(steps):
+    img <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">256</span>, (width, height, <span style="color:#ae81ff">3</span>), np<span style="color:#f92672">.</span>uint8)
+    video<span style="color:#f92672">.</span>write(img)
+
+video<span style="color:#f92672">.</span>release()
+</code></pre></div><p><a href="https://github.com/tomowarkar/stapp/commit/568772006e507bed222a7bdb02780a5995ebb5da">残骸</a></p>
+<p>ローカルでは動作したけど、<code>heroku</code>上でうまく<code>/tmp</code>ディレクトリにファイルを作れず動作しなかった。</p>
+]]></content>
+        </item>
         
         <item>
             <title>Mac のCPU周りを調べるコマンド</title>

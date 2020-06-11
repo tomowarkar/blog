@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>heroku on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/heroku/</link>
+    <description>Recent content in heroku on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>tomowarkar</copyright>
+    <lastBuildDate>Thu, 11 Jun 2020 08:29:53 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/heroku/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>streamlit で画像処理アプリを作る。</title>
+      <link>https://tomowarkar.github.io/blog/posts/heroku_streamlit/</link>
+      <pubDate>Thu, 11 Jun 2020 08:29:53 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/heroku_streamlit/</guid>
+      <description>最近流行のstreamlitを使って簡単な画像処理アプリを作ったので備忘録 デモページ ソースページ (Github) パッケージ管理にはpipenvを使用。 顔検</description>
+    </item>
+    
+  </channel>
+</rss>

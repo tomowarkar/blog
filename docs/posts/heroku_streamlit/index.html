@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="最近流行のstreamlitを使って簡単な画像処理アプリを作ったので備忘録 デモページ ソースページ (Github) パッケージ管理にはpipenvを使用。 顔検" />
+<meta name="keywords" content=", python, heroku" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/heroku_streamlit/" />
+
+
+    <title>
+        
+            streamlit で画像処理アプリを作る。 :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="streamlit で画像処理アプリを作る。">
+<meta itemprop="description" content="最近流行のstreamlitを使って簡単な画像処理アプリを作ったので備忘録 デモページ ソースページ (Github) パッケージ管理にはpipenvを使用。 顔検">
+<meta itemprop="datePublished" content="2020-06-11T08:29:53&#43;09:00" />
+<meta itemprop="dateModified" content="2020-06-11T08:29:53&#43;09:00" />
+<meta itemprop="wordCount" content="1072">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="python,heroku," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="streamlit で画像処理アプリを作る。"/>
+<meta name="twitter:description" content="最近流行のstreamlitを使って簡単な画像処理アプリを作ったので備忘録 デモページ ソースページ (Github) パッケージ管理にはpipenvを使用。 顔検"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-06-11 08:29:53 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/heroku_streamlit/">streamlit で画像処理アプリを作る。</a>
+            </h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">目次</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#顔検出モデル">顔検出モデル</a></li>
+    <li><a href="#streamlit-どうやって-heroku-にデプロイするの">streamlit どうやって Heroku にデプロイするの?</a></li>
+    <li><a href="#python-ファイル分割しないの">Python ファイル分割しないの?</a></li>
+    <li><a href="#heroku-で-opencv-が使えない">Heroku で OpenCV が使えない</a>
+      <ul>
+        <li><a href="#heroku-のビルドパックに-heroku-buildpack-apt-を追加">Heroku のビルドパックに heroku-buildpack-apt を追加</a></li>
+        <li><a href="#aptfile-を追加しopencv-の依存関係を入れる">Aptfile を追加し、OpenCV の依存関係を入れる</a></li>
+      </ul>
+    </li>
+    <li><a href="#heroku-の無料枠を最大限使いたい">Heroku の無料枠を最大限使いたい</a>
+      <ul>
+        <li><a href="#github-actions-で-20-分毎にアプリにトラフィックを送る">GitHub Actions で 20 分毎にアプリにトラフィックを送る</a></li>
+      </ul>
+    </li>
+    <li><a href="#できなかったこと">できなかったこと</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                <p>最近流行の<code>streamlit</code>を使って簡単な画像処理アプリを作ったので備忘録</p>
+<p><a href="https://still-sands-82310.herokuapp.com/">デモページ</a></p>
+<p><a href="https://github.com/tomowarkar/stapp">ソースページ (Github)</a></p>
+
+    <img src="https://tomowarkar.github.io/blog/imgs/heroku_streamlit/01.gif"  alt="アプリデモ"  class="center"  style="border-radius: 8px;"  />
+
+
+<p>パッケージ管理には<code>pipenv</code>を使用。</p>
+<h2 id="顔検出モデル">顔検出モデル</h2>
+<p><a href="https://github.com/opencv/opencv/tree/master/data/haarcascades">opencv/data/haarcascades at master · opencv/opencv</a></p>
+<p>かなり昔に書いたのコードを流用した。</p>
+<h2 id="streamlit-どうやって-heroku-にデプロイするの">streamlit どうやって Heroku にデプロイするの?</h2>
+<p><code>Procfile</code>に以下のように記載。</p>
+<pre><code class="language-Procfile" data-lang="Procfile">web: streamlit run --server.enableCORS false --server.port $PORT app.py
+</code></pre><p><a href="https://discuss.streamlit.io/t/hosting-streamlit-on-heroku/132/12">Hosting streamlit on Heroku - Questions - Streamlit</a></p>
+<p>より詳細は以下記事参照。</p>
+<p><a href="https://qiita.com/tomowarkar/items/f41f778b6ae003d9a027">Streamlit を Heroku にデプロイする。</a></p>
+<h2 id="python-ファイル分割しないの">Python ファイル分割しないの?</h2>
+<p>streamlit の面白いところは以下のように<code>clone</code>とかなしに直接ローカル環境で試すことができる点だと思う。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ streamlit run https://github.com/tomowarkar/stapp/blob/master/app.py
+</code></pre></div><p>これをするにあたってできるだけシングルページにまとめた方がいいかな(分けるにしてもそのあたりを考えつつ)という意図。</p>
+<h2 id="heroku-で-opencv-が使えない">Heroku で OpenCV が使えない</h2>
+<p>何も知らずに Heroku で OpenCV をつかおうとすると以下のエラーが&hellip;</p>
+<pre><code>...
+import cv2
+from .cv2 import *
+...
+ImportError: libSM.so.6: cannot open shared object file: No such file or directory
+</code></pre><h3 id="heroku-のビルドパックに-heroku-buildpack-apt-を追加">Heroku のビルドパックに heroku-buildpack-apt を追加</h3>
+<p><a href="https://github.com/heroku/heroku-buildpack-apt">heroku/heroku-buildpack-apt</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ heroku buildpacks:add --index <span style="color:#ae81ff">1</span> https://github.com/heroku/heroku-buildpack-apt
+</code></pre></div><h3 id="aptfile-を追加しopencv-の依存関係を入れる">Aptfile を追加し、OpenCV の依存関係を入れる</h3>
+<p><code>Aptfile</code>を作成し、 <code>libsm6</code>, <code>libxrender1</code>, <code>libfontconfig1</code>, <code>libice6</code> の 4 つのライブラリを 1 行毎に記載</p>
+<pre><code>libsm6
+libxrender1
+libfontconfig1
+libice6
+</code></pre><p><a href="https://stackoverflow.com/questions/49469764/how-to-use-opencv-with-heroku">python - How to use OpenCV with Heroku - Stack Overflow</a></p>
+<p><a href="https://qiita.com/haru1843/items/210cb08024195b9d1bc8">heroku で OpenCV を利用する [Python3] - Qiita</a></p>
+<h2 id="heroku-の無料枠を最大限使いたい">Heroku の無料枠を最大限使いたい</h2>
+<p><a href="https://devcenter.heroku.com/articles/free-dyno-hours">Free Dyno Hours | Heroku Dev Center</a></p>
+<p>Heroku のアプリはアクセスや内部実行がなければ 30 分間でスリープ状態に入り、スリープからの起動には少し時間がかかる。</p>
+<p>無料枠を超えない範囲でアプリをスリープさせないようにトラフィックを送ってやればいい。</p>
+<p>定期実行できればなんでもいいが、コードと一緒に管理できる<code>GitHub Actions</code>が個人的に扱いやすいのでこれで行う。</p>
+<p><a href="https://help.github.com/ja/actions/getting-started-with-github-actions/about-github-actions#usage-limits">GitHub Actions について - GitHub ヘルプ</a></p>
+<h3 id="github-actions-で-20-分毎にアプリにトラフィックを送る">GitHub Actions で 20 分毎にアプリにトラフィックを送る</h3>
+<p><code>Procfile</code> と 同階層に<code>.github/workflows/heroku.yml</code>を作成する。</p>
+<p><code>heroku.yml</code>に以下のように記載。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-yml" data-lang="yml"><span style="color:#66d9ef">name</span>: Heroku Alarm Clock
+
+<span style="color:#66d9ef">on</span>:
+  <span style="color:#66d9ef">schedule</span>:
+    - <span style="color:#66d9ef">cron</span>: <span style="color:#e6db74">&#34;*/20 * * * *&#34;</span>
+
+<span style="color:#66d9ef">jobs</span>:
+  <span style="color:#66d9ef">build</span>:
+    <span style="color:#66d9ef">runs-on</span>: ubuntu-latest
+
+    <span style="color:#66d9ef">steps</span>:
+      - <span style="color:#66d9ef">name</span>: Alarm
+        <span style="color:#66d9ef">run</span>: curl YOUR_HEROKU_APP_URL
+</code></pre></div><p>cron を 20 分おきに実行し、curl でアプリにアクセスするというだけの内容だ。これだとデフォルトの無料枠は超えてしまうので好きに変更されたし。</p>
+<p>ちなみに Heroku の個人アカウントにはデフォルトで毎月 550 時間の無料枠が割り当てられていて(アカウントに紐づく全てのアプリの総起動時間と思われる。)、超過すると月の残りは強制スリープになるので注意。</p>
+<h2 id="できなかったこと">できなかったこと</h2>
+<p>クライアント側のパラメータに応じてその場で動画を生成し、表示すること。</p>
+<p><code>/tmp</code>に<code>filename</code>を作成しそれを元に<code>st.video(video)</code>で表示する。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">fourcc <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>VideoWriter_fourcc(<span style="color:#f92672">*</span><span style="color:#e6db74">&#34;avc1&#34;</span>)
+video <span style="color:#f92672">=</span> cv2<span style="color:#f92672">.</span>VideoWriter(filename, fourcc, fps, (width, height))
+
+steps <span style="color:#f92672">=</span> fps <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(steps):
+    img <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>randint(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">256</span>, (width, height, <span style="color:#ae81ff">3</span>), np<span style="color:#f92672">.</span>uint8)
+    video<span style="color:#f92672">.</span>write(img)
+
+video<span style="color:#f92672">.</span>release()
+</code></pre></div><p><a href="https://github.com/tomowarkar/stapp/commit/568772006e507bed222a7bdb02780a5995ebb5da">残骸</a></p>
+<p>ローカルでは動作したけど、<code>heroku</code>上でうまく<code>/tmp</code>ディレクトリにファイルを作れず動作しなかった。</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/heroku">heroku</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1072 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-11 08:29 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/mac_cpu/">
+                                <span class="button__text">Mac のCPU周りを調べるコマンド</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Sun, 07 Jun 2020 21:39:51 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2020 08:29:53 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>streamlit で画像処理アプリを作る。</title>
+      <link>https://tomowarkar.github.io/blog/posts/heroku_streamlit/</link>
+      <pubDate>Thu, 11 Jun 2020 08:29:53 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/heroku_streamlit/</guid>
+      <description>最近流行のstreamlitを使って簡単な画像処理アプリを作ったので備忘録 デモページ ソースページ (Github) パッケージ管理にはpipenvを使用。 顔検</description>
+    </item>
     
     <item>
       <title>今さら言語処理100本ノック #7</title>

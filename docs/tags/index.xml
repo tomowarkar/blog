@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Wed, 10 Jun 2020 23:05:15 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2020 08:29:53 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>heroku</title>
+      <link>https://tomowarkar.github.io/blog/tags/heroku/</link>
+      <pubDate>Thu, 11 Jun 2020 08:29:53 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/heroku/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://tomowarkar.github.io/blog/tags/python/</link>
+      <pubDate>Thu, 11 Jun 2020 08:29:53 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>MacOS</title>
@@ -27,15 +45,6 @@
       <pubDate>Mon, 08 Jun 2020 14:58:53 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/nlp/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>python</title>
-      <link>https://tomowarkar.github.io/blog/tags/python/</link>
-      <pubDate>Sun, 07 Jun 2020 21:39:51 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
       <description></description>
     </item>
     
