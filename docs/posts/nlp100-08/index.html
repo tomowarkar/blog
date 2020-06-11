@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="ようやく終わりが見えてきましたね。 他の 100 本ノックシリーズ 言語処理 100 本ノック(第 8 章: ニューラルネット) 70. 単語ベクトルの和による特徴量 問題 50 で" />
+<meta name="keywords" content=", nlp, python" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/nlp100-08/" />
+
+
+    <title>
+        
+            今さら言語処理100本ノック #8 前半 :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="今さら言語処理100本ノック #8 前半">
+<meta itemprop="description" content="ようやく終わりが見えてきましたね。 他の 100 本ノックシリーズ 言語処理 100 本ノック(第 8 章: ニューラルネット) 70. 単語ベクトルの和による特徴量 問題 50 で">
+<meta itemprop="datePublished" content="2020-06-11T16:45:32&#43;09:00" />
+<meta itemprop="dateModified" content="2020-06-11T16:45:32&#43;09:00" />
+<meta itemprop="wordCount" content="1615">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="nlp,python," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="今さら言語処理100本ノック #8 前半"/>
+<meta name="twitter:description" content="ようやく終わりが見えてきましたね。 他の 100 本ノックシリーズ 言語処理 100 本ノック(第 8 章: ニューラルネット) 70. 単語ベクトルの和による特徴量 問題 50 で"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-06-11 16:45:32 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>4 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/nlp100-08/">今さら言語処理100本ノック #8 前半</a>
+            </h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">目次</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#70-単語ベクトルの和による特徴量">70. 単語ベクトルの和による特徴量</a>
+      <ul>
+        <li><a href="#モデルの読み込み特徴量生成">モデルの読み込み、特徴量生成</a></li>
+        <li><a href="#特徴量保存">特徴量保存</a></li>
+      </ul>
+    </li>
+    <li><a href="#71-単層ニューラルネットワークによる予測">71. 単層ニューラルネットワークによる予測</a>
+      <ul>
+        <li><a href="#numpy">NumPy</a></li>
+        <li><a href="#pytorch">PyTorch</a></li>
+        <li><a href="#tensorflow">TensorFlow</a></li>
+      </ul>
+    </li>
+    <li><a href="#72-損失と勾配の計算">72. 損失と勾配の計算</a>
+      <ul>
+        <li><a href="#numpy-交差エントロピー">NumPy (交差エントロピー)</a></li>
+        <li><a href="#pytorch-交差エントロピー">PyTorch (交差エントロピー)</a></li>
+        <li><a href="#tensorflow-交差エントロピー">TensorFlow (交差エントロピー)</a></li>
+        <li><a href="#勾配">勾配</a></li>
+      </ul>
+    </li>
+    <li><a href="#73-確率的勾配降下法による学習">73. 確率的勾配降下法による学習</a>
+      <ul>
+        <li><a href="#トレーニング-検証データの読み込み">トレーニング, 検証データの読み込み</a></li>
+        <li><a href="#keras-を用いた実装">Keras を用いた実装</a></li>
+      </ul>
+    </li>
+    <li><a href="#74-正解率の計測">74. 正解率の計測</a></li>
+    <li><a href="#75-損失と正解率のプロット">75. 損失と正解率のプロット</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                <p>ようやく終わりが見えてきましたね。</p>
+<p><a href="https://tomowarkar.github.io/blog/posts/100series/">他の 100 本ノックシリーズ</a></p>
+<p><a href="https://nlp100.github.io/ja/ch08.html">言語処理 100 本ノック(第 8 章: ニューラルネット)</a></p>
+<h2 id="70-単語ベクトルの和による特徴量">70. 単語ベクトルの和による特徴量</h2>
+<blockquote>
+<p>問題 50 で構築した学習データ，検証データ，評価データを行列・ベクトルに変換したい．(以下略)</p>
+</blockquote>
+<p>記事見出し内を単語化-&gt;単語を単語ベクトルに変換-&gt;記事見出し内の単語ベクトルの平均を求め、それをその記事の特徴量にする。</p>
+<p>といったことを行う。</p>
+<p>記事見出し内を単語化というのは<a href="https://tomowarkar.github.io/blog/posts/nlp100-06/#%E4%B8%AD%E9%96%93%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%81%AE%E4%BD%9C%E6%88%90">第 6 章 51.</a>で同じようなことをしていたので、この時作成した中間ファイルをそのまま流用する。</p>
+<h3 id="モデルの読み込み特徴量生成">モデルの読み込み、特徴量生成</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> gensim.models <span style="color:#f92672">import</span> KeyedVectors
+model <span style="color:#f92672">=</span> KeyedVectors<span style="color:#f92672">.</span>load_word2vec_format(<span style="color:#e6db74">&#39;GoogleNews-vectors-negative300.bin.gz&#39;</span>, binary<span style="color:#f92672">=</span>True)
+
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;train.middle.txt&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  lines <span style="color:#f92672">=</span> f<span style="color:#f92672">.</span>readlines()
+
+category_pair <span style="color:#f92672">=</span> {<span style="color:#e6db74">&#34;b&#34;</span>:<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;t&#34;</span>:<span style="color:#ae81ff">1</span>, <span style="color:#e6db74">&#34;e&#34;</span>:<span style="color:#ae81ff">2</span>, <span style="color:#e6db74">&#34;m&#34;</span>:<span style="color:#ae81ff">3</span>}
+category, data <span style="color:#f92672">=</span> [], []
+
+<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> lines:
+  cat, body <span style="color:#f92672">=</span> line<span style="color:#f92672">.</span>rstrip(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)
+  token_vecs <span style="color:#f92672">=</span> [model[t] <span style="color:#66d9ef">for</span> t <span style="color:#f92672">in</span> body<span style="color:#f92672">.</span>split() <span style="color:#66d9ef">if</span> t <span style="color:#f92672">in</span> model]
+  <span style="color:#66d9ef">if</span> len(token_vecs) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+    <span style="color:#66d9ef">continue</span>
+
+  category<span style="color:#f92672">.</span>append(category_pair<span style="color:#f92672">.</span>get(cat))
+  mean <span style="color:#f92672">=</span> sum(token_vecs)<span style="color:#f92672">/</span>len(token_vecs)
+  data<span style="color:#f92672">.</span>append(mean)
+</code></pre></div><h3 id="特徴量保存">特徴量保存</h3>
+<p><code>h5py</code>の使い方いまいち理解していないのに使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> h5py
+<span style="color:#66d9ef">with</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#39;train_nlp100_08_70.hdf5&#39;</span>, mode<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;x&#39;</span>) <span style="color:#66d9ef">as</span> f:
+  f<span style="color:#f92672">.</span>create_dataset(<span style="color:#e6db74">&#39;label&#39;</span>, data<span style="color:#f92672">=</span>category)
+  f<span style="color:#f92672">.</span>create_dataset(<span style="color:#e6db74">&#39;vect&#39;</span>, data<span style="color:#f92672">=</span>data)
+</code></pre></div><h2 id="71-単層ニューラルネットワークによる予測">71. 単層ニューラルネットワークによる予測</h2>
+<p><code>70</code>で作ったデータの読み込み</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> h5py
+<span style="color:#66d9ef">with</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#39;train_nlp100_08_70.hdf5&#39;</span>, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  label <span style="color:#f92672">=</span> f[<span style="color:#e6db74">&#34;label&#34;</span>][<span style="color:#f92672">...</span>]
+  vect <span style="color:#f92672">=</span> f[<span style="color:#e6db74">&#34;vect&#34;</span>][<span style="color:#f92672">...</span>]
+
+<span style="color:#66d9ef">print</span>(label<span style="color:#f92672">.</span>shape, vect<span style="color:#f92672">.</span>shape) <span style="color:#75715e">#&gt; (10683,) (10683, 300)</span>
+</code></pre></div><h3 id="numpy">NumPy</h3>
+<p>ソフトマックス関数は簡単にいえば出力値の合計を 1 にする関数で、各値の範囲が 0~1 となる。</p>
+<p>行列 W をランダムな値で初期化とあるのでここではゼロ行列で初期化する。</p>
+<p>この時出力のベクトルは<code>[0.25, 0.25, 0.25, 0.25]</code>であることが期待される。(入力値が全て 0 のため、各事例に分類される可能性は全て等しい)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">4</span>))
+softmax <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: np<span style="color:#f92672">.</span>exp(x) <span style="color:#f92672">/</span> np<span style="color:#f92672">.</span>sum(np<span style="color:#f92672">.</span>exp(x), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+
+<span style="color:#66d9ef">print</span>(softmax(np<span style="color:#f92672">.</span>dot(vect[:<span style="color:#ae81ff">1</span>], w)))
+<span style="color:#66d9ef">print</span>(softmax(np<span style="color:#f92672">.</span>dot(vect[:<span style="color:#ae81ff">4</span>], w)))
+</code></pre></div><pre><code>[[0.25 0.25 0.25 0.25]]
+[[0.25 0.25 0.25 0.25]
+ [0.25 0.25 0.25 0.25]
+ [0.25 0.25 0.25 0.25]
+ [0.25 0.25 0.25 0.25]]
+</code></pre><h3 id="pytorch">PyTorch</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> torch
+
+x_train <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(vect, dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32)
+w <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">4</span>)
+softmax <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>Softmax(dim<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>)
+
+<span style="color:#66d9ef">print</span>(softmax(torch<span style="color:#f92672">.</span>matmul(x_train[:<span style="color:#ae81ff">1</span>], w)))
+<span style="color:#66d9ef">print</span>(softmax(torch<span style="color:#f92672">.</span>matmul(x_train[:<span style="color:#ae81ff">4</span>], w)))
+</code></pre></div><h3 id="tensorflow">TensorFlow</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
+
+w <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">4</span>))
+<span style="color:#66d9ef">print</span>(tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>softmax(tf<span style="color:#f92672">.</span>matmul(vect[:<span style="color:#ae81ff">1</span>],w), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+<span style="color:#66d9ef">print</span>(tf<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>softmax(tf<span style="color:#f92672">.</span>matmul(vect[:<span style="color:#ae81ff">4</span>],w), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>))
+</code></pre></div><p>参考は特記がなければ以下を参考にしている。</p>
+<p><a href="https://pytorch.org/docs/stable/index.html">PyTorch documentation — PyTorch 1.5.0 documentation</a></p>
+<p><a href="https://www.tensorflow.org/versions">TensorFlow API Versions</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(torch<span style="color:#f92672">.</span>__version__) <span style="color:#75715e">#&gt; &#39;1.5.0+cu101&#39;</span>
+<span style="color:#66d9ef">print</span>(tensorflow<span style="color:#f92672">.</span>__version__) <span style="color:#75715e">#&gt; &#39;2.2.0&#39;</span>
+</code></pre></div><h2 id="72-損失と勾配の計算">72. 損失と勾配の計算</h2>
+<p>$x_1-x_4$の正解ラベルを<code>[0, 1, 2, 3]</code>とする。</p>
+<p>正解ラベルのインデックスを 1,それ以外のインデックスを 0 とした<code>1-hotベクトル</code>で構成される行列 t は</p>
+
+    <img src="https://latex.codecogs.com/gif.latex?t%3D%5Cbegin%7Bbmatrix%7D%201%20%26%200%20%26%200%20%26%200%20%5C%5C%200%20%26%201%20%26%200%20%26%200%20%5C%5C%200%20%26%200%20%26%201%20%26%200%20%5C%5C%200%20%26%200%20%26%200%20%26%201%20%5C%5C%20%5Cend%7Bbmatrix%7D"  alt="t=1-hot vector"  class="center"  style="border-radius: 8px;"  />
+
+
+<p>この時交差エントロピーは</p>
+
+    <img src="https://latex.codecogs.com/gif.latex?L&amp;space;=&amp;space;-%5cfrac%7b1%7d%7bN%7d%5csum%5eN_%7bn=1%7dt_nlogy_n%5c%5c&amp;space;=&amp;space;-%5cfrac%7b1%7d%7b4%7d%28t_1*logy_1&amp;plus;t_2*logy_2&amp;plus;t_3*logy_3&amp;plus;t_4*logy_4%29"  alt="L = -\x0crac{1}{N}\\sum^N_{n=1}t_nlogy_n\\\n= -\x0crac{1}{4}(t_1*logy_1&#43;t_2*logy_2&#43;t_3*logy_3&#43;t_4*logy_4) "  class="center"  style="border-radius: 8px;"  />
+
+
+<p>($y_n$は先ほどの確率分布)</p>
+<p>参考: <a href="https://japan-medical-ai.github.io/medical-ai-course-materials/notebooks/03_Introduction_to_Neural_Network.html">3. ニューラルネットワークの基礎 — メディカル AI 専門コース オンライン講義資料 documentation</a></p>
+<h3 id="numpy-交差エントロピー">NumPy (交差エントロピー)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">4</span>))
+softmax <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: np<span style="color:#f92672">.</span>exp(x) <span style="color:#f92672">/</span> np<span style="color:#f92672">.</span>sum(np<span style="color:#f92672">.</span>exp(x), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+
+one_hot <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>identity(<span style="color:#ae81ff">4</span>)[[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]]
+
+l <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>np<span style="color:#f92672">.</span>mean(np<span style="color:#f92672">.</span>sum(one_hot <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>ma<span style="color:#f92672">.</span>log(softmax(np<span style="color:#f92672">.</span>dot(vect[:<span style="color:#ae81ff">4</span>], w))), axis<span style="color:#f92672">=-</span><span style="color:#ae81ff">1</span>))
+<span style="color:#66d9ef">print</span>(l) <span style="color:#75715e">#&gt; 1.3862943611198906</span>
+</code></pre></div><h3 id="pytorch-交差エントロピー">PyTorch (交差エントロピー)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_train <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor(vect[:<span style="color:#ae81ff">4</span>], dtype<span style="color:#f92672">=</span>torch<span style="color:#f92672">.</span>float32, requires_grad<span style="color:#f92672">=</span>True)
+y_train <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>tensor([<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>])
+w <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>zeros(<span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">4</span>)
+
+loss <span style="color:#f92672">=</span> torch<span style="color:#f92672">.</span>nn<span style="color:#f92672">.</span>CrossEntropyLoss()
+output <span style="color:#f92672">=</span> loss(torch<span style="color:#f92672">.</span>matmul(x_train, w), y_train)
+output<span style="color:#f92672">.</span>backward()
+<span style="color:#66d9ef">print</span>(output<span style="color:#f92672">.</span>item()) <span style="color:#75715e">#&gt; 1.3862943649291992</span>
+</code></pre></div><p><code>y_train</code>のラベルを float 型にしてしまっていったり、<code>requires_grad=True</code>にしていなかったりで時間食いました。</p>
+<p>困ったら<a href="https://pytorch.org/docs/stable/nn.html#crossentropyloss">ドキュメント</a>をみましょう</p>
+<h3 id="tensorflow-交差エントロピー">TensorFlow (交差エントロピー)</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">x_train <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>constant(vect[:<span style="color:#ae81ff">4</span>], dtype<span style="color:#f92672">=</span>tf<span style="color:#f92672">.</span>float32)
+y_train <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>one_hot([<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>], depth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>) <span style="color:#75715e"># one-hotベクトルなので注意</span>
+
+w <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">4</span>))
+output <span style="color:#f92672">=</span> tf<span style="color:#f92672">.</span>compat<span style="color:#f92672">.</span>v1<span style="color:#f92672">.</span>losses<span style="color:#f92672">.</span>softmax_cross_entropy(y_train, tf<span style="color:#f92672">.</span>matmul(x_train, w))
+<span style="color:#66d9ef">print</span>(output<span style="color:#f92672">.</span>numpy()) <span style="color:#75715e">#&gt; 1.3862944</span>
+</code></pre></div><h3 id="勾配">勾配</h3>
+<p>Softmax と Cross Entropy 損失を用いた分類における$w_i$における勾配は$y_i-t_i$で求まる。</p>
+<p><a href="https://www.ics.uci.edu/~pjsadows/notes.pdf">notes.pdf</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">w <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">300</span>, <span style="color:#ae81ff">4</span>))
+softmax <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: np<span style="color:#f92672">.</span>exp(x) <span style="color:#f92672">/</span> np<span style="color:#f92672">.</span>sum(np<span style="color:#f92672">.</span>exp(x), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+
+t <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>identity(<span style="color:#ae81ff">4</span>)[[<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>]]
+y <span style="color:#f92672">=</span> one_hot <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>ma<span style="color:#f92672">.</span>log(softmax(np<span style="color:#f92672">.</span>dot(vect[:<span style="color:#ae81ff">4</span>], w)))
+
+<span style="color:#66d9ef">print</span>(y <span style="color:#f92672">-</span> t)
+</code></pre></div><pre><code>[[-2.386294361119891 -0.0 -0.0 -0.0]
+ [-0.0 -2.386294361119891 -0.0 -0.0]
+ [-0.0 -0.0 -2.386294361119891 -0.0]
+ [-0.0 -0.0 -0.0 -2.386294361119891]]
+</code></pre><p><code>TensorFlow</code>と<code>PyTorch</code>での勾配の導出は調べきれなかったのでパスします。</p>
+<h2 id="73-確率的勾配降下法による学習">73. 確率的勾配降下法による学習</h2>
+<blockquote>
+<p>確率的勾配降下法（SGD: Stochastic Gradient Descent）を用いて，行列 W を学習せよ．なお，学習は適当な基準で終了させればよい（例えば「100 エポックで終了」など）．</p>
+</blockquote>
+<h3 id="トレーニング-検証データの読み込み">トレーニング, 検証データの読み込み</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> h5py
+
+<span style="color:#66d9ef">with</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#39;train_nlp100_08_70.hdf5&#39;</span>, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  train_label <span style="color:#f92672">=</span> f[<span style="color:#e6db74">&#34;label&#34;</span>][<span style="color:#f92672">...</span>]
+  train_vect <span style="color:#f92672">=</span> f[<span style="color:#e6db74">&#34;vect&#34;</span>][<span style="color:#f92672">...</span>]
+
+<span style="color:#66d9ef">with</span> h5py<span style="color:#f92672">.</span>File(<span style="color:#e6db74">&#39;valid_nlp100_08_70.hdf5&#39;</span>, <span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> f:
+  valid_label <span style="color:#f92672">=</span> f[<span style="color:#e6db74">&#34;label&#34;</span>][<span style="color:#f92672">...</span>]
+  valid_vect <span style="color:#f92672">=</span> f[<span style="color:#e6db74">&#34;vect&#34;</span>][<span style="color:#f92672">...</span>]
+
+</code></pre></div><h3 id="keras-を用いた実装">Keras を用いた実装</h3>
+<p>あまり自信がないが、それらしきものは得た。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> tensorflow <span style="color:#f92672">as</span> tf
+<span style="color:#f92672">from</span> tensorflow <span style="color:#f92672">import</span> keras
+
+model <span style="color:#f92672">=</span> keras<span style="color:#f92672">.</span>Sequential()
+model<span style="color:#f92672">.</span>add(keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">300</span>))
+model<span style="color:#f92672">.</span>add(keras<span style="color:#f92672">.</span>layers<span style="color:#f92672">.</span>Dense(<span style="color:#ae81ff">4</span>, activation<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;softmax&#39;</span>))
+
+model<span style="color:#f92672">.</span>compile(loss<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;categorical_crossentropy&#39;</span>, optimizer<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sgd&#39;</span>, metrics<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;accuracy&#39;</span>])
+history <span style="color:#f92672">=</span> model<span style="color:#f92672">.</span>fit(train_vect, tf<span style="color:#f92672">.</span>one_hot(train_label, depth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>), epochs<span style="color:#f92672">=</span><span style="color:#ae81ff">100</span>, validation_data<span style="color:#f92672">=</span>(valid_vect, tf<span style="color:#f92672">.</span>one_hot(valid_label, depth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>)), verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>)
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">model<span style="color:#f92672">.</span>summary()
+</code></pre></div><pre><code>Model: &quot;sequential_23&quot;
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #
+=================================================================
+dense_33 (Dense)             multiple                  90300
+_________________________________________________________________
+dense_34 (Dense)             multiple                  1204
+=================================================================
+Total params: 91,504
+Trainable params: 91,504
+Non-trainable params: 0
+_________________________________________________________________
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#f92672">*</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>shape, [train_vect, train_label, valid_vect, valid_label]))
+<span style="color:#75715e">#&gt; (10683, 300) (10683,) (1335, 300) (1335,)</span>
+</code></pre></div><p><a href="https://www.tensorflow.org/tutorials/keras/classification?hl=ja">はじめてのニューラルネットワーク：分類問題の初歩  |  TensorFlow Core</a></p>
+<h2 id="74-正解率の計測">74. 正解率の計測</h2>
+<blockquote>
+<p>問題 73 で求めた行列を用いて学習データおよび評価データの事例を分類したとき，その正解率をそれぞれ求めよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;train: &#34;</span>, model<span style="color:#f92672">.</span>evaluate(train_vect, tf<span style="color:#f92672">.</span>one_hot(train_label, depth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>), verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>))
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;valid: &#34;</span>, model<span style="color:#f92672">.</span>evaluate(valid_vect, tf<span style="color:#f92672">.</span>one_hot(valid_label, depth<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span>), verbose<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>))
+</code></pre></div><pre><code>334/334 - 0s - loss: 0.2365 - accuracy: 0.9219
+train:  [0.2365119755268097, 0.92193204164505]
+42/42 - 0s - loss: 0.2907 - accuracy: 0.9004
+valid:  [0.29069963097572327, 0.9003745317459106]
+</code></pre><h2 id="75-損失と正解率のプロット">75. 損失と正解率のプロット</h2>
+<blockquote>
+<p>問題 73 のコードを改変し，各エポックのパラメータ更新が完了するたびに，訓練データでの損失，正解率，検証データでの損失，正解率をグラフにプロットし，学習の進捗状況を確認できるようにせよ．</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#f92672">as</span> plt
+plt<span style="color:#f92672">.</span>figure(figsize<span style="color:#f92672">=</span>(<span style="color:#ae81ff">16</span>,<span style="color:#ae81ff">10</span>))
+
+<span style="color:#66d9ef">for</span> k, v <span style="color:#f92672">in</span> history<span style="color:#f92672">.</span>history<span style="color:#f92672">.</span>items():
+  plt<span style="color:#f92672">.</span>plot(history<span style="color:#f92672">.</span>epoch, v, label<span style="color:#f92672">=</span>k)
+
+plt<span style="color:#f92672">.</span>xlabel(<span style="color:#e6db74">&#39;Epochs&#39;</span>)
+plt<span style="color:#f92672">.</span>legend()
+plt<span style="color:#f92672">.</span>xlim([<span style="color:#ae81ff">0</span>,max(history<span style="color:#f92672">.</span>epoch)])
+plt<span style="color:#f92672">.</span>show()
+</code></pre></div>
+    <img src="https://i.imgur.com/7ywBore.png"  alt="blog top page"  class="center"  />
+
+
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/nlp">nlp</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1615 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-11 16:45 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/heroku_streamlit/">
+                                <span class="button__text">streamlit で画像処理アプリを作る。</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

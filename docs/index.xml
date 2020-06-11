@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Thu, 11 Jun 2020 08:29:53 +0900</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jun 2020 16:45:32 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>今さら言語処理100本ノック #8 前半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-08/</link>
+      <pubDate>Thu, 11 Jun 2020 16:45:32 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-08/</guid>
+      <description>ようやく終わりが見えてきましたね。 他の 100 本ノックシリーズ 言語処理 100 本ノック(第 8 章: ニューラルネット) 70. 単語ベクトルの和による特徴量 問題 50 で</description>
+    </item>
     
     <item>
       <title>streamlit で画像処理アプリを作る。</title>
