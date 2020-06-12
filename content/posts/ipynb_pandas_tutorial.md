@@ -420,3 +420,15 @@ df.fillna(method='ffill').loc[[14, 15, 16]]
 ```python
 df.fillna(method='bfill').loc[[14, 15, 16]]
 ````
+
+## 文字一括置換 (2020/6/12 追記)
+
+```python
+df.apply(lambda x: x.str.translate(str.maketrans({',': '', '%':'', 'K': ''})))
+```
+
+### 文字列を含む数値型のキャストで使える
+
+```python
+df.apply(lambda x: x.str.translate(str.maketrans({',': '', '%':'', 'K': ''}))).astype(np.float)
+```

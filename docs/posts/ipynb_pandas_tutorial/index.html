@@ -34,7 +34,7 @@
 <meta itemprop="description" content="備忘録的メモ この記事は Python 環境がなくても、Google Colab上で実際に動かすことができます。 実行環境 Google Colab ! cat /etc/issue Ubuntu 18.04.3 LTS \n \l ! python -V Python 3.6.9 ! pip show pandas">
 <meta itemprop="datePublished" content="2020-05-02T21:09:14&#43;09:00" />
 <meta itemprop="dateModified" content="2020-05-02T21:09:14&#43;09:00" />
-<meta itemprop="wordCount" content="1538">
+<meta itemprop="wordCount" content="1580">
 <meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
 
 
@@ -159,6 +159,11 @@
     <li><a href="#複雑な抽出">複雑な抽出</a></li>
     <li><a href="#dtype-の変更">dtype の変更</a></li>
     <li><a href="#欠損地の扱い">欠損地の扱い</a></li>
+    <li><a href="#文字一括置換-2020612-追記">文字一括置換 (2020/6/12 追記)</a>
+      <ul>
+        <li><a href="#文字列を含む数値型のキャストで使える">文字列を含む数値型のキャストで使える</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
                 </aside>
@@ -383,6 +388,10 @@ df[<span style="color:#e6db74">&#34;age&#34;</span>] <span style="color:#f92672"
 <span style="color:#960050;background-color:#1e0010">欠損値を後ろの値で置換</span> <span style="color:#e6db74">`df.fillna(method=&#39;bfill&#39;)`</span>
 <span style="color:#e6db74">``</span><span style="color:#960050;background-color:#1e0010">`</span>python
 df<span style="color:#f92672">.</span>fillna(method<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;bfill&#39;</span>)<span style="color:#f92672">.</span>loc[[<span style="color:#ae81ff">14</span>, <span style="color:#ae81ff">15</span>, <span style="color:#ae81ff">16</span>]]
+</code></pre></div><h2 id="文字一括置換-2020612-追記">文字一括置換 (2020/6/12 追記)</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>translate(str<span style="color:#f92672">.</span>maketrans({<span style="color:#e6db74">&#39;,&#39;</span>: <span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#e6db74">&#39;%&#39;</span>:<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#e6db74">&#39;K&#39;</span>: <span style="color:#e6db74">&#39;&#39;</span>})))
+</code></pre></div><h3 id="文字列を含む数値型のキャストで使える">文字列を含む数値型のキャストで使える</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>translate(str<span style="color:#f92672">.</span>maketrans({<span style="color:#e6db74">&#39;,&#39;</span>: <span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#e6db74">&#39;%&#39;</span>:<span style="color:#e6db74">&#39;&#39;</span>, <span style="color:#e6db74">&#39;K&#39;</span>: <span style="color:#e6db74">&#39;&#39;</span>})))<span style="color:#f92672">.</span>astype(np<span style="color:#f92672">.</span>float)
 </code></pre></div>
             </div>
         </article>
@@ -394,7 +403,7 @@ df<span style="color:#f92672">.</span>fillna(method<span style="color:#f92672">=
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/colab">colab</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1538 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1580 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-02 21:09 &#43;0900</p>
         </div>
