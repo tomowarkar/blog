@@ -6,8 +6,56 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Thu, 11 Jun 2020 16:45:32 +0900</lastBuildDate>
+        <lastBuildDate>Fri, 12 Jun 2020 14:29:12 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Raspberry pi NAS化計画 - 事前準備</title>
+            <link>https://tomowarkar.github.io/blog/posts/raspi_nas_pre/</link>
+            <pubDate>Fri, 12 Jun 2020 14:29:12 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/raspi_nas_pre/</guid>
+            <description>モチベーション 最近 Mac の usb コネクタの接続が不安定になり、充電ができなくなるという現象が発生した。 usb ポートは二つあるので今のところ致命傷には至っ</description>
+            <content type="html"><![CDATA[<h2 id="モチベーション">モチベーション</h2>
+<p>最近 Mac の usb コネクタの接続が不安定になり、充電ができなくなるという現象が発生した。
+usb ポートは二つあるので今のところ致命傷には至っていないが、どちらのポートからも給電できなくなると Mac が大きな文鎮となってしまうのでその対策をしようというのが事始め。</p>
+<h2 id="バックアップとれよ">バックアップとれよ</h2>
+<p>現状 128GB の USB に <code>Timemachine</code> で Mac のバックアップがとってあり、よく使うファイルに関してはクラウドで管理しているのですが、<code>Timemachine</code>の扱いに不慣れな点と、Mac にしか互換性がない点, クラウドの通信量問題<sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>から新しくバックアップを用意しようと思いました。</p>
+<h2 id="外付け-hdd-を使って-nas-を構築する">外付け HDD を使って NAS を構築する</h2>
+<p>単純にバックアップをとるだけならそのまま外づけ HDD を接続すればいいのですが、せっかくなので NAS を作ってみようと思います。</p>
+<p>幸い手元に<a href="https://www.yodobashi.com/product/100000001003904466/">Raspberry Pi Zero WH</a>と<a href="https://amzn.to/2UBGgpu">Raspberry Pi 4 ModelB 2GB</a>があるので、外付け HDD を購入するだけで挑戦することができます。</p>
+<p>また NAS にすることでスマホや iPad からもコンテンツにアクセスしたいという意図もありました。</p>
+<h2 id="hdd-vs-ssd">HDD vs SSD</h2>
+<p>どっちがいいか考えてみたのですが、費用対容量の観点から HDD にし, <a href="https://amzn.to/2zoDMn1">Transcend ポータブル HDD 1TB [TS1TSJ25M3S]</a>を購入しました。</p>
+<p>また<a href="https://www.yodobashi.com/product/100000001003904466/">Raspberry Pi Zero WH</a>を使って NAS を作ろうと考えていたため、速度のボトルネックは Raspi 側にくるのではないかと考えたのもあります。</p>
+<p>バックアップがメインでアクセス性が良くなればいいという考え方です。</p>
+<h2 id="raspi-zero-vs-4">Raspi zero vs 4</h2>
+<p><a href="https://www.yodobashi.com/product/100000001003904466/">Raspberry Pi Zero</a>と<a href="https://amzn.to/2UBGgpu">Raspberry Pi 4</a>どちらが NAS に向いているかを考えれば、圧倒的に<a href="https://amzn.to/2UBGgpu">Raspberry Pi 4</a>でしょう。</p>
+<p><code>USB 3.0</code>の通信速度と CPU スペックが存分にいかせます。</p>
+<p>反面、NAS としての利用だけを考える場合少しオーバースペックになるのではないかと考えました。</p>
+<p>なのでとりあえず<a href="https://www.yodobashi.com/product/100000001003904466/">Raspberry Pi Zero</a>で作ってみて、問題がありそうであれば<a href="https://amzn.to/2UBGgpu">Raspberry Pi 4</a>に乗り換えることにします。</p>
+<h2 id="その他実装への参考">その他実装への参考</h2>
+<p><a href="https://www.yodobashi.com/product/100000001003904466/">Raspberry Pi Zero</a>と<a href="https://amzn.to/2zoDMn1">ポータブル HDD</a>で NAS を作る利点は簡単に持ち運ぶことができる点です。それを踏まえ実装を考えていきます。</p>
+<h3 id="hdd-フォーマット">HDD フォーマット</h3>
+<p>Mac と Windows のデフォルトのフォーマット形式は互換性がありません。どちらからもファイルの読み書きができるようにしたいです。</p>
+<p><a href="https://qiita.com/rkonno/items/54b2e4b8770c8b0b2bcd#comments">RaspberryPi2 で Mac と Windows 両対応の NAS を構築する - Qiita</a></p>
+<h3 id="複数-wifi-の設定">複数 Wifi の設定</h3>
+<p>持ち運ぶ上でいちいち wifi を切り替えるのは手間です。</p>
+<p><a href="https://qiita.com/hxbdy625/items/374394f3dff17bdaf843">ラズパイで複数のネットワーク設定をする - Qiita</a></p>
+<h3 id="そのた参考になりそうなもの">そのた参考になりそうなもの</h3>
+<p><a href="https://raspida.com/omv-exfat">openmediavault で exfat の外付けハードディスクを利用する</a></p>
+<p><a href="https://www.itmedia.co.jp/news/articles/2002/24/news008.html">ラズパイで自宅ファイルサーバを作る ～自作 NAS「openmediavault」編～ (1/4) - ITmedia NEWS</a></p>
+<p><a href="https://qiita.com/zono_0/items/1eb877ad9c6e5ac12532">Raspberry pi 4 で NAS（openmediavault）を構築する方法 - Qiita</a></p>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1" role="doc-endnote">
+<p><code>ポータブルWi-Fiなので使える通信量に制限がある</code> <a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</section>
+]]></content>
+        </item>
         
         <item>
             <title>今さら言語処理100本ノック #8 前半</title>
