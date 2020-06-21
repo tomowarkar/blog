@@ -95,13 +95,17 @@ network={
 EOF
 ```
 
-平文パスワードを嫌う場合[WPA key calculation](http://jorisvr.nl/wpapsk.html)を使ってパスワードを暗号化して記載することもできる。
+平文パスワードを嫌う場合[WPA key calculation](http://jorisvr.nl/wpapsk.html)を使ってパスワードを暗号化して記載することもできる。`wpa_passphrase`コマンドもあり。
 
 また以下コマンドで Mac が接続している`Wi-Fi`を確認できる。
 
 ```bash
 networksetup -getairportnetwork en0
 ```
+
+### raspberry pi での wpa_supplicant.conf
+
+`/etc/wpa_supplicant/wpa_supplicant.conf`に場所が変わっている
 
 ## ssh 接続
 
@@ -122,6 +126,8 @@ arp -a
 ```bash
 ssh pi@raspberrypi.local
 ```
+
+`ssh-keygen -R raspberrypi.local`
 
 ## これより以下 Mac 上で Raspberri Pi に ssh 接続していることが前提
 
@@ -157,16 +163,123 @@ $ sudo gpasswd -a ユーザー名 sudo
 $ sudo gpasswd -d pi sudo
 ```
 
-## [記載予定] cron のログ出力
+## 日本時間にする
+
+`sudo timedatectl set-timezone Asia/Tokyo`
+
+```bash
+$ date
+Sun Jun 14 08:01:52 BST 2020
+$ sudo timedatectl set-timezone Asia/Tokyo
+$ date
+Sun Jun 14 16:03:39 JST 2020
+```
+
+## cron のログ出力
+
+`sudo vim /etc/rsyslog.conf`
 
 ```
-# sed -i -e 's/^#cron.* /^cron.* /' /etc/rsyslog.conf
+#cron.*                          /var/log/cron.log
+↓
+cron.*                          /var/log/cron.log
 ```
 
-## [記載予定] ip アドレスの固定化
+設定の反映
+
+```bash
+$ sudo /etc/init.d/rsyslog restart
+```
+
+[RaspberryPi3 で初めて crontab を使う前に - Qiita](https://qiita.com/Higemal/items/5a579b2701ef7c473062)
 
 ## [記載予定] エディタ設定
 
 `nano` も良いが、せっかくだし`vim`を使えるようになりたい
 
 [エディタ戦争](https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E6%88%A6%E4%BA%89)
+
+### vim-tiny アンインストール
+
+```bash
+$ sudo apt-get --purge remove vim-common vim-tiny
+```
+
+### vim インストール
+
+```bash
+$ sudo apt-get install vim
+```
+
+```
+$ vim ~/.vimrc
+```
+
+## 日本語化
+
+```
+$ sudo apt-get update
+$ sudo apt-get install fcitx-mozc
+$ sudo reboot
+```
+
+```
+$ locale
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: LC_ALL??????????????????: ??????????????????????
+LANG=ja_JP.UTF-8
+LANGUAGE=
+LC_CTYPE=UTF-8
+LC_NUMERIC="ja_JP.UTF-8"
+LC_TIME="ja_JP.UTF-8"
+LC_COLLATE="ja_JP.UTF-8"
+LC_MONETARY="ja_JP.UTF-8"
+LC_MESSAGES="ja_JP.UTF-8"
+LC_PAPER="ja_JP.UTF-8"
+LC_NAME="ja_JP.UTF-8"
+LC_ADDRESS="ja_JP.UTF-8"
+LC_TELEPHONE="ja_JP.UTF-8"
+LC_MEASUREMENT="ja_JP.UTF-8"
+LC_IDENTIFICATION="ja_JP.UTF-8"
+LC_ALL=
+
+```
+
+```bash
+vi ~/.bashrc
+```
+
+```
+export LANGUAGE=ja_JP.UTF-8
+export LC_ALL=ja_JP.UTF-8
+export LC_TYPE=ja_JP.UTF-8
+
+```
+
+## pip
+
+```bash
+$ pip3 -V
+-bash: pip3: コマンドが見つかりません
+$ sudo apt-get install python3-pip
+$ pip3 -V
+pip 18.1 from /usr/lib/python3/dist-packages/pip (python 3.7)
+```
+
+`Original error was: libf77blas.so.3: cannot open shared object file: No such file or directory`
+[ImportError: libf77blas.so.3: cannot open shared object file: No such file or directory · Issue #262 · Kitt-AI/snowboy](https://github.com/Kitt-AI/snowboy/issues/262)
+
+```bash
+$ sudo apt-get install libatlas-base-dev
+```
+
+## git
+
+```bash
+$ sudo apt-get install git
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
+
+```
+
+## [記載予定] ip アドレスの固定化

@@ -34,7 +34,7 @@
 <meta itemprop="description" content="raspberry pi の環境を作っては壊し、壊しては作りを繰り返しているので備忘録 実行環境 Mac Book Pro により ssh 接続でraspberry piに接続、CUI操作をメイン">
 <meta itemprop="datePublished" content="2020-05-22T21:55:40&#43;09:00" />
 <meta itemprop="dateModified" content="2020-05-22T21:55:40&#43;09:00" />
-<meta itemprop="wordCount" content="914">
+<meta itemprop="wordCount" content="1215">
 <meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
 
 
@@ -119,7 +119,7 @@
     <main class="post">
 
         <div class="post-info">
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>2 minutes
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>3 minutes
 
             
 
@@ -154,7 +154,11 @@
     </li>
     <li><a href="#イメージの書き込み">イメージの書き込み</a></li>
     <li><a href="#無線-lan-設定">無線 LAN 設定</a></li>
-    <li><a href="#ネットワーク設定">ネットワーク設定</a></li>
+    <li><a href="#ネットワーク設定">ネットワーク設定</a>
+      <ul>
+        <li><a href="#raspberry-pi-での-wpa_supplicantconf">raspberry pi での wpa_supplicant.conf</a></li>
+      </ul>
+    </li>
     <li><a href="#ssh-接続">ssh 接続</a>
       <ul>
         <li><a href="#raspberry-pi-の-ip-アドレス確認">raspberry pi の IP アドレス確認</a></li>
@@ -167,9 +171,18 @@
     <li><a href="#新規ユーザーの追加">新規ユーザーの追加</a></li>
     <li><a href="#新規ユーザーに-sudo-権限を追加">新規ユーザーに sudo 権限を追加</a></li>
     <li><a href="#pi-ユーザを-sudo-から外す">pi ユーザを sudo から外す</a></li>
-    <li><a href="#記載予定-cron-のログ出力">[記載予定] cron のログ出力</a></li>
+    <li><a href="#日本時間にする">日本時間にする</a></li>
+    <li><a href="#cron-のログ出力">cron のログ出力</a></li>
+    <li><a href="#記載予定-エディタ設定">[記載予定] エディタ設定</a>
+      <ul>
+        <li><a href="#vim-tiny-アンインストール">vim-tiny アンインストール</a></li>
+        <li><a href="#vim-インストール">vim インストール</a></li>
+      </ul>
+    </li>
+    <li><a href="#日本語化">日本語化</a></li>
+    <li><a href="#pip">pip</a></li>
+    <li><a href="#git">git</a></li>
     <li><a href="#記載予定-ip-アドレスの固定化">[記載予定] ip アドレスの固定化</a></li>
-    <li><a href="#記載予定-エディタ設定">[記載予定] エディタ設定</a></li>
   </ul>
 </nav>
                 </aside>
@@ -227,10 +240,12 @@ cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.con
 </span><span style="color:#e6db74">    psk=&#34;$wifi_pswd&#34;
 </span><span style="color:#e6db74">}
 </span><span style="color:#e6db74">EOF</span>
-</code></pre></div><p>平文パスワードを嫌う場合<a href="http://jorisvr.nl/wpapsk.html">WPA key calculation</a>を使ってパスワードを暗号化して記載することもできる。</p>
+</code></pre></div><p>平文パスワードを嫌う場合<a href="http://jorisvr.nl/wpapsk.html">WPA key calculation</a>を使ってパスワードを暗号化して記載することもできる。<code>wpa_passphrase</code>コマンドもあり。</p>
 <p>また以下コマンドで Mac が接続している<code>Wi-Fi</code>を確認できる。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">networksetup -getairportnetwork en0
-</code></pre></div><h2 id="ssh-接続">ssh 接続</h2>
+</code></pre></div><h3 id="raspberry-pi-での-wpa_supplicantconf">raspberry pi での wpa_supplicant.conf</h3>
+<p><code>/etc/wpa_supplicant/wpa_supplicant.conf</code>に場所が変わっている</p>
+<h2 id="ssh-接続">ssh 接続</h2>
 <p><code>ssh ユーザー名@IPアドレス</code>で接続することができる。</p>
 <p>初期パスワードは<code>raspberry</code></p>
 <h3 id="raspberry-pi-の-ip-アドレス確認">raspberry pi の IP アドレス確認</h3>
@@ -238,7 +253,8 @@ cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.con
 </code></pre></div><h3 id="raspberrypi-への接続">raspberrypi への接続</h3>
 <p>より簡単には以下でも可能</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh pi@raspberrypi.local
-</code></pre></div><h2 id="これより以下-mac-上で-raspberri-pi-に-ssh-接続していることが前提">これより以下 Mac 上で Raspberri Pi に ssh 接続していることが前提</h2>
+</code></pre></div><p><code>ssh-keygen -R raspberrypi.local</code></p>
+<h2 id="これより以下-mac-上で-raspberri-pi-に-ssh-接続していることが前提">これより以下 Mac 上で Raspberri Pi に ssh 接続していることが前提</h2>
 <h2 id="pi-ユーザーのパスワード変更">pi ユーザーのパスワード変更</h2>
 <p>raspberrypi の初期ユーザーとパスワードは公開されているため、一番最低限のセキュリティ対策として<code>pi</code>ユーザーのパスワード変更をすべきである。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ passwd
@@ -250,12 +266,72 @@ cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.con
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo gpasswd -a ユーザー名 sudo
 </code></pre></div><h2 id="pi-ユーザを-sudo-から外す">pi ユーザを sudo から外す</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo gpasswd -d pi sudo
-</code></pre></div><h2 id="記載予定-cron-のログ出力">[記載予定] cron のログ出力</h2>
-<pre><code># sed -i -e 's/^#cron.* /^cron.* /' /etc/rsyslog.conf
-</code></pre><h2 id="記載予定-ip-アドレスの固定化">[記載予定] ip アドレスの固定化</h2>
+</code></pre></div><h2 id="日本時間にする">日本時間にする</h2>
+<p><code>sudo timedatectl set-timezone Asia/Tokyo</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ date
+Sun Jun <span style="color:#ae81ff">14</span> 08:01:52 BST <span style="color:#ae81ff">2020</span>
+$ sudo timedatectl set-timezone Asia/Tokyo
+$ date
+Sun Jun <span style="color:#ae81ff">14</span> 16:03:39 JST <span style="color:#ae81ff">2020</span>
+</code></pre></div><h2 id="cron-のログ出力">cron のログ出力</h2>
+<p><code>sudo vim /etc/rsyslog.conf</code></p>
+<pre><code>#cron.*                          /var/log/cron.log
+↓
+cron.*                          /var/log/cron.log
+</code></pre><p>設定の反映</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo /etc/init.d/rsyslog restart
+</code></pre></div><p><a href="https://qiita.com/Higemal/items/5a579b2701ef7c473062">RaspberryPi3 で初めて crontab を使う前に - Qiita</a></p>
 <h2 id="記載予定-エディタ設定">[記載予定] エディタ設定</h2>
 <p><code>nano</code> も良いが、せっかくだし<code>vim</code>を使えるようになりたい</p>
 <p><a href="https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E6%88%A6%E4%BA%89">エディタ戦争</a></p>
+<h3 id="vim-tiny-アンインストール">vim-tiny アンインストール</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get --purge remove vim-common vim-tiny
+</code></pre></div><h3 id="vim-インストール">vim インストール</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get install vim
+</code></pre></div><pre><code>$ vim ~/.vimrc
+</code></pre><h2 id="日本語化">日本語化</h2>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install fcitx-mozc
+$ sudo reboot
+</code></pre><pre><code>$ locale
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: LC_ALL??????????????????: ??????????????????????
+LANG=ja_JP.UTF-8
+LANGUAGE=
+LC_CTYPE=UTF-8
+LC_NUMERIC=&quot;ja_JP.UTF-8&quot;
+LC_TIME=&quot;ja_JP.UTF-8&quot;
+LC_COLLATE=&quot;ja_JP.UTF-8&quot;
+LC_MONETARY=&quot;ja_JP.UTF-8&quot;
+LC_MESSAGES=&quot;ja_JP.UTF-8&quot;
+LC_PAPER=&quot;ja_JP.UTF-8&quot;
+LC_NAME=&quot;ja_JP.UTF-8&quot;
+LC_ADDRESS=&quot;ja_JP.UTF-8&quot;
+LC_TELEPHONE=&quot;ja_JP.UTF-8&quot;
+LC_MEASUREMENT=&quot;ja_JP.UTF-8&quot;
+LC_IDENTIFICATION=&quot;ja_JP.UTF-8&quot;
+LC_ALL=
+
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vi ~/.bashrc
+</code></pre></div><pre><code>export LANGUAGE=ja_JP.UTF-8
+export LC_ALL=ja_JP.UTF-8
+export LC_TYPE=ja_JP.UTF-8
+
+</code></pre><h2 id="pip">pip</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ pip3 -V
+-bash: pip3: コマンドが見つかりません
+$ sudo apt-get install python3-pip
+$ pip3 -V
+pip 18.1 from /usr/lib/python3/dist-packages/pip <span style="color:#f92672">(</span>python 3.7<span style="color:#f92672">)</span>
+</code></pre></div><p><code>Original error was: libf77blas.so.3: cannot open shared object file: No such file or directory</code>
+<a href="https://github.com/Kitt-AI/snowboy/issues/262">ImportError: libf77blas.so.3: cannot open shared object file: No such file or directory · Issue #262 · Kitt-AI/snowboy</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get install libatlas-base-dev
+</code></pre></div><h2 id="git">git</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get install git
+$ git config --global user.email <span style="color:#e6db74">&#34;you@example.com&#34;</span>
+$ git config --global user.name <span style="color:#e6db74">&#34;Your Name&#34;</span>
+
+</code></pre></div><h2 id="記載予定-ip-アドレスの固定化">[記載予定] ip アドレスの固定化</h2>
 
             </div>
         </article>
@@ -267,7 +343,7 @@ cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.con
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/raspberrypi">raspberrypi</a></span>
                 </p>
 
-            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>914 Words</p>
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>1215 Words</p>
 
             <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-05-22 21:55 &#43;0900</p>
         </div>

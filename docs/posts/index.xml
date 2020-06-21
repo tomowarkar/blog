@@ -1457,10 +1457,12 @@ cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.con
 </span><span style="color:#e6db74">    psk=&#34;$wifi_pswd&#34;
 </span><span style="color:#e6db74">}
 </span><span style="color:#e6db74">EOF</span>
-</code></pre></div><p>平文パスワードを嫌う場合<a href="http://jorisvr.nl/wpapsk.html">WPA key calculation</a>を使ってパスワードを暗号化して記載することもできる。</p>
+</code></pre></div><p>平文パスワードを嫌う場合<a href="http://jorisvr.nl/wpapsk.html">WPA key calculation</a>を使ってパスワードを暗号化して記載することもできる。<code>wpa_passphrase</code>コマンドもあり。</p>
 <p>また以下コマンドで Mac が接続している<code>Wi-Fi</code>を確認できる。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">networksetup -getairportnetwork en0
-</code></pre></div><h2 id="ssh-接続">ssh 接続</h2>
+</code></pre></div><h3 id="raspberry-pi-での-wpa_supplicantconf">raspberry pi での wpa_supplicant.conf</h3>
+<p><code>/etc/wpa_supplicant/wpa_supplicant.conf</code>に場所が変わっている</p>
+<h2 id="ssh-接続">ssh 接続</h2>
 <p><code>ssh ユーザー名@IPアドレス</code>で接続することができる。</p>
 <p>初期パスワードは<code>raspberry</code></p>
 <h3 id="raspberry-pi-の-ip-アドレス確認">raspberry pi の IP アドレス確認</h3>
@@ -1468,7 +1470,8 @@ cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.con
 </code></pre></div><h3 id="raspberrypi-への接続">raspberrypi への接続</h3>
 <p>より簡単には以下でも可能</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh pi@raspberrypi.local
-</code></pre></div><h2 id="これより以下-mac-上で-raspberri-pi-に-ssh-接続していることが前提">これより以下 Mac 上で Raspberri Pi に ssh 接続していることが前提</h2>
+</code></pre></div><p><code>ssh-keygen -R raspberrypi.local</code></p>
+<h2 id="これより以下-mac-上で-raspberri-pi-に-ssh-接続していることが前提">これより以下 Mac 上で Raspberri Pi に ssh 接続していることが前提</h2>
 <h2 id="pi-ユーザーのパスワード変更">pi ユーザーのパスワード変更</h2>
 <p>raspberrypi の初期ユーザーとパスワードは公開されているため、一番最低限のセキュリティ対策として<code>pi</code>ユーザーのパスワード変更をすべきである。</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ passwd
@@ -1480,12 +1483,72 @@ cat <span style="color:#e6db74">&lt;&lt;EOF &gt;/Volumes/boot/wpa_supplicant.con
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo gpasswd -a ユーザー名 sudo
 </code></pre></div><h2 id="pi-ユーザを-sudo-から外す">pi ユーザを sudo から外す</h2>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo gpasswd -d pi sudo
-</code></pre></div><h2 id="記載予定-cron-のログ出力">[記載予定] cron のログ出力</h2>
-<pre><code># sed -i -e 's/^#cron.* /^cron.* /' /etc/rsyslog.conf
-</code></pre><h2 id="記載予定-ip-アドレスの固定化">[記載予定] ip アドレスの固定化</h2>
+</code></pre></div><h2 id="日本時間にする">日本時間にする</h2>
+<p><code>sudo timedatectl set-timezone Asia/Tokyo</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ date
+Sun Jun <span style="color:#ae81ff">14</span> 08:01:52 BST <span style="color:#ae81ff">2020</span>
+$ sudo timedatectl set-timezone Asia/Tokyo
+$ date
+Sun Jun <span style="color:#ae81ff">14</span> 16:03:39 JST <span style="color:#ae81ff">2020</span>
+</code></pre></div><h2 id="cron-のログ出力">cron のログ出力</h2>
+<p><code>sudo vim /etc/rsyslog.conf</code></p>
+<pre><code>#cron.*                          /var/log/cron.log
+↓
+cron.*                          /var/log/cron.log
+</code></pre><p>設定の反映</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo /etc/init.d/rsyslog restart
+</code></pre></div><p><a href="https://qiita.com/Higemal/items/5a579b2701ef7c473062">RaspberryPi3 で初めて crontab を使う前に - Qiita</a></p>
 <h2 id="記載予定-エディタ設定">[記載予定] エディタ設定</h2>
 <p><code>nano</code> も良いが、せっかくだし<code>vim</code>を使えるようになりたい</p>
 <p><a href="https://ja.wikipedia.org/wiki/%E3%82%A8%E3%83%87%E3%82%A3%E3%82%BF%E6%88%A6%E4%BA%89">エディタ戦争</a></p>
+<h3 id="vim-tiny-アンインストール">vim-tiny アンインストール</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get --purge remove vim-common vim-tiny
+</code></pre></div><h3 id="vim-インストール">vim インストール</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get install vim
+</code></pre></div><pre><code>$ vim ~/.vimrc
+</code></pre><h2 id="日本語化">日本語化</h2>
+<pre><code>$ sudo apt-get update
+$ sudo apt-get install fcitx-mozc
+$ sudo reboot
+</code></pre><pre><code>$ locale
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: LC_ALL??????????????????: ??????????????????????
+LANG=ja_JP.UTF-8
+LANGUAGE=
+LC_CTYPE=UTF-8
+LC_NUMERIC=&quot;ja_JP.UTF-8&quot;
+LC_TIME=&quot;ja_JP.UTF-8&quot;
+LC_COLLATE=&quot;ja_JP.UTF-8&quot;
+LC_MONETARY=&quot;ja_JP.UTF-8&quot;
+LC_MESSAGES=&quot;ja_JP.UTF-8&quot;
+LC_PAPER=&quot;ja_JP.UTF-8&quot;
+LC_NAME=&quot;ja_JP.UTF-8&quot;
+LC_ADDRESS=&quot;ja_JP.UTF-8&quot;
+LC_TELEPHONE=&quot;ja_JP.UTF-8&quot;
+LC_MEASUREMENT=&quot;ja_JP.UTF-8&quot;
+LC_IDENTIFICATION=&quot;ja_JP.UTF-8&quot;
+LC_ALL=
+
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">vi ~/.bashrc
+</code></pre></div><pre><code>export LANGUAGE=ja_JP.UTF-8
+export LC_ALL=ja_JP.UTF-8
+export LC_TYPE=ja_JP.UTF-8
+
+</code></pre><h2 id="pip">pip</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ pip3 -V
+-bash: pip3: コマンドが見つかりません
+$ sudo apt-get install python3-pip
+$ pip3 -V
+pip 18.1 from /usr/lib/python3/dist-packages/pip <span style="color:#f92672">(</span>python 3.7<span style="color:#f92672">)</span>
+</code></pre></div><p><code>Original error was: libf77blas.so.3: cannot open shared object file: No such file or directory</code>
+<a href="https://github.com/Kitt-AI/snowboy/issues/262">ImportError: libf77blas.so.3: cannot open shared object file: No such file or directory · Issue #262 · Kitt-AI/snowboy</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get install libatlas-base-dev
+</code></pre></div><h2 id="git">git</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo apt-get install git
+$ git config --global user.email <span style="color:#e6db74">&#34;you@example.com&#34;</span>
+$ git config --global user.name <span style="color:#e6db74">&#34;Your Name&#34;</span>
+
+</code></pre></div><h2 id="記載予定-ip-アドレスの固定化">[記載予定] ip アドレスの固定化</h2>
 ]]></content>
         </item>
         
