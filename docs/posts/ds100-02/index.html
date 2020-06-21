@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ" />
+<meta name="keywords" content=", python, 100knocks" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/ds100-02/" />
+
+
+    <title>
+        
+            データサイエンス100本ノックをPythonでやってみた [11-20] :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="データサイエンス100本ノックをPythonでやってみた [11-20]">
+<meta itemprop="description" content="データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ">
+<meta itemprop="datePublished" content="2020-06-21T00:00:00&#43;09:00" />
+<meta itemprop="dateModified" content="2020-06-21T00:00:00&#43;09:00" />
+<meta itemprop="wordCount" content="2468">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="python,100knocks," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="データサイエンス100本ノックをPythonでやってみた [11-20]"/>
+<meta name="twitter:description" content="データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-06-21 00:00:00 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>5 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/ds100-02/">データサイエンス100本ノックをPythonでやってみた [11-20]</a>
+            </h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">目次</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</a>
+      <ul>
+        <li><a href="#google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</a></li>
+        <li><a href="#実行ファイル">実行ファイル</a></li>
+      </ul>
+    </li>
+    <li><a href="#011">011</a></li>
+    <li><a href="#012">012</a></li>
+    <li><a href="#013">013</a></li>
+    <li><a href="#014">014</a></li>
+    <li><a href="#015">015</a></li>
+    <li><a href="#016">016</a>
+      <ul>
+        <li><a href="#memo">memo</a></li>
+      </ul>
+    </li>
+    <li><a href="#017">017</a></li>
+    <li><a href="#018">018</a></li>
+    <li><a href="#019">019</a></li>
+    <li><a href="#020">020</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                <h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="011">011</h2>
+<blockquote>
+<p>P-011: 顧客データフレーム（df_customer）から顧客 ID（customer_id）の末尾が 1 のものだけ全項目抽出し、10 件だけ表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer[df_customer<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;1&#34;</span>)]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>        customer_id customer_name  ...  application_date     status_cd
+1    CS037613000071         六角 雅彦  ...          20150414  0-00000000-0
+3    CS028811000001        堀井 かおり  ...          20160115  0-00000000-0
+14   CS040412000191         川井 郁恵  ...          20151101  1-20091025-4
+31   CS028314000011        小菅 あおい  ...          20151123  1-20080426-5
+56   CS039212000051        藤島 恵梨香  ...          20171121  1-20100215-4
+59   CS015412000111         松居 奈月  ...          20150629  0-00000000-0
+63   CS004702000041          野島 洋  ...          20170218  0-00000000-0
+74   CS041515000001         栗田 千夏  ...          20160422  E-20100803-F
+85   CS029313000221        北条 ひかり  ...          20180810  0-00000000-0
+102  CS034312000071         望月 奈央  ...          20160106  0-00000000-0
+
+[10 rows x 11 columns]
+</code></pre><h2 id="012">012</h2>
+<blockquote>
+<p>P-012: 店舗データフレーム（df_store）から横浜市の店舗だけ全項目表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_store[df_store<span style="color:#f92672">.</span>address<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>contains(<span style="color:#e6db74">&#34;横浜市&#34;</span>)]
+</code></pre></div><pre><code>   store_cd store_name  prefecture_cd  ... longitude  latitude floor_area
+2    S14010        菊名店             14  ...  139.6326  35.50049     1732.0
+3    S14033       阿久和店             14  ...  139.4961  35.45918     1495.0
+7    S14040       長津田店             14  ...  139.4994  35.52398     1548.0
+9    S14050      阿久和西店             14  ...  139.4961  35.45918     1830.0
+12   S14028       二ツ橋店             14  ...  139.4963  35.46304     1574.0
+16   S14012      本牧和田店             14  ...  139.6582  35.42156     1341.0
+18   S14046       北山田店             14  ...  139.5916  35.56189      831.0
+20   S14011      日吉本町店             14  ...  139.6316  35.54655      890.0
+26   S14048      中川中央店             14  ...  139.5758  35.54912     1657.0
+40   S14042       新山下店             14  ...  139.6593  35.43894     1044.0
+52   S14006       葛が谷店             14  ...  139.5633  35.53573     1886.0
+
+[11 rows x 10 columns]
+</code></pre><h2 id="013">013</h2>
+<blockquote>
+<p>P-013: 顧客データフレーム（df_customer）から、ステータスコード（status_cd）の先頭がアルファベットの A〜F で始まるデータを全項目抽出し、10 件だけ表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer[df_customer<span style="color:#f92672">.</span>status_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;[A-F]&#34;</span>)]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>       customer_id customer_name  ...  application_date     status_cd
+2   CS031415000172       宇多田 貴美子  ...          20150529  D-20100325-C
+6   CS015414000103         奥野 陽子  ...          20150722  B-20100609-B
+12  CS011215000048         芦田 沙耶  ...          20150228  C-20100421-9
+15  CS029415000023         梅田 里穂  ...          20150610  D-20100918-E
+21  CS035415000029         寺沢 真希  ...          20141220  F-20101029-F
+32  CS031415000106        宇野 由美子  ...          20150201  F-20100511-E
+33  CS029215000025         石倉 美帆  ...          20150708  B-20100820-C
+40  CS033605000005         猪股 雄太  ...          20150425  F-20100917-E
+44  CS033415000229        板垣 菜々美  ...          20150712  F-20100326-E
+53  CS008415000145         黒谷 麻緒  ...          20150829  F-20100622-F
+
+[10 rows x 11 columns]
+</code></pre><p><code>str.match</code> は先頭一致で正規表現に一致するものを抽出できます。</p>
+<h2 id="014">014</h2>
+<blockquote>
+<p>P-014: 顧客データフレーム（df_customer）から、ステータスコード（status_cd）の末尾が数字の 1〜9 で終わるデータを全項目抽出し、10 件だけ表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer[df_customer<span style="color:#f92672">.</span>status_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>contains(<span style="color:#e6db74">&#34;[1-9]$&#34;</span>, regex<span style="color:#f92672">=</span>True)]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>       customer_id customer_name  ...  application_date     status_cd
+4   CS001215000145         田崎 美紀  ...          20170605  6-20090929-2
+9   CS033513000180          安斎 遥  ...          20150728  6-20080506-5
+12  CS011215000048         芦田 沙耶  ...          20150228  C-20100421-9
+14  CS040412000191         川井 郁恵  ...          20151101  1-20091025-4
+16  CS009315000023         皆川 文世  ...          20150319  5-20080322-1
+22  CS015315000033        福士 璃奈子  ...          20141024  4-20080219-3
+23  CS023513000066         神戸 そら  ...          20150915  5-20100524-9
+24  CS035513000134         市川 美帆  ...          20150227  8-20100711-9
+27  CS001515000263         高松 夏空  ...          20160812  1-20100804-1
+28  CS040314000027       鶴田 きみまろ  ...          20150122  2-20080426-4
+
+[10 rows x 11 columns]
+</code></pre><h2 id="015">015</h2>
+<blockquote>
+<p>P-015: 顧客データフレーム（df_customer）から、ステータスコード（status_cd）の先頭がアルファベットの A〜F で始まり、末尾が数字の 1〜9 で終わるデータを全項目抽出し、10 件だけ表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer[df_customer<span style="color:#f92672">.</span>status_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;[A-F].*\d$&#34;</span>)]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>        customer_id customer_name  ...  application_date     status_cd
+12   CS011215000048         芦田 沙耶  ...          20150228  C-20100421-9
+68   CS022513000105        島村 貴美子  ...          20150320  A-20091115-7
+71   CS001515000096         水野 陽子  ...          20150614  A-20100724-7
+122  CS013615000053         西脇 季衣  ...          20150128  B-20100329-6
+144  CS020412000161          小宮 薫  ...          20150822  B-20081021-3
+178  CS001215000097        竹中 あさみ  ...          20170315  A-20100211-2
+252  CS035212000007        内村 恵梨香  ...          20151013  B-20101018-6
+259  CS002515000386         野田 コウ  ...          20160410  C-20100127-8
+293  CS001615000372        稲垣 寿々花  ...          20170403  A-20100104-1
+297  CS032512000121         松井 知世  ...          20150727  A-20100103-5
+
+[10 rows x 11 columns]
+</code></pre><h2 id="016">016</h2>
+<blockquote>
+<p>P-016: 店舗データフレーム（df_store）から、電話番号（tel_no）が 3 桁-3 桁-4 桁のデータを全項目表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_store[df_store<span style="color:#f92672">.</span>tel_no<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;\d{3}-\d{3}-\d{4}$&#34;</span>)]
+</code></pre></div><pre><code>   store_cd store_name  prefecture_cd  ... longitude  latitude floor_area
+0    S12014       千草台店             12  ...  140.1180  35.63559     1698.0
+1    S13002       国分寺店             13  ...  139.4802  35.70566     1735.0
+2    S14010        菊名店             14  ...  139.6326  35.50049     1732.0
+3    S14033       阿久和店             14  ...  139.4961  35.45918     1495.0
+4    S14036     相模原中央店             14  ...  139.3716  35.57327     1679.0
+7    S14040       長津田店             14  ...  139.4994  35.52398     1548.0
+9    S14050      阿久和西店             14  ...  139.4961  35.45918     1830.0
+11   S13052        森野店             13  ...  139.4383  35.55293     1087.0
+12   S14028       二ツ橋店             14  ...  139.4963  35.46304     1574.0
+16   S14012      本牧和田店             14  ...  139.6582  35.42156     1341.0
+18   S14046       北山田店             14  ...  139.5916  35.56189      831.0
+19   S14022        逗子店             14  ...  139.5789  35.29642     1838.0
+20   S14011      日吉本町店             14  ...  139.6316  35.54655      890.0
+21   S13016       小金井店             13  ...  139.5094  35.70018     1399.0
+22   S14034      川崎野川店             14  ...  139.5998  35.57693     1318.0
+26   S14048      中川中央店             14  ...  139.5758  35.54912     1657.0
+27   S12007        佐倉店             12  ...  140.1452  35.71872     1895.0
+28   S14026     辻堂西海岸店             14  ...  139.4466  35.32464     1732.0
+29   S13041       八王子店             13  ...  139.4235  35.63787      810.0
+31   S14049      川崎大師店             14  ...  139.7327  35.53759      962.0
+32   S14023        川崎店             14  ...  139.7028  35.53599     1804.0
+33   S13018        清瀬店             13  ...  139.5178  35.76885     1220.0
+35   S14027       南藤沢店             14  ...  139.4896  35.33762     1521.0
+36   S14021       伊勢原店             14  ...  139.3129  35.40169      962.0
+37   S14047       相模原店             14  ...  139.3748  35.55959     1047.0
+38   S12013       習志野店             12  ...  140.0220  35.66122      808.0
+40   S14042       新山下店             14  ...  139.6593  35.43894     1044.0
+42   S12030        八幡店             12  ...  139.9240  35.72318     1162.0
+44   S14025        大和店             14  ...  139.4680  35.43414     1011.0
+45   S14045        厚木店             14  ...  139.3651  35.44182      980.0
+47   S12029        東野店             12  ...  139.8968  35.65086     1101.0
+49   S12053        高洲店             12  ...  139.9176  35.63755     1555.0
+51   S14024        三田店             14  ...  139.5424  35.60770      972.0
+52   S14006       葛が谷店             14  ...  139.5633  35.53573     1886.0
+
+[34 rows x 10 columns]
+</code></pre><h3 id="memo">memo</h3>
+<p>先頭末尾をバインドしないと</p>
+<p><code>0000-000-0000</code>や<code>000-000-00000</code>みたいな番号もマッチするので注意ですね。</p>
+<h2 id="017">017</h2>
+<blockquote>
+<p>P-17: 顧客データフレーム（df_customer）を生年月日（birth_day）で高齢順にソートし、先頭 10 件を全項目表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer<span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;birth_day&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>          customer_id customer_name  ...  application_date     status_cd
+18817  CS003813000014        村山 菜々美  ...          20160214  0-00000000-0
+12328  CS026813000004         吉村 朝陽  ...          20150723  0-00000000-0
+15682  CS018811000003         熊沢 美里  ...          20150403  0-00000000-0
+15302  CS027803000004         内村 拓郎  ...          20151227  0-00000000-0
+1681   CS013801000003         天野 拓郎  ...          20160120  0-00000000-0
+7511   CS001814000022         鶴田 里穂  ...          20161012  A-20090415-7
+2378   CS016815000002         山元 美紀  ...          20150629  C-20090923-C
+4680   CS009815000003         中田 里穂  ...          20150421  D-20091021-E
+16070  CS005813000015        金谷 恵梨香  ...          20150506  0-00000000-0
+6305   CS012813000013         宇野 南朋  ...          20150712  0-00000000-0
+
+[10 rows x 11 columns]
+</code></pre><h2 id="018">018</h2>
+<blockquote>
+<p>P-18: 顧客データフレーム（df_customer）を生年月日（birth_day）で若い順にソートし、先頭 10 件を全項目表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer<span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;birth_day&#34;</span>, ascending<span style="color:#f92672">=</span>False)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>          customer_id customer_name  ...  application_date     status_cd
+15639  CS035114000004         大村 美里  ...          20150619  6-20091205-6
+7468   CS022103000002        福山 はじめ  ...          20160909  0-00000000-0
+10745  CS002113000009        柴田 真悠子  ...          20160304  0-00000000-0
+19811  CS004115000014         松井 京子  ...          20161120  1-20081231-1
+7039   CS002114000010          山内 遥  ...          20160920  6-20100510-1
+3670   CS025115000002         小柳 夏希  ...          20160116  D-20100913-D
+12493  CS002113000025        広末 まなみ  ...          20171030  0-00000000-0
+15977  CS033112000003         長野 美紀  ...          20150606  0-00000000-0
+5716   CS007115000006          福岡 瞬  ...          20151118  F-20101016-F
+15097  CS014113000008         矢口 莉緒  ...          20150622  3-20091108-6
+
+[10 rows x 11 columns]
+</code></pre><h2 id="019">019</h2>
+<blockquote>
+<p>P-19: レシート明細データフレーム（df_receipt）に対し、1 件あたりの売上金額（amount）が高い順にランクを付与し、先頭 10 件を抽出せよ。項目は顧客 ID（customer_id）、売上金額（amount）、付与したランクを表示させること。なお、売上金額（amount）が等しい場合は同一順位を付与するものとする。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [df_receipt[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>]],
+      df_receipt<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>rank(ascending<span style="color:#f92672">=</span>False, method<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;min&#39;</span>)<span style="color:#f92672">.</span>rename(<span style="color:#e6db74">&#34;rank&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;rank&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>          customer_id  amount  rank
+1202   CS011415000006   10925   1.0
+62317  ZZ000000000000    6800   2.0
+54095  CS028605000002    5780   3.0
+4632   CS015515000034    5480   4.0
+72747  ZZ000000000000    5480   4.0
+10320  ZZ000000000000    5480   4.0
+97294  CS021515000089    5440   7.0
+28304  ZZ000000000000    5440   7.0
+92246  CS009415000038    5280   9.0
+68553  CS040415000200    5280   9.0
+</code></pre><p><code>pandas.Series.rank</code>を使ってランク付します。</p>
+<h2 id="020">020</h2>
+<blockquote>
+<p>P-020: レシート明細データフレーム（df_receipt）に対し、1 件あたりの売上金額（amount）が高い順にランクを付与し、先頭 10 件を抽出せよ。項目は顧客 ID（customer_id）、売上金額（amount）、付与したランクを表示させること。なお、売上金額（amount）が等しい場合でも別順位を付与すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [df_receipt[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>]],
+      df_receipt<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>rank(ascending<span style="color:#f92672">=</span>False, method<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;first&#39;</span>)<span style="color:#f92672">.</span>rename(<span style="color:#e6db74">&#34;rank&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;rank&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>          customer_id  amount  rank
+1202   CS011415000006   10925   1.0
+62317  ZZ000000000000    6800   2.0
+54095  CS028605000002    5780   3.0
+4632   CS015515000034    5480   4.0
+10320  ZZ000000000000    5480   5.0
+72747  ZZ000000000000    5480   6.0
+28304  ZZ000000000000    5440   7.0
+97294  CS021515000089    5440   8.0
+596    CS015515000083    5280   9.0
+11275  CS017414000114    5280  10.0
+</code></pre><p><code>pandas.Series.rank</code> の引数を<code>method='first'</code>にすることで同一値は登場順にランク付されます。</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/100knocks">100knocks</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2468 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-21 00:00 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/raspi_nas_pre/">
+                                <span class="button__text">Raspberry pi NAS化計画 - 事前準備</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>
