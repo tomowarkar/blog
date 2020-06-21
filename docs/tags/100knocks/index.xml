@@ -13,12 +13,129 @@
     
     
     <item>
+      <title>データサイエンス100本ノックをPythonでやってみた [1-10]</title>
+      <link>https://tomowarkar.github.io/blog/posts/ds100-01/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/ds100-01/</guid>
+      <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+    </item>
+    
+    <item>
+      <title>データサイエンス100本ノックをPythonでやってみた [11-20]</title>
+      <link>https://tomowarkar.github.io/blog/posts/ds100-02/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/ds100-02/</guid>
+      <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+    </item>
+    
+    <item>
       <title>データサイエンス100本ノックをPythonでやってみた [21-30]</title>
       <link>https://tomowarkar.github.io/blog/posts/ds100-03/</link>
       <pubDate>Sun, 21 Jun 2020 00:00:00 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/posts/ds100-03/</guid>
       <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #8 前半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-08/</link>
+      <pubDate>Thu, 11 Jun 2020 16:45:32 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-08/</guid>
+      <description>ようやく終わりが見えてきましたね。 他の 100 本ノックシリーズ 言語処理 100 本ノック(第 8 章: ニューラルネット) 70. 単語ベクトルの和による特徴量 問題 50 で</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #7</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-07/</link>
+      <pubDate>Sun, 07 Jun 2020 21:39:51 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-07/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 7 章: 単語ベクトル) 60. 単語ベクトルの読み込みと表示 Google News データセット（約 1,000 億単語）での学習済み単語</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #6 後半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-06_2/</link>
+      <pubDate>Sun, 07 Jun 2020 04:24:15 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-06_2/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 6 章: 機械学習) 使用するパラメータや変数の一部は前半で使用したものを使っています。 55. 混同行列の作</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #6 前半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-06/</link>
+      <pubDate>Sat, 30 May 2020 17:16:34 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-06/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 6 章: 機械学習) 50. データの入手・整形 News Aggregator Data Setをダウンロードし、以下の要領で学習データ（tra</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #05 後半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-05_2/</link>
+      <pubDate>Wed, 20 May 2020 23:22:46 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-05_2/</guid>
+      <description>他の 100 本ノックシリーズ 途中でかなりめんどくさくなってしまって関数名とか実行時間と考えず適当になったのは内緒。 自作ライブラリのインストール MeCab と</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #05 前半</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-05/</link>
+      <pubDate>Fri, 24 Apr 2020 10:51:15 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-05/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 5 章: 係り受け解析) 夏目漱石の小説『吾輩は猫である』の文章（neko.txt）を CaboCha を使って係り受</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #04</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-04/</link>
+      <pubDate>Fri, 24 Apr 2020 07:07:28 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-04/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 4 章: 形態素解析) 夏目漱石の小説『吾輩は猫である』の文章（[neko.txt](https://</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #03</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-03/</link>
+      <pubDate>Thu, 23 Apr 2020 14:16:41 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-03/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 3 章: 正規表現) Wikipedia の記事を以下のフォーマットで書き出したファイルjawiki-country.j</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #02-bash</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-02/</link>
+      <pubDate>Wed, 22 Apr 2020 13:01:34 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-02/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 2 章: UNIX コマンド) popular-names.txtは，アメリカで生まれた赤ちゃんの「名前」「性</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #02-python</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-02-py/</link>
+      <pubDate>Wed, 22 Apr 2020 13:01:34 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-02-py/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 2 章: UNIX コマンド) popular-names.txtは，アメリカで生まれた赤ちゃんの「名前」「性</description>
+    </item>
+    
+    <item>
+      <title>今さら言語処理100本ノック #01</title>
+      <link>https://tomowarkar.github.io/blog/posts/nlp100-01/</link>
+      <pubDate>Mon, 13 Apr 2020 09:56:10 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/nlp100-01/</guid>
+      <description>他の 100 本ノックシリーズ 言語処理 100 本ノック(第 1 章: 準備運動) 環境 Python 3.6.8 00. 文字列の逆順 Permalink 文字列”stressed”の文字を逆に（末尾から先頭に向</description>
     </item>
     
   </channel>
