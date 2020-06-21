@@ -10,11 +10,11 @@
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
         
         <item>
-            <title>データサイエンス100本ノックをPythonでやってみた [11-20]</title>
-            <link>https://tomowarkar.github.io/blog/posts/ds100-02/</link>
+            <title>データサイエンス100本ノックをPythonでやってみた [21-30]</title>
+            <link>https://tomowarkar.github.io/blog/posts/ds100-03/</link>
             <pubDate>Sun, 21 Jun 2020 00:00:00 +0900</pubDate>
             
-            <guid>https://tomowarkar.github.io/blog/posts/ds100-02/</guid>
+            <guid>https://tomowarkar.github.io/blog/posts/ds100-03/</guid>
             <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
             <content type="html"><![CDATA[<h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
 <p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
@@ -23,221 +23,150 @@
 <p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
 <h3 id="実行ファイル">実行ファイル</h3>
 <p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
-<h2 id="011">011</h2>
+<h2 id="021">021</h2>
 <blockquote>
-<p>P-011: 顧客データフレーム（df_customer）から顧客 ID（customer_id）の末尾が 1 のものだけ全項目抽出し、10 件だけ表示せよ。</p>
+<p>P-021: レシート明細データフレーム（df_receipt）に対し、件数をカウントせよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer[df_customer<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>endswith(<span style="color:#e6db74">&#34;1&#34;</span>)]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
-</code></pre></div><pre><code>        customer_id customer_name  ...  application_date     status_cd
-1    CS037613000071         六角 雅彦  ...          20150414  0-00000000-0
-3    CS028811000001        堀井 かおり  ...          20160115  0-00000000-0
-14   CS040412000191         川井 郁恵  ...          20151101  1-20091025-4
-31   CS028314000011        小菅 あおい  ...          20151123  1-20080426-5
-56   CS039212000051        藤島 恵梨香  ...          20171121  1-20100215-4
-59   CS015412000111         松居 奈月  ...          20150629  0-00000000-0
-63   CS004702000041          野島 洋  ...          20170218  0-00000000-0
-74   CS041515000001         栗田 千夏  ...          20160422  E-20100803-F
-85   CS029313000221        北条 ひかり  ...          20180810  0-00000000-0
-102  CS034312000071         望月 奈央  ...          20160106  0-00000000-0
-
-[10 rows x 11 columns]
-</code></pre><h2 id="012">012</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">len(df_receipt) <span style="color:#75715e">#&gt; 104681</span>
+</code></pre></div><h2 id="022">022</h2>
 <blockquote>
-<p>P-012: 店舗データフレーム（df_store）から横浜市の店舗だけ全項目表示せよ。</p>
+<p>P-022: レシート明細データフレーム（df_receipt）の顧客 ID（customer_id）に対し、ユニーク件数をカウントせよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_store[df_store<span style="color:#f92672">.</span>address<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>contains(<span style="color:#e6db74">&#34;横浜市&#34;</span>)]
-</code></pre></div><pre><code>   store_cd store_name  prefecture_cd  ... longitude  latitude floor_area
-2    S14010        菊名店             14  ...  139.6326  35.50049     1732.0
-3    S14033       阿久和店             14  ...  139.4961  35.45918     1495.0
-7    S14040       長津田店             14  ...  139.4994  35.52398     1548.0
-9    S14050      阿久和西店             14  ...  139.4961  35.45918     1830.0
-12   S14028       二ツ橋店             14  ...  139.4963  35.46304     1574.0
-16   S14012      本牧和田店             14  ...  139.6582  35.42156     1341.0
-18   S14046       北山田店             14  ...  139.5916  35.56189      831.0
-20   S14011      日吉本町店             14  ...  139.6316  35.54655      890.0
-26   S14048      中川中央店             14  ...  139.5758  35.54912     1657.0
-40   S14042       新山下店             14  ...  139.6593  35.43894     1044.0
-52   S14006       葛が谷店             14  ...  139.5633  35.53573     1886.0
-
-[11 rows x 10 columns]
-</code></pre><h2 id="013">013</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>nunique() <span style="color:#75715e">#&gt; 8307</span>
+</code></pre></div><p><code>pandas.Series.nunique</code> を使います。</p>
+<h2 id="023">023</h2>
 <blockquote>
-<p>P-013: 顧客データフレーム（df_customer）から、ステータスコード（status_cd）の先頭がアルファベットの A〜F で始まるデータを全項目抽出し、10 件だけ表示せよ。</p>
+<p>P-023: レシート明細データフレーム（df_receipt）に対し、店舗コード（store_cd）ごとに売上金額（amount）と売上数量（quantity）を合計せよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer[df_customer<span style="color:#f92672">.</span>status_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;[A-F]&#34;</span>)]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
-</code></pre></div><pre><code>       customer_id customer_name  ...  application_date     status_cd
-2   CS031415000172       宇多田 貴美子  ...          20150529  D-20100325-C
-6   CS015414000103         奥野 陽子  ...          20150722  B-20100609-B
-12  CS011215000048         芦田 沙耶  ...          20150228  C-20100421-9
-15  CS029415000023         梅田 里穂  ...          20150610  D-20100918-E
-21  CS035415000029         寺沢 真希  ...          20141220  F-20101029-F
-32  CS031415000106        宇野 由美子  ...          20150201  F-20100511-E
-33  CS029215000025         石倉 美帆  ...          20150708  B-20100820-C
-40  CS033605000005         猪股 雄太  ...          20150425  F-20100917-E
-44  CS033415000229        板垣 菜々美  ...          20150712  F-20100326-E
-53  CS008415000145         黒谷 麻緒  ...          20150829  F-20100622-F
-
-[10 rows x 11 columns]
-</code></pre><p><code>str.match</code> は先頭一致で正規表現に一致するものを抽出できます。</p>
-<h2 id="014">014</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt[[<span style="color:#e6db74">&#34;store_cd&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>, <span style="color:#e6db74">&#34;quantity&#34;</span>]]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;store_cd&#34;</span>)<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>          amount  quantity
+store_cd
+S12007    638761      2099
+S12013    787513      2425
+S12014    725167      2358
+S12029    794741      2555
+S12030    684402      2403
+S13001    811936      2347
+S13002    727821      2340
+S13003    764294      2197
+S13004    779373      2390
+S13005    629876      2004
+</code></pre><h2 id="024">024</h2>
 <blockquote>
-<p>P-014: 顧客データフレーム（df_customer）から、ステータスコード（status_cd）の末尾が数字の 1〜9 で終わるデータを全項目抽出し、10 件だけ表示せよ。</p>
+<p>P-024: レシート明細データフレーム（df_receipt）に対し、顧客 ID（customer_id）ごとに最も新しい売上日（sales_ymd）を求め、10 件表示せよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer[df_customer<span style="color:#f92672">.</span>status_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>contains(<span style="color:#e6db74">&#34;[1-9]$&#34;</span>, regex<span style="color:#f92672">=</span>True)]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
-</code></pre></div><pre><code>       customer_id customer_name  ...  application_date     status_cd
-4   CS001215000145         田崎 美紀  ...          20170605  6-20090929-2
-9   CS033513000180          安斎 遥  ...          20150728  6-20080506-5
-12  CS011215000048         芦田 沙耶  ...          20150228  C-20100421-9
-14  CS040412000191         川井 郁恵  ...          20151101  1-20091025-4
-16  CS009315000023         皆川 文世  ...          20150319  5-20080322-1
-22  CS015315000033        福士 璃奈子  ...          20141024  4-20080219-3
-23  CS023513000066         神戸 そら  ...          20150915  5-20100524-9
-24  CS035513000134         市川 美帆  ...          20150227  8-20100711-9
-27  CS001515000263         高松 夏空  ...          20160812  1-20100804-1
-28  CS040314000027       鶴田 きみまろ  ...          20150122  2-20080426-4
-
-[10 rows x 11 columns]
-</code></pre><h2 id="015">015</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;sales_ymd&#34;</span>]]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>max()<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                sales_ymd
+customer_id
+CS001113000004   20190308
+CS001114000005   20190731
+CS001115000010   20190405
+CS001205000004   20190625
+CS001205000006   20190224
+CS001211000025   20190322
+CS001212000027   20170127
+CS001212000031   20180906
+CS001212000046   20170811
+CS001212000070   20191018
+</code></pre><h2 id="025">025</h2>
 <blockquote>
-<p>P-015: 顧客データフレーム（df_customer）から、ステータスコード（status_cd）の先頭がアルファベットの A〜F で始まり、末尾が数字の 1〜9 で終わるデータを全項目抽出し、10 件だけ表示せよ。</p>
+<p>P-025: レシート明細データフレーム（df_receipt）に対し、顧客 ID（customer_id）ごとに最も古い売上日（sales_ymd）を求め、10 件表示せよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer[df_customer<span style="color:#f92672">.</span>status_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;[A-F].*\d$&#34;</span>)]<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
-</code></pre></div><pre><code>        customer_id customer_name  ...  application_date     status_cd
-12   CS011215000048         芦田 沙耶  ...          20150228  C-20100421-9
-68   CS022513000105        島村 貴美子  ...          20150320  A-20091115-7
-71   CS001515000096         水野 陽子  ...          20150614  A-20100724-7
-122  CS013615000053         西脇 季衣  ...          20150128  B-20100329-6
-144  CS020412000161          小宮 薫  ...          20150822  B-20081021-3
-178  CS001215000097        竹中 あさみ  ...          20170315  A-20100211-2
-252  CS035212000007        内村 恵梨香  ...          20151013  B-20101018-6
-259  CS002515000386         野田 コウ  ...          20160410  C-20100127-8
-293  CS001615000372        稲垣 寿々花  ...          20170403  A-20100104-1
-297  CS032512000121         松井 知世  ...          20150727  A-20100103-5
-
-[10 rows x 11 columns]
-</code></pre><h2 id="016">016</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;sales_ymd&#34;</span>]]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>min()<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                sales_ymd
+customer_id
+CS001113000004   20190308
+CS001114000005   20180503
+CS001115000010   20171228
+CS001205000004   20170914
+CS001205000006   20180207
+CS001211000025   20190322
+CS001212000027   20170127
+CS001212000031   20180906
+CS001212000046   20170811
+CS001212000070   20191018
+</code></pre><h2 id="026">026</h2>
 <blockquote>
-<p>P-016: 店舗データフレーム（df_store）から、電話番号（tel_no）が 3 桁-3 桁-4 桁のデータを全項目表示せよ。</p>
+<p>P-026: レシート明細データフレーム（df_receipt）に対し、顧客 ID（customer_id）ごとに最も新しい売上日（sales_ymd）と古い売上日を求め、両者が異なるデータを 10 件表示せよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_store[df_store<span style="color:#f92672">.</span>tel_no<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;\d{3}-\d{3}-\d{4}$&#34;</span>)]
-</code></pre></div><pre><code>   store_cd store_name  prefecture_cd  ... longitude  latitude floor_area
-0    S12014       千草台店             12  ...  140.1180  35.63559     1698.0
-1    S13002       国分寺店             13  ...  139.4802  35.70566     1735.0
-2    S14010        菊名店             14  ...  139.6326  35.50049     1732.0
-3    S14033       阿久和店             14  ...  139.4961  35.45918     1495.0
-4    S14036     相模原中央店             14  ...  139.3716  35.57327     1679.0
-7    S14040       長津田店             14  ...  139.4994  35.52398     1548.0
-9    S14050      阿久和西店             14  ...  139.4961  35.45918     1830.0
-11   S13052        森野店             13  ...  139.4383  35.55293     1087.0
-12   S14028       二ツ橋店             14  ...  139.4963  35.46304     1574.0
-16   S14012      本牧和田店             14  ...  139.6582  35.42156     1341.0
-18   S14046       北山田店             14  ...  139.5916  35.56189      831.0
-19   S14022        逗子店             14  ...  139.5789  35.29642     1838.0
-20   S14011      日吉本町店             14  ...  139.6316  35.54655      890.0
-21   S13016       小金井店             13  ...  139.5094  35.70018     1399.0
-22   S14034      川崎野川店             14  ...  139.5998  35.57693     1318.0
-26   S14048      中川中央店             14  ...  139.5758  35.54912     1657.0
-27   S12007        佐倉店             12  ...  140.1452  35.71872     1895.0
-28   S14026     辻堂西海岸店             14  ...  139.4466  35.32464     1732.0
-29   S13041       八王子店             13  ...  139.4235  35.63787      810.0
-31   S14049      川崎大師店             14  ...  139.7327  35.53759      962.0
-32   S14023        川崎店             14  ...  139.7028  35.53599     1804.0
-33   S13018        清瀬店             13  ...  139.5178  35.76885     1220.0
-35   S14027       南藤沢店             14  ...  139.4896  35.33762     1521.0
-36   S14021       伊勢原店             14  ...  139.3129  35.40169      962.0
-37   S14047       相模原店             14  ...  139.3748  35.55959     1047.0
-38   S12013       習志野店             12  ...  140.0220  35.66122      808.0
-40   S14042       新山下店             14  ...  139.6593  35.43894     1044.0
-42   S12030        八幡店             12  ...  139.9240  35.72318     1162.0
-44   S14025        大和店             14  ...  139.4680  35.43414     1011.0
-45   S14045        厚木店             14  ...  139.3651  35.44182      980.0
-47   S12029        東野店             12  ...  139.8968  35.65086     1101.0
-49   S12053        高洲店             12  ...  139.9176  35.63755     1555.0
-51   S14024        三田店             14  ...  139.5424  35.60770      972.0
-52   S14006       葛が谷店             14  ...  139.5633  35.53573     1886.0
-
-[34 rows x 10 columns]
-</code></pre><h3 id="memo">memo</h3>
-<p>先頭末尾をバインドしないと</p>
-<p><code>0000-000-0000</code>や<code>000-000-00000</code>みたいな番号もマッチするので注意ですね。</p>
-<h2 id="017">017</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)\
+  <span style="color:#f92672">.</span>agg(sales_ymd_max<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;max&#34;</span>), sales_ymd_min<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;min&#34;</span>))\
+  <span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#34;sales_ymd_max != sales_ymd_min&#34;</span>)\
+  <span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                sales_ymd_max  sales_ymd_min
+customer_id
+CS001114000005       20190731       20180503
+CS001115000010       20190405       20171228
+CS001205000004       20190625       20170914
+CS001205000006       20190224       20180207
+CS001214000009       20190902       20170306
+CS001214000017       20191006       20180828
+CS001214000048       20190929       20171109
+CS001214000052       20190617       20180208
+CS001215000005       20181021       20170206
+CS001215000040       20171022       20170214
+</code></pre><h2 id="027">027</h2>
 <blockquote>
-<p>P-17: 顧客データフレーム（df_customer）を生年月日（birth_day）で高齢順にソートし、先頭 10 件を全項目表示せよ。</p>
+<p>P-027: レシート明細データフレーム（df_receipt）に対し、店舗コード（store_cd）ごとに売上金額（amount）の平均を計算し、降順で TOP5 を表示せよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer<span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;birth_day&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
-</code></pre></div><pre><code>          customer_id customer_name  ...  application_date     status_cd
-18817  CS003813000014        村山 菜々美  ...          20160214  0-00000000-0
-12328  CS026813000004         吉村 朝陽  ...          20150723  0-00000000-0
-15682  CS018811000003         熊沢 美里  ...          20150403  0-00000000-0
-15302  CS027803000004         内村 拓郎  ...          20151227  0-00000000-0
-1681   CS013801000003         天野 拓郎  ...          20160120  0-00000000-0
-7511   CS001814000022         鶴田 里穂  ...          20161012  A-20090415-7
-2378   CS016815000002         山元 美紀  ...          20150629  C-20090923-C
-4680   CS009815000003         中田 里穂  ...          20150421  D-20091021-E
-16070  CS005813000015        金谷 恵梨香  ...          20150506  0-00000000-0
-6305   CS012813000013         宇野 南朋  ...          20150712  0-00000000-0
-
-[10 rows x 11 columns]
-</code></pre><h2 id="018">018</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;store_cd&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;mean&#34;</span>})\
+  <span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;amount&#34;</span>, ascending<span style="color:#f92672">=</span>False)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">5</span>)
+</code></pre></div><pre><code>              amount
+store_cd
+S13052    402.867470
+S13015    351.111960
+S13003    350.915519
+S14010    348.791262
+S13001    348.470386
+</code></pre><h2 id="028">028</h2>
 <blockquote>
-<p>P-18: 顧客データフレーム（df_customer）を生年月日（birth_day）で若い順にソートし、先頭 10 件を全項目表示せよ。</p>
+<p>P-028: レシート明細データフレーム（df_receipt）に対し、店舗コード（store_cd）ごとに売上金額（amount）の中央値を計算し、降順で TOP5 を表示せよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer<span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;birth_day&#34;</span>, ascending<span style="color:#f92672">=</span>False)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
-</code></pre></div><pre><code>          customer_id customer_name  ...  application_date     status_cd
-15639  CS035114000004         大村 美里  ...          20150619  6-20091205-6
-7468   CS022103000002        福山 はじめ  ...          20160909  0-00000000-0
-10745  CS002113000009        柴田 真悠子  ...          20160304  0-00000000-0
-19811  CS004115000014         松井 京子  ...          20161120  1-20081231-1
-7039   CS002114000010          山内 遥  ...          20160920  6-20100510-1
-3670   CS025115000002         小柳 夏希  ...          20160116  D-20100913-D
-12493  CS002113000025        広末 まなみ  ...          20171030  0-00000000-0
-15977  CS033112000003         長野 美紀  ...          20150606  0-00000000-0
-5716   CS007115000006          福岡 瞬  ...          20151118  F-20101016-F
-15097  CS014113000008         矢口 莉緒  ...          20150622  3-20091108-6
-
-[10 rows x 11 columns]
-</code></pre><h2 id="019">019</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;store_cd&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;median&#34;</span>})\
+  <span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;amount&#34;</span>, ascending<span style="color:#f92672">=</span>False)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">5</span>)
+</code></pre></div><pre><code>          amount
+store_cd
+S13052       190
+S14010       188
+S14050       185
+S14040       180
+S13003       180
+</code></pre><h2 id="029">029</h2>
 <blockquote>
-<p>P-19: レシート明細データフレーム（df_receipt）に対し、1 件あたりの売上金額（amount）が高い順にランクを付与し、先頭 10 件を抽出せよ。項目は顧客 ID（customer_id）、売上金額（amount）、付与したランクを表示させること。なお、売上金額（amount）が等しい場合は同一順位を付与するものとする。</p>
+<p>P-029: レシート明細データフレーム（df_receipt）に対し、店舗コード（store_cd）ごとに商品コード（product_cd）の最頻値を求めよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
-    [df_receipt[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>]],
-      df_receipt<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>rank(ascending<span style="color:#f92672">=</span>False, method<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;min&#39;</span>)<span style="color:#f92672">.</span>rename(<span style="color:#e6db74">&#34;rank&#34;</span>)],
-    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-)<span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;rank&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
-</code></pre></div><pre><code>          customer_id  amount  rank
-1202   CS011415000006   10925   1.0
-62317  ZZ000000000000    6800   2.0
-54095  CS028605000002    5780   3.0
-4632   CS015515000034    5480   4.0
-72747  ZZ000000000000    5480   4.0
-10320  ZZ000000000000    5480   4.0
-97294  CS021515000089    5440   7.0
-28304  ZZ000000000000    5440   7.0
-92246  CS009415000038    5280   9.0
-68553  CS040415000200    5280   9.0
-</code></pre><p><code>pandas.Series.rank</code>を使ってランク付します。</p>
-<h2 id="020">020</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;store_cd&#34;</span>)\
+  <span style="color:#f92672">.</span>agg(product_cd_mode<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;product_cd&#34;</span>, <span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>mode()[<span style="color:#ae81ff">0</span>]))<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>         product_cd_mode
+store_cd
+S12007        P060303001
+S12013        P060303001
+S12014        P060303001
+S12029        P060303001
+S12030        P060303001
+S13001        P060303001
+S13002        P060303001
+S13003        P071401001
+S13004        P060303001
+S13005        P040503001
+</code></pre><h2 id="030">030</h2>
 <blockquote>
-<p>P-020: レシート明細データフレーム（df_receipt）に対し、1 件あたりの売上金額（amount）が高い順にランクを付与し、先頭 10 件を抽出せよ。項目は顧客 ID（customer_id）、売上金額（amount）、付与したランクを表示させること。なお、売上金額（amount）が等しい場合でも別順位を付与すること。</p>
+<p>P-030: レシート明細データフレーム（df_receipt）に対し、店舗コード（store_cd）ごとに売上金額（amount）の標本分散を計算し、降順で TOP5 を表示せよ。</p>
 </blockquote>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
-    [df_receipt[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>]],
-      df_receipt<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>rank(ascending<span style="color:#f92672">=</span>False, method<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;first&#39;</span>)<span style="color:#f92672">.</span>rename(<span style="color:#e6db74">&#34;rank&#34;</span>)],
-    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-)<span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;rank&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
-</code></pre></div><pre><code>          customer_id  amount  rank
-1202   CS011415000006   10925   1.0
-62317  ZZ000000000000    6800   2.0
-54095  CS028605000002    5780   3.0
-4632   CS015515000034    5480   4.0
-10320  ZZ000000000000    5480   5.0
-72747  ZZ000000000000    5480   6.0
-28304  ZZ000000000000    5440   7.0
-97294  CS021515000089    5440   8.0
-596    CS015515000083    5280   9.0
-11275  CS017414000114    5280  10.0
-</code></pre><p><code>pandas.Series.rank</code> の引数を<code>method='first'</code>にすることで同一値は登場順にランク付されます。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;store_cd&#34;</span>)\
+  <span style="color:#f92672">.</span>agg(sample_var<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;amount&#34;</span>, <span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>var(ddof<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)))\
+  <span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;sample_var&#34;</span>, ascending<span style="color:#f92672">=</span>False)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">5</span>)
+</code></pre></div><pre><code>             sample_var
+store_cd
+S13052    440088.701311
+S14011    306314.558164
+S14034    296920.081011
+S13001    295431.993329
+S13015    295294.361116
+</code></pre><p><a href="http://sinhrks.hatenablog.com/entry/2014/11/27/232150">Python pandas の算術演算 / 集約関数 / 統計関数まとめ - StatsFragments</a></p>
 ]]></content>
         </item>
         
