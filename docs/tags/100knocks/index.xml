@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>100knocks on tomowarkarの技術ブログ</title>
+    <link>https://tomowarkar.github.io/blog/tags/100knocks/</link>
+    <description>Recent content in 100knocks on tomowarkarの技術ブログ</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>ja-jp</language>
+    <copyright>tomowarkar</copyright>
+    <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0900</lastBuildDate>
+    
+	<atom:link href="https://tomowarkar.github.io/blog/tags/100knocks/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>データサイエンス100本ノックをPythonでやってみた [1-10]</title>
+      <link>https://tomowarkar.github.io/blog/posts/ds100-01/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/ds100-01/</guid>
+      <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+    </item>
+    
+  </channel>
+</rss>

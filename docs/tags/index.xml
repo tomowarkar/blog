@@ -7,10 +7,28 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Fri, 12 Jun 2020 14:29:12 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>100knocks</title>
+      <link>https://tomowarkar.github.io/blog/tags/100knocks/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/100knocks/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>python</title>
+      <link>https://tomowarkar.github.io/blog/tags/python/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>raspberrypi</title>
@@ -27,15 +45,6 @@
       <pubDate>Thu, 11 Jun 2020 16:45:32 +0900</pubDate>
       
       <guid>https://tomowarkar.github.io/blog/tags/nlp/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>python</title>
-      <link>https://tomowarkar.github.io/blog/tags/python/</link>
-      <pubDate>Thu, 11 Jun 2020 16:45:32 +0900</pubDate>
-      
-      <guid>https://tomowarkar.github.io/blog/tags/python/</guid>
       <description></description>
     </item>
     

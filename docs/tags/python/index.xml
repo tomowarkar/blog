@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Thu, 11 Jun 2020 16:45:32 +0900</lastBuildDate>
+    <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>データサイエンス100本ノックをPythonでやってみた [1-10]</title>
+      <link>https://tomowarkar.github.io/blog/posts/ds100-01/</link>
+      <pubDate>Sun, 21 Jun 2020 00:00:00 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/ds100-01/</guid>
+      <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+    </item>
     
     <item>
       <title>今さら言語処理100本ノック #8 前半</title>
