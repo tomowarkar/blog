@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="">
+<meta name="description" content="データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ" />
+<meta name="keywords" content=", python, 100knocks" />
+<meta name="robots" content="noodp" />
+<meta name="theme-color" content="" />
+<link rel="canonical" href="https://tomowarkar.github.io/blog/posts/ds100-06/" />
+
+
+    <title>
+        
+            データサイエンス100本ノックをPythonでやってみた [51-60] :: tomowarkarの技術ブログ  — ３歩進んで２歩下がる
+        
+    </title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="https://tomowarkar.github.io/blog/main.min.84ed5579024525d4b50458514d1a43e40dd5272df45c7cd6da85b225af457154.css">
+
+
+
+
+<meta itemprop="name" content="データサイエンス100本ノックをPythonでやってみた [51-60]">
+<meta itemprop="description" content="データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ">
+<meta itemprop="datePublished" content="2020-06-23T00:00:00&#43;09:00" />
+<meta itemprop="dateModified" content="2020-06-23T00:00:00&#43;09:00" />
+<meta itemprop="wordCount" content="2643">
+<meta itemprop="image" content="https://tomowarkar.github.io/blog/"/>
+
+
+
+<meta itemprop="keywords" content="python,100knocks," /><meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://tomowarkar.github.io/blog/"/>
+
+<meta name="twitter:title" content="データサイエンス100本ノックをPythonでやってみた [51-60]"/>
+<meta name="twitter:description" content="データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ"/>
+
+
+
+
+
+    <meta property="article:published_time" content="2020-06-23 00:00:00 &#43;0900 JST" />
+
+
+
+
+
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-130237515-2"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-130237515-2');
+</script>
+    </head>
+
+    <body class="">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="https://tomowarkar.github.io/blog/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">tomowarkar</span>
+            <span class="logo__cursor" style=
+                  "
+                   
+                   ">
+            </span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="https://tomowarkar.github.io/blog/posts">Blog</a></li><li><a href="https://tomowarkar.github.io/blog/tags">Tags</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle unselectable"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>6 minutes
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title">
+                <a href="https://tomowarkar.github.io/blog/posts/ds100-06/">データサイエンス100本ノックをPythonでやってみた [51-60]</a>
+            </h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">目次</div>
+                    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</a>
+      <ul>
+        <li><a href="#google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</a></li>
+        <li><a href="#実行ファイル">実行ファイル</a></li>
+      </ul>
+    </li>
+    <li><a href="#051">051</a></li>
+    <li><a href="#052">052</a></li>
+    <li><a href="#053">053</a>
+      <ul>
+        <li><a href="#別解">別解</a></li>
+      </ul>
+    </li>
+    <li><a href="#054">054</a></li>
+    <li><a href="#055">055</a></li>
+    <li><a href="#056">056</a></li>
+    <li><a href="#057">057</a></li>
+    <li><a href="#058">058</a></li>
+    <li><a href="#059">059</a></li>
+    <li><a href="#060">060</a></li>
+  </ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                <h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="051">051</h2>
+<blockquote>
+<p>P-051: レシート明細データフレーム（df_receipt）の売上エポック秒（sales_epoch）を日付型（timestamp 型）に変換し、&ldquo;日&quot;だけ取り出してレシート番号(receipt_no)、レシートサブ番号（receipt_sub_no）とともに抽出せよ。なお、&ldquo;日&quot;は 0 埋め 2 桁で取り出すこと。データは 10 件を抽出すれば良い。</p>
+</blockquote>
+<p>50 と同じようにしてもできるが、違う方法で解く</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [pd<span style="color:#f92672">.</span>to_datetime(df_receipt<span style="color:#f92672">.</span>sales_epoch, unit<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;s&#39;</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: <span style="color:#e6db74">&#34;{:02d}&#34;</span><span style="color:#f92672">.</span>format(x<span style="color:#f92672">.</span>day)),
+    df_receipt[[<span style="color:#e6db74">&#34;receipt_no&#34;</span>, <span style="color:#e6db74">&#34;receipt_sub_no&#34;</span>]]],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>  sales_epoch  receipt_no  receipt_sub_no
+0          03         112               1
+1          18        1132               2
+2          12        1102               1
+3          05        1132               1
+4          21        1102               2
+5          05        1112               1
+6          05        1102               2
+7          22        1102               1
+8          04        1112               2
+9          10        1102               1
+</code></pre><h2 id="052">052</h2>
+<blockquote>
+<p>P-052: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計の上、売上金額合計に対して 2000 円以下を 0、2000 円超を 1 に 2 値化し、顧客 ID、売上金額合計とともに 10 件表示せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+
+pd<span style="color:#f92672">.</span>DataFrame(
+  [tmp, tmp<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2000</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>)],
+  index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;amount&#34;</span>, <span style="color:#e6db74">&#34;flag&#34;</span>]
+)<span style="color:#f92672">.</span>T<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount  flag
+customer_id
+CS001113000004    1298     0
+CS001114000005     626     0
+CS001115000010    3044     1
+CS001205000004    1988     0
+CS001205000006    3337     1
+CS001211000025     456     0
+CS001212000027     448     0
+CS001212000031     296     0
+CS001212000046     228     0
+CS001212000070     456     0
+</code></pre><h2 id="053">053</h2>
+<blockquote>
+<p>P-053: 顧客データフレーム（df_customer）の郵便番号（postal_cd）に対し、東京（先頭 3 桁が 100〜209 のもの）を 1、それ以外のものを 0 に２値化せよ。さらにレシート明細データフレーム（df_receipt）と結合し、全期間において買い物実績のある顧客数を、作成した 2 値ごとにカウントせよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>merge(
+  pd<span style="color:#f92672">.</span>concat(
+      [df_customer<span style="color:#f92672">.</span>customer_id, df_customer<span style="color:#f92672">.</span>postal_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;1\d\d|20\d&#34;</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>)],
+      axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+  ),
+  df_receipt<span style="color:#f92672">.</span>customer_id, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;inner&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;postal_cd&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;customer_id&#34;</span>:<span style="color:#e6db74">&#34;nunique&#34;</span>})
+</code></pre></div><pre><code>           customer_id
+postal_cd
+0                 3906
+1                 4400
+</code></pre><h3 id="別解">別解</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;postal_cd&#34;</span>]]<span style="color:#f92672">.</span>copy()
+tmp[<span style="color:#e6db74">&#34;flag&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>postal_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;1\d\d|20\d&#34;</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>)
+<span style="color:#75715e"># tmp[&#34;flag&#34;] = tmp.postal_cd.map(lambda x: 1 if 100&lt;=int(x[:3])&lt;=209 else 0)</span>
+pd<span style="color:#f92672">.</span>merge(
+    tmp,
+    pd<span style="color:#f92672">.</span>Series(df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>unique(), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>),
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;inner&#34;</span>,
+    on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;flag&#34;</span>)<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>count()
+</code></pre></div><h2 id="054">054</h2>
+<blockquote>
+<p>P-054: 顧客データデータフレーム（df_customer）の住所（address）は、埼玉県、千葉県、東京都、神奈川県のいずれかとなっている。都道府県毎にコード値を作成し、顧客 ID、住所とともに抽出せよ。値は埼玉県を 11、千葉県を 12、東京都を 13、神奈川県を 14 とすること。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat([df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;address&#34;</span>]],
+    pd<span style="color:#f92672">.</span>Series(
+      df_customer<span style="color:#f92672">.</span>address<span style="color:#f92672">.</span>str[:<span style="color:#ae81ff">3</span>]<span style="color:#f92672">.</span>map({<span style="color:#e6db74">&#34;埼玉県&#34;</span>:<span style="color:#ae81ff">11</span>, <span style="color:#e6db74">&#34;千葉県&#34;</span>:<span style="color:#ae81ff">12</span>, <span style="color:#e6db74">&#34;東京都&#34;</span>:<span style="color:#ae81ff">13</span>, <span style="color:#e6db74">&#34;神奈川&#34;</span>:<span style="color:#ae81ff">14</span>}),
+      name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;address_cd&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id                 address  address_cd
+0  CS021313000114    神奈川県伊勢原市粟窪**********          14
+1  CS037613000071      東京都江東区南砂**********          13
+2  CS031415000172     東京都渋谷区代々木**********          13
+3  CS028811000001  神奈川県横浜市泉区和泉町**********          14
+4  CS001215000145     東京都大田区仲六郷**********          13
+5  CS020401000016      東京都板橋区若木**********          13
+6  CS015414000103      東京都江東区北砂**********          13
+7  CS029403000008      千葉県浦安市海楽**********          12
+8  CS015804000004      東京都江東区北砂**********          13
+9  CS033513000180  神奈川県横浜市旭区善部町**********          14
+</code></pre><h2 id="055">055</h2>
+<blockquote>
+<p>P-055: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計し、その合計金額の四分位点を求めよ。その上で、顧客ごとの売上金額合計に対して以下の基準でカテゴリ値を作成し、顧客 ID、売上金額と合計ともに表示せよ。カテゴリ値は上から順に 1〜4 とする。結果は 10 件表示させれば良い。</p>
+<ul>
+<li>最小値以上第一四分位未満</li>
+<li>第一四分位以上第二四分位未満</li>
+<li>第二四分位以上第三四分位未満</li>
+<li>第三四分位以上</li>
+</ul>
+</blockquote>
+<p>32 でも使った<code>pandas.Series.quantile</code>を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})
+quarter <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>quantile([i<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">76</span>, <span style="color:#ae81ff">25</span>)])<span style="color:#f92672">.</span>values
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>(x):
+  <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> quarter[<span style="color:#ae81ff">0</span>]: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+  <span style="color:#66d9ef">if</span> quarter[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;=</span> x <span style="color:#f92672">&lt;</span> quarter[<span style="color:#ae81ff">1</span>]: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span>
+  <span style="color:#66d9ef">if</span> quarter[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;=</span> x <span style="color:#f92672">&lt;</span> quarter[<span style="color:#ae81ff">2</span>]: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">3</span>
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">4</span>
+
+tmp[<span style="color:#e6db74">&#34;cat_cd&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>map(f)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount  cat_cd
+customer_id
+CS001113000004    1298       2
+CS001114000005     626       2
+CS001115000010    3044       3
+CS001205000004    1988       3
+CS001205000006    3337       3
+CS001211000025     456       1
+CS001212000027     448       1
+CS001212000031     296       1
+CS001212000046     228       1
+CS001212000070     456       1
+</code></pre><h2 id="056">056</h2>
+<blockquote>
+<p>P-056: 顧客データフレーム（df_customer）の年齢（age）をもとに 10 歳刻みで年代を算出し、顧客 ID（customer_id）、生年月日（birth_day）とともに抽出せよ。ただし、60 歳以上は全て 60 歳代とすること。年代を表すカテゴリ名は任意とする。先頭 10 件を表示させればよい。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;birth_day&#34;</span>]],
+     pd<span style="color:#f92672">.</span>Series(df_customer<span style="color:#f92672">.</span>age<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">//</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#ae81ff">10</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">60</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">60</span>), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;age_cd&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+
+</code></pre></div><pre><code>      customer_id   birth_day  age_cd
+0  CS021313000114  1981-04-29      30
+1  CS037613000071  1952-04-01      60
+2  CS031415000172  1976-10-04      40
+3  CS028811000001  1933-03-27      60
+4  CS001215000145  1995-03-29      20
+5  CS020401000016  1974-09-15      40
+6  CS015414000103  1977-08-09      40
+7  CS029403000008  1973-08-17      40
+8  CS015804000004  1931-05-02      60
+9  CS033513000180  1962-07-11      50
+</code></pre><h2 id="057">057</h2>
+<blockquote>
+<p>P-057: 前問題の抽出結果と性別（gender）を組み合わせ、新たに性別 × 年代の組み合わせを表すカテゴリデータを作成せよ。組み合わせを表すカテゴリの値は任意とする。先頭 10 件を表示させればよい</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;birth_day&#34;</span>, <span style="color:#e6db74">&#34;gender&#34;</span>]],
+     pd<span style="color:#f92672">.</span>Series(
+       [<span style="color:#e6db74">&#34;{:02d}{:02d}&#34;</span><span style="color:#f92672">.</span>format(g, a) <span style="color:#66d9ef">for</span> g, a <span style="color:#f92672">in</span> zip(df_customer<span style="color:#f92672">.</span>gender_cd, df_customer<span style="color:#f92672">.</span>age<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">//</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#ae81ff">10</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">60</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">60</span>))], name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gen_age&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id   birth_day gender gen_age
+0  CS021313000114  1981-04-29     女性    0130
+1  CS037613000071  1952-04-01     不明    0960
+2  CS031415000172  1976-10-04     女性    0140
+3  CS028811000001  1933-03-27     女性    0160
+4  CS001215000145  1995-03-29     女性    0120
+5  CS020401000016  1974-09-15     男性    0040
+6  CS015414000103  1977-08-09     女性    0140
+7  CS029403000008  1973-08-17     男性    0040
+8  CS015804000004  1931-05-02     男性    0060
+9  CS033513000180  1962-07-11     女性    0150
+</code></pre><h2 id="058">058</h2>
+<blockquote>
+<p>P-058: 顧客データフレーム（df_customer）の性別コード（gender_cd）をダミー変数化し、顧客 ID（customer_id）とともに抽出せよ。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<p><code>pandas.get_dummies</code> を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>get_dummies(
+  df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;gender_cd&#34;</span>]],
+  columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;gender_cd&#34;</span>],
+  prefix_sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;_&#39;</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id  gender_cd_0  gender_cd_1  gender_cd_9
+0  CS021313000114            0            1            0
+1  CS037613000071            0            0            1
+2  CS031415000172            0            1            0
+3  CS028811000001            0            1            0
+4  CS001215000145            0            1            0
+5  CS020401000016            1            0            0
+6  CS015414000103            0            1            0
+7  CS029403000008            1            0            0
+8  CS015804000004            1            0            0
+9  CS033513000180            0            1            0
+</code></pre><h2 id="059">059</h2>
+<blockquote>
+<p>P-059: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計し、合計した売上金額を平均 0、標準偏差 1 に標準化して顧客 ID、売上金額合計とともに表示せよ。標準化に使用する標準偏差は、不偏標準偏差と標本標準偏差のどちらでも良いものとする。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+pd<span style="color:#f92672">.</span>concat(
+    [tmp,
+     pd<span style="color:#f92672">.</span>Series((tmp <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>mean()) <span style="color:#f92672">/</span> tmp<span style="color:#f92672">.</span>std(), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;standardization&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount  standardization
+customer_id
+CS001113000004    1298        -0.459350
+CS001114000005     626        -0.706348
+CS001115000010    3044         0.182403
+CS001205000004    1988        -0.205737
+CS001205000006    3337         0.290096
+CS001211000025     456        -0.768832
+CS001212000027     448        -0.771773
+CS001212000031     296        -0.827641
+CS001212000046     228        -0.852635
+CS001212000070     456        -0.768832
+</code></pre><h2 id="060">060</h2>
+<blockquote>
+<p>P-060: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計し、合計した売上金額を最小値 0、最大値 1 に正規化して顧客 ID、売上金額合計とともに表示せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+pd<span style="color:#f92672">.</span>concat(
+    [tmp,
+     pd<span style="color:#f92672">.</span>Series((tmp <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>min()) <span style="color:#f92672">/</span> (tmp<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>min()), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;normalization&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount  normalization
+customer_id
+CS001113000004    1298       0.053354
+CS001114000005     626       0.024157
+CS001115000010    3044       0.129214
+CS001205000004    1988       0.083333
+CS001205000006    3337       0.141945
+CS001211000025     456       0.016771
+CS001212000027     448       0.016423
+CS001212000031     296       0.009819
+CS001212000046     228       0.006865
+CS001212000070     456       0.016771
+</code></pre>
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/python">python</a></span><span class="tag"><a href="https://tomowarkar.github.io/blog/tags/100knocks">100knocks</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>2643 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2020-06-23 00:00 &#43;0900</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h">Read other posts</span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+                        <span class="button previous">
+                            <a href="https://tomowarkar.github.io/blog/posts/ds100-05/">
+                                <span class="button__icon">←</span>
+                                <span class="button__text">データサイエンス100本ノックをPythonでやってみた [41-50]</span>
+                            </a>
+                        </span>
+                    
+
+                    
+                        <span class="button next">
+                            <a href="https://tomowarkar.github.io/blog/posts/ds100-04/">
+                                <span class="button__text">データサイエンス100本ノックをPythonでやってみた [31-40]</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+    </main>
+    <div><style>
+        .bmc-button img {
+            height: 34px !important;
+            width: 35px !important;
+            margin-bottom: 1px !important;
+            box-shadow: none !important;
+            border: none !important;
+            vertical-align: middle !important;
+        }
+    
+        .bmc-button {
+            padding: 7px 10px 7px 10px !important;
+            line-height: 35px !important;
+            height: 51px !important;
+            min-width: 217px !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            color: #ffffff !important;
+            background-color: #FF5F5F !important;
+            border-radius: 5px !important;
+            border: 1px solid transparent !important;
+            padding: 7px 10px 7px 10px !important;
+            font-size: 20px !important;
+            letter-spacing: 0.6px !important;
+            box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            margin: 0 auto !important;
+            font-family: 'Arial', cursive !important;
+            -webkit-box-sizing: border-box !important;
+            box-sizing: border-box !important;
+            -o-transition: 0.3s all linear !important;
+            -webkit-transition: 0.3s all linear !important;
+            -moz-transition: 0.3s all linear !important;
+            -ms-transition: 0.3s all linear !important;
+            transition: 0.3s all linear !important;
+        }
+    
+        .bmc-button:hover,
+        .bmc-button:active,
+        .bmc-button:focus {
+            -webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            text-decoration: none !important;
+            box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;
+            opacity: 0.85 !important;
+            color: #ffffff !important;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css?family=Arial" rel="stylesheet"><a class="bmc-button" target="_blank"
+        href="https://www.buymeacoffee.com/tomowarkar"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+            alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a></div>
+
+            </div>
+
+            
+                <footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__content">
+      <span>&copy; 2020</span>
+      
+      <span>tomowarkar</span>
+      
+    </div>
+  </div>
+  <div class="footer__inner">
+    <div class="footer__content">
+      
+    </div>
+  </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="https://tomowarkar.github.io/blog/bundle.min.2d5469329143160ae2456a69c3c76dc2d0a3b212b46afe291a51bd68650ed6f8697e001dab54f1c272c77ce08092a8c55e5bb4314e0ee334aab4b927ec896638.js" integrity="sha512-LVRpMpFDFgriRWppw8dtwtCjshK0av4pGlG9aGUO1vhpfgAdq1TxwnLHfOCAkqjFXlu0MU4O4zSqtLkn7IlmOA=="></script>
+
+
+
+    </body>
+</html>

@@ -6,8 +6,1691 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Sun, 21 Jun 2020 00:00:00 +0900</lastBuildDate>
+        <lastBuildDate>Wed, 24 Jun 2020 00:00:00 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>データサイエンス100本ノックをPythonでやってみた [61-70]</title>
+            <link>https://tomowarkar.github.io/blog/posts/ds100-07/</link>
+            <pubDate>Wed, 24 Jun 2020 00:00:00 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/ds100-07/</guid>
+            <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+            <content type="html"><![CDATA[<h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="061">061</h2>
+<blockquote>
+<p>P-061: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計し、合計した売上金額を常用対数化（底=10）して顧客 ID、売上金額合計とともに表示せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<p>対数化は 0 に注意ですが,今回は問題なさそうだったのでそのままです。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+pd<span style="color:#f92672">.</span>concat(
+    [tmp,
+     pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>log10(tmp), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;log10&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount     log10
+customer_id
+CS001113000004    1298  3.113275
+CS001114000005     626  2.796574
+CS001115000010    3044  3.483445
+CS001205000004    1988  3.298416
+CS001205000006    3337  3.523356
+CS001211000025     456  2.658965
+CS001212000027     448  2.651278
+CS001212000031     296  2.471292
+CS001212000046     228  2.357935
+CS001212000070     456  2.658965
+</code></pre><h2 id="062">062</h2>
+<blockquote>
+<p>P-062: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計し、合計した売上金額を自然対数化(底=e）して顧客 ID、売上金額合計とともに表示せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+pd<span style="color:#f92672">.</span>concat(
+    [tmp,
+     pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>log(tmp), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;log&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount       log
+customer_id
+CS001113000004    1298  7.168580
+CS001114000005     626  6.439350
+CS001115000010    3044  8.020928
+CS001205000004    1988  7.594884
+CS001205000006    3337  8.112827
+CS001211000025     456  6.122493
+CS001212000027     448  6.104793
+CS001212000031     296  5.690359
+CS001212000046     228  5.429346
+CS001212000070     456  6.122493
+</code></pre><h2 id="063">063</h2>
+<blockquote>
+<p>P-063: 商品データフレーム（df_product）の単価（unit_price）と原価（unit_cost）から、各商品の利益額を算出せよ。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [df_product,
+     pd<span style="color:#f92672">.</span>Series(df_product<span style="color:#f92672">.</span>unit_price <span style="color:#f92672">-</span> df_product<span style="color:#f92672">.</span>unit_cost, name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unit_margin&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   product_cd  category_major_cd  ...  unit_cost  unit_margin
+0  P040101001                  4  ...      149.0         49.0
+1  P040101002                  4  ...      164.0         54.0
+2  P040101003                  4  ...      173.0         57.0
+3  P040101004                  4  ...      186.0         62.0
+4  P040101005                  4  ...      201.0         67.0
+5  P040101006                  4  ...      224.0         74.0
+6  P040101007                  4  ...      254.0         84.0
+7  P040101008                  4  ...      315.0        105.0
+8  P040101009                  4  ...      374.0        124.0
+9  P040101010                  4  ...      435.0        145.0
+
+[10 rows x 7 columns]
+</code></pre><h2 id="064">064</h2>
+<blockquote>
+<p>P-064: 商品データフレーム（df_product）の単価（unit_price）と原価（unit_cost）から、各商品の利益率の全体平均を算出せよ。 ただし、単価と原価には NULL が存在することに注意せよ。</p>
+</blockquote>
+<p><code>pandas.Series.mean</code>を使います引数の<code>skipnabool</code>がデフォルトで<code>True</code>なので NULL に関しては何も考えなくていいと思います。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">((df_product<span style="color:#f92672">.</span>unit_price <span style="color:#f92672">-</span> df_product<span style="color:#f92672">.</span>unit_cost)<span style="color:#f92672">/</span>df_product<span style="color:#f92672">.</span>unit_price)<span style="color:#f92672">.</span>mean() <span style="color:#75715e">#&gt; 0.24911389885176904</span>
+</code></pre></div><h2 id="065">065</h2>
+<blockquote>
+<p>P-065: 商品データフレーム（df_product）の各商品について、利益率が 30%となる新たな単価を求めよ。ただし、1 円未満は切り捨てること。そして結果を 10 件表示させ、利益率がおよそ 30％付近であることを確認せよ。ただし、単価（unit_price）と原価（unit_cost）には NULL が存在することに注意せよ。</p>
+</blockquote>
+<p><code>numpy.floor</code>を使います。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat(
+    [df_product,
+     pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>floor(df_product<span style="color:#f92672">.</span>unit_cost<span style="color:#f92672">/</span><span style="color:#ae81ff">0.7</span>), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unit_price_30&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   product_cd  category_major_cd  ...  unit_cost  unit_price_30
+0  P040101001                  4  ...      149.0          212.0
+1  P040101002                  4  ...      164.0          234.0
+2  P040101003                  4  ...      173.0          247.0
+3  P040101004                  4  ...      186.0          265.0
+4  P040101005                  4  ...      201.0          287.0
+5  P040101006                  4  ...      224.0          320.0
+6  P040101007                  4  ...      254.0          362.0
+7  P040101008                  4  ...      315.0          450.0
+8  P040101009                  4  ...      374.0          534.0
+9  P040101010                  4  ...      435.0          621.0
+
+[10 rows x 7 columns]
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">((tmp<span style="color:#f92672">.</span>unit_price_30 <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>unit_cost)<span style="color:#f92672">/</span>tmp<span style="color:#f92672">.</span>unit_price_30)<span style="color:#f92672">.</span>mean() <span style="color:#75715e">#&gt;0.298678449725414</span>
+</code></pre></div><h2 id="066">066</h2>
+<blockquote>
+<p>P-066: 商品データフレーム（df_product）の各商品について、利益率が 30%となる新たな単価を求めよ。今回は、1 円未満を四捨五入すること（0.5 については偶数方向の丸めで良い）。そして結果を 10 件表示させ、利益率がおよそ 30％付近であることを確認せよ。ただし、単価（unit_price）と原価（unit_cost）には NULL が存在することに注意せよ。</p>
+</blockquote>
+<p><code>numpy.round</code>を使います。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat(
+    [df_product,
+     pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>round(df_product<span style="color:#f92672">.</span>unit_cost<span style="color:#f92672">/</span><span style="color:#ae81ff">0.7</span>), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unit_price_30&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   product_cd  category_major_cd  ...  unit_cost  unit_price_30
+0  P040101001                  4  ...      149.0          213.0
+1  P040101002                  4  ...      164.0          234.0
+2  P040101003                  4  ...      173.0          247.0
+3  P040101004                  4  ...      186.0          266.0
+4  P040101005                  4  ...      201.0          287.0
+5  P040101006                  4  ...      224.0          320.0
+6  P040101007                  4  ...      254.0          363.0
+7  P040101008                  4  ...      315.0          450.0
+8  P040101009                  4  ...      374.0          534.0
+9  P040101010                  4  ...      435.0          621.0
+
+[10 rows x 7 columns]
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">((tmp<span style="color:#f92672">.</span>unit_price_30 <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>unit_cost)<span style="color:#f92672">/</span>tmp<span style="color:#f92672">.</span>unit_price_30)<span style="color:#f92672">.</span>mean() <span style="color:#75715e">#&gt; 0.2999568445636658</span>
+</code></pre></div><h2 id="067">067</h2>
+<blockquote>
+<p>P-067: 商品データフレーム（df_product）の各商品について、利益率が 30%となる新たな単価を求めよ。今回は、1 円未満を切り上げること。そして結果を 10 件表示させ、利益率がおよそ 30％付近であることを確認せよ。ただし、単価（unit_price）と原価（unit_cost）には NULL が存在することに注意せよ。</p>
+</blockquote>
+<p><code>numpy.ceil</code>を使います。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>concat(
+    [df_product,
+     pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>ceil(df_product<span style="color:#f92672">.</span>unit_cost<span style="color:#f92672">/</span><span style="color:#ae81ff">0.7</span>), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;unit_price_30&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   product_cd  category_major_cd  ...  unit_cost  unit_price_30
+0  P040101001                  4  ...      149.0          213.0
+1  P040101002                  4  ...      164.0          235.0
+2  P040101003                  4  ...      173.0          248.0
+3  P040101004                  4  ...      186.0          266.0
+4  P040101005                  4  ...      201.0          288.0
+5  P040101006                  4  ...      224.0          320.0
+6  P040101007                  4  ...      254.0          363.0
+7  P040101008                  4  ...      315.0          451.0
+8  P040101009                  4  ...      374.0          535.0
+9  P040101010                  4  ...      435.0          622.0
+
+[10 rows x 7 columns]
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">((tmp<span style="color:#f92672">.</span>unit_price_30 <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>unit_cost)<span style="color:#f92672">/</span>tmp<span style="color:#f92672">.</span>unit_price_30)<span style="color:#f92672">.</span>mean() <span style="color:#75715e">#&gt; 0.3014164030578494</span>
+</code></pre></div><h2 id="068">068</h2>
+<blockquote>
+<p>P-068: 商品データフレーム（df_product）の各商品について、消費税率 10%の税込み金額を求めよ。 1 円未満の端数は切り捨てとし、結果は 10 件表示すれば良い。ただし、単価（unit_price）には NULL が存在することに注意せよ。</p>
+</blockquote>
+<p>単価 NULL の場合税込み金額も NULL になるので特に気にしません。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [df_product,
+     pd<span style="color:#f92672">.</span>Series(np<span style="color:#f92672">.</span>floor(df_product<span style="color:#f92672">.</span>unit_price<span style="color:#f92672">*</span><span style="color:#ae81ff">1.1</span>), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;with_tax_10&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   product_cd  category_major_cd  ...  unit_cost  with_tax_10
+0  P040101001                  4  ...      149.0        217.0
+1  P040101002                  4  ...      164.0        239.0
+2  P040101003                  4  ...      173.0        253.0
+3  P040101004                  4  ...      186.0        272.0
+4  P040101005                  4  ...      201.0        294.0
+5  P040101006                  4  ...      224.0        327.0
+6  P040101007                  4  ...      254.0        371.0
+7  P040101008                  4  ...      315.0        462.0
+8  P040101009                  4  ...      374.0        547.0
+9  P040101010                  4  ...      435.0        638.0
+
+[10 rows x 7 columns]
+</code></pre><h2 id="069">069</h2>
+<blockquote>
+<p>P-069: レシート明細データフレーム（df_receipt）と商品データフレーム（df_product）を結合し、顧客毎に全商品の売上金額合計と、カテゴリ大区分（category_major_cd）が&quot;07&rdquo;（瓶詰缶詰）の売上金額合計を計算の上、両者の比率を求めよ。抽出対象はカテゴリ大区分&quot;07&rdquo;（瓶詰缶詰）の購入実績がある顧客のみとし、結果は 10 件表示させればよい。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># カテゴリ区分7を集計</span>
+tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+  df_receipt,
+  df_product<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;category_major_cd == 7&#39;</span>),
+  how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;inner&#34;</span>,
+  on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;product_cd&#34;</span>
+)<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;customer_id&#39;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})
+
+<span style="color:#75715e"># カテゴリ区分7の購入実績のあるcustomer_idをもとにdf_receiptを抽出して集計</span>
+tmp2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+  df_receipt,
+  pd<span style="color:#f92672">.</span>Series(tmp<span style="color:#f92672">.</span>index),
+  how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;inner&#34;</span>,
+  on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;customer_id&#39;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})
+
+pd<span style="color:#f92672">.</span>DataFrame(
+  [tmp<span style="color:#f92672">.</span>amount, tmp2<span style="color:#f92672">.</span>amount, tmp<span style="color:#f92672">.</span>amount<span style="color:#f92672">/</span>tmp2<span style="color:#f92672">.</span>amount],
+  index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;cat07&#34;</span>, <span style="color:#e6db74">&#34;all&#34;</span>, <span style="color:#e6db74">&#34;ratio&#34;</span>]
+)<span style="color:#f92672">.</span>T<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                 cat07     all     ratio
+customer_id
+CS001113000004  1298.0  1298.0  1.000000
+CS001114000005   486.0   626.0  0.776358
+CS001115000010  2694.0  3044.0  0.885020
+CS001205000004   346.0  1988.0  0.174044
+CS001205000006  2004.0  3337.0  0.600539
+CS001212000027   200.0   448.0  0.446429
+CS001212000031   296.0   296.0  1.000000
+CS001212000046   108.0   228.0  0.473684
+CS001212000070   308.0   456.0  0.675439
+CS001213000018   145.0   243.0  0.596708
+</code></pre><h2 id="070">070</h2>
+<blockquote>
+<p>P-070: レシート明細データフレーム（df_receipt）の売上日（sales_ymd）に対し、顧客データフレーム（df_customer）の会員申込日（application_date）からの経過日数を計算し、顧客 ID（customer_id）、売上日、会員申込日とともに表示せよ。結果は 10 件表示させれば良い（なお、sales_ymd は数値、application_date は文字列でデータを保持している点に注意）。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_date&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+)
+tmp[<span style="color:#e6db74">&#34;elapsed_days&#34;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(tmp<span style="color:#f92672">.</span>sales_ymd, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>) <span style="color:#f92672">-</span> pd<span style="color:#f92672">.</span>to_datetime(tmp<span style="color:#f92672">.</span>application_date, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   sales_ymd     customer_id  application_date elapsed_days
+0   20181103  CS006214000001        20150201.0    1371 days
+1   20181118  CS008415000097        20150322.0    1337 days
+2   20170712  CS028414000014        20150711.0     732 days
+3   20190205  ZZ000000000000               NaN          NaT
+4   20180821  CS025415000050        20160131.0     933 days
+5   20190605  CS003515000195        20150306.0    1552 days
+6   20181205  CS024514000042        20151010.0    1152 days
+7   20190922  CS040415000178        20150627.0    1548 days
+8   20170504  ZZ000000000000               NaN          NaT
+9   20191010  CS027514000015        20151101.0    1439 days
+</code></pre>]]></content>
+        </item>
+        
+        <item>
+            <title>データサイエンス100本ノックをPythonでやってみた [71-80]</title>
+            <link>https://tomowarkar.github.io/blog/posts/ds100-08/</link>
+            <pubDate>Wed, 24 Jun 2020 00:00:00 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/ds100-08/</guid>
+            <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+            <content type="html"><![CDATA[<h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="071">071</h2>
+<blockquote>
+<p>P-071: レシート明細データフレーム（df_receipt）の売上日（sales_ymd）に対し、顧客データフレーム（df_customer）の会員申込日（application_date）からの経過月数を計算し、顧客 ID（customer_id）、売上日、会員申込日とともに表示せよ。結果は 10 件表示させれば良い（なお、sales_ymd は数値、application_date は文字列でデータを保持している点に注意）。1 ヶ月未満は切り捨てること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_date&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+)
+f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: pd<span style="color:#f92672">.</span>to_datetime(x, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dt
+<span style="color:#75715e"># a (売り上げ日) &gt;= b (申込日)</span>
+a, b <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>sales_ymd), f(tmp<span style="color:#f92672">.</span>application_date)
+tmp[<span style="color:#e6db74">&#34;elapsed_months&#34;</span>] <span style="color:#f92672">=</span> a<span style="color:#f92672">.</span>month <span style="color:#f92672">-</span> b<span style="color:#f92672">.</span>month <span style="color:#f92672">-</span> (b<span style="color:#f92672">.</span>day <span style="color:#f92672">&gt;</span> a<span style="color:#f92672">.</span>day) <span style="color:#f92672">+</span> <span style="color:#ae81ff">12</span> <span style="color:#f92672">*</span> (a<span style="color:#f92672">.</span>year <span style="color:#f92672">-</span> b<span style="color:#f92672">.</span>year)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   sales_ymd     customer_id  application_date  elapsed_months
+0   20181103  CS006214000001        20150201.0            45.0
+1   20181118  CS008415000097        20150322.0            43.0
+2   20170712  CS028414000014        20150711.0            24.0
+3   20190205  ZZ000000000000               NaN             NaN
+4   20180821  CS025415000050        20160131.0            30.0
+5   20190605  CS003515000195        20150306.0            50.0
+6   20181205  CS024514000042        20151010.0            37.0
+7   20190922  CS040415000178        20150627.0            50.0
+8   20170504  ZZ000000000000               NaN             NaN
+9   20191010  CS027514000015        20151101.0            47.0
+</code></pre><h3 id="tips">Tips</h3>
+<p>※ 一部<code>dateutil.relativedelta.relativedelta</code>を使用する</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%%</span>timeit
+tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_date&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+)
+f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: pd<span style="color:#f92672">.</span>to_datetime(x<span style="color:#f92672">.</span>fillna(<span style="color:#e6db74">&#34;19700101&#34;</span>), format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)
+dict_sales_ymd <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>sales_ymd)<span style="color:#f92672">.</span>to_dict()
+dict_application_date <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>application_date)<span style="color:#f92672">.</span>to_dict()
+
+tmp<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: relativedelta(dict_sales_ymd[x], dict_application_date[x]))
+</code></pre></div><pre><code>1 loop, best of 3: 5.16 s per loop
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%%</span>timeit
+<span style="color:#75715e"># 別解の別解(遅い)</span>
+tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_date&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+)
+f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: pd<span style="color:#f92672">.</span>to_datetime(x<span style="color:#f92672">.</span>fillna(<span style="color:#e6db74">&#34;19700101&#34;</span>), format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)
+tmp<span style="color:#f92672">.</span>sales_ymd <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>sales_ymd)
+tmp<span style="color:#f92672">.</span>application_date <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>application_date)
+
+tmp<span style="color:#f92672">.</span>apply(<span style="color:#66d9ef">lambda</span> x: relativedelta(x<span style="color:#f92672">.</span>sales_ymd,x<span style="color:#f92672">.</span>application_date), axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+</code></pre></div><pre><code>1 loop, best of 3: 10.6 s per loop
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">%%</span>timeit
+tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_date&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+)
+f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: pd<span style="color:#f92672">.</span>to_datetime(x, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dt
+<span style="color:#75715e"># a (売り上げ日) &gt;= b (申込日)</span>
+a, b <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>sales_ymd), f(tmp<span style="color:#f92672">.</span>application_date)
+
+a<span style="color:#f92672">.</span>month <span style="color:#f92672">-</span> b<span style="color:#f92672">.</span>month <span style="color:#f92672">-</span> (b<span style="color:#f92672">.</span>day <span style="color:#f92672">&gt;</span> a<span style="color:#f92672">.</span>day) <span style="color:#f92672">+</span> <span style="color:#ae81ff">12</span> <span style="color:#f92672">*</span> (a<span style="color:#f92672">.</span>year <span style="color:#f92672">-</span> b<span style="color:#f92672">.</span>year)
+</code></pre></div><pre><code>1 loop, best of 3: 213 ms per loop
+</code></pre><p>以上のように全ての列に<code>map</code>や<code>apply</code>を使ってアクセスするのは時間がかかるのでなるだけ配列演算をしたい</p>
+<h2 id="072">072</h2>
+<blockquote>
+<p>P-072: レシート明細データフレーム（df_receipt）の売上日（sales_ymd）に対し、顧客データフレーム（df_customer）の会員申込日（application_date）からの経過年数を計算し、顧客 ID（customer_id）、売上日、会員申込日とともに表示せよ。結果は 10 件表示させれば良い。（なお、sales_ymd は数値、application_date は文字列でデータを保持している点に注意）。1 年未満は切り捨てること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_date&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+)
+f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: pd<span style="color:#f92672">.</span>to_datetime(x, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dt
+<span style="color:#75715e"># a (売り上げ日) &gt;= b (申込日)</span>
+a, b <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>sales_ymd), f(tmp<span style="color:#f92672">.</span>application_date)
+tmp[<span style="color:#e6db74">&#34;elapsed_years&#34;</span>] <span style="color:#f92672">=</span> (a<span style="color:#f92672">.</span>year <span style="color:#f92672">-</span> b<span style="color:#f92672">.</span>year) <span style="color:#f92672">-</span> (a<span style="color:#f92672">.</span>month <span style="color:#f92672">-</span> b<span style="color:#f92672">.</span>month <span style="color:#f92672">-</span> (b<span style="color:#f92672">.</span>day <span style="color:#f92672">&gt;</span> a<span style="color:#f92672">.</span>day))<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">&lt;</span><span style="color:#ae81ff">0</span>)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   sales_ymd     customer_id  application_date  elapsed_years
+0   20181103  CS006214000001        20150201.0            3.0
+1   20181118  CS008415000097        20150322.0            3.0
+2   20170712  CS028414000014        20150711.0            2.0
+3   20190205  ZZ000000000000               NaN            NaN
+4   20180821  CS025415000050        20160131.0            2.0
+5   20190605  CS003515000195        20150306.0            4.0
+6   20181205  CS024514000042        20151010.0            3.0
+7   20190922  CS040415000178        20150627.0            4.0
+8   20170504  ZZ000000000000               NaN            NaN
+9   20191010  CS027514000015        20151101.0            3.0
+</code></pre><h3 id="別解">別解</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_date&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+)
+f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: pd<span style="color:#f92672">.</span>to_datetime(x<span style="color:#f92672">.</span>fillna(<span style="color:#e6db74">&#34;19700101&#34;</span>), format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)
+dict_sales_ymd <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>sales_ymd)<span style="color:#f92672">.</span>to_dict()
+dict_application_date <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>application_date)<span style="color:#f92672">.</span>to_dict()
+tmp[<span style="color:#e6db74">&#34;elapsed_years&#34;</span>] <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>Series(tmp<span style="color:#f92672">.</span>index<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: relativedelta(dict_sales_ymd[x], dict_application_date[x])<span style="color:#f92672">.</span>years))
+
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><h2 id="073">073</h2>
+<blockquote>
+<p>P-073: レシート明細データフレーム（df_receipt）の売上日（sales_ymd）に対し、顧客データフレーム（df_customer）の会員申込日（application_date）からのエポック秒による経過時間を計算し、顧客 ID（customer_id）、売上日、会員申込日とともに表示せよ。結果は 10 件表示させれば良い（なお、sales_ymd は数値、application_date は文字列でデータを保持している点に注意）。なお、時間情報は保有していないため各日付は 0 時 0 分 0 秒を表すものとする。</p>
+</blockquote>
+<p>欠損値を UNIX 基準日に合わせる</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_date&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+)
+f <span style="color:#f92672">=</span> <span style="color:#66d9ef">lambda</span> x: pd<span style="color:#f92672">.</span>to_datetime(x<span style="color:#f92672">.</span>fillna(<span style="color:#e6db74">&#34;19700101&#34;</span>), format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>timestamp())<span style="color:#f92672">.</span>astype(int)
+tmp[<span style="color:#e6db74">&#34;elapsed_epoch&#34;</span>] <span style="color:#f92672">=</span> f(tmp<span style="color:#f92672">.</span>sales_ymd)<span style="color:#f92672">-</span> f(tmp<span style="color:#f92672">.</span>application_date)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   sales_ymd     customer_id  application_date  elapsed_epoch
+0   20181103  CS006214000001        20150201.0      118454400
+1   20181118  CS008415000097        20150322.0      115516800
+2   20170712  CS028414000014        20150711.0       63244800
+3   20190205  ZZ000000000000               NaN     1549324800
+4   20180821  CS025415000050        20160131.0       80611200
+5   20190605  CS003515000195        20150306.0      134092800
+6   20181205  CS024514000042        20151010.0       99532800
+7   20190922  CS040415000178        20150627.0      133747200
+8   20170504  ZZ000000000000               NaN     1493856000
+9   20191010  CS027514000015        20151101.0      124329600
+</code></pre><h2 id="074">074</h2>
+<blockquote>
+<p>P-074: レシート明細データフレーム（df_receipt）の売上日（sales_ymd）に対し、当該週の月曜日からの経過日数を計算し、売上日、当該週の月曜日付とともに表示せよ。結果は 10 件表示させれば良い（なお、sales_ymd は数値でデータを保持している点に注意）。</p>
+</blockquote>
+<p><code>pandas.tseries.offsets</code>を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> pandas.tseries.offsets <span style="color:#f92672">as</span> offsets
+
+tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(df_receipt<span style="color:#f92672">.</span>sales_ymd, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)
+<span style="color:#66d9ef">print</span>(pd<span style="color:#f92672">.</span>concat(
+    [df_receipt[[<span style="color:#e6db74">&#34;sales_ymd&#34;</span>]],
+     tmp<span style="color:#f92672">.</span>dt<span style="color:#f92672">.</span>weekday,
+     tmp<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x <span style="color:#f92672">+</span> offsets<span style="color:#f92672">.</span>Day(<span style="color:#f92672">-</span>x<span style="color:#f92672">.</span>weekday()))],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>))
+</code></pre></div><pre><code>  sales_ymd sales_ymd  sales_ymd
+0  20181103         5 2018-10-29
+1  20181118         6 2018-11-12
+2  20170712         2 2017-07-10
+3  20190205         1 2019-02-04
+4  20180821         1 2018-08-20
+5  20190605         2 2019-06-03
+6  20181205         2 2018-12-03
+7  20190922         6 2019-09-16
+8  20170504         3 2017-05-01
+9  20191010         3 2019-10-07
+</code></pre><h2 id="075">075</h2>
+<blockquote>
+<p>P-075: 顧客データフレーム（df_customer）からランダムに 1%のデータを抽出し、先頭から 10 件データを抽出せよ。</p>
+</blockquote>
+<p>ランダムサンプリング</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer<span style="color:#f92672">.</span>sample(frac<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>          customer_id customer_name  ...  application_date     status_cd
+11557  CS011411000084          神戸 遥  ...          20150805  2-20100904-3
+11803  CS001613000148        内野 れいな  ...          20160216  1-20091228-1
+10038  CS003413000448         西脇 恭子  ...          20160322  0-00000000-0
+21959  CS008513000185         長沢 路子  ...          20150228  0-00000000-0
+15259  CS038412000016        柴田 はるみ  ...          20141226  7-20100214-B
+12616  CS023515000118        吉原 ちえみ  ...          20150707  F-20100728-C
+11091  CS005613000214        柴田 まさみ  ...          20170601  0-00000000-0
+14468  CS005513000061        戸塚 菜々美  ...          20151030  A-20080826-8
+18627  CS023613000074         浅川 奈々  ...          20141117  0-00000000-0
+10967  CS038411000013         原 あや子  ...          20150525  9-20100306-A
+
+[10 rows x 11 columns]
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer<span style="color:#f92672">.</span>sample(frac<span style="color:#f92672">=</span><span style="color:#ae81ff">0.01</span>)<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;gender_cd&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;customer_id&#34;</span>:<span style="color:#e6db74">&#34;count&#34;</span>})
+</code></pre></div><pre><code>           customer_id
+gender_cd
+0                   27
+1                  187
+9                    6
+</code></pre><h2 id="076">076</h2>
+<blockquote>
+<p>P-076: 顧客データフレーム（df_customer）から性別（gender_cd）の割合に基づきランダムに 10%のデータを層化抽出データし、性別ごとに件数を集計せよ。</p>
+</blockquote>
+<p>層化抽出</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([])
+<span style="color:#66d9ef">for</span> _, v <span style="color:#f92672">in</span> df_customer<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;gender_cd&#34;</span>)<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>groups<span style="color:#f92672">.</span>items():
+  i <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(v<span style="color:#f92672">.</span>values, size<span style="color:#f92672">=</span>len(v<span style="color:#f92672">.</span>values)<span style="color:#f92672">//</span><span style="color:#ae81ff">10</span>, replace<span style="color:#f92672">=</span>False)
+  idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>append(idx, i)
+
+df_customer<span style="color:#f92672">.</span>loc[sorted(idx)]
+</code></pre></div><pre><code>            customer_id customer_name  ...  application_date     status_cd
+2.0      CS031415000172       宇多田 貴美子  ...          20150529  D-20100325-C
+10.0     CS007403000016          依田 満  ...          20150914  0-00000000-0
+16.0     CS009315000023         皆川 文世  ...          20150319  5-20080322-1
+29.0     CS028413000087          浅野 薫  ...          20150528  0-00000000-0
+30.0     CS006415000279          末永 綾  ...          20150713  1-20100519-2
+...                 ...           ...  ...               ...           ...
+21879.0  CS001215000040         大原 奈央  ...          20151211  C-20081022-B
+21901.0  CS028715000034        浅野 真悠子  ...          20151114  0-00000000-0
+21918.0  CS038714000037        浜本 みゆき  ...          20160812  0-00000000-0
+21926.0  CS045613000006        布施 あさみ  ...          20170513  8-20100809-9
+21954.0  CS037701000008          米倉 優  ...          20151128  0-00000000-0
+
+[2196 rows x 11 columns]
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer<span style="color:#f92672">.</span>loc[idx]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;gender_cd&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;customer_id&#34;</span>:<span style="color:#e6db74">&#34;count&#34;</span>})
+</code></pre></div><pre><code>           customer_id
+gender_cd
+0                  298
+1                 1791
+9                  107
+</code></pre><h3 id="別解-1">別解</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split
+
+_, tmp <span style="color:#f92672">=</span> train_test_split(df_customer, test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>, stratify<span style="color:#f92672">=</span>df_customer<span style="color:#f92672">.</span>gender)
+</code></pre></div><h2 id="077">077</h2>
+<blockquote>
+<p>P-077: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客単位に合計し、合計した売上金額の外れ値を抽出せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。なお、ここでは外れ値を平均から 3σ 以上離れたものとする。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<p><code>pandas.Series.mean</code>, <code>pandas.Series.std</code>を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+mean <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>mean()
+std <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>std(ddof<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)
+tmp[abs(mean<span style="color:#f92672">-</span>tmp) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">3</span><span style="color:#f92672">*</span>std]<span style="color:#f92672">.</span>reset_index()<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id  amount
+0  CS001605000009   18925
+1  CS006415000147   12723
+2  CS006515000023   18372
+3  CS006515000125   12575
+4  CS006515000209   11373
+5  CS007115000006   11528
+6  CS007514000056   13293
+7  CS007514000094   15735
+8  CS007515000107   11188
+9  CS007615000026   11959
+</code></pre><h2 id="078">078</h2>
+<blockquote>
+<p>P-078: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客単位に合計し、合計した売上金額の外れ値を抽出せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。なお、ここでは外れ値を第一四分位と第三四分位の差である IQR を用いて、「第一四分位数-1.5×IQR」よりも下回るもの、または「第三四分位数+1.5×IQR」を超えるものとする。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+q1, q3 <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>quantile([<span style="color:#f92672">.</span><span style="color:#ae81ff">25</span>, <span style="color:#f92672">.</span><span style="color:#ae81ff">75</span>])
+iqr <span style="color:#f92672">=</span> q3 <span style="color:#f92672">-</span> q1
+tmp[(tmp<span style="color:#f92672">&lt;</span>q1<span style="color:#f92672">-</span><span style="color:#ae81ff">1.5</span><span style="color:#f92672">*</span>iqr)<span style="color:#f92672">|</span>(tmp<span style="color:#f92672">&gt;</span>q3<span style="color:#f92672">+</span><span style="color:#ae81ff">1.5</span><span style="color:#f92672">*</span>iqr)]<span style="color:#f92672">.</span>reset_index()<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id  amount
+0  CS001414000048    8584
+1  CS001605000009   18925
+2  CS002415000594    9568
+3  CS004414000181    9584
+4  CS005415000137    8734
+5  CS006414000001    9156
+6  CS006414000029    9179
+7  CS006415000105   10042
+8  CS006415000147   12723
+9  CS006415000157   10648
+</code></pre><h2 id="079">079</h2>
+<blockquote>
+<p>P-079: 商品データフレーム（df_product）の各項目に対し、欠損数を確認せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 列ベース</span>
+df_product<span style="color:#f92672">.</span>isna()<span style="color:#f92672">.</span>sum()
+</code></pre></div><pre><code>product_cd            0
+category_major_cd     0
+category_medium_cd    0
+category_small_cd     0
+unit_price            7
+unit_cost             7
+dtype: int64
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e"># 行ベース</span>
+df_product<span style="color:#f92672">.</span>isna()<span style="color:#f92672">.</span>any(axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>sum() <span style="color:#75715e">#&gt; 7</span>
+</code></pre></div><h2 id="080">080</h2>
+<blockquote>
+<p>P-080: 商品データフレーム（df_product）のいずれかの項目に欠損が発生しているレコードを全て削除した新たな df_product_1 を作成せよ。なお、削除前後の件数を表示させ、前設問で確認した件数だけ減少していることも確認すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_product_1 <span style="color:#f92672">=</span> df_product<span style="color:#f92672">.</span>dropna()
+<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;before:&#34;</span>, len(df_product), <span style="color:#e6db74">&#34;, after:&#34;</span>, len(df_product_1)) <span style="color:#75715e">#&gt; before: 10030 , after: 10023</span>
+</code></pre></div>]]></content>
+        </item>
+        
+        <item>
+            <title>データサイエンス100本ノックをPythonでやってみた [81-90]</title>
+            <link>https://tomowarkar.github.io/blog/posts/ds100-09/</link>
+            <pubDate>Wed, 24 Jun 2020 00:00:00 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/ds100-09/</guid>
+            <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+            <content type="html"><![CDATA[<h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="081">081</h2>
+<blockquote>
+<p>P-081: 単価（unit_price）と原価（unit_cost）の欠損値について、それぞれの平均値で補完した新たな df_product_2 を作成せよ。なお、平均値について 1 円未満は四捨五入とし、0.5 については偶数寄せでかまわない。補完実施後、各項目について欠損が生じていないことも確認すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_product_2 <span style="color:#f92672">=</span> df_product<span style="color:#f92672">.</span>fillna(
+    {<span style="color:#e6db74">&#34;unit_price&#34;</span>: np<span style="color:#f92672">.</span>round(df_product<span style="color:#f92672">.</span>unit_price<span style="color:#f92672">.</span>mean()),
+     <span style="color:#e6db74">&#34;unit_cost&#34;</span>: np<span style="color:#f92672">.</span>round(df_product<span style="color:#f92672">.</span>unit_cost<span style="color:#f92672">.</span>mean())})
+
+df_product_2<span style="color:#f92672">.</span>isna()<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>any() <span style="color:#75715e">#&gt; False</span>
+</code></pre></div><p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">動作検証は実行ファイル参照</a></p>
+<h2 id="082">082</h2>
+<blockquote>
+<p>P-082: 単価（unit_price）と原価（unit_cost）の欠損値について、それぞれの中央値で補完した新たな df_product_3 を作成せよ。なお、中央値について 1 円未満は四捨五入とし、0.5 については偶数寄せでかまわない。補完実施後、各項目について欠損が生じていないことも確認すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_product_3 <span style="color:#f92672">=</span> df_product<span style="color:#f92672">.</span>fillna(
+  {<span style="color:#e6db74">&#34;unit_price&#34;</span>: np<span style="color:#f92672">.</span>round(df_product<span style="color:#f92672">.</span>unit_price<span style="color:#f92672">.</span>median()),
+   <span style="color:#e6db74">&#34;unit_cost&#34;</span>: np<span style="color:#f92672">.</span>round(df_product<span style="color:#f92672">.</span>unit_cost<span style="color:#f92672">.</span>median())})
+
+df_product_3<span style="color:#f92672">.</span>isna()<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>any() <span style="color:#75715e">#&gt; False</span>
+</code></pre></div><p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">動作検証は実行ファイル参照</a></p>
+<h2 id="083">083</h2>
+<blockquote>
+<p>P-083: 単価（unit_price）と原価（unit_cost）の欠損値について、各商品の小区分（category_small_cd）ごとに算出した中央値で補完した新たな df_product_4 を作成せよ。なお、中央値について 1 円未満は四捨五入とし、0.5 については偶数寄せでかまわない。補完実施後、各項目について欠損が生じていないことも確認すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mask <span style="color:#f92672">=</span> df_product<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;category_small_cd&#34;</span>)<span style="color:#f92672">.</span>agg(unit_price_median<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;unit_price&#34;</span>,<span style="color:#e6db74">&#34;median&#34;</span>), unit_cost_median<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;unit_cost&#34;</span>,<span style="color:#e6db74">&#34;median&#34;</span>))<span style="color:#f92672">.</span>reset_index()
+mask[[<span style="color:#e6db74">&#34;unit_price_median&#34;</span>, <span style="color:#e6db74">&#34;unit_cost_median&#34;</span>]] <span style="color:#f92672">=</span> mask[[<span style="color:#e6db74">&#34;unit_price_median&#34;</span>, <span style="color:#e6db74">&#34;unit_cost_median&#34;</span>]]<span style="color:#f92672">.</span>applymap(<span style="color:#66d9ef">lambda</span> x: np<span style="color:#f92672">.</span>round(x))
+mask <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(df_product, mask, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;category_small_cd&#34;</span>)
+
+mask<span style="color:#f92672">.</span>loc[mask<span style="color:#f92672">.</span>unit_price<span style="color:#f92672">.</span>isna(), <span style="color:#e6db74">&#34;unit_price&#34;</span>] <span style="color:#f92672">=</span> mask<span style="color:#f92672">.</span>loc[mask<span style="color:#f92672">.</span>unit_price<span style="color:#f92672">.</span>isna(), <span style="color:#e6db74">&#34;unit_price_median&#34;</span>]
+mask<span style="color:#f92672">.</span>loc[mask<span style="color:#f92672">.</span>unit_cost<span style="color:#f92672">.</span>isna(), <span style="color:#e6db74">&#34;unit_cost&#34;</span>] <span style="color:#f92672">=</span> mask<span style="color:#f92672">.</span>loc[mask<span style="color:#f92672">.</span>unit_cost<span style="color:#f92672">.</span>isna(), <span style="color:#e6db74">&#34;unit_cost_median&#34;</span>]
+
+df_product_4 <span style="color:#f92672">=</span> mask<span style="color:#f92672">.</span>drop([<span style="color:#e6db74">&#39;unit_price_median&#39;</span>, <span style="color:#e6db74">&#39;unit_cost_median&#39;</span>], axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)
+df_product_4<span style="color:#f92672">.</span>isna()<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>any() <span style="color:#75715e">#&gt; False</span>
+</code></pre></div><p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">動作検証は実行ファイル参照</a></p>
+<h2 id="084">084</h2>
+<blockquote>
+<p>P-084: 顧客データフレーム（df_customer）の全顧客に対し、全期間の売上金額に占める 2019 年売上金額の割合を計算せよ。ただし、販売実績のない場合は 0 として扱うこと。そして計算した割合が 0 超のものを抽出せよ。 結果は 10 件表示させれば良い。また、作成したデータに NA や NAN が存在しないことを確認せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>]], df_receipt<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;20190101 &lt;= sales_ymd &lt;= 20191231&#39;</span>)<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>agg(amount_2019<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;amount&#34;</span>,<span style="color:#e6db74">&#34;sum&#34;</span>))<span style="color:#f92672">.</span>reset_index(), how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>)
+tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(tmp, df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>agg(amount_all<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;amount&#34;</span>,<span style="color:#e6db74">&#34;sum&#34;</span>))<span style="color:#f92672">.</span>reset_index(), how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>)
+tmp[<span style="color:#e6db74">&#34;ratio&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>amount_2019 <span style="color:#f92672">/</span> tmp<span style="color:#f92672">.</span>amount_all
+tmp <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>fillna(<span style="color:#ae81ff">0</span>)
+tmp<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;ratio &gt; 0&#39;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>       customer_id  amount_2019  amount_all     ratio
+2   CS031415000172       2971.0      5088.0  0.583923
+6   CS015414000103        874.0      3122.0  0.279949
+12  CS011215000048        248.0      3444.0  0.072009
+15  CS029415000023       3767.0      5167.0  0.729050
+21  CS035415000029       5823.0      7504.0  0.775986
+23  CS023513000066        208.0       771.0  0.269780
+24  CS035513000134        463.0      1565.0  0.295847
+27  CS001515000263        216.0       216.0  1.000000
+30  CS006415000279        229.0       229.0  1.000000
+32  CS031415000106        215.0      7741.0  0.027774
+</code></pre><h2 id="085">085</h2>
+<blockquote>
+<p>P-085: 顧客データフレーム（df_customer）の全顧客に対し、郵便番号（postal_cd）を用いて経度緯度変換用データフレーム（df_geocode）を紐付け、新たな df_customer_1 を作成せよ。ただし、複数紐づく場合は経度（longitude）、緯度（latitude）それぞれ平均を算出すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer_1 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_customer,
+    df_geocode<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;postal_cd&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;longitude&#34;</span>:<span style="color:#e6db74">&#34;mean&#34;</span>, <span style="color:#e6db74">&#34;latitude&#34;</span>:<span style="color:#e6db74">&#34;mean&#34;</span>})<span style="color:#f92672">.</span>reset_index(),
+    on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;postal_cd&#34;</span>,
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>
+  )
+df_customer_1<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id customer_name  gender_cd  ...     status_cd  longitude  latitude
+0  CS021313000114        大野 あや子          1  ...  0-00000000-0  139.31779  35.41358
+1  CS037613000071         六角 雅彦          9  ...  0-00000000-0  139.83502  35.67193
+2  CS031415000172       宇多田 貴美子          1  ...  D-20100325-C  139.68965  35.67374
+3  CS028811000001        堀井 かおり          1  ...  0-00000000-0  139.48360  35.39125
+4  CS001215000145         田崎 美紀          1  ...  6-20090929-2  139.70775  35.54084
+5  CS020401000016         宮下 達士          0  ...  0-00000000-0  139.67245  35.77073
+6  CS015414000103         奥野 陽子          1  ...  B-20100609-B  139.83601  35.67818
+7  CS029403000008          釈 人志          0  ...  0-00000000-0  139.90469  35.65422
+8  CS015804000004         松谷 米蔵          0  ...  0-00000000-0  139.83601  35.67818
+9  CS033513000180          安斎 遥          1  ...  6-20080506-5  139.51463  35.45013
+
+[10 rows x 13 columns]
+</code></pre><h2 id="086">086</h2>
+<blockquote>
+<p>P-086: 前設問で作成した緯度経度つき顧客データフレーム（df_customer_1）に対し、申込み店舗コード（application_store_cd）をキーに店舗データフレーム（df_store）と結合せよ。そして申込み店舗の緯度（latitude）・経度情報（longitude)と顧客の緯度・経度を用いて距離（km）を求め、顧客 ID（customer_id）、顧客住所（address）、店舗住所（address）とともに表示せよ。計算式は簡易式で良いものとするが、その他精度の高い方式を利用したライブラリを利用してもかまわない。結果は 10 件表示すれば良い。</p>
+</blockquote>
+<pre><code class="language-math" data-lang="math">緯度（ラジアン）：\phi \\
+経度（ラジアン）：\lambda \\
+距離L = 6371 * arccos(sin \phi_1 * sin \phi_2
++ cos \phi_1 * cos \phi_2 * cos(\lambda_1 − \lambda_2))
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_customer_1[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;application_store_cd&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;latitude&#34;</span>]],
+    df_store[[<span style="color:#e6db74">&#34;store_cd&#34;</span>, <span style="color:#e6db74">&#34;longitude&#34;</span>, <span style="color:#e6db74">&#34;latitude&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>,
+    left_on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;application_store_cd&#34;</span>,
+    right_on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;store_cd&#34;</span>
+  )
+x1, y1, x2, y2 <span style="color:#f92672">=</span> map(np<span style="color:#f92672">.</span>radians, [tmp<span style="color:#f92672">.</span>longitude_x, tmp<span style="color:#f92672">.</span>latitude_x, tmp<span style="color:#f92672">.</span>longitude_y, tmp<span style="color:#f92672">.</span>latitude_y])
+
+df_customer_1[<span style="color:#e6db74">&#34;distance&#34;</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">6371</span><span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>arccos(np<span style="color:#f92672">.</span>sin(y1) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>sin(y2) <span style="color:#f92672">+</span> np<span style="color:#f92672">.</span>cos(y1) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>cos(y2) <span style="color:#f92672">*</span> np<span style="color:#f92672">.</span>cos(x1<span style="color:#f92672">-</span>x2))
+df_customer_1<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id customer_name  gender_cd  ...  longitude  latitude  distance
+0  CS021313000114        大野 あや子          1  ...  139.31779  35.41358  1.394409
+1  CS037613000071         六角 雅彦          9  ...  139.83502  35.67193  1.451182
+2  CS031415000172       宇多田 貴美子          1  ...  139.68965  35.67374  0.411733
+3  CS028811000001        堀井 かおり          1  ...  139.48360  35.39125  8.065196
+4  CS001215000145         田崎 美紀          1  ...  139.70775  35.54084  1.268421
+5  CS020401000016         宮下 達士          0  ...  139.67245  35.77073  4.185905
+6  CS015414000103         奥野 陽子          1  ...  139.83601  35.67818  1.449673
+7  CS029403000008          釈 人志          0  ...  139.90469  35.65422  0.804858
+8  CS015804000004         松谷 米蔵          0  ...  139.83601  35.67818  1.449673
+9  CS033513000180          安斎 遥          1  ...  139.51463  35.45013  1.956947
+
+[10 rows x 14 columns]
+</code></pre><h2 id="087">087</h2>
+<blockquote>
+<p>P-087: 顧客データフレーム（df_customer）では、異なる店舗での申込みなどにより同一顧客が複数登録されている。名前（customer_name）と郵便番号（postal_cd）が同じ顧客は同一顧客とみなし、1 顧客 1 レコードとなるように名寄せした名寄顧客データフレーム（df_customer_u）を作成せよ。ただし、同一顧客に対しては売上金額合計が最も高いものを残すものとし、売上金額合計が同一もしくは売上実績の無い顧客については顧客 ID（customer_id）の番号が小さいものを残すこととする。</p>
+</blockquote>
+<p>ソートして<code>drop_duplicates</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_customer,
+    df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;customer_id&#39;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})<span style="color:#f92672">.</span>reset_index(),
+    how <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;left&#34;</span>,
+    on <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)<span style="color:#f92672">.</span>sort_values([<span style="color:#e6db74">&#34;amount&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>], ascending<span style="color:#f92672">=</span>[False, True])
+
+
+df_customer_u <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>drop_duplicates(subset<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;customer_name&#34;</span>, <span style="color:#e6db74">&#34;postal_cd&#34;</span>], keep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;first&#34;</span>)
+df_customer_u<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>          customer_id customer_name  ...     status_cd   amount
+16905  CS017415000097         福士 千夏  ...  F-20101006-F  23086.0
+12692  CS015415000185        岩淵 はるみ  ...  F-20101014-F  20153.0
+13550  CS031414000051        長澤 沙知絵  ...  F-20101009-F  19202.0
+4808   CS028415000007         紺野 あい  ...  F-20100922-F  19127.0
+14205  CS001605000009         安部 耕司  ...  F-20101019-E  18925.0
+14760  CS010214000010         高嶋 芽以  ...  F-20100909-F  18585.0
+15709  CS006515000023        竹村 はるみ  ...  F-20100831-F  18372.0
+6353   CS016415000141         西谷 愛梨  ...  F-20100611-F  18372.0
+21458  CS011414000106          紺野 窈  ...  F-20101028-F  18338.0
+20336  CS038415000104        城戸 しほり  ...  F-20100922-F  17847.0
+
+[10 rows x 12 columns]
+</code></pre><h2 id="088">088</h2>
+<blockquote>
+<p>P-088: 前設問で作成したデータを元に、顧客データフレームに統合名寄 ID を付与したデータフレーム（df_customer_n）を作成せよ。ただし、統合名寄 ID は以下の仕様で付与するものとする。</p>
+<ul>
+<li>重複していない顧客：顧客 ID（customer_id）を設定</li>
+<li>重複している顧客：前設問で抽出したレコードの顧客 ID を設定</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_customer_n <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_customer,
+    df_customer_u[[<span style="color:#e6db74">&#34;customer_name&#34;</span>, <span style="color:#e6db74">&#34;postal_cd&#34;</span>, <span style="color:#e6db74">&#34;customer_id&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>, on <span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;customer_name&#34;</span>, <span style="color:#e6db74">&#34;postal_cd&#34;</span>]
+)<span style="color:#f92672">.</span>rename(columns<span style="color:#f92672">=</span>{<span style="color:#e6db74">&#34;customer_id_x&#34;</span>:<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;customer_id_y&#34;</span>:<span style="color:#e6db74">&#34;new_customer_id&#34;</span>})
+
+
+df_customer_n<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id customer_name  ...     status_cd new_customer_id
+0  CS021313000114        大野 あや子  ...  0-00000000-0  CS021313000114
+1  CS037613000071         六角 雅彦  ...  0-00000000-0  CS037613000071
+2  CS031415000172       宇多田 貴美子  ...  D-20100325-C  CS031415000172
+3  CS028811000001        堀井 かおり  ...  0-00000000-0  CS028811000001
+4  CS001215000145         田崎 美紀  ...  6-20090929-2  CS001215000145
+5  CS020401000016         宮下 達士  ...  0-00000000-0  CS020401000016
+6  CS015414000103         奥野 陽子  ...  B-20100609-B  CS015414000103
+7  CS029403000008          釈 人志  ...  0-00000000-0  CS029403000008
+8  CS015804000004         松谷 米蔵  ...  0-00000000-0  CS015804000004
+9  CS033513000180          安斎 遥  ...  6-20080506-5  CS033513000180
+
+[10 rows x 12 columns]
+</code></pre><h2 id="089">089</h2>
+<blockquote>
+<p>P-089: 売上実績のある顧客に対し、予測モデル構築のため学習用データとテスト用データに分割したい。それぞれ 8:2 の割合でランダムにデータを分割せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> sklearn.model_selection <span style="color:#f92672">import</span> train_test_split
+
+df_train, df_test <span style="color:#f92672">=</span> train_test_split(df_customer_u<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#34;amount&gt;0&#34;</span>), test_size<span style="color:#f92672">=</span><span style="color:#ae81ff">0.2</span>)
+</code></pre></div><h2 id="090">090</h2>
+<blockquote>
+<p>P-090: レシート明細データフレーム（df_receipt）は 2017 年 1 月 1 日〜2019 年 10 月 31 日までのデータを有している。売上金額（amount）を月次で集計し、学習用に 12 ヶ月、テスト用に 6 ヶ月のモデル構築用データを 3 セット作成せよ。</p>
+</blockquote>
+<p><code>pandas.Grouper</code>を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt<span style="color:#f92672">.</span>copy()
+tmp<span style="color:#f92672">.</span>sales_ymd <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>to_datetime(tmp<span style="color:#f92672">.</span>sales_ymd, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)
+group <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>groupby(pd<span style="color:#f92672">.</span>Grouper(key<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sales_ymd&#39;</span>, freq<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;1m&#39;</span>))<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})<span style="color:#f92672">.</span>reset_index()
+df_train1, df_test1 <span style="color:#f92672">=</span> group<span style="color:#f92672">.</span>loc[:<span style="color:#ae81ff">11</span>], group<span style="color:#f92672">.</span>loc[:<span style="color:#ae81ff">5</span>]
+df_train2, df_test2 <span style="color:#f92672">=</span> group<span style="color:#f92672">.</span>loc[<span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">23</span>], group<span style="color:#f92672">.</span>loc[<span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">17</span>]
+df_train3, df_test3 <span style="color:#f92672">=</span> group<span style="color:#f92672">.</span>loc[<span style="color:#ae81ff">24</span>:], group<span style="color:#f92672">.</span>loc[<span style="color:#ae81ff">24</span>:<span style="color:#ae81ff">30</span>]
+</code></pre></div><p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">動作検証は実行ファイル参照</a></p>
+]]></content>
+        </item>
+        
+        <item>
+            <title>データサイエンス100本ノックをPythonでやってみた [91-100]</title>
+            <link>https://tomowarkar.github.io/blog/posts/ds100-10/</link>
+            <pubDate>Wed, 24 Jun 2020 00:00:00 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/ds100-10/</guid>
+            <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+            <content type="html"><![CDATA[<h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="091">091</h2>
+<blockquote>
+<p>P-091: 顧客データフレーム（df_customer）の各顧客に対し、売上実績のある顧客数と売上実績のない顧客数が 1:1 となるようにアンダーサンプリングで抽出せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">group <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_customer,
+    df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#39;customer_id&#39;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})<span style="color:#f92672">.</span>reset_index(),
+    how <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;left&#34;</span>,
+    on <span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)<span style="color:#f92672">.</span>groupby(df_customer_u<span style="color:#f92672">.</span>amount <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>)
+
+max_num <span style="color:#f92672">=</span> min(len(group<span style="color:#f92672">.</span>groups<span style="color:#f92672">.</span>get(True)), len(group<span style="color:#f92672">.</span>groups<span style="color:#f92672">.</span>get(False)))
+num <span style="color:#f92672">=</span> <span style="color:#ae81ff">10000</span>
+
+flag_true_idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(group<span style="color:#f92672">.</span>groups<span style="color:#f92672">.</span>get(True)<span style="color:#f92672">.</span>values, min(max_num, num), replace<span style="color:#f92672">=</span>False)
+flag_false_idx <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>random<span style="color:#f92672">.</span>choice(group<span style="color:#f92672">.</span>groups<span style="color:#f92672">.</span>get(False)<span style="color:#f92672">.</span>values, min(max_num, num), replace<span style="color:#f92672">=</span>False)
+
+flag_true_df <span style="color:#f92672">=</span> df_customer<span style="color:#f92672">.</span>loc[flag_true_idx]
+flag_false_df <span style="color:#f92672">=</span> df_customer<span style="color:#f92672">.</span>loc[flag_false_idx]
+</code></pre></div><p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">動作検証は実行ファイル参照</a></p>
+<h2 id="092">092</h2>
+<blockquote>
+<p>P-092: 顧客データフレーム（df_customer）では、性別に関する情報が非正規化の状態で保持されている。これを第三正規化せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_gender <span style="color:#f92672">=</span> df_customer[[<span style="color:#e6db74">&#39;gender_cd&#39;</span>, <span style="color:#e6db74">&#39;gender&#39;</span>]]<span style="color:#f92672">.</span>drop_duplicates()
+df_customer_v2 <span style="color:#f92672">=</span> df_customer<span style="color:#f92672">.</span>drop(columns<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gender&#34;</span>)
+</code></pre></div><h2 id="093">093</h2>
+<blockquote>
+<p>P-093: 商品データフレーム（df_product）では各カテゴリのコード値だけを保有し、カテゴリ名は保有していない。カテゴリデータフレーム（df_category）と組み合わせて非正規化し、カテゴリ名を保有した新たな商品データフレームを作成せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_product_v2 <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_product,
+    df_category[[<span style="color:#e6db74">&#34;category_small_cd&#34;</span>, <span style="color:#e6db74">&#34;category_major_name&#34;</span>, <span style="color:#e6db74">&#34;category_medium_name&#34;</span>, <span style="color:#e6db74">&#34;category_small_name&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>,
+    on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;category_small_cd&#34;</span>
+)
+</code></pre></div><h2 id="094">094</h2>
+<blockquote>
+<p>P-094: 先に作成したカテゴリ名付き商品データを以下の仕様でファイル出力せよ。なお、出力先のパスは data 配下とする。</p>
+<ul>
+<li>ファイル形式は CSV（カンマ区切り）</li>
+<li>ヘッダ有り</li>
+<li>文字コードは UTF-8</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>makedirs(<span style="color:#e6db74">&#34;data&#34;</span>, exist_ok<span style="color:#f92672">=</span>True)
+
+df_product_v2<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;data/product_v2.csv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>, header<span style="color:#f92672">=</span>True, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>, index<span style="color:#f92672">=</span>False)
+</code></pre></div><h2 id="095">095</h2>
+<blockquote>
+<p>P-095: 先に作成したカテゴリ名付き商品データを以下の仕様でファイル出力せよ。なお、出力先のパスは data 配下とする。</p>
+<ul>
+<li>ファイル形式は CSV（カンマ区切り）</li>
+<li>ヘッダ有り</li>
+<li>文字コードは CP932</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>makedirs(<span style="color:#e6db74">&#34;data&#34;</span>, exist_ok<span style="color:#f92672">=</span>True)
+
+df_product_v2<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;data/product_v2.csv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>, header<span style="color:#f92672">=</span>True, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;CP932&#34;</span>, index<span style="color:#f92672">=</span>False)
+</code></pre></div><h2 id="096">096</h2>
+<blockquote>
+<p>P-096: 先に作成したカテゴリ名付き商品データを以下の仕様でファイル出力せよ。なお、出力先のパスは data 配下とする。</p>
+<ul>
+<li>ファイル形式は CSV（カンマ区切り）</li>
+<li>ヘッダ無し</li>
+<li>文字コードは UTF-8</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>makedirs(<span style="color:#e6db74">&#34;data&#34;</span>, exist_ok<span style="color:#f92672">=</span>True)
+
+df_product_v2<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;data/product_v2.csv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>, header<span style="color:#f92672">=</span>False, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>, index<span style="color:#f92672">=</span>False)
+</code></pre></div><h2 id="097">097</h2>
+<hr>
+<blockquote>
+<p>P-097: 先に作成した以下形式のファイルを読み込み、データフレームを作成せよ。また、先頭 10 件を表示させ、正しくとりまれていることを確認せよ。</p>
+<ul>
+<li>ファイル形式は CSV（カンマ区切り）</li>
+<li>ヘッダ有り</li>
+<li>文字コードは UTF-8</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>makedirs(<span style="color:#e6db74">&#34;data&#34;</span>, exist_ok<span style="color:#f92672">=</span>True)
+
+df_product_v2<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;data/product_v2.csv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>, header<span style="color:#f92672">=</span>True, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>, index<span style="color:#f92672">=</span>False)
+pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;data/product_v2.csv&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   product_cd  category_major_cd  ...  category_medium_name  category_small_name
+0  P040101001                  4  ...                   御飯類                  弁当類
+1  P040101002                  4  ...                   御飯類                  弁当類
+2  P040101003                  4  ...                   御飯類                  弁当類
+3  P040101004                  4  ...                   御飯類                  弁当類
+4  P040101005                  4  ...                   御飯類                  弁当類
+5  P040101006                  4  ...                   御飯類                  弁当類
+6  P040101007                  4  ...                   御飯類                  弁当類
+7  P040101008                  4  ...                   御飯類                  弁当類
+8  P040101009                  4  ...                   御飯類                  弁当類
+9  P040101010                  4  ...                   御飯類                  弁当類
+
+[10 rows x 9 columns]
+</code></pre><h2 id="098">098</h2>
+<blockquote>
+<p>P-098: 先に作成した以下形式のファイルを読み込み、データフレームを作成せよ。また、先頭 10 件を表示させ、正しくとりまれていることを確認せよ。</p>
+<ul>
+<li>ファイル形式は CSV（カンマ区切り）</li>
+<li>ヘッダ無し</li>
+<li>文字コードは UTF-8</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>makedirs(<span style="color:#e6db74">&#34;data&#34;</span>, exist_ok<span style="color:#f92672">=</span>True)
+
+df_product_v2<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;data/product_v2.csv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;,&#34;</span>, header<span style="color:#f92672">=</span>False, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>, index<span style="color:#f92672">=</span>False)
+pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;data/product_v2.csv&#34;</span>, header<span style="color:#f92672">=</span>None)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>            0  1    2      3      4      5   6    7    8
+0  P040101001  4  401  40101  198.0  149.0  惣菜  御飯類  弁当類
+1  P040101002  4  401  40101  218.0  164.0  惣菜  御飯類  弁当類
+2  P040101003  4  401  40101  230.0  173.0  惣菜  御飯類  弁当類
+3  P040101004  4  401  40101  248.0  186.0  惣菜  御飯類  弁当類
+4  P040101005  4  401  40101  268.0  201.0  惣菜  御飯類  弁当類
+5  P040101006  4  401  40101  298.0  224.0  惣菜  御飯類  弁当類
+6  P040101007  4  401  40101  338.0  254.0  惣菜  御飯類  弁当類
+7  P040101008  4  401  40101  420.0  315.0  惣菜  御飯類  弁当類
+8  P040101009  4  401  40101  498.0  374.0  惣菜  御飯類  弁当類
+9  P040101010  4  401  40101  580.0  435.0  惣菜  御飯類  弁当類
+</code></pre><h2 id="099">099</h2>
+<blockquote>
+<p>P-099: 先に作成したカテゴリ名付き商品データを以下の仕様でファイル出力せよ。なお、出力先のパスは data 配下とする。</p>
+<ul>
+<li>ファイル形式は TSV（タブ区切り）</li>
+<li>ヘッダ有り</li>
+<li>文字コードは UTF-8</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">os<span style="color:#f92672">.</span>makedirs(<span style="color:#e6db74">&#34;data&#34;</span>, exist_ok<span style="color:#f92672">=</span>True)
+
+df_product_v2<span style="color:#f92672">.</span>to_csv(<span style="color:#e6db74">&#34;data/product_v2.tsv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>, header<span style="color:#f92672">=</span>True, encoding<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;UTF-8&#34;</span>, index<span style="color:#f92672">=</span>False)
+</code></pre></div><h2 id="100">100</h2>
+<blockquote>
+<p>P-100: 先に作成した以下形式のファイルを読み込み、データフレームを作成せよ。また、先頭 10 件を表示させ、正しくとりまれていることを確認せよ。</p>
+<ul>
+<li>ファイル形式は TSV（タブ区切り）</li>
+<li>ヘッダ有り</li>
+<li>文字コードは UTF-8</li>
+</ul>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>read_csv(<span style="color:#e6db74">&#34;data/product_v2.tsv&#34;</span>, sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   product_cd  category_major_cd  ...  category_medium_name  category_small_name
+0  P040101001                  4  ...                   御飯類                  弁当類
+1  P040101002                  4  ...                   御飯類                  弁当類
+2  P040101003                  4  ...                   御飯類                  弁当類
+3  P040101004                  4  ...                   御飯類                  弁当類
+4  P040101005                  4  ...                   御飯類                  弁当類
+5  P040101006                  4  ...                   御飯類                  弁当類
+6  P040101007                  4  ...                   御飯類                  弁当類
+7  P040101008                  4  ...                   御飯類                  弁当類
+8  P040101009                  4  ...                   御飯類                  弁当類
+9  P040101010                  4  ...                   御飯類                  弁当類
+
+[10 rows x 9 columns]
+</code></pre>]]></content>
+        </item>
+        
+        <item>
+            <title>データサイエンス100本ノックをPythonでやってみた [41-50]</title>
+            <link>https://tomowarkar.github.io/blog/posts/ds100-05/</link>
+            <pubDate>Tue, 23 Jun 2020 00:00:00 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/ds100-05/</guid>
+            <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+            <content type="html"><![CDATA[<h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="041">041</h2>
+<blockquote>
+<p>P-041: レシート明細データフレーム（df_receipt）の売上金額（amount）を日付（sales_ymd）ごとに集計し、前日からの売上金額増減を計算せよ。なお、計算結果は 10 件表示すればよい。</p>
+</blockquote>
+<p><code>pandas.Series.diff</code>を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;sales_ymd&#34;</span>)\
+  <span style="color:#f92672">.</span>agg(diff_sum_amount<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;amount&#34;</span>, <span style="color:#e6db74">&#34;sum&#34;</span>))\
+  <span style="color:#f92672">.</span>diff(periods<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>           diff_sum_amount
+sales_ymd
+20170101               NaN
+20170102           -9558.0
+20170103            3338.0
+20170104            8662.0
+20170105            1665.0
+20170106           -5443.0
+20170107           -8972.0
+20170108            1322.0
+20170109            1981.0
+20170110           -6575.0
+</code></pre><p>groupby で sales_ymd が昇順に並ぶので厳密に前日からかは確認していけど、前営業日からの売り上げ差分は保証できているしこれでいいと思う。</p>
+<h2 id="042">042</h2>
+<blockquote>
+<p>P-042: レシート明細データフレーム（df_receipt）の売上金額（amount）を日付（sales_ymd）ごとに集計し、各日付のデータに対し、１日前、２日前、３日前のデータを結合せよ。結果は 10 件表示すればよい。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;sales_ymd&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})
+pd<span style="color:#f92672">.</span>concat(
+    [tmp, pd<span style="color:#f92672">.</span>DataFrame({f<span style="color:#e6db74">&#34;diff_{i}&#34;</span>:tmp<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>diff(i) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">4</span>)})],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>           amount  diff_1   diff_2   diff_3
+sales_ymd
+20170101    33723     NaN      NaN      NaN
+20170102    24165 -9558.0      NaN      NaN
+20170103    27503  3338.0  -6220.0      NaN
+20170104    36165  8662.0  12000.0   2442.0
+20170105    37830  1665.0  10327.0  13665.0
+20170106    32387 -5443.0  -3778.0   4884.0
+20170107    23415 -8972.0 -14415.0 -12750.0
+20170108    24737  1322.0  -7650.0 -13093.0
+20170109    26718  1981.0   3303.0  -5669.0
+20170110    20143 -6575.0  -4594.0  -3272.0
+</code></pre><h2 id="043">043</h2>
+<blockquote>
+<p>P-043： レシート明細データフレーム（df_receipt）と顧客データフレーム（df_customer）を結合し、性別（gender）と年代（age から計算）ごとに売上金額（amount）を合計した売上サマリデータフレーム（df_sales_summary）を作成せよ。性別は 0 が男性、1 が女性、9 が不明を表すものとする。</p>
+<p>ただし、項目構成は年代、女性の売上金額、男性の売上金額、性別不明の売上金額の 4 項目とすること（縦に年代、横に性別のクロス集計）。また、年代は 10 歳ごとの階級とすること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;gender&#34;</span>, <span style="color:#e6db74">&#34;age&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>,
+    on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)
+
+tmp[<span style="color:#e6db74">&#34;gender&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>gender<span style="color:#f92672">.</span>map({<span style="color:#e6db74">&#34;男性&#34;</span>:<span style="color:#ae81ff">0</span>, <span style="color:#e6db74">&#34;女性&#34;</span>:<span style="color:#ae81ff">1</span>})<span style="color:#f92672">.</span>fillna(<span style="color:#ae81ff">9</span>)
+tmp[<span style="color:#e6db74">&#34;age&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>age<span style="color:#f92672">.</span>fillna(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">//</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#ae81ff">10</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">else</span> x)
+df_sales_summary <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>pivot_table(tmp, index<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;age&#39;</span>, columns<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;gender&#39;</span>, values<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;amount&#39;</span>, aggfunc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sum&#39;</span>)<span style="color:#f92672">.</span>reset_index()
+df_sales_summary<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;gen&#34;</span>, <span style="color:#e6db74">&#34;male&#34;</span>, <span style="color:#e6db74">&#34;female&#34;</span>, <span style="color:#e6db74">&#34;unknown&#34;</span>]
+df_sales_summary
+</code></pre></div><pre><code>    gen      male     female     unknown
+0  -1.0       NaN        NaN  12395003.0
+1  10.0    1591.0   149836.0      4317.0
+2  20.0   72940.0  1363724.0     44328.0
+3  30.0  177322.0   693047.0     50441.0
+4  40.0   19355.0  9320791.0    483512.0
+5  50.0   54320.0  6685192.0    342923.0
+6  60.0  272469.0   987741.0     71418.0
+7  70.0   13435.0    29764.0      2427.0
+8  80.0   46360.0   262923.0      5111.0
+9  90.0       NaN     6260.0         NaN
+</code></pre><h2 id="044">044</h2>
+<blockquote>
+<p>P-044： 前設問で作成した売上サマリデータフレーム（df_sales_summary）は性別の売上を横持ちさせたものであった。このデータフレームから性別を縦持ちさせ、年代、性別コード、売上金額の 3 項目に変換せよ。ただし、性別コードは男性を&rsquo;00&rsquo;、女性を&rsquo;01&rsquo;、不明を&rsquo;99'とする。</p>
+</blockquote>
+<p>データのピボット処理</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_sales_summary <span style="color:#f92672">=</span> df_sales_summary<span style="color:#f92672">.</span>set_index(<span style="color:#e6db74">&#39;gen&#39;</span>)<span style="color:#f92672">.</span>stack()<span style="color:#f92672">.</span>reset_index()
+df_sales_summary<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;gen&#34;</span>, <span style="color:#e6db74">&#34;gender_cd&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>]
+df_sales_summary[<span style="color:#e6db74">&#34;gender_cd&#34;</span>] <span style="color:#f92672">=</span> df_sales_summary<span style="color:#f92672">.</span>gender_cd<span style="color:#f92672">.</span>map({<span style="color:#e6db74">&#34;male&#34;</span>:<span style="color:#e6db74">&#34;00&#34;</span>, <span style="color:#e6db74">&#34;female&#34;</span>:<span style="color:#e6db74">&#34;01&#34;</span>, <span style="color:#e6db74">&#34;unknown&#34;</span>:<span style="color:#e6db74">&#34;99&#34;</span>})
+df_sales_summary
+</code></pre></div><pre><code>     gen gender_cd      amount
+0   -1.0        99  12395003.0
+1   10.0        00      1591.0
+2   10.0        01    149836.0
+3   10.0        99      4317.0
+4   20.0        00     72940.0
+5   20.0        01   1363724.0
+6   20.0        99     44328.0
+7   30.0        00    177322.0
+8   30.0        01    693047.0
+9   30.0        99     50441.0
+10  40.0        00     19355.0
+11  40.0        01   9320791.0
+12  40.0        99    483512.0
+13  50.0        00     54320.0
+14  50.0        01   6685192.0
+15  50.0        99    342923.0
+16  60.0        00    272469.0
+17  60.0        01    987741.0
+18  60.0        99     71418.0
+19  70.0        00     13435.0
+20  70.0        01     29764.0
+21  70.0        99      2427.0
+22  80.0        00     46360.0
+23  80.0        01    262923.0
+24  80.0        99      5111.0
+25  90.0        01      6260.0
+</code></pre><h3 id="別解">別解</h3>
+<p>最初から作る場合</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>merge(
+    df_receipt[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>]],
+    df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;gender&#34;</span>, <span style="color:#e6db74">&#34;age&#34;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;left&#34;</span>,
+    on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)
+
+tmp[<span style="color:#e6db74">&#34;gender&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>gender<span style="color:#f92672">.</span>map({<span style="color:#e6db74">&#34;男性&#34;</span>:<span style="color:#e6db74">&#34;00&#34;</span>, <span style="color:#e6db74">&#34;女性&#34;</span>:<span style="color:#e6db74">&#34;01&#34;</span>})<span style="color:#f92672">.</span>fillna(<span style="color:#e6db74">&#34;99&#34;</span>)
+tmp[<span style="color:#e6db74">&#34;age&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>age<span style="color:#f92672">.</span>fillna(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">//</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#ae81ff">10</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">else</span> x)
+df_sales_summary <span style="color:#f92672">=</span> pd<span style="color:#f92672">.</span>pivot_table(tmp, index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;age&#39;</span>, <span style="color:#e6db74">&#39;gender&#39;</span>], values<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;amount&#39;</span>, aggfunc<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;sum&#39;</span>)<span style="color:#f92672">.</span>reset_index()
+df_sales_summary<span style="color:#f92672">.</span>columns <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#34;gen&#34;</span>, <span style="color:#e6db74">&#34;gender_cd&#34;</span>, <span style="color:#e6db74">&#34;amount&#34;</span>]
+df_sales_summary
+</code></pre></div><h2 id="045">045</h2>
+<blockquote>
+<p>P-045: 顧客データフレーム（df_customer）の生年月日（birth_day）は日付型（Date）でデータを保有している。これを YYYYMMDD 形式の文字列に変換し、顧客 ID（customer_id）とともに抽出せよ。データは 10 件を抽出すれば良い。</p>
+</blockquote>
+<p><code>pandas.to_datetime</code>を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [pd<span style="color:#f92672">.</span>to_datetime(df_customer<span style="color:#f92672">.</span>birth_day, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y-%m-</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>)<span style="color:#f92672">.</span>dt<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>),
+    df_customer<span style="color:#f92672">.</span>customer_id],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>  birth_day     customer_id
+0  19810429  CS021313000114
+1  19520401  CS037613000071
+2  19761004  CS031415000172
+3  19330327  CS028811000001
+4  19950329  CS001215000145
+5  19740915  CS020401000016
+6  19770809  CS015414000103
+7  19730817  CS029403000008
+8  19310502  CS015804000004
+9  19620711  CS033513000180
+</code></pre><h2 id="046">046</h2>
+<blockquote>
+<p>P-046: 顧客データフレーム（df_customer）の申し込み日（application_date）は YYYYMMD 形式の文字列型でデータを保有している。これを日付型（date や datetime）に変換し、顧客 ID（customer_id）とともに抽出せよ。データは 10 件を抽出すれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [pd<span style="color:#f92672">.</span>to_datetime(df_customer<span style="color:#f92672">.</span>application_date, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>),
+    df_customer<span style="color:#f92672">.</span>customer_id],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>  application_date     customer_id
+0       2015-09-05  CS021313000114
+1       2015-04-14  CS037613000071
+2       2015-05-29  CS031415000172
+3       2016-01-15  CS028811000001
+4       2017-06-05  CS001215000145
+5       2015-02-25  CS020401000016
+6       2015-07-22  CS015414000103
+7       2015-05-15  CS029403000008
+8       2015-06-07  CS015804000004
+9       2015-07-28  CS033513000180
+</code></pre><h2 id="047">047</h2>
+<blockquote>
+<p>P-047: レシート明細データフレーム（df_receipt）の売上日（sales_ymd）は YYYYMMDD 形式の数値型でデータを保有している。これを日付型（date や datetime）に変換し、レシート番号(receipt_no)、レシートサブ番号（receipt_sub_no）とともに抽出せよ。データは 10 件を抽出すれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [pd<span style="color:#f92672">.</span>to_datetime(df_receipt<span style="color:#f92672">.</span>sales_ymd, format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;%Y%m</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span>),
+    df_receipt[[<span style="color:#e6db74">&#34;receipt_no&#34;</span>, <span style="color:#e6db74">&#34;receipt_sub_no&#34;</span>]]],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   sales_ymd  receipt_no  receipt_sub_no
+0 2018-11-03         112               1
+1 2018-11-18        1132               2
+2 2017-07-12        1102               1
+3 2019-02-05        1132               1
+4 2018-08-21        1102               2
+5 2019-06-05        1112               1
+6 2018-12-05        1102               2
+7 2019-09-22        1102               1
+8 2017-05-04        1112               2
+9 2019-10-10        1102               1
+</code></pre><h2 id="048">048</h2>
+<blockquote>
+<p>P-048: レシート明細データフレーム（df_receipt）の売上エポック秒（sales_epoch）は数値型の UNIX 秒でデータを保有している。これを日付型（date や datetime）に変換し、レシート番号(receipt_no)、レシートサブ番号（receipt_sub_no）とともに抽出せよ。データは 10 件を抽出すれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [pd<span style="color:#f92672">.</span>to_datetime(df_receipt<span style="color:#f92672">.</span>sales_epoch, unit<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;s&#39;</span>),
+    df_receipt[[<span style="color:#e6db74">&#34;receipt_no&#34;</span>, <span style="color:#e6db74">&#34;receipt_sub_no&#34;</span>]]],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>  sales_epoch  receipt_no  receipt_sub_no
+0  2009-11-03         112               1
+1  2009-11-18        1132               2
+2  2008-07-12        1102               1
+3  2010-02-05        1132               1
+4  2009-08-21        1102               2
+5  2010-06-05        1112               1
+6  2009-12-05        1102               2
+7  2010-09-22        1102               1
+8  2008-05-04        1112               2
+9  2010-10-10        1102               1
+</code></pre><h2 id="049">049</h2>
+<blockquote>
+<p>P-049: レシート明細データフレーム（df_receipt）の売上エポック秒（sales_epoch）を日付型（timestamp 型）に変換し、&ldquo;年&quot;だけ取り出してレシート番号(receipt_no)、レシートサブ番号（receipt_sub_no）とともに抽出せよ。データは 10 件を抽出すれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [pd<span style="color:#f92672">.</span>to_datetime(df_receipt<span style="color:#f92672">.</span>sales_epoch, unit<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;s&#39;</span>)<span style="color:#f92672">.</span>dt<span style="color:#f92672">.</span>year,
+    df_receipt[[<span style="color:#e6db74">&#34;receipt_no&#34;</span>, <span style="color:#e6db74">&#34;receipt_sub_no&#34;</span>]]],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   sales_epoch  receipt_no  receipt_sub_no
+0         2009         112               1
+1         2009        1132               2
+2         2008        1102               1
+3         2010        1132               1
+4         2009        1102               2
+5         2010        1112               1
+6         2009        1102               2
+7         2010        1102               1
+8         2008        1112               2
+9         2010        1102               1
+</code></pre><h2 id="050">050</h2>
+<blockquote>
+<p>P-050: レシート明細データフレーム（df_receipt）の売上エポック秒（sales_epoch）を日付型（timestamp 型）に変換し、&ldquo;月&quot;だけ取り出してレシート番号(receipt_no)、レシートサブ番号（receipt_sub_no）とともに抽出せよ。なお、&ldquo;月&quot;は 0 埋め 2 桁で取り出すこと。データは 10 件を抽出すれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [pd<span style="color:#f92672">.</span>to_datetime(df_receipt<span style="color:#f92672">.</span>sales_epoch, unit<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;s&#39;</span>)<span style="color:#f92672">.</span>dt<span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;%m&#39;</span>),
+    df_receipt[[<span style="color:#e6db74">&#34;receipt_no&#34;</span>, <span style="color:#e6db74">&#34;receipt_sub_no&#34;</span>]]],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>  sales_epoch  receipt_no  receipt_sub_no
+0          11         112               1
+1          11        1132               2
+2          07        1102               1
+3          02        1132               1
+4          08        1102               2
+5          06        1112               1
+6          12        1102               2
+7          09        1102               1
+8          05        1112               2
+9          10        1102               1
+</code></pre>]]></content>
+        </item>
+        
+        <item>
+            <title>データサイエンス100本ノックをPythonでやってみた [51-60]</title>
+            <link>https://tomowarkar.github.io/blog/posts/ds100-06/</link>
+            <pubDate>Tue, 23 Jun 2020 00:00:00 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/ds100-06/</guid>
+            <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+            <content type="html"><![CDATA[<h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="051">051</h2>
+<blockquote>
+<p>P-051: レシート明細データフレーム（df_receipt）の売上エポック秒（sales_epoch）を日付型（timestamp 型）に変換し、&ldquo;日&quot;だけ取り出してレシート番号(receipt_no)、レシートサブ番号（receipt_sub_no）とともに抽出せよ。なお、&ldquo;日&quot;は 0 埋め 2 桁で取り出すこと。データは 10 件を抽出すれば良い。</p>
+</blockquote>
+<p>50 と同じようにしてもできるが、違う方法で解く</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [pd<span style="color:#f92672">.</span>to_datetime(df_receipt<span style="color:#f92672">.</span>sales_epoch, unit<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;s&#39;</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: <span style="color:#e6db74">&#34;{:02d}&#34;</span><span style="color:#f92672">.</span>format(x<span style="color:#f92672">.</span>day)),
+    df_receipt[[<span style="color:#e6db74">&#34;receipt_no&#34;</span>, <span style="color:#e6db74">&#34;receipt_sub_no&#34;</span>]]],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>  sales_epoch  receipt_no  receipt_sub_no
+0          03         112               1
+1          18        1132               2
+2          12        1102               1
+3          05        1132               1
+4          21        1102               2
+5          05        1112               1
+6          05        1102               2
+7          22        1102               1
+8          04        1112               2
+9          10        1102               1
+</code></pre><h2 id="052">052</h2>
+<blockquote>
+<p>P-052: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計の上、売上金額合計に対して 2000 円以下を 0、2000 円超を 1 に 2 値化し、顧客 ID、売上金額合計とともに 10 件表示せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+
+pd<span style="color:#f92672">.</span>DataFrame(
+  [tmp, tmp<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">2000</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">1</span>)],
+  index<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;amount&#34;</span>, <span style="color:#e6db74">&#34;flag&#34;</span>]
+)<span style="color:#f92672">.</span>T<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount  flag
+customer_id
+CS001113000004    1298     0
+CS001114000005     626     0
+CS001115000010    3044     1
+CS001205000004    1988     0
+CS001205000006    3337     1
+CS001211000025     456     0
+CS001212000027     448     0
+CS001212000031     296     0
+CS001212000046     228     0
+CS001212000070     456     0
+</code></pre><h2 id="053">053</h2>
+<blockquote>
+<p>P-053: 顧客データフレーム（df_customer）の郵便番号（postal_cd）に対し、東京（先頭 3 桁が 100〜209 のもの）を 1、それ以外のものを 0 に２値化せよ。さらにレシート明細データフレーム（df_receipt）と結合し、全期間において買い物実績のある顧客数を、作成した 2 値ごとにカウントせよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>merge(
+  pd<span style="color:#f92672">.</span>concat(
+      [df_customer<span style="color:#f92672">.</span>customer_id, df_customer<span style="color:#f92672">.</span>postal_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;1\d\d|20\d&#34;</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>)],
+      axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+  ),
+  df_receipt<span style="color:#f92672">.</span>customer_id, how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;inner&#34;</span>, on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;postal_cd&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;customer_id&#34;</span>:<span style="color:#e6db74">&#34;nunique&#34;</span>})
+</code></pre></div><pre><code>           customer_id
+postal_cd
+0                 3906
+1                 4400
+</code></pre><h3 id="別解">別解</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;postal_cd&#34;</span>]]<span style="color:#f92672">.</span>copy()
+tmp[<span style="color:#e6db74">&#34;flag&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>postal_cd<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>match(<span style="color:#e6db74">&#34;1\d\d|20\d&#34;</span>)<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> x <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">0</span>)
+<span style="color:#75715e"># tmp[&#34;flag&#34;] = tmp.postal_cd.map(lambda x: 1 if 100&lt;=int(x[:3])&lt;=209 else 0)</span>
+pd<span style="color:#f92672">.</span>merge(
+    tmp,
+    pd<span style="color:#f92672">.</span>Series(df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>unique(), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>),
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;inner&#34;</span>,
+    on<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;customer_id&#34;</span>
+)<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;flag&#34;</span>)<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>count()
+</code></pre></div><h2 id="054">054</h2>
+<blockquote>
+<p>P-054: 顧客データデータフレーム（df_customer）の住所（address）は、埼玉県、千葉県、東京都、神奈川県のいずれかとなっている。都道府県毎にコード値を作成し、顧客 ID、住所とともに抽出せよ。値は埼玉県を 11、千葉県を 12、東京都を 13、神奈川県を 14 とすること。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat([df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;address&#34;</span>]],
+    pd<span style="color:#f92672">.</span>Series(
+      df_customer<span style="color:#f92672">.</span>address<span style="color:#f92672">.</span>str[:<span style="color:#ae81ff">3</span>]<span style="color:#f92672">.</span>map({<span style="color:#e6db74">&#34;埼玉県&#34;</span>:<span style="color:#ae81ff">11</span>, <span style="color:#e6db74">&#34;千葉県&#34;</span>:<span style="color:#ae81ff">12</span>, <span style="color:#e6db74">&#34;東京都&#34;</span>:<span style="color:#ae81ff">13</span>, <span style="color:#e6db74">&#34;神奈川&#34;</span>:<span style="color:#ae81ff">14</span>}),
+      name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;address_cd&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id                 address  address_cd
+0  CS021313000114    神奈川県伊勢原市粟窪**********          14
+1  CS037613000071      東京都江東区南砂**********          13
+2  CS031415000172     東京都渋谷区代々木**********          13
+3  CS028811000001  神奈川県横浜市泉区和泉町**********          14
+4  CS001215000145     東京都大田区仲六郷**********          13
+5  CS020401000016      東京都板橋区若木**********          13
+6  CS015414000103      東京都江東区北砂**********          13
+7  CS029403000008      千葉県浦安市海楽**********          12
+8  CS015804000004      東京都江東区北砂**********          13
+9  CS033513000180  神奈川県横浜市旭区善部町**********          14
+</code></pre><h2 id="055">055</h2>
+<blockquote>
+<p>P-055: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計し、その合計金額の四分位点を求めよ。その上で、顧客ごとの売上金額合計に対して以下の基準でカテゴリ値を作成し、顧客 ID、売上金額と合計ともに表示せよ。カテゴリ値は上から順に 1〜4 とする。結果は 10 件表示させれば良い。</p>
+<ul>
+<li>最小値以上第一四分位未満</li>
+<li>第一四分位以上第二四分位未満</li>
+<li>第二四分位以上第三四分位未満</li>
+<li>第三四分位以上</li>
+</ul>
+</blockquote>
+<p>32 でも使った<code>pandas.Series.quantile</code>を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})
+quarter <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>quantile([i<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">25</span>, <span style="color:#ae81ff">76</span>, <span style="color:#ae81ff">25</span>)])<span style="color:#f92672">.</span>values
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">f</span>(x):
+  <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> quarter[<span style="color:#ae81ff">0</span>]: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span>
+  <span style="color:#66d9ef">if</span> quarter[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">&lt;=</span> x <span style="color:#f92672">&lt;</span> quarter[<span style="color:#ae81ff">1</span>]: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">2</span>
+  <span style="color:#66d9ef">if</span> quarter[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">&lt;=</span> x <span style="color:#f92672">&lt;</span> quarter[<span style="color:#ae81ff">2</span>]: <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">3</span>
+  <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">4</span>
+
+tmp[<span style="color:#e6db74">&#34;cat_cd&#34;</span>] <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>map(f)
+tmp<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount  cat_cd
+customer_id
+CS001113000004    1298       2
+CS001114000005     626       2
+CS001115000010    3044       3
+CS001205000004    1988       3
+CS001205000006    3337       3
+CS001211000025     456       1
+CS001212000027     448       1
+CS001212000031     296       1
+CS001212000046     228       1
+CS001212000070     456       1
+</code></pre><h2 id="056">056</h2>
+<blockquote>
+<p>P-056: 顧客データフレーム（df_customer）の年齢（age）をもとに 10 歳刻みで年代を算出し、顧客 ID（customer_id）、生年月日（birth_day）とともに抽出せよ。ただし、60 歳以上は全て 60 歳代とすること。年代を表すカテゴリ名は任意とする。先頭 10 件を表示させればよい。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;birth_day&#34;</span>]],
+     pd<span style="color:#f92672">.</span>Series(df_customer<span style="color:#f92672">.</span>age<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">//</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#ae81ff">10</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">60</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">60</span>), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;age_cd&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+
+</code></pre></div><pre><code>      customer_id   birth_day  age_cd
+0  CS021313000114  1981-04-29      30
+1  CS037613000071  1952-04-01      60
+2  CS031415000172  1976-10-04      40
+3  CS028811000001  1933-03-27      60
+4  CS001215000145  1995-03-29      20
+5  CS020401000016  1974-09-15      40
+6  CS015414000103  1977-08-09      40
+7  CS029403000008  1973-08-17      40
+8  CS015804000004  1931-05-02      60
+9  CS033513000180  1962-07-11      50
+</code></pre><h2 id="057">057</h2>
+<blockquote>
+<p>P-057: 前問題の抽出結果と性別（gender）を組み合わせ、新たに性別 × 年代の組み合わせを表すカテゴリデータを作成せよ。組み合わせを表すカテゴリの値は任意とする。先頭 10 件を表示させればよい</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>concat(
+    [df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;birth_day&#34;</span>, <span style="color:#e6db74">&#34;gender&#34;</span>]],
+     pd<span style="color:#f92672">.</span>Series(
+       [<span style="color:#e6db74">&#34;{:02d}{:02d}&#34;</span><span style="color:#f92672">.</span>format(g, a) <span style="color:#66d9ef">for</span> g, a <span style="color:#f92672">in</span> zip(df_customer<span style="color:#f92672">.</span>gender_cd, df_customer<span style="color:#f92672">.</span>age<span style="color:#f92672">.</span>map(<span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">//</span><span style="color:#ae81ff">10</span><span style="color:#f92672">*</span><span style="color:#ae81ff">10</span> <span style="color:#66d9ef">if</span> x <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">60</span> <span style="color:#66d9ef">else</span> <span style="color:#ae81ff">60</span>))], name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;gen_age&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id   birth_day gender gen_age
+0  CS021313000114  1981-04-29     女性    0130
+1  CS037613000071  1952-04-01     不明    0960
+2  CS031415000172  1976-10-04     女性    0140
+3  CS028811000001  1933-03-27     女性    0160
+4  CS001215000145  1995-03-29     女性    0120
+5  CS020401000016  1974-09-15     男性    0040
+6  CS015414000103  1977-08-09     女性    0140
+7  CS029403000008  1973-08-17     男性    0040
+8  CS015804000004  1931-05-02     男性    0060
+9  CS033513000180  1962-07-11     女性    0150
+</code></pre><h2 id="058">058</h2>
+<blockquote>
+<p>P-058: 顧客データフレーム（df_customer）の性別コード（gender_cd）をダミー変数化し、顧客 ID（customer_id）とともに抽出せよ。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<p><code>pandas.get_dummies</code> を使う</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>get_dummies(
+  df_customer[[<span style="color:#e6db74">&#34;customer_id&#34;</span>, <span style="color:#e6db74">&#34;gender_cd&#34;</span>]],
+  columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#34;gender_cd&#34;</span>],
+  prefix_sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;_&#39;</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id  gender_cd_0  gender_cd_1  gender_cd_9
+0  CS021313000114            0            1            0
+1  CS037613000071            0            0            1
+2  CS031415000172            0            1            0
+3  CS028811000001            0            1            0
+4  CS001215000145            0            1            0
+5  CS020401000016            1            0            0
+6  CS015414000103            0            1            0
+7  CS029403000008            1            0            0
+8  CS015804000004            1            0            0
+9  CS033513000180            0            1            0
+</code></pre><h2 id="059">059</h2>
+<blockquote>
+<p>P-059: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計し、合計した売上金額を平均 0、標準偏差 1 に標準化して顧客 ID、売上金額合計とともに表示せよ。標準化に使用する標準偏差は、不偏標準偏差と標本標準偏差のどちらでも良いものとする。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+pd<span style="color:#f92672">.</span>concat(
+    [tmp,
+     pd<span style="color:#f92672">.</span>Series((tmp <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>mean()) <span style="color:#f92672">/</span> tmp<span style="color:#f92672">.</span>std(), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;standardization&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount  standardization
+customer_id
+CS001113000004    1298        -0.459350
+CS001114000005     626        -0.706348
+CS001115000010    3044         0.182403
+CS001205000004    1988        -0.205737
+CS001205000006    3337         0.290096
+CS001211000025     456        -0.768832
+CS001212000027     448        -0.771773
+CS001212000031     296        -0.827641
+CS001212000046     228        -0.852635
+CS001212000070     456        -0.768832
+</code></pre><h2 id="060">060</h2>
+<blockquote>
+<p>P-060: レシート明細データフレーム（df_receipt）の売上金額（amount）を顧客 ID（customer_id）ごとに合計し、合計した売上金額を最小値 0、最大値 1 に正規化して顧客 ID、売上金額合計とともに表示せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。結果は 10 件表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()
+pd<span style="color:#f92672">.</span>concat(
+    [tmp,
+     pd<span style="color:#f92672">.</span>Series((tmp <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>min()) <span style="color:#f92672">/</span> (tmp<span style="color:#f92672">.</span>max() <span style="color:#f92672">-</span> tmp<span style="color:#f92672">.</span>min()), name<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;normalization&#34;</span>)],
+    axis<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount  normalization
+customer_id
+CS001113000004    1298       0.053354
+CS001114000005     626       0.024157
+CS001115000010    3044       0.129214
+CS001205000004    1988       0.083333
+CS001205000006    3337       0.141945
+CS001211000025     456       0.016771
+CS001212000027     448       0.016423
+CS001212000031     296       0.009819
+CS001212000046     228       0.006865
+CS001212000070     456       0.016771
+</code></pre>]]></content>
+        </item>
+        
+        <item>
+            <title>データサイエンス100本ノックをPythonでやってみた [31-40]</title>
+            <link>https://tomowarkar.github.io/blog/posts/ds100-04/</link>
+            <pubDate>Mon, 22 Jun 2020 00:00:00 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/ds100-04/</guid>
+            <description>データサイエンス 100 本ノックとは The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編） Google Colab で データサイエンス 100 本ノックをするにあたって 以下の ipynb ファ</description>
+            <content type="html"><![CDATA[<h2 id="データサイエンス-100-本ノックとは">データサイエンス 100 本ノックとは</h2>
+<p><a href="https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess">The-Japan-DataScientist-Society/100knocks-preprocess: データサイエンス 100 本ノック（構造化データ加工編）</a></p>
+<h3 id="google-colab-で-データサイエンス-100-本ノックをするにあたって">Google Colab で データサイエンス 100 本ノックをするにあたって</h3>
+<p>以下の ipynb ファイルを使用させていただきました。</p>
+<p><a href="https://github.com/noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook">noguhiro2002/100knocks-preprocess_ForColab-AzureNotebook: データサイエンス 100 本ノック（構造化データ加工編）For Azure_Notebook/Google_Colabo</a></p>
+<h3 id="実行ファイル">実行ファイル</h3>
+<p><a href="https://colab.research.google.com/drive/1BFlAbxy3zLfDH_UtrhiGb7iz6mmPF5t1?usp=sharing">データサイエンス 100 本ノック by tomowarkar</a></p>
+<h2 id="031">031</h2>
+<blockquote>
+<p>P-031: レシート明細データフレーム（df_receipt）に対し、店舗コード（store_cd）ごとに売上金額（amount）の標本標準偏差を計算し、降順で TOP5 を表示せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;store_cd&#34;</span>)\
+  <span style="color:#f92672">.</span>agg(sample_std<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;amount&#34;</span>, <span style="color:#66d9ef">lambda</span> x: x<span style="color:#f92672">.</span>std(ddof<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>)))\
+  <span style="color:#f92672">.</span>sort_values(<span style="color:#e6db74">&#34;sample_std&#34;</span>, ascending<span style="color:#f92672">=</span>False)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">5</span>)
+</code></pre></div><pre><code>          sample_std
+store_cd
+S13052    663.391816
+S14011    553.456916
+S14034    544.903736
+S13001    543.536561
+S13015    543.409938
+</code></pre><h2 id="032">032</h2>
+<blockquote>
+<p>P-032: レシート明細データフレーム（df_receipt）の売上金額（amount）について、25％刻みでパーセンタイル値を求めよ。</p>
+</blockquote>
+<p><code>pandas.Series.quantile</code>を使います。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>quantile([i<span style="color:#f92672">/</span><span style="color:#ae81ff">100</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">101</span>, <span style="color:#ae81ff">25</span>)])
+</code></pre></div><pre><code>0.00       10.0
+0.25      102.0
+0.50      170.0
+0.75      288.0
+1.00    10925.0
+Name: amount, dtype: float64
+</code></pre><h2 id="033">033</h2>
+<blockquote>
+<p>P-033: レシート明細データフレーム（df_receipt）に対し、店舗コード（store_cd）ごとに売上金額（amount）の平均を計算し、330 以上のものを抽出せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;store_cd&#34;</span>)\
+  <span style="color:#f92672">.</span>agg(mean_amount<span style="color:#f92672">=</span>(<span style="color:#e6db74">&#34;amount&#34;</span>, <span style="color:#e6db74">&#34;mean&#34;</span>))\
+  <span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#34;mean_amount &gt;= 330&#34;</span>)
+</code></pre></div><pre><code>          mean_amount
+store_cd
+S12013     330.194130
+S13001     348.470386
+S13003     350.915519
+S13004     330.943949
+S13015     351.111960
+S13019     330.208616
+S13020     337.879932
+S13052     402.867470
+S14010     348.791262
+S14011     335.718333
+S14026     332.340588
+S14045     330.082073
+S14047     330.077073
+</code></pre><h2 id="034">034</h2>
+<blockquote>
+<p>P-034: レシート明細データフレーム（df_receipt）に対し、顧客 ID（customer_id）ごとに売上金額（amount）を合計して全顧客の平均を求めよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>mean() <span style="color:#75715e">#&gt; 2547.742234529256</span>
+</code></pre></div><h2 id="035">035</h2>
+<blockquote>
+<p>P-035: レシート明細データフレーム（df_receipt）に対し、顧客 ID（customer_id）ごとに売上金額（amount）を合計して全顧客の平均を求め、平均以上に買い物をしている顧客を抽出せよ。ただし、顧客 ID が&quot;Z&quot;から始まるのものは非会員を表すため、除外して計算すること。なお、データは 10 件だけ表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">mean_amount <span style="color:#f92672">=</span> df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>amount<span style="color:#f92672">.</span>sum()<span style="color:#f92672">.</span>mean()
+
+df_receipt[<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)\
+  <span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})\
+  <span style="color:#f92672">.</span>query(f<span style="color:#e6db74">&#34;amount &gt;= {mean_amount}&#34;</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>                amount
+customer_id
+CS001115000010    3044
+CS001205000006    3337
+CS001214000009    4685
+CS001214000017    4132
+CS001214000052    5639
+CS001215000040    3496
+CS001304000006    3726
+CS001305000005    3485
+CS001305000011    4370
+CS001315000180    3300
+</code></pre><h2 id="036">036</h2>
+<blockquote>
+<p>P-036: レシート明細データフレーム（df_receipt）と店舗データフレーム（df_store）を内部結合し、レシート明細データフレームの全項目と店舗データフレームの店舗名（store_name）を 10 件表示させよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>merge(
+    df_receipt,
+    df_store[[<span style="color:#e6db74">&#39;store_cd&#39;</span>,<span style="color:#e6db74">&#39;store_name&#39;</span>]],
+    how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;inner&#39;</span>,
+    on<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;store_cd&#39;</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   sales_ymd  sales_epoch store_cd  ...  quantity  amount store_name
+0   20181103   1257206400   S14006  ...         1     158       葛が谷店
+1   20181116   1258329600   S14006  ...         1      48       葛が谷店
+2   20170118   1200614400   S14006  ...         1     220       葛が谷店
+3   20190524   1274659200   S14006  ...         1      80       葛が谷店
+4   20190419   1271635200   S14006  ...         1     148       葛が谷店
+5   20181119   1258588800   S14006  ...         1      88       葛が谷店
+6   20171211   1228953600   S14006  ...         1      80       葛が谷店
+7   20191021   1287619200   S14006  ...         1     405       葛が谷店
+8   20170710   1215648000   S14006  ...         1     330       葛が谷店
+9   20190805   1280966400   S14006  ...         1     115       葛が谷店
+
+[10 rows x 10 columns]
+</code></pre><h2 id="037">037</h2>
+<blockquote>
+<p>P-037: 商品データフレーム（df_product）とカテゴリデータフレーム（df_category）を内部結合し、商品データフレームの全項目とカテゴリデータフレームの小区分名（category_small_name）を 10 件表示させよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>merge(
+  df_product,
+  df_category[[<span style="color:#e6db74">&#39;category_small_cd&#39;</span>,<span style="color:#e6db74">&#39;category_small_name&#39;</span>]],
+  how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;inner&#39;</span>,
+  on<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;category_small_cd&#39;</span>
+)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>   product_cd  category_major_cd  ...  unit_cost  category_small_name
+0  P040101001                  4  ...      149.0                  弁当類
+1  P040101002                  4  ...      164.0                  弁当類
+2  P040101003                  4  ...      173.0                  弁当類
+3  P040101004                  4  ...      186.0                  弁当類
+4  P040101005                  4  ...      201.0                  弁当類
+5  P040101006                  4  ...      224.0                  弁当類
+6  P040101007                  4  ...      254.0                  弁当類
+7  P040101008                  4  ...      315.0                  弁当類
+8  P040101009                  4  ...      374.0                  弁当類
+9  P040101010                  4  ...      435.0                  弁当類
+
+[10 rows x 7 columns]
+</code></pre><h3 id="別解">別解</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">tmp <span style="color:#f92672">=</span> list(set(df_product<span style="color:#f92672">.</span>columns) <span style="color:#f92672">&amp;</span> set(df_category<span style="color:#f92672">.</span>columns))
+pd<span style="color:#f92672">.</span>merge(df_product, df_category[tmp<span style="color:#f92672">+</span>[<span style="color:#e6db74">&#39;category_small_name&#39;</span>]], how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;inner&#39;</span>, on<span style="color:#f92672">=</span>tmp)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><h2 id="038">038</h2>
+<blockquote>
+<p>P-038: 顧客データフレーム（df_customer）とレシート明細データフレーム（df_receipt）から、各顧客ごとの売上金額合計を求めよ。ただし、買い物の実績がない顧客については売上金額を 0 として表示させること。また、顧客は性別コード（gender_cd）が女性（1）であるものを対象とし、非会員（顧客 ID が&rsquo;Z'から始まるもの）は除外すること。なお、結果は 10 件だけ表示させれば良い。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">pd<span style="color:#f92672">.</span>merge(
+  df_customer[(<span style="color:#f92672">~</span>df_customer<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>)) <span style="color:#f92672">&amp;</span> (df_customer<span style="color:#f92672">.</span>gender_cd <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span>)]<span style="color:#f92672">.</span>customer_id,
+  df_receipt<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>: <span style="color:#e6db74">&#34;sum&#34;</span>}),
+  how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;left&#39;</span>,
+  on<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;customer_id&#39;</span>
+)<span style="color:#f92672">.</span>fillna(<span style="color:#ae81ff">0</span>)<span style="color:#f92672">.</span>head(<span style="color:#ae81ff">10</span>)
+</code></pre></div><pre><code>      customer_id  amount
+0  CS021313000114     0.0
+1  CS031415000172  5088.0
+2  CS028811000001     0.0
+3  CS001215000145   875.0
+4  CS015414000103  3122.0
+5  CS033513000180   868.0
+6  CS035614000014     0.0
+7  CS011215000048  3444.0
+8  CS009413000079     0.0
+9  CS040412000191   210.0
+</code></pre><h2 id="039">039</h2>
+<blockquote>
+<p>P-039: レシート明細データフレーム（df_receipt）から売上日数の多い顧客の上位 20 件と、売上金額合計の多い顧客の上位 20 件を抽出し、完全外部結合せよ。ただし、非会員（顧客 ID が&rsquo;Z'から始まるもの）は除外すること。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">group <span style="color:#f92672">=</span> df_receipt[(<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>))]<span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)
+pd<span style="color:#f92672">.</span>merge(
+  group<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>})<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;amount.rank(ascending=False, method=&#34;first&#34;) &lt;= 20&#39;</span>, engine<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;python&#34;</span>),
+  group<span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;sales_ymd&#34;</span>:<span style="color:#e6db74">&#34;nunique&#34;</span>})<span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;sales_ymd.rank(ascending=False, method=&#34;first&#34;) &lt;= 20&#39;</span>, engine<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;python&#34;</span>),
+  how<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;outer&#39;</span>,
+  on<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;customer_id&#39;</span>
+)
+</code></pre></div><pre><code>                 amount  sales_ymd
+customer_id
+CS001605000009  18925.0        NaN
+CS006515000023  18372.0        NaN
+CS007514000094  15735.0        NaN
+CS009414000059  15492.0        NaN
+CS010214000010  18585.0       22.0
+CS011414000106  18338.0        NaN
+CS011415000006  16094.0        NaN
+CS015415000185  20153.0       22.0
+CS015515000034  15300.0        NaN
+CS016415000101  16348.0        NaN
+CS016415000141  18372.0       20.0
+CS017415000097  23086.0       20.0
+CS021515000089  17580.0        NaN
+CS028415000007  19127.0       21.0
+CS030415000034  15468.0        NaN
+CS031414000051  19202.0       19.0
+CS032414000072  16563.0        NaN
+CS034415000047  16083.0        NaN
+CS035414000024  17615.0        NaN
+CS038415000104  17847.0        NaN
+CS007515000107      NaN       18.0
+CS010214000002      NaN       21.0
+CS014214000023      NaN       19.0
+CS014415000077      NaN       18.0
+CS021514000045      NaN       19.0
+CS021515000056      NaN       18.0
+CS021515000172      NaN       19.0
+CS021515000211      NaN       18.0
+CS022515000028      NaN       18.0
+CS022515000226      NaN       19.0
+CS030214000008      NaN       18.0
+CS031414000073      NaN       18.0
+CS039414000052      NaN       19.0
+CS040214000008      NaN       23.0
+</code></pre><h3 id="別解-1">別解</h3>
+<p>こっちのがシュッとしている</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">df_receipt[(<span style="color:#f92672">~</span>df_receipt<span style="color:#f92672">.</span>customer_id<span style="color:#f92672">.</span>str<span style="color:#f92672">.</span>startswith(<span style="color:#e6db74">&#34;Z&#34;</span>))]\
+  <span style="color:#f92672">.</span>groupby(<span style="color:#e6db74">&#34;customer_id&#34;</span>)\
+  <span style="color:#f92672">.</span>agg({<span style="color:#e6db74">&#34;amount&#34;</span>:<span style="color:#e6db74">&#34;sum&#34;</span>, <span style="color:#e6db74">&#34;sales_ymd&#34;</span>:<span style="color:#e6db74">&#34;nunique&#34;</span>})\
+  <span style="color:#f92672">.</span>query(<span style="color:#e6db74">&#39;amount.rank(ascending=False, method=&#34;first&#34;) &lt;= 20 | sales_ymd.rank(ascending=False, method=&#34;first&#34;) &lt;= 20&#39;</span>, engine<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;python&#34;</span>
+)
+</code></pre></div><pre><code>                amount  sales_ymd
+customer_id
+CS001605000009   18925          9
+CS006515000023   18372         15
+CS007514000094   15735         13
+CS007515000107   11188         18
+CS009414000059   15492         17
+CS010214000002   13120         21
+CS010214000010   18585         22
+CS011414000106   18338         16
+CS011415000006   16094         11
+CS014214000023    8405         19
+CS014415000077   14076         18
+CS015415000185   20153         22
+CS015515000034   15300          7
+CS016415000101   16348         12
+CS016415000141   18372         20
+CS017415000097   23086         20
+CS021514000045    9741         19
+CS021515000056   12036         18
+CS021515000089   17580         12
+CS021515000172   13974         19
+CS021515000211   10148         18
+CS022515000028   13512         18
+CS022515000226    8556         19
+CS028415000007   19127         21
+CS030214000008   10357         18
+CS030415000034   15468         13
+CS031414000051   19202         19
+CS031414000073    9317         18
+CS032414000072   16563         13
+CS034415000047   16083         14
+CS035414000024   17615         11
+CS038415000104   17847         14
+CS039414000052   11438         19
+CS040214000008   13523         23
+</code></pre><h2 id="040">040</h2>
+<blockquote>
+<p>P-040: 全ての店舗と全ての商品を組み合わせると何件のデータとなるか調査したい。店舗（df_store）と商品（df_product）を直積した件数を計算せよ。</p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">len(set(df_store<span style="color:#f92672">.</span>store_cd)) <span style="color:#f92672">*</span> len(set(df_product<span style="color:#f92672">.</span>product_cd)) <span style="color:#75715e">#&gt;531590</span>
+</code></pre></div><h3 id="別解-2">別解</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> itertools <span style="color:#f92672">import</span> product
+pd<span style="color:#f92672">.</span>DataFrame(
+  product(df_store<span style="color:#f92672">.</span>store_cd, df_product<span style="color:#f92672">.</span>product_cd),
+  columns<span style="color:#f92672">=</span>[<span style="color:#e6db74">&#39;store_cd&#39;</span>, <span style="color:#e6db74">&#39;product_cd&#39;</span>]
+)
+</code></pre></div>]]></content>
+        </item>
         
         <item>
             <title>データサイエンス100本ノックをPythonでやってみた [1-10]</title>
