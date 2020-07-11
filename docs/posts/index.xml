@@ -6,8 +6,32 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>ja-jp</language>
         <copyright>tomowarkar</copyright>
-        <lastBuildDate>Wed, 24 Jun 2020 00:00:00 +0900</lastBuildDate>
+        <lastBuildDate>Sat, 11 Jul 2020 17:31:16 +0900</lastBuildDate>
         <atom:link href="https://tomowarkar.github.io/blog/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Youtubedl がいつもと違う挙動やエラーをはく時の対象法</title>
+            <link>https://tomowarkar.github.io/blog/posts/youtubedl/</link>
+            <pubDate>Sat, 11 Jul 2020 17:31:16 +0900</pubDate>
+            
+            <guid>https://tomowarkar.github.io/blog/posts/youtubedl/</guid>
+            <description>Q. youtubedl で普段と違ったエラーが出ます A. まずはアップデートしましょう sudo youtubedl -U U option 最新バージョンにアップデートしてくれるオプション Options: General Options: -U, --update Update this program to latest</description>
+            <content type="html"><![CDATA[<p>Q. youtubedl で普段と違ったエラーが出ます</p>
+<h2 id="a-まずはアップデートしましょう">A. まずはアップデートしましょう</h2>
+<pre><code>sudo youtubedl -U
+</code></pre><h3 id="u-option">U option</h3>
+<p>最新バージョンにアップデートしてくれるオプション</p>
+<pre><code>Options:
+  General Options:
+    -U, --update  Update this program to latest version. Make sure that you have sufficient permissions (run with sudo if needed)
+</code></pre><h2 id="ダメですそれでも治りません">ダメです!それでも治りません</h2>
+<h3 id="issues-で同じ症状がないか探します">Issues で同じ症状がないか探します</h3>
+<p><a href="https://github.com/ytdl-org/youtube-dl/issues">https://github.com/ytdl-org/youtube-dl/issues</a></p>
+<p>そこで議論されている解決方法に頼る or パッチが当てられるのを待つ or 自分でスクリプトを書く</p>
+<h2 id="終わりに">終わりに</h2>
+<p>対象サイトの仕様変更が原因となることが多いのでこまめにアップデートしましょうって感じ</p>
+]]></content>
+        </item>
         
         <item>
             <title>データサイエンス100本ノックをPythonでやってみた [61-70]</title>

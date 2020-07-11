@@ -3,27 +3,37 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://tomowarkar.github.io/blog/posts/</loc>
+    <lastmod>2020-07-11T17:31:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/</loc>
+    <lastmod>2020-07-11T17:31:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/</loc>
+    <lastmod>2020-07-11T17:31:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/tags/untagged/</loc>
+    <lastmod>2020-07-11T17:31:16+09:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://tomowarkar.github.io/blog/posts/youtubedl/</loc>
+    <lastmod>2020-07-11T17:31:16+09:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://tomowarkar.github.io/blog/tags/100knocks/</loc>
     <lastmod>2020-06-24T00:00:00+09:00</lastmod>
   </url>
   
   <url>
-    <loc>https://tomowarkar.github.io/blog/posts/</loc>
-    <lastmod>2020-06-24T00:00:00+09:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://tomowarkar.github.io/blog/tags/python/</loc>
-    <lastmod>2020-06-24T00:00:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/tags/</loc>
-    <lastmod>2020-06-24T00:00:00+09:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://tomowarkar.github.io/blog/</loc>
     <lastmod>2020-06-24T00:00:00+09:00</lastmod>
   </url>
   

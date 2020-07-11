@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Wed, 24 Jun 2020 00:00:00 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2020 17:31:16 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Youtubedl がいつもと違う挙動やエラーをはく時の対象法</title>
+      <link>https://tomowarkar.github.io/blog/posts/youtubedl/</link>
+      <pubDate>Sat, 11 Jul 2020 17:31:16 +0900</pubDate>
+      
+      <guid>https://tomowarkar.github.io/blog/posts/youtubedl/</guid>
+      <description>Q. youtubedl で普段と違ったエラーが出ます A. まずはアップデートしましょう sudo youtubedl -U U option 最新バージョンにアップデートしてくれるオプション Options: General Options: -U, --update Update this program to latest</description>
+    </item>
     
     <item>
       <title>データサイエンス100本ノックをPythonでやってみた [61-70]</title>

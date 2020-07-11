@@ -7,18 +7,18 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>ja-jp</language>
     <copyright>tomowarkar</copyright>
-    <lastBuildDate>Sun, 07 Jun 2020 20:33:47 +0900</lastBuildDate>
+    <lastBuildDate>Sat, 11 Jul 2020 17:31:16 +0900</lastBuildDate>
     
 	<atom:link href="https://tomowarkar.github.io/blog/tags/untagged/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Nlp100_2020</title>
-      <link>https://tomowarkar.github.io/blog/posts/nlp100_2020/</link>
-      <pubDate>Sun, 07 Jun 2020 20:33:47 +0900</pubDate>
+      <title>Youtubedl がいつもと違う挙動やエラーをはく時の対象法</title>
+      <link>https://tomowarkar.github.io/blog/posts/youtubedl/</link>
+      <pubDate>Sat, 11 Jul 2020 17:31:16 +0900</pubDate>
       
-      <guid>https://tomowarkar.github.io/blog/posts/nlp100_2020/</guid>
-      <description>00. 文字列の逆順 01. 「パタトクカシーー」 02. 「パトカー」＋「タクシー」＝「パタトクカシーー」 03. 円周率 04. 元素記号 05. n-gram 06. 集合 07. テンプレートによる文生成</description>
+      <guid>https://tomowarkar.github.io/blog/posts/youtubedl/</guid>
+      <description>Q. youtubedl で普段と違ったエラーが出ます A. まずはアップデートしましょう sudo youtubedl -U U option 最新バージョンにアップデートしてくれるオプション Options: General Options: -U, --update Update this program to latest</description>
     </item>
     
   </channel>
